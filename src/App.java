@@ -9,5 +9,7 @@ public class App {
         for (int i=0;i<2;i++){
             System.out.println(genny[i]);
         }
+        
+        Rider rider = new Rider();
     }
 }
