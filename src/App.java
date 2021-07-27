@@ -11,5 +11,6 @@ public class App {
         }
         
         Rider rider = new Rider();
+        System.out.println("Hello! This is ee");
     }
 }
