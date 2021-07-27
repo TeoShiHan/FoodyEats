@@ -13,5 +13,7 @@ public class App {
         System.out.println("good night");
         
         Rider rider = new Rider();
+
+        System.out.println("this is a git try conflict");
     }
 }
