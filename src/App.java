@@ -11,5 +11,7 @@ public class App {
         }
 
         System.out.println("good night");
+        
+        Rider rider = new Rider();
     }
 }
