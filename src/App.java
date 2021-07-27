@@ -9,7 +9,11 @@ public class App {
         for (int i=0;i<2;i++){
             System.out.println(genny[i]);
         }
+
+        System.out.println("good night");
         
         Rider rider = new Rider();
+
+        System.out.println("this is a git try conflict");
     }
 }
