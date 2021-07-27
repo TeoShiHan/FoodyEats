@@ -16,5 +16,6 @@ public class App {
         System.out.println("Hello! This is ee");
 
         System.out.println("this is a git try conflict");        
+        System.out.println("Thsi is ee, take 2");
     }
 }
