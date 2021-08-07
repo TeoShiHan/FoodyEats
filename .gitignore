@@ -73,7 +73,6 @@
 !.vscode/extensions.json
 
 ## reference link:https://github.com/microsoft/vscode-java-test/blob/main/.gitignore
-bin
 # Compiled class file
 *.class
 
