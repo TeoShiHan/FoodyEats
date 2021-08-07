@@ -1,3 +1,5 @@
+package Classes;
+
 import java.sql.*;
 import java.util.ArrayList;
 //Syntax to crate javadoc
@@ -27,7 +29,7 @@ public class JDBC {
      * @param userSQLstatement SELECT statement as argument
      * 
      */
-    JDBC(String userSQLstatement) {
+    public JDBC(String userSQLstatement) {
         this.userSQLstatement = userSQLstatement;
         returningExecution();
     }
