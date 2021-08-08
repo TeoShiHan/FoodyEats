@@ -85,6 +85,7 @@ public class JDBC {
 
     public void copyStringcol(String field, ArrayList<String> dbStringCol) {
         try {
+            this.queryRslt.first();
             while (queryRslt.next()) {
                 dbStringCol.add(this.queryRslt.getString(field));
             }
@@ -95,6 +96,7 @@ public class JDBC {
 
     public void copyDoublecol(String field, ArrayList<Double> dbIntCol) {
         try {
+            this.queryRslt.first();
             while (queryRslt.next()) {
                 dbIntCol.add(this.queryRslt.getDouble(field));
             }
@@ -105,6 +107,7 @@ public class JDBC {
 
     public void copyIntcol(String field, ArrayList<String> dbIntCol) {
         try {
+            this.queryRslt.first();
             while (queryRslt.next()) {
                 dbIntCol.add(this.queryRslt.getString(field));
             }
