@@ -16,7 +16,6 @@ import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.layout.AnchorPane;
-import Classes.account;
 
 public class BuyerTable implements Initializable{
 
@@ -25,6 +24,8 @@ public class BuyerTable implements Initializable{
     @FXML private Button addBtn;
     @FXML private Button deleteBtn; 
     @FXML private Button updateBtn;
+
+    //INSIDE <> IS "RELATED CLASS"
     @FXML private TableView<account> buyerTable;
     @FXML private TableColumn<account, String> accountID;
     @FXML private TableColumn<account, String> accountType;
