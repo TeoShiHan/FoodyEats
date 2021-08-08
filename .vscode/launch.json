@@ -6,10 +6,47 @@
     "configurations": [
         {
             "type": "java",
+            "name": "Launch Main",
+            "request": "launch",
+            "mainClass": "Controller.Main",
+            "vmArgs": "--module-path \"lib\\JAVAfx\\javafx-sdk-11.0.2\\lib\" --add-modules javafx.controls,javafx.fxml",
+            "projectName": "FoodyEats_d7312e69"
+        },
+        {
+            "type": "java",
+            "name": "Launch dummyRunner",
+            "request": "launch",
+            "mainClass": "Controller.dummyRunner",
+            "vmArgs": "--module-path \"lib\\JAVAfx\\javafx-sdk-11.0.2\\lib\" --add-modules javafx.controls,javafx.fxml",
+            "projectName": "FoodyEats_d7312e69"
+        },
+        {
+            "type": "java",
+            "name": "Launch App",
+            "request": "launch",
+            "mainClass": "Controller.App",
+            "projectName": "FoodyEats_d7312e69"
+        },
+        {
+            "type": "java",
             "name": "Launch TestGUI",
             "request": "launch",
             "mainClass": "TestGUI",
-            "vmArgs": "--module-path \"C:/Users/Asus/Downloads/SEM 3 - OOP/javafx-sdk-11.0.2/lib\" --add-modules=javafx.swing,javafx.graphics,javafx.fxml,javafx.media,javafx.web --add-reads javafx.graphics=ALL-UNNAMED --add-opens javafx.controls/com.sun.javafx.charts=ALL-UNNAMED --add-opens javafx.graphics/com.sun.javafx.iio=ALL-UNNAMED --add-opens javafx.graphics/com.sun.javafx.iio.common=ALL-UNNAMED --add-opens javafx.graphics/com.sun.javafx.css=ALL-UNNAMED --add-opens javafx.base/com.sun.javafx.runtime=ALL-UNNAMED",
+            "projectName": "FoodyEats_d7312e69"
+        },
+        {
+            "type": "java",
+            "name": "Launch App",
+            "request": "launch",
+            "mainClass": "App",
+            "vmArgs": "--module-path \"lib\\JAVAfx\\javafx-sdk-11.0.2\\lib\" --add-modules javafx.controls,javafx.fxml",
+            "projectName": "FoodyEats_d7312e69"
+        },
+        {
+            "type": "java",
+            "name": "Launch TestGUI",
+            "request": "launch",
+            "mainClass": "TestGUI",
             "projectName": "FoodyEats_9dc77aee"
         },
         {
@@ -23,7 +60,7 @@
             "name": "Launch App",
             "request": "launch",
             "mainClass": "App",
-            "vmArgs": "--module-path \"C:/Users/Asus/Downloads/SEM 3 - OOP/javafx-sdk-11.0.2/lib\" --add-modules=javafx.swing,javafx.graphics,javafx.fxml,javafx.media,javafx.web --add-reads javafx.graphics=ALL-UNNAMED --add-opens javafx.controls/com.sun.javafx.charts=ALL-UNNAMED --add-opens javafx.graphics/com.sun.javafx.iio=ALL-UNNAMED --add-opens javafx.graphics/com.sun.javafx.iio.common=ALL-UNNAMED --add-opens javafx.graphics/com.sun.javafx.css=ALL-UNNAMED --add-opens javafx.base/com.sun.javafx.runtime=ALL-UNNAMED",
+            "vmArgs": "--module-path \"lib\\JAVAfx\\javafx-sdk-11.0.2\\lib\" --add-modules javafx.controls,javafx.fxml",
             "projectName": "FoodyEats_9dc77aee"
         },
         {
@@ -31,8 +68,7 @@
             "name": "Launch HelloWorld",
             "request": "launch",
             "mainClass": "HelloWorld",
-            "vmArgs": "--module-path \"C:/Users/Asus/Downloads/SEM 3 - OOP/javafx-sdk-11.0.2/lib\" --add-modules=javafx.swing,javafx.graphics,javafx.fxml,javafx.media,javafx.web --add-reads javafx.graphics=ALL-UNNAMED --add-opens javafx.controls/com.sun.javafx.charts=ALL-UNNAMED --add-opens javafx.graphics/com.sun.javafx.iio=ALL-UNNAMED --add-opens javafx.graphics/com.sun.javafx.iio.common=ALL-UNNAMED --add-opens javafx.graphics/com.sun.javafx.css=ALL-UNNAMED --add-opens javafx.base/com.sun.javafx.runtime=ALL-UNNAMED",
             "projectName": "FoodyEats_9dc77aee"
-        }        
+        }
     ]
 }

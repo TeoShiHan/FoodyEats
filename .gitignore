@@ -65,6 +65,7 @@
 ## reference link:https://blog.martinhujer.cz/dont-put-idea-vscode-directories-to-projects-gitignore/
 ## or 
 ## reference link:https://stackoverflow.com/questions/32964920/should-i-commit-the-vscode-folder-to-source-control
+lib
 ### VisualStudioCode ###
 .vscode/*      # Maybe .vscode/**/* instead - see comments
 !.vscode/settings.json
@@ -129,4 +130,3 @@ resources/templates/fonts/**
 dist
 **/vscode.d.ts
 **/vscode.proposed.d.ts
-
