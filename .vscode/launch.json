@@ -10,7 +10,7 @@
             "request": "launch",
             "mainClass": "Main",
             "vmArgs": "--module-path \"lib\\JAVAfx\\javafx-sdk-11.0.2\\lib\" --add-modules javafx.controls,javafx.fxml",
-
             "projectName": "FoodyEats_d7312e69"
-    ]
+        }
+    ]  
 }
