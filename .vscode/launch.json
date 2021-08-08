@@ -8,67 +8,9 @@
             "type": "java",
             "name": "Launch Main",
             "request": "launch",
-            "mainClass": "Controller.Main",
+            "mainClass": "Main",
             "vmArgs": "--module-path \"lib\\JAVAfx\\javafx-sdk-11.0.2\\lib\" --add-modules javafx.controls,javafx.fxml",
+
             "projectName": "FoodyEats_d7312e69"
-        },
-        {
-            "type": "java",
-            "name": "Launch dummyRunner",
-            "request": "launch",
-            "mainClass": "Controller.dummyRunner",
-            "vmArgs": "--module-path \"lib\\JAVAfx\\javafx-sdk-11.0.2\\lib\" --add-modules javafx.controls,javafx.fxml",
-            "projectName": "FoodyEats_d7312e69"
-        },
-        {
-            "type": "java",
-            "name": "Launch App",
-            "request": "launch",
-            "mainClass": "Controller.App",
-            "projectName": "FoodyEats_d7312e69"
-        },
-        {
-            "type": "java",
-            "name": "Launch TestGUI",
-            "request": "launch",
-            "mainClass": "TestGUI",
-            "projectName": "FoodyEats_d7312e69"
-        },
-        {
-            "type": "java",
-            "name": "Launch App",
-            "request": "launch",
-            "mainClass": "App",
-            "vmArgs": "--module-path \"lib\\JAVAfx\\javafx-sdk-11.0.2\\lib\" --add-modules javafx.controls,javafx.fxml",
-            "projectName": "FoodyEats_d7312e69"
-        },
-        {
-            "type": "java",
-            "name": "Launch TestGUI",
-            "request": "launch",
-            "mainClass": "TestGUI",
-            "projectName": "FoodyEats_9dc77aee"
-        },
-        {
-            "type": "java",
-            "name": "Launch Current File",
-            "request": "launch",
-            "mainClass": "${file}"
-        },
-        {
-            "type": "java",
-            "name": "Launch App",
-            "request": "launch",
-            "mainClass": "App",
-            "vmArgs": "--module-path \"lib\\JAVAfx\\javafx-sdk-11.0.2\\lib\" --add-modules javafx.controls,javafx.fxml",
-            "projectName": "FoodyEats_9dc77aee"
-        },
-        {
-            "type": "java",
-            "name": "Launch HelloWorld",
-            "request": "launch",
-            "mainClass": "HelloWorld",
-            "projectName": "FoodyEats_9dc77aee"
-        }
     ]
 }
