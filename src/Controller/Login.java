@@ -12,7 +12,6 @@ import java.text.Format.Field;
 import javax.swing.JOptionPane;
 import javax.swing.text.DefaultStyledDocument.ElementSpec;
 
-import com.mysql.cj.protocol.x.SyncFlushDeflaterOutputStream;
 
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
