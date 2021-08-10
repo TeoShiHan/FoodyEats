@@ -12,7 +12,7 @@ import java.text.Format.Field;
 import javax.swing.JOptionPane;
 import javax.swing.text.DefaultStyledDocument.ElementSpec;
 
-
+import Cache.GUI;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.fxml.FXML;
@@ -40,6 +40,7 @@ import javafx.util.Duration;
 import javafx.animation.PauseTransition;
 
 public class Login {    
+    private static GUI gui = GUI.getInstance();
     private Person p;
     private Stage stage;
     private Scene scene;
@@ -56,12 +57,11 @@ public class Login {
     @FXML
     void actionLogin(ActionEvent event) throws IOException, NoSuchMethodException, SecurityException, IllegalAccessException, IllegalArgumentException, InvocationTargetException{
         if(inputUsername.getText().strip().equals("khoo") && inputPassword.getText().strip().equals("ce")){
-            customPopupMessage();
-
-            JDBC db = new JDBC("SELECT * FROM ");
+            customPopupMessage();                        
 
             p = new Person("Khoo","Chong Ee");
-            toNextScene("View/BuyerHome.fxml");
+            gui.toNextScene("View/BuyerOrder.fxml");
+            // toNextScene("View/BuyerHome.fxml");
             // sendData(event);
 
             // File f = new File("JDBC.java");
@@ -211,9 +211,9 @@ public class Login {
         loader.setLocation(getClass().getClassLoader().getResource(ResourcePath));
         root = loader.load();                        
             
-        passDataToNextScene(loader);        
+        // passDataToNextScene(loader);        
 
-        stage.setUserData(this.p);
+        // stage.setUserData(this.p);
         stage.setScene(new Scene(root));   
     }
 

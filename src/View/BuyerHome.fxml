@@ -12,7 +12,7 @@
       <Rectangle arcHeight="5.0" arcWidth="5.0" fill="#ff9819" height="291.0" layoutX="-19.0" layoutY="411.0" stroke="BLACK" strokeType="INSIDE" strokeWidth="0.0" width="1227.0" />
       <ImageView fx:id="iconProfile" fitHeight="120.0" fitWidth="120.0" layoutX="20.0" layoutY="20.0" onMouseClicked="#toBuyerOrder" pickOnBounds="true" preserveRatio="true">
          <image>
-            <Image url="@Images/profileIcon.gif" />
+            <Image url="@Images/profileIcon.png" />
          </image>
       </ImageView>
       <Label fx:id="lblWelcome" layoutX="160.0" layoutY="41.0" prefHeight="38.0" prefWidth="282.0" style="-fx-font-weight: 800;" text="Welcome">

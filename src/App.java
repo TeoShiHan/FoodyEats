@@ -1,5 +1,6 @@
-import java.io.IOException;
+import Classes.*;
 
+import java.io.IOException;
 import javafx.application.Application;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
@@ -23,7 +24,10 @@ import Controller.Payment;
  
 import java.util.ArrayList; // import the ArrayList class
 
+import Cache.GUI;
+
 public class App extends Application{
+    private static GUI gui = GUI.getInstance();
     public static void main(String[] args) throws Exception  {
         System.out.println("Main method start");              
         launch(); 
@@ -32,7 +36,9 @@ public class App extends Application{
     }
 
     @Override
-    public void start(Stage stage) throws Exception {        
+    public void start(Stage stage) throws Exception {   
+        gui.setStage(stage);
+
         // <--------------FXMK Loader------------------->
         Parent root = FXMLLoader.load(getClass().getResource("View/Login.fxml"));  
         // String css = this.getClass().getResource("View/BuyerHome.css").toExternalForm();
@@ -46,6 +52,6 @@ public class App extends Application{
         stage.setHeight(700);
         stage.setResizable(false);
         stage.setScene(scene);        
-        stage.show();           
+        stage.show();                   
     }
 }
