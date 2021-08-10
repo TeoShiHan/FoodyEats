@@ -2,6 +2,8 @@ package Classes;
 
 import java.sql.*;
 import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.List;
 //Syntax to crate javadoc
 //    javadoc -d <directory of HTML files> <directory to .java files> -author
 
@@ -23,7 +25,7 @@ public class JDBC {
     private static String url = "jdbc:mysql://37.59.55.185:3306/fCe5HJjPF6";
     private static String user = "fCe5HJjPF6";
     private static String pwrd = "iKXuA6Ozsj";
-    private String userSQLstatement;
+    private String userSQLstatement;    
 
     /** 
      * @param userSQLstatement SELECT statement as argument
@@ -53,7 +55,7 @@ public class JDBC {
     public String getFirstString(String field){
         String firstString = null;
         try {
-            this.queryRslt.first();
+            this.queryRslt.first();            
             firstString = queryRslt.getString(field);
         } catch (SQLException exc) {
             System.out.println("A database error occured: " + exc.getMessage());
@@ -114,7 +116,43 @@ public class JDBC {
         } catch (SQLException exc) {
             System.out.println("A database error occured: " + exc.getMessage());
         }
-    }
+    }    
+
+    public HashMap<String,Object> getOne() {     
+        HashMap<String,Object> hMap = new HashMap<String,Object>();        
+        try{  
+            this.queryRslt.first();                                   
+            for (int i=1;i<=queryRslt.getMetaData().getColumnCount();i++) { 
+                Object obj=queryRslt.getObject(i); //get the value for whatever column the result has   
+                // hMap.put(rs.getMetaData().getColumnName(i), obj); 
+                hMap.put(queryRslt.getMetaData().getColumnName(i), obj);
+            }                            
+            return hMap;
+        }catch (Exception e) { 
+            System.out.println("A database error occured: " + e.getMessage());
+            return null;
+        } 
+    } 
+
+    public List<HashMap<String,Object>> getAll() {         
+        List<HashMap<String, Object>> hMapList = new ArrayList<HashMap<String,Object>>();
+        try{              
+            while(queryRslt.next()){           
+                HashMap<String, Object> hmap = new HashMap<String,Object>();
+                for (int i=1;i<=queryRslt.getMetaData().getColumnCount();i++) { 
+                    Object obj=queryRslt.getObject(i); //get the value for whatever column the result has (so that no need identify whats the value type)  
+                    // hMap.put(rs.getMetaData().getColumnName(i), obj); 
+                    hmap.put(queryRslt.getMetaData().getColumnName(i), obj);                    
+                }                
+                hMapList.add(hmap);
+            }                
+            this.queryRslt.beforeFirst();
+            return hMapList;        
+        }catch (Exception e) { 
+            System.out.println("A database error occured: " + e.getMessage());
+            return null;
+        } 
+    } 
 
     public static void nonReturningExecution(String userSQLStatement) {
         try {

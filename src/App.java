@@ -37,7 +37,7 @@ public class App extends Application{
         Parent root = FXMLLoader.load(getClass().getResource("View/Login.fxml"));  
         // String css = this.getClass().getResource("View/BuyerHome.css").toExternalForm();
         
-        Scene scene = new Scene(root);                        
+        Scene scene = new Scene(root);
         // scene.getStylesheets().add(css);
 
         // stage.initStyle(StageStyle.UTILITY);
