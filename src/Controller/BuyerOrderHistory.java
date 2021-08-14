@@ -29,8 +29,7 @@ public class BuyerOrderHistory implements Initializable {
     @FXML private Label lblWelcome;
     @FXML private ImageView iconCart,iconHome;
     @FXML private TableView<Order> tableView;
-    @FXML private TableColumn<Order,Object> colOrderId,colStatus,colDate;
-    // @FXML private TableColumn<Order,LocalDate> ;
+    @FXML private TableColumn<Order,Object> colOrderId,colStatus,colDate;    
     @FXML private TableColumn<Order,Order> colAction;
 
     @Override
