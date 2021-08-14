@@ -1,0 +1,51 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.control.TextField?>
+<?import javafx.scene.layout.VBox?>
+<?import javafx.scene.text.Font?>
+
+<VBox xmlns="http://javafx.com/javafx/16" xmlns:fx="http://javafx.com/fxml/1">
+   <children>
+        <TextField fx:id="inputName" prefHeight="50.0" prefWidth="363.0" promptText="Name">
+            <font>
+                <Font size="20.0" />
+            </font>
+            <VBox.margin>
+                <Insets bottom="10.0" />
+            </VBox.margin>
+        </TextField>
+        <TextField fx:id="inputNRIC" prefHeight="50.0" prefWidth="363.0" promptText="NRIC No">
+            <font>
+                <Font size="20.0" />
+            </font>
+            <VBox.margin>
+                <Insets bottom="10.0" />
+            </VBox.margin>
+        </TextField>
+        <TextField fx:id="inputNRIC1" prefHeight="50.0" prefWidth="660.0" promptText="Address">
+            <font>
+                <Font size="20.0" />
+            </font>
+            <VBox.margin>
+                <Insets bottom="10.0" />
+            </VBox.margin>
+        </TextField>
+        <TextField fx:id="inputNRIC2" prefHeight="50.0" prefWidth="660.0" promptText="Mobille No.">
+            <font>
+                <Font size="20.0" />
+            </font>
+            <VBox.margin>
+                <Insets bottom="10.0" />
+            </VBox.margin>
+        </TextField>
+        <TextField fx:id="inputNRIC21" prefHeight="50.0" prefWidth="660.0" promptText="Email">
+            <font>
+                <Font size="20.0" />
+            </font>
+            <VBox.margin>
+                <Insets bottom="10.0" />
+            </VBox.margin>
+        </TextField>
+   </children>
+</VBox>

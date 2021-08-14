@@ -1,14 +1,85 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.Cursor?>
 <?import javafx.scene.control.Button?>
-<?import javafx.scene.control.TextField?>
+<?import javafx.scene.control.ComboBox?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.RadioButton?>
+<?import javafx.scene.control.ToggleGroup?>
 <?import javafx.scene.layout.AnchorPane?>
-<?import javafx.scene.web.WebView?>
+<?import javafx.scene.shape.Rectangle?>
+<?import javafx.scene.text.Font?>
 
-<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="700.0" prefWidth="1200.0" xmlns="http://javafx.com/javafx/16" xmlns:fx="http://javafx.com/fxml/1" fx:controller="Controller.Controller">
+<AnchorPane fx:id="panePayment" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="700.0" prefWidth="1200.0" style="-fx-background-color: #FAF0E4;" xmlns="http://javafx.com/javafx/16" xmlns:fx="http://javafx.com/fxml/1" fx:controller="Controller.Payment">
    <children>
-      <Button fx:id="loadPageBtn" layoutX="1135.0" layoutY="13.0" mnemonicParsing="false" onAction="#loadPage" text="Load" />
-      <TextField fx:id="textField" layoutX="13.0" layoutY="12.0" prefHeight="26.0" prefWidth="1106.0" />
-      <WebView fx:id="webView" layoutX="8.0" layoutY="45.0" prefHeight="628.0" prefWidth="1174.0" />
+      <Rectangle arcHeight="5.0" arcWidth="5.0" fill="#ff9819" height="125.0" stroke="BLACK" strokeType="INSIDE" strokeWidth="0.0" width="1200.0" />
+      <Label fx:id="lblCart" layoutX="30.0" layoutY="33.0" prefHeight="46.0" prefWidth="466.0" style="-fx-font-weight: 800;" text="Payment">
+         <font>
+            <Font size="36.0" />
+         </font>
+      </Label>
+      <Label layoutX="30.0" layoutY="164.0" prefHeight="60.0" prefWidth="291.0" style="-fx-font-weight: 800;" text="Total">
+         <font>
+            <Font size="24.0" />
+         </font>
+      </Label>
+      <Label layoutX="29.0" layoutY="420.0" prefHeight="60.0" prefWidth="291.0" style="-fx-font-weight: 800;" text="Payment method">
+         <font>
+            <Font size="24.0" />
+         </font>
+      </Label>
+      <Label layoutX="263.0" layoutY="164.0" prefHeight="87.0" prefWidth="895.0" style="-fx-background-color: lightgray;" text="Total">
+         <font>
+            <Font size="24.0" />
+         </font>
+         <padding>
+            <Insets left="10.0" />
+         </padding>
+      </Label>
+      <RadioButton layoutX="263.0" layoutY="479.0" mnemonicParsing="false" prefHeight="60.0" prefWidth="895.0" text="Online Banking">
+         <font>
+            <Font size="24.0" />
+         </font>
+         <toggleGroup>
+            <ToggleGroup fx:id="paymentMethod" />
+         </toggleGroup>
+      </RadioButton>
+      <RadioButton layoutX="263.0" layoutY="420.0" mnemonicParsing="false" prefHeight="60.0" prefWidth="895.0" selected="true" text="Credit / Debit Bank" toggleGroup="$paymentMethod">
+         <font>
+            <Font size="24.0" />
+         </font>
+      </RadioButton>
+      <Label layoutX="29.0" layoutY="294.0" prefHeight="60.0" prefWidth="291.0" style="-fx-font-weight: 800;" text="Bank">
+         <font>
+            <Font size="24.0" />
+         </font>
+      </Label>
+      <ComboBox layoutX="263.0" layoutY="294.0" prefHeight="87.0" prefWidth="895.0" promptText="Select Yout Bank">
+         <cursor>
+            <Cursor fx:constant="DEFAULT" />
+         </cursor>
+      </ComboBox>
+      <Button layoutX="263.0" layoutY="567.0" mnemonicParsing="false" prefHeight="87.0" prefWidth="291.0" text="Proceed">
+         <font>
+            <Font size="24.0" />
+         </font>
+      </Button>
+      <Button layoutX="600.0" layoutY="567.0" mnemonicParsing="false" prefHeight="87.0" prefWidth="291.0" text="Cancel">
+         <font>
+            <Font size="24.0" />
+         </font>
+      </Button>      
+      <!-- <ImageView fx:id="iconCart" fitHeight="80.0" fitWidth="80.0" layoutX="990.0" layoutY="20.0" onMouseClicked="#toCart" pickOnBounds="true" preserveRatio="true">
+         <image>
+            <Image url="@Images/orderHistoryIcon.png" />
+         </image>
+      </ImageView>
+      <ImageView fx:id="iconHome" fitHeight="80.0" fitWidth="80.0" layoutX="1090.0" layoutY="20.0" onMouseClicked="#toHome" pickOnBounds="true" preserveRatio="true">
+         <image>
+            <Image url="@Images/homeIcon.png" />
+         </image>
+      </ImageView> -->
+            
    </children>
 </AnchorPane>

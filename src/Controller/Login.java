@@ -1,5 +1,6 @@
 package Controller;
 import Classes.*;  //invoke the all the class in the Classes package
+import Cache.*;
 
 import java.io.File;
 import java.io.IOException;
@@ -10,9 +11,7 @@ import java.lang.reflect.Parameter;
 import java.text.Format.Field;
 
 import javax.swing.JOptionPane;
-import javax.swing.text.DefaultStyledDocument.ElementSpec;
 
-import Cache.GUI;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.fxml.FXML;
@@ -23,9 +22,12 @@ import javafx.geometry.Pos;
 import javafx.scene.Node;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
+import javafx.scene.control.Alert;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
+import javafx.scene.control.Alert.AlertType;
+import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.Background;
 import javafx.scene.layout.BackgroundFill;
@@ -41,52 +43,37 @@ import javafx.animation.PauseTransition;
 
 public class Login {    
     private static GUI gui = GUI.getInstance();
-    private Person p;
     private Stage stage;
-    private Scene scene;
+    // private Scene scene;
     private Parent root;
-    private Node node;
 
-    @FXML
-    private AnchorPane paneLogin;    
-    @FXML
-    private TextField inputUsername,inputPassword;
-    @FXML
-    private Button btnLogin;
+    @FXML private AnchorPane paneLogin;    
+    @FXML private TextField inputUsername,inputPassword;
+    @FXML private Button btnLogin;
+    @FXML private Label linkToRegister;
 
     @FXML
     void actionLogin(ActionEvent event) throws IOException, NoSuchMethodException, SecurityException, IllegalAccessException, IllegalArgumentException, InvocationTargetException{
-        if(inputUsername.getText().strip().equals("khoo") && inputPassword.getText().strip().equals("ce")){
-            customPopupMessage();                        
-
-            p = new Person("Khoo","Chong Ee");
-            gui.toNextScene("View/BuyerOrder.fxml");
-            // toNextScene("View/BuyerHome.fxml");
-            // sendData(event);
-
-            // File f = new File("JDBC.java");
-            // JDBC db = new JDBC();
-
-            // // reference link:https://www.youtube.com/watch?v=ZJtXD03-D2I
-            // AnchorPane paneBuyerHome = FXMLLoader.load(getClass().getResource("../View/BuyerHome.fxml"));            
-
+        if(inputUsername.getText().strip().equals("khoo") && inputPassword.getText().strip().equals("ce")){            
             // BuyerHome controller = new BuyerHome();
             // controller.receiveData(this.p);            
-            // System.out.println(paneLogin.getChildren());
+            // System.out.println(paneLogin.getChildren());                                                                                
+            
+            gui.toNextScene("View/BuyerHome.fxml");
 
-            // paneLogin.getChildren().removeAll();
-            // // paneLogin.getChildren().setAll(paneBuyerHome); //it will stacked the pane into it self
-            // paneLogin.getChildren().setAll(paneBuyerHome.getChildren());             
-
-            // node = (Node) event.getSource();
-            // // System.out.println(node);
-            // stage = (Stage) node.getScene().getWindow();                        
-                                               
-        }else{                        
+            // toNextScene("View/BuyerHome.fxml");
+            // sendData(event);                        
+        }else{          
             customRealPopup(event);
+            // customPopupMessage();
             // customPopupWarning("Warning","Invalid credentials!");
             // System.out.println("Invalid credentials!");
         }         
+    }
+
+    @FXML
+    void toRegister(MouseEvent event) throws Exception{        
+        gui.toNextScene("View/RegisterInformation.fxml");        
     }
 
     void customRealPopup(ActionEvent event){
@@ -189,66 +176,66 @@ public class Login {
         // delay.play();
     }    
 
-    void sendData(ActionEvent event) throws IOException{
-        FXMLLoader loader = new FXMLLoader(getClass().getResource("../View/BuyerHome.fxml"));
-        root = loader.load();
+    // void sendData(ActionEvent event) throws IOException{
+    //     FXMLLoader loader = new FXMLLoader(getClass().getResource("../View/BuyerHome.fxml"));
+    //     root = loader.load();
 
-        BuyerHome controllerBuyerHome = (BuyerHome)loader.getController();
-        controllerBuyerHome.receiveData(this.p);
+    //     BuyerHome controllerBuyerHome = (BuyerHome)loader.getController();
+    //     controllerBuyerHome.receiveData(this.p);
 
-        stage = (Stage)((Node)event.getSource()).getScene().getWindow();
-        scene = new Scene(root);         
-        stage.setScene(scene);        
-        stage.show();
-    }    
+    //     stage = (Stage)((Node)event.getSource()).getScene().getWindow();
+    //     scene = new Scene(root);         
+    //     stage.setScene(scene);        
+    //     stage.show();
+    // }    
 
-    public void toNextScene(String ResourcePath) throws NoSuchMethodException, SecurityException, IOException, IllegalAccessException, IllegalArgumentException, InvocationTargetException{
-        stage = (Stage) paneLogin.getScene().getWindow();
+    // public void toNextScene(String ResourcePath) throws NoSuchMethodException, SecurityException, IOException, IllegalAccessException, IllegalArgumentException, InvocationTargetException{
+    //     stage = (Stage) paneLogin.getScene().getWindow();
         
-        FXMLLoader loader = new FXMLLoader();
-        // loader.setLocation(getClass().getResource("/View/BuyerOrder.fxml"));  //this is similar to next line, this line should add '/' infront of the path
-        // loader.setLocation(getClass().getClassLoader().getResource("View/BuyerOrder.fxml"));
-        loader.setLocation(getClass().getClassLoader().getResource(ResourcePath));
-        root = loader.load();                        
+    //     FXMLLoader loader = new FXMLLoader();
+    //     // loader.setLocation(getClass().getResource("/View/BuyerOrder.fxml"));  //this is similar to next line, this line should add '/' infront of the path
+    //     // loader.setLocation(getClass().getClassLoader().getResource("View/BuyerOrder.fxml"));
+    //     loader.setLocation(getClass().getClassLoader().getResource(ResourcePath));
+    //     root = loader.load();                        
             
-        // passDataToNextScene(loader);        
+    //     // passDataToNextScene(loader);        
 
-        // stage.setUserData(this.p);
-        stage.setScene(new Scene(root));   
-    }
+    //     // stage.setUserData(this.p);
+    //     stage.setScene(new Scene(root));   
+    // }
 
-    public void passDataToNextScene(FXMLLoader loader) throws NoSuchMethodException, SecurityException, IllegalAccessException, IllegalArgumentException, InvocationTargetException{        
-        // Original way to get the controller of next scene
-        // BuyerHome ctrl = loader.getController();          
-        // System.out.println("crtl: "+ctrl);        
+    // public void passDataToNextScene(FXMLLoader loader) throws NoSuchMethodException, SecurityException, IllegalAccessException, IllegalArgumentException, InvocationTargetException{        
+    //     // Original way to get the controller of next scene
+    //     // BuyerHome ctrl = loader.getController();          
+    //     // System.out.println("crtl: "+ctrl);        
 
-        // More flexible way to get the controller of next scene (this could only pass 1 object as argument)
-        Class<?> classType = loader.getController().getClass();
-        Object controller = classType.cast(loader.getController());        
-        System.out.println("controller: "+controller.getClass().getMethods());
-        Method method = controller.getClass().getDeclaredMethod("initData",Object.class);
-        System.out.println(method);
-        System.out.println(method.getName());
-        method.invoke(controller, this.p);
-        // If want to invoke more than one method
-        // for(Method mtd : controller.getClass().getMethods()){
-        //     System.out.println(mtd.getName());
-        // }         
+    //     // More flexible way to get the controller of next scene (this could only pass 1 object as argument)
+    //     Class<?> classType = loader.getController().getClass();
+    //     Object controller = classType.cast(loader.getController());        
+    //     System.out.println("controller: "+controller.getClass().getMethods());
+    //     Method method = controller.getClass().getDeclaredMethod("initData",Object.class);
+    //     System.out.println(method);
+    //     System.out.println(method.getName());
+    //     method.invoke(controller, this.p);
+    //     // If want to invoke more than one method
+    //     // for(Method mtd : controller.getClass().getMethods()){
+    //     //     System.out.println(mtd.getName());
+    //     // }         
 
-        // // This is to detect passing many different Object as the arguments
-        // Class<?> classType = loader.getController().getClass();
-        // Object controller = classType.cast(loader.getController());    
-        // // System.out.println("controller: "+controller.getClass().getMethods());
-        // Method method = controller.getClass().getDeclaredMethod("initData",new Class[]{Object[].class});
-        // System.out.println(method);
-        // System.out.println(method.getName());
-        // Object[] arguments = {this.p,this.p};
-        // method.invoke(controller, arguments);
-        // // If want to invoke more than one method
-        // // for(Method mtd : controller.getClass().getMethods()){
-        // //     System.out.println(mtd.getName());
-        // // }         
-    }
+    //     // // This is to detect passing many different Object as the arguments
+    //     // Class<?> classType = loader.getController().getClass();
+    //     // Object controller = classType.cast(loader.getController());    
+    //     // // System.out.println("controller: "+controller.getClass().getMethods());
+    //     // Method method = controller.getClass().getDeclaredMethod("initData",new Class[]{Object[].class});
+    //     // System.out.println(method);
+    //     // System.out.println(method.getName());
+    //     // Object[] arguments = {this.p,this.p};
+    //     // method.invoke(controller, arguments);
+    //     // // If want to invoke more than one method
+    //     // // for(Method mtd : controller.getClass().getMethods()){
+    //     // //     System.out.println(mtd.getName());
+    //     // // }         
+    // }
 
     // private <T> T castObject(Class<T> clazz, Object object) {
     //     return (T) object;

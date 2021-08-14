@@ -32,7 +32,7 @@
             <Font size="30.0" />
          </font>
       </Button>
-      <Label layoutX="1.0" layoutY="605.0" prefHeight="27.0" prefWidth="1200.0" style="-fx-font-weight: 800; -fx-text-fill: #2E989F; -fx-alignment: center;" text="Don't have an account? Register here" underline="true">
+      <Label fx:id="linkToRegister" layoutX="1.0" layoutY="605.0" onMouseClicked="#toRegister" prefHeight="27.0" prefWidth="1200.0" style="-fx-font-weight: 800; -fx-text-fill: #2E989F; -fx-alignment: center;" text="Don't have an account? Register here" underline="true">
          <font>
             <Font size="18.0" />
          </font>
