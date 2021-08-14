@@ -54,21 +54,22 @@ public class Login {
 
     @FXML
     void actionLogin(ActionEvent event) throws IOException, NoSuchMethodException, SecurityException, IllegalAccessException, IllegalArgumentException, InvocationTargetException{
-        if(inputUsername.getText().strip().equals("khoo") && inputPassword.getText().strip().equals("ce")){            
-            // BuyerHome controller = new BuyerHome();
-            // controller.receiveData(this.p);            
-            // System.out.println(paneLogin.getChildren());                                                                                
+        gui.toNextScene("View/BuyerHome.fxml");
+        // if(inputUsername.getText().strip().equals("khoo") && inputPassword.getText().strip().equals("ce")){            
+        //     // BuyerHome controller = new BuyerHome();
+        //     // controller.receiveData(this.p);            
+        //     // System.out.println(paneLogin.getChildren());                                                                                
             
-            gui.toNextScene("View/BuyerHome.fxml");
+        //     gui.toNextScene("View/BuyerHome.fxml");
 
-            // toNextScene("View/BuyerHome.fxml");
-            // sendData(event);                        
-        }else{          
-            customRealPopup(event);
-            // customPopupMessage();
-            // customPopupWarning("Warning","Invalid credentials!");
-            // System.out.println("Invalid credentials!");
-        }         
+        //     // toNextScene("View/BuyerHome.fxml");
+        //     // sendData(event);                        
+        // }else{          
+        //     customRealPopup(event);
+        //     // customPopupMessage();
+        //     // customPopupWarning("Warning","Invalid credentials!");
+        //     // System.out.println("Invalid credentials!");
+        // }         
     }
 
     @FXML
