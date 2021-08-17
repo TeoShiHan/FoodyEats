@@ -3,11 +3,14 @@ package Classes;
 import java.time.LocalDate;
 import java.util.ArrayList;
 
+import javafx.scene.control.Button;
+
 public class Order {
-    String id,status,buyerId,riderId,shopId,paymentId,reviewId;
-    LocalDate dateCreated;
-    Review review;
-    ArrayList<OrderDetails> orderDetails;
+    private String id,status,buyerId,riderId,shopId,paymentId,reviewId;
+    private LocalDate dateCreated;
+    private Review review;
+    // private Button button = new Button("Action");
+    private ArrayList<OrderItem> orderItems = new ArrayList<OrderItem>();
 
     public Order(){
         this("","","","","","","",LocalDate.now());
@@ -22,7 +25,10 @@ public class Order {
         this.shopId = shopId;
         this.paymentId = paymentId;
         this.reviewId = reviewId;
-        this.dateCreated = dateCreated;
+        this.dateCreated = dateCreated;        
+        // this.button.setOnAction(e->{
+        //     System.out.println("id:"+this.id+"; status:"+this.status);
+        // });
     }    
 
     public Order(Object id, Object status, Object buyerId, Object riderId, Object shopId, Object paymentId,
@@ -35,6 +41,9 @@ public class Order {
         this.paymentId = (String)paymentId;
         this.reviewId = (String)reviewId;
         this.dateCreated = (LocalDate)dateCreated;
+        // this.button.setOnAction(e->{
+        //     System.out.println("id:"+this.id+"; status:"+this.status);
+        // });
     }
 
     public String getId() {
@@ -103,16 +112,29 @@ public class Order {
 
     public void setReview(Review review) {
         this.review = review;
+    }       
+
+    public ArrayList<OrderItem> getOrderItems() {
+        return orderItems;
     }
 
-    public ArrayList<OrderDetails> getOrderDetails() {
-        return orderDetails;
+    public void setOrderItems(ArrayList<OrderItem> orderItems) {
+        this.orderItems = orderItems;
+    }    
+
+    // public Button getButton() {
+    //     return button;
+    // }
+
+    // public void setButton(Button button) {
+    //     this.button = button;
+    // }    
+
+    public double getTotalAmount(){        
+        double totalAmount = 0.0;
+        for(OrderItem orderItem: orderItems){
+            totalAmount += orderItem.getAmount();
+        }
+        return totalAmount;
     }
-
-    public void setOrderDetails(ArrayList<OrderDetails> orderDetails) {
-        this.orderDetails = orderDetails;
-    }
-
-    
-
 }

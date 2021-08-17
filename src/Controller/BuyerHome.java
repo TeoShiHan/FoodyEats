@@ -1,5 +1,6 @@
 package Controller;
 import Classes.*;
+import Cache.*;
 
 import javafx.fxml.FXMLLoader;
 import javafx.fxml.FXML;
@@ -31,21 +32,17 @@ import java.util.ResourceBundle;
 import javax.sound.midi.Receiver;
 import javax.swing.plaf.synth.SynthSplitPaneUI;
 
-public class BuyerHome implements Initializable{
-    Person pp;
-    private Stage stage;
-    private Scene scene;
-    private Parent root;
-    // private Node node;
 
-    @FXML
-    private AnchorPane paneBuyerHome;
-    @FXML
-    private ImageView iconProfile;        
-    @FXML
-    private Label lblWelcome,linkLogout;
-    @FXML
-    private ImageView iconCart;   
+public class BuyerHome implements Initializable{
+    GUI gui = GUI.getInstance();
+    DataHolder data = DataHolder.getInstance();
+    private Scene scene;
+    private Parent root;    
+
+    @FXML private AnchorPane paneBuyerHome;
+    @FXML private ImageView iconProfile;        
+    @FXML private Label lblWelcome,linkLogout;
+    @FXML private ImageView iconCart;   
 
     @Override
     public void initialize(URL location, ResourceBundle resources) {        
@@ -87,44 +84,43 @@ public class BuyerHome implements Initializable{
         //     }
         // }
                
-    }
+    }        
 
     @FXML
-    void toCart(MouseEvent event) {
-
-    }
-
-    @FXML
-    void toLogin(MouseEvent event) {
-
+    void toProfile(MouseEvent event) throws IOException {
+        gui.toNextScene("View/Profile.fxml");        
     }    
 
     @FXML
-    void toBuyerOrder(MouseEvent event) throws IOException {
-        stage = (Stage) paneBuyerHome.getScene().getWindow();
-        // System.out.println(stage);
-        // System.out.println(stage.getUserData());    
-        
-        root = FXMLLoader.load(getClass().getClassLoader().getResource("View/BuyerOrder.fxml"));        
-        stage.setScene(new Scene(root));
+    void logout(MouseEvent event) throws IOException {
+        gui.toNextScene("View/Login.fxml");
+        data.clear();
+    }    
 
-        // reference link:https://www.youtube.com/watch?v=ZJtXD03-D2I  (Another way to "switch" scene)
-        // AnchorPane paneBuyerOrder = FXMLLoader.load(getClass().getResource("../View/BuyerOrder.fxml"));
-        // paneBuyerHome.getChildren().removeAll();
-        // paneBuyerHome.getChildren().setAll(paneBuyerOrder);
+    @FXML
+    void back(MouseEvent event) throws IOException {
+        gui.toPrevScene();
+    }  
+
+    @FXML
+    void toBuyerOrderHistory(MouseEvent event) throws IOException {
+        gui.toNextScene("View/BuyerOrderHistory.fxml");                
     }   
 
-    void sentData() throws IOException{
-        // FXMLLoader loader = new FXMLLoader(getClass().getResource("../View/BuyerHome.fxml"));
-        // Parent root = loader.load();
-
-        // BuyerHome controllerBuyerHome = loader.getController();
-        // controllerBuyerHome.
+    @FXML
+    void toCart(MouseEvent event) throws IOException {
+        gui.toNextScene("View/BuyerCart.fxml");
     }
 
-    void receiveData(Person p){
-        System.out.println("received the person!");
-        this.pp = p;
-        System.out.println(this.pp.getFirstName());
-    }    
+    // void sentData() throws IOException{
+    //     FXMLLoader loader = new FXMLLoader(getClass().getResource("../View/BuyerHome.fxml"));
+    //     Parent root = loader.load();
+
+    //     BuyerHome controllerBuyerHome = loader.getController();
+    //     controllerBuyerHome.
+    // }
+
+    // void receiveData(Person p){
+    //     System.out.println("received the person!");                
+    // }    
 }

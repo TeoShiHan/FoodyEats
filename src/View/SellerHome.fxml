@@ -1,0 +1,74 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.image.Image?>
+<?import javafx.scene.image.ImageView?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.layout.HBox?>
+<?import javafx.scene.layout.Pane?>
+<?import javafx.scene.shape.Rectangle?>
+<?import javafx.scene.text.Font?>
+
+<AnchorPane fx:id="paneSellerHome" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="700.0" prefWidth="1200.0" style="-fx-background-color: #FAF0E4;" xmlns="http://javafx.com/javafx/16" xmlns:fx="http://javafx.com/fxml/1" fx:controller="Controller.SellerHome">
+   <children>
+      <Rectangle arcHeight="5.0" arcWidth="5.0" fill="#ff9819" height="245.0" layoutY="455.0" stroke="BLACK" strokeType="INSIDE" strokeWidth="0.0" width="1200.0" />
+      <ImageView fx:id="iconProfile" fitHeight="80.0" fitWidth="80.0" layoutX="30.0" layoutY="20.0" onMouseClicked="#toProfile" pickOnBounds="true" preserveRatio="true">
+         <image>
+            <Image url="@../Images/profileIcon.png" />
+         </image>
+      </ImageView>
+      <Label fx:id="lblWelcome" layoutX="126.0" layoutY="30.0" prefHeight="46.0" prefWidth="466.0" style="-fx-font-weight: 800;" text="Welcome asasd asd asd asd asd asd asda dasd">
+         <font>
+            <Font size="30.0" />
+         </font>
+      </Label>
+      <Label fx:id="linkLogout" layoutX="126.0" layoutY="60.0" onMouseClicked="#logout" prefHeight="46.0" prefWidth="80.0" style="-fx-text-fill: #059862;" text="Logout" underline="true">
+         <font>
+            <Font size="24.0" />
+         </font>
+      </Label>
+      <Pane fx:id="btnIncomingOrder" layoutX="30.0" layoutY="250.0" onMouseClicked="#toSellerIncomingOrder" prefHeight="373.0" prefWidth="357.0" style="-fx-background-color: white; -fx-border-radius: 20px; -fx-background-radius: 20px;">
+         <children>
+            <ImageView fitHeight="207.0" fitWidth="207.0" layoutX="75.0" layoutY="50.0" pickOnBounds="true" preserveRatio="true">
+               <image>
+                  <Image url="@../Images/bellIcon.png" />
+               </image>
+            </ImageView>
+            <Label layoutY="280.0" prefHeight="46.0" prefWidth="358.0" style="-fx-font-weight: 800; -fx-alignment: center;" text="Incoming Order">
+               <font>
+                  <Font size="36.0" />
+               </font>
+            </Label>
+         </children>
+      </Pane>
+      <Pane fx:id="btnManageProduct" layoutX="812.0" layoutY="250.0" onMouseClicked="#toSellerManageProduct" prefHeight="373.0" prefWidth="357.0" style="-fx-background-color: white; -fx-border-radius: 20px; -fx-background-radius: 20px;">
+         <children>
+            <ImageView fitHeight="207.0" fitWidth="207.0" layoutX="75.0" layoutY="50.0" pickOnBounds="true" preserveRatio="true">
+               <image>
+                  <Image url="@../Images/settingIcon.png" />
+               </image>
+            </ImageView>
+            <Label layoutY="280.0" prefHeight="46.0" prefWidth="358.0" style="-fx-font-weight: 800; -fx-alignment: center;" text="Manage Product">
+               <font>
+                  <Font size="36.0" />
+               </font>
+            </Label>
+         </children>
+      </Pane>
+      <Pane fx:id="btnOrderHistory" layoutX="421.0" layoutY="250.0" onMouseClicked="#toSellerOrderHistory" prefHeight="373.0" prefWidth="357.0" style="-fx-background-color: white; -fx-border-radius: 20px; -fx-background-radius: 20px;">
+         <children>
+            <ImageView fitHeight="207.0" fitWidth="207.0" layoutX="75.0" layoutY="50.0" pickOnBounds="true" preserveRatio="true">
+               <image>
+                  <Image url="@../Images/historyIcon.png" />
+               </image>
+            </ImageView>
+            <Label layoutY="280.0" prefHeight="46.0" prefWidth="358.0" style="-fx-font-weight: 800; -fx-alignment: center;" text="Order History">
+               <font>
+                  <Font size="36.0" />
+               </font>
+            </Label>
+         </children>
+      </Pane>
+      <HBox fx:id="toggleSwitch" layoutX="982.0" layoutY="33.0" prefHeight="53.0" prefWidth="188.0" />
+   </children>
+</AnchorPane>
