@@ -23,12 +23,12 @@
       </Label>      
       <ImageView fx:id="iconCart" fitHeight="80.0" fitWidth="80.0" layoutX="990.0" layoutY="20.0" onMouseClicked="#toCart" pickOnBounds="true" preserveRatio="true">
          <image>
-            <Image url="@Images/cartIcon.png" />
+            <Image url="@../Images/cartIcon.png" />
          </image>
       </ImageView>
       <ImageView fx:id="iconHome" fitHeight="80.0" fitWidth="80.0" layoutX="1090.0" layoutY="20.0" onMouseClicked="#toHome" pickOnBounds="true" preserveRatio="true">
          <image>
-            <Image url="@Images/homeIcon.png" />
+            <Image url="@../Images/homeIcon.png" />
          </image>
       </ImageView>
       <Button layoutX="824.0" layoutY="442.0" prefHeight="94.0" prefWidth="346.0" text="Rate">

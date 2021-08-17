@@ -26,7 +26,7 @@ public class RegisterInformation implements Initializable{
     private GUI gui = GUI.getInstance();
     private DataHolder data = DataHolder.getInstance();
 
-    @FXML private AnchorPane paneRegister;
+    @FXML private AnchorPane paneRegisterInformation;
     @FXML private RadioButton radioBtnBuyer,radioBtnSeller,radioBtnRider;
     @FXML private ToggleGroup accountType;
     @FXML private VBox containerInformation;

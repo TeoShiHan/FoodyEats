@@ -9,19 +9,14 @@
 <?import javafx.scene.shape.Rectangle?>
 <?import javafx.scene.text.Font?>
 
-<AnchorPane fx:id="paneBuyerHome" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="700.0" prefWidth="1200.0" style="-fx-background-color: #FAF0E4;" xmlns="http://javafx.com/javafx/16" xmlns:fx="http://javafx.com/fxml/1" fx:controller="Controller.BuyerOrderHistory">
+<AnchorPane fx:id="paneRiderOrders" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="700.0" prefWidth="1200.0" style="-fx-background-color: #FAF0E4;" xmlns="http://javafx.com/javafx/16" xmlns:fx="http://javafx.com/fxml/1" fx:controller="Controller.RiderOrders">
    <children>
       <Rectangle arcHeight="5.0" arcWidth="5.0" fill="#ff9819" height="245.0" layoutY="455.0" stroke="BLACK" strokeType="INSIDE" strokeWidth="0.0" width="1200.0" />
-      <Label fx:id="lblWelcome" layoutX="30.0" layoutY="30.0" prefHeight="46.0" prefWidth="466.0" style="-fx-font-weight: 800;" text="Order History">
+      <Label fx:id="lblPage" layoutX="30.0" layoutY="30.0" prefHeight="46.0" prefWidth="466.0" style="-fx-font-weight: 800;" text="Orders">
          <font>
             <Font size="36.0" />
          </font>
-      </Label>      
-      <ImageView fx:id="iconCart" fitHeight="80.0" fitWidth="80.0" layoutX="990.0" layoutY="20.0" onMouseClicked="#toCart" pickOnBounds="true" preserveRatio="true">
-         <image>
-            <Image url="@../Images/cartIcon.png" />
-         </image>
-      </ImageView>
+      </Label>
       <ImageView fx:id="iconHome" fitHeight="80.0" fitWidth="80.0" layoutX="1090.0" layoutY="20.0" onMouseClicked="#toHome" pickOnBounds="true" preserveRatio="true">
          <image>
             <Image url="@../Images/homeIcon.png" />
@@ -29,10 +24,9 @@
       </ImageView>
       <TableView fx:id="tableView" focusTraversable="false" layoutX="30.0" layoutY="140.0" prefHeight="526.0" prefWidth="1138.0">
         <columns>
-          <TableColumn fx:id="colOrderId" prefWidth="196" text="OrderId" />
-          <TableColumn fx:id="colDate" prefWidth="224" text="Date" />
-            <TableColumn fx:id="colStatus" prefWidth="320" text="Status" />
-            <TableColumn fx:id="colAction" prefWidth="400" text="Action" />
+          <TableColumn fx:id="colOrderId" prefWidth="320.0" text="OrderId" />
+          <TableColumn fx:id="colDate" prefWidth="320.0" text="Date" />
+            <TableColumn fx:id="colAction" prefWidth="498.0" text="Action" />
         </columns>
       </TableView>
    </children>

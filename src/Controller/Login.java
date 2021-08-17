@@ -54,7 +54,8 @@ public class Login {
 
     @FXML
     void actionLogin(ActionEvent event) throws IOException, NoSuchMethodException, SecurityException, IllegalAccessException, IllegalArgumentException, InvocationTargetException{
-        gui.toNextScene("View/BuyerHome.fxml");
+        // gui.toNextScene("View/BuyerHome.fxml");
+        gui.toNextScene("View/SellerHome.fxml");
         // if(inputUsername.getText().strip().equals("khoo") && inputPassword.getText().strip().equals("ce")){            
         //     // BuyerHome controller = new BuyerHome();
         //     // controller.receiveData(this.p);            

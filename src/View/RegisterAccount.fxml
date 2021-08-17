@@ -7,7 +7,7 @@
 <?import javafx.scene.shape.Rectangle?>
 <?import javafx.scene.text.Font?>
 
-<AnchorPane fx:id="paneRegister" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="700.0" prefWidth="1200.0" style="-fx-background-color: #FAF0E4;" xmlns="http://javafx.com/javafx/16" xmlns:fx="http://javafx.com/fxml/1" fx:controller="Controller.RegisterAccount">
+<AnchorPane fx:id="paneRegister" maxHeight="-Infinity" maxWidth="-Infinity" prefWidth="800.0" style="-fx-background-color: #FAF0E4;" xmlns="http://javafx.com/javafx/16" xmlns:fx="http://javafx.com/fxml/1" fx:controller="Controller.RegisterAccount">
    <children>
       <Rectangle arcHeight="5.0" arcWidth="5.0" fill="#ff9819" height="98.0" stroke="BLACK" strokeType="INSIDE" strokeWidth="0.0" width="1200.0" />
       <Label layoutX="1.0" layoutY="14.0" prefHeight="70.0" prefWidth="1200.0" style="-fx-font-weight: 800; -fx-alignment: center;" text="Register" textAlignment="CENTER">
