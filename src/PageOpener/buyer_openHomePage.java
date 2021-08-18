@@ -44,8 +44,8 @@ public class buyer_openHomePage extends Application{
         gui.setStage(stage);
 
         // <--------------FXMK Loader------------------->
-        Parent root = FXMLLoader.load(getClass().getResource("View/BuyerHome.fxml"));  
-        String css = this.getClass().getResource("View/App.css").toExternalForm();
+        Parent root = FXMLLoader.load(getClass().getResource("../View/BuyerHome.fxml"));  
+        String css = this.getClass().getResource("../View/App.css").toExternalForm();
         
         Scene scene = new Scene(root);
         scene.getStylesheets().add(css);        
