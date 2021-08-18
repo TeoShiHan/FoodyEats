@@ -1,0 +1,82 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.control.ComboBox?>
+<?import javafx.scene.control.TextField?>
+<?import javafx.scene.layout.HBox?>
+<?import javafx.scene.layout.VBox?>
+<?import javafx.scene.text.Font?>
+
+<VBox xmlns="http://javafx.com/javafx/16" xmlns:fx="http://javafx.com/fxml/1" fx:controller="Controller.Register.Rider">
+   <children>
+      <TextField fx:id="inputShopName" prefHeight="50.0" prefWidth="660.0" promptText="Name">
+         <font>
+            <Font size="20.0" />
+         </font>
+         <VBox.margin>
+            <Insets bottom="10.0" />
+         </VBox.margin>
+      </TextField>
+      <TextField fx:id="inputEmail" prefHeight="50.0" prefWidth="660.0" promptText="Email">
+         <font>
+            <Font size="20.0" />
+         </font>
+         <VBox.margin>
+            <Insets bottom="10.0" />
+         </VBox.margin>
+      </TextField>
+      <TextField fx:id="inputContactNo" prefHeight="50.0" prefWidth="660.0" promptText="Contact No.">
+         <font>
+            <Font size="20.0" />
+         </font>
+         <VBox.margin>
+            <Insets bottom="10.0" />
+         </VBox.margin>
+      </TextField>
+      <ComboBox fx:id="dropdownVehicleType" onAction="#selectVehicleType" prefHeight="50.0" prefWidth="660.0" promptText="Vehicle Type">
+         <VBox.margin>
+            <Insets bottom="10.0" />
+         </VBox.margin>
+      </ComboBox>
+      <HBox prefHeight="50.0" prefWidth="660.0">
+         <children>
+            <TextField fx:id="inputModel" disable="true" prefHeight="50.0" prefWidth="660.0" promptText="Model">
+               <font>
+                  <Font size="20.0" />
+               </font>
+               <HBox.margin>
+                  <Insets right="20.0" />
+               </HBox.margin>
+            </TextField>
+            <TextField fx:id="inputBrand" disable="true" prefHeight="50.0" prefWidth="660.0" promptText="Brand">
+               <font>
+                  <Font size="20.0" />
+               </font>
+            </TextField>
+         </children>
+         <VBox.margin>
+            <Insets bottom="10.0" />
+         </VBox.margin>
+      </HBox>
+      <HBox prefHeight="50.0" prefWidth="660.0">
+         <children>
+            <TextField fx:id="inputPlateNo" disable="true" prefHeight="50.0" prefWidth="660.0" promptText="Plate No.">
+               <font>
+                  <Font size="20.0" />
+               </font>
+               <HBox.margin>
+                  <Insets right="20.0" />
+               </HBox.margin>
+            </TextField>
+            <TextField fx:id="inputColor" disable="true" prefHeight="50.0" prefWidth="660.0" promptText="Color">
+               <font>
+                  <Font size="20.0" />
+               </font>
+            </TextField>
+         </children>
+         <VBox.margin>
+            <Insets bottom="10.0" />
+         </VBox.margin>
+      </HBox>
+   </children>
+</VBox>

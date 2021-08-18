@@ -9,25 +9,35 @@
 
 <AnchorPane fx:id="paneBuyerHome" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="700.0" prefWidth="1200.0" style="-fx-background-color: #FAF0E4;" xmlns="http://javafx.com/javafx/16" xmlns:fx="http://javafx.com/fxml/1" fx:controller="Controller.BuyerHome">
    <children>
-      <Rectangle arcHeight="5.0" arcWidth="5.0" fill="#ff9819" height="291.0" layoutX="-19.0" layoutY="411.0" stroke="BLACK" strokeType="INSIDE" strokeWidth="0.0" width="1227.0" />
-      <ImageView fx:id="iconProfile" fitHeight="120.0" fitWidth="120.0" layoutX="20.0" layoutY="20.0" onMouseClicked="#toBuyerOrder" pickOnBounds="true" preserveRatio="true">
+      <Rectangle arcHeight="5.0" arcWidth="5.0" fill="#ff9819" height="245.0" layoutY="455.0" stroke="BLACK" strokeType="INSIDE" strokeWidth="0.0" width="1200.0" />
+      <ImageView fx:id="iconProfile" fitHeight="80.0" fitWidth="80.0" layoutX="30.0" layoutY="20.0" onMouseClicked="#toProfile" pickOnBounds="true" preserveRatio="true">
          <image>
-            <Image url="@Images/profileIcon.png" />
+            <Image url="@../Images/profileIcon.png" />
          </image>
       </ImageView>
-      <Label fx:id="lblWelcome" layoutX="160.0" layoutY="41.0" prefHeight="38.0" prefWidth="282.0" style="-fx-font-weight: 800;" text="Welcome">
+      <Label fx:id="lblWelcome" layoutX="126.0" layoutY="30.0" prefHeight="46.0" prefWidth="466.0" style="-fx-font-weight: 800;" text="Welcome asasd asd asd asd asd asd asda dasd">
          <font>
             <Font size="30.0" />
          </font>
       </Label>
-      <Label fx:id="linkLogout" layoutX="160.0" layoutY="76.0" onMouseClicked="#toLogin" prefHeight="46.0" prefWidth="275.0" style="-fx-text-fill: #059862;" text="Logout" underline="true">
+      <Label fx:id="linkLogout" layoutX="126.0" layoutY="60.0" onMouseClicked="#logout" prefHeight="46.0" prefWidth="80.0" style="-fx-text-fill: #059862;" text="Logout" underline="true">
          <font>
             <Font size="24.0" />
          </font>
       </Label>
-      <ImageView fx:id="iconCart" fitHeight="120.0" fitWidth="120.0" layoutX="1060.0" layoutY="20.0" onMouseClicked="#toCart" pickOnBounds="true" preserveRatio="true">
+      <ImageView fx:id="iconBack" fitHeight="80.0" fitWidth="80.0" layoutX="890.0" layoutY="20.0" onMouseClicked="#back" pickOnBounds="true" preserveRatio="true">
          <image>
-            <Image url="@Images/cartIcon.png" />
+            <Image url="@../Images/backIcon.png" />
+         </image>
+      </ImageView>
+      <ImageView fx:id="iconOrderHistory" fitHeight="80.0" fitWidth="80.0" layoutX="990.0" layoutY="20.0" onMouseClicked="#toBuyerOrderHistory" pickOnBounds="true" preserveRatio="true">
+         <image>
+            <Image url="@../Images/historyIcon.png" />
+         </image>
+      </ImageView>
+      <ImageView fx:id="iconCart" fitHeight="80.0" fitWidth="80.0" layoutX="1090.0" layoutY="20.0" onMouseClicked="#toCart" pickOnBounds="true" preserveRatio="true">
+         <image>
+            <Image url="@../Images/cartIcon.png" />
          </image>
       </ImageView>
    </children>
