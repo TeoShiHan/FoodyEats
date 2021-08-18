@@ -1,84 +1,84 @@
 package Classes;
 
-import java.time.LocalDate;
-
 public class Food {
-    private String id,name,desc,imgPath,category,shopId;
-    private double price;    
-    private LocalDate dateCreated; //is it needed?
+    private String 
+    foodID, name, desc, imgPath, category, shopID;
 
-    public Food(){
-        this("","","","","","",0.0,LocalDate.now());
-    }        
-    public Food(String id, String name, String desc, String imgPath, String category, String shopId, double price,
-                LocalDate dateCreated){
-        this.id = id;
-        this.name = name;
-        this.desc = desc;
-        this.imgPath = imgPath;
-        this.category = category;
-        this.shopId = shopId;
-        this.price = price;        
-        this.dateCreated = dateCreated;            
-    }
-    public Food(Object id, Object name, Object desc, Object imgPath, Object category, Object shopId, Object price,
-                LocalDate dateCreated){
-        this.id = (String)id;
+    private Double price;
+
+    //  CONSTRUCTOR FOR DATABASE
+    public Food(
+        Object FoodID, 
+        Object name, 
+        Object desc, 
+        Object imgPath, 
+        Object category, 
+        Object shopID, 
+        Object price) 
+    {
+        this.foodID = (String)foodID;
         this.name = (String)name;
         this.desc = (String)desc;
         this.imgPath = (String)imgPath;
         this.category = (String)category;
-        this.shopId = (String)shopId;
-        this.price = (double)price;        
-        this.dateCreated = (LocalDate)dateCreated;
-    }    
+        this.shopID = (String)shopID;
+        this.price = (Double)price;
+    }
 
-    public String getId() {
-        return id;
+    //  GETTER AND SETTER
+    public String getFoodID() {
+        return foodID;
     }
-    public void setId(String id) {
-        this.id = id;
+
+    public void setFoodID(String foodID) {
+        this.foodID = foodID;
     }
+
     public String getName() {
         return name;
     }
+
     public void setName(String name) {
         this.name = name;
     }
+
     public String getDesc() {
         return desc;
     }
+
     public void setDesc(String desc) {
         this.desc = desc;
     }
+
     public String getImgPath() {
         return imgPath;
     }
+
     public void setImgPath(String imgPath) {
         this.imgPath = imgPath;
     }
+
     public String getCategory() {
         return category;
     }
+
     public void setCategory(String category) {
         this.category = category;
     }
-    public String getShopId() {
-        return shopId;
+
+    public String getShopID() {
+        return shopID;
     }
-    public void setShopId(String shopId) {
-        this.shopId = shopId;
+
+    public void setShopID(String shopID) {
+        this.shopID = shopID;
     }
-    public double getPrice() {
+
+    public Double getPrice() {
         return price;
     }
-    public void setPrice(double price) {
+
+    public void setPrice(Double price) {
         this.price = price;
-    }    
-    public LocalDate getDateCreated() {
-        return dateCreated;
-    }
-    public void setDateCreated(LocalDate dateCreated) {
-        this.dateCreated = dateCreated;
     }
 }
