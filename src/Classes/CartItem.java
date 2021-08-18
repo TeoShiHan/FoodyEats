@@ -6,7 +6,7 @@ public class CartItem {
     private Food food; //indigo area
 
     public CartItem() {  //No-arg Constructor
-    	this("","",0,new Food());
+    	this("","",0, new Food());
     }
 
     public CartItem(String string, String string2, int qty, Food food2) {

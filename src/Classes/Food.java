@@ -6,6 +6,10 @@ public class Food {
 
     private Double price;
 
+    public Food(){
+        this("","","","","","","");
+    }
+
     //  CONSTRUCTOR FOR DATABASE
     public Food(
         Object FoodID, 
