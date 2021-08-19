@@ -40,33 +40,13 @@ public class buyer_openCartpage extends Application{
     }
 
     @Override
-    public void start(Stage stage) throws Exception {   
-        gui.setStage(stage);
-
-        // <--------------FXMK Loader------------------->
-        Parent root = FXMLLoader.load(getClass().getResource("../View/BuyerCart.fxml"));  
-        String css = this.getClass().getResource("../View/App.css").toExternalForm();
-        
+    public void start(Stage primaryStage) throws Exception{
+        Parent root = FXMLLoader.load(getClass().getResource("../View/Login.fxml"));
+        String css = this.getClass().getResource("View/App.css").toExternalForm();        
+        primaryStage.setTitle("Fruits Marker");
         Scene scene = new Scene(root);
         scene.getStylesheets().add(css);        
-        // stage.initStyle(StageStyle.UTILITY);
-        stage.setTitle("Foody Eats");   
-        // stage.setWidth(1215);
-        // stage.setHeight(730);
-        stage.setResizable(false);
-        stage.setScene(scene);                
-        stage.show();         
-        stage.centerOnScreen();
-        // stage.setOnCloseRequest(event->{
-        //     event.consume();
-        //     Alert alert = new Alert(AlertType.CONFIRMATION);
-        //     alert.setTitle("Close window");
-        //     alert.setHeaderText("Close Window?");
-        //     alert.setContentText("Are you sure you want to close the window?");
-
-        //     if(alert.showAndWait().get() == ButtonType.OK){
-        //         stage.close();
-        //     }          
-        // });                  
-    }   
+        primaryStage.setScene(scene);
+        primaryStage.show();
+    }
 }
