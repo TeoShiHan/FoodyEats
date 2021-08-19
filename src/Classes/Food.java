@@ -1,7 +1,5 @@
 package Classes;
 
-import java.time.LocalDate;
-
 public class Food {
     private String id,name,desc,imgPath,category,shopID;
     private double price;        
@@ -28,46 +26,59 @@ public class Food {
         this.shopID = (String)shopID;                    
     }    
 
-    public String getId() {
-        return id;
+    //  GETTER AND SETTER
+    public String getFoodID() {
+        return foodID;
     }
-    public void setId(String id) {
-        this.id = id;
+
+    public void setFoodID(String foodID) {
+        this.foodID = foodID;
     }
+
     public String getName() {
         return name;
     }
+
     public void setName(String name) {
         this.name = name;
     }
+
     public String getDesc() {
         return desc;
     }
+
     public void setDesc(String desc) {
         this.desc = desc;
     }
+
     public String getImgPath() {
         return imgPath;
     }
+
     public void setImgPath(String imgPath) {
         this.imgPath = imgPath;
     }
+
     public String getCategory() {
         return category;
     }
+
     public void setCategory(String category) {
         this.category = category;
     }
+  
     public String getShopID() {
         return shopID;
     }
     public void setShopID(String shopID) {
         this.shopID = shopID;
     }
-    public double getPrice() {
+
+    public Double getPrice() {
         return price;
     }
-    public void setPrice(double price) {
+
+    public void setPrice(Double price) {
         this.price = price;
     }
 }
