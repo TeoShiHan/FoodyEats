@@ -35,10 +35,10 @@ public class RiderOrders implements Initializable {
     @Override
     public void initialize(URL location, ResourceBundle resources) {
         // TODO Auto-generated method stub        
-        Order order1 = new Order("O1234","Pending","B1233","","S1231","P1245","R1233",LocalDate.now());
-        Order order2 = new Order("O2234","Accepted","B7486","","S1111","P8975","R2585",LocalDate.now());
-        Order order3 = new Order("O7234","Completed","B7746","R1254","S1255","P8907","R3000",LocalDate.now());
-        ObservableList<Order> observableList = FXCollections.observableArrayList(order1,order2,order3);
+        // Order order1 = new Order("O1234","Pending","B1233","","S1231","P1245","R1233",LocalDate.now());
+        // Order order2 = new Order("O2234","Accepted","B7486","","S1111","P8975","R2585",LocalDate.now());
+        // Order order3 = new Order("O7234","Completed","B7746","R1254","S1255","P8907","R3000",LocalDate.now());
+        ObservableList<Order> observableList = FXCollections.observableArrayList();
         
         tableView.setItems(observableList);
 

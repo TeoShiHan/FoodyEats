@@ -1,33 +1,30 @@
 package Classes;
 
 public class Food {
-    private String 
-    foodID, name, desc, imgPath, category, shopID;
-
-    private Double price;
+    private String id,name,desc,imgPath,category,shopID;
+    private double price;        
 
     public Food(){
-        this("","","","","","","");
+        this("","","","",0.0,"","");
+    }     
+    public Food(String id, String name, String desc, String imgPath, double price, String category, String shopID){
+        this.id = id;
+        this.name = name;
+        this.desc = desc;
+        this.imgPath = imgPath;
+        this.price = price;
+        this.category = category;
+        this.shopID = shopID;        
     }
-
-    //  CONSTRUCTOR FOR DATABASE
-    public Food(
-        Object FoodID, 
-        Object name, 
-        Object desc, 
-        Object imgPath, 
-        Object category, 
-        Object shopID, 
-        Object price) 
-    {
-        this.foodID = (String)foodID;
+    public Food(Object id, Object name, Object desc, Object imgPath, Object price, Object category, Object shopID){
+        this.id = (String)id;
         this.name = (String)name;
         this.desc = (String)desc;
         this.imgPath = (String)imgPath;
+        this.price = (double)price;    
         this.category = (String)category;
-        this.shopID = (String)shopID;
-        this.price = (Double)price;
-    }
+        this.shopID = (String)shopID;                    
+    }    
 
     //  GETTER AND SETTER
     public String getFoodID() {
@@ -69,11 +66,10 @@ public class Food {
     public void setCategory(String category) {
         this.category = category;
     }
-
+  
     public String getShopID() {
         return shopID;
     }
-
     public void setShopID(String shopID) {
         this.shopID = shopID;
     }

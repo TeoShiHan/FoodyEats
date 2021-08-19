@@ -5,6 +5,8 @@ import Classes.*;
 import java.io.IOException;
 import java.net.URL;
 import java.time.LocalDate;
+import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.ResourceBundle;
 
 import javafx.beans.property.ReadOnlyObjectWrapper;
@@ -25,6 +27,7 @@ import javafx.scene.layout.AnchorPane;
 public class BuyerOrderHistory implements Initializable {
     GUI gui = GUI.getInstance();
     DataHolder data = DataHolder.getInstance();
+    JDBC db = new JDBC();
     @FXML private AnchorPane paneBuyerHistory;
     @FXML private Label lblWelcome;
     @FXML private ImageView iconCart,iconHome;
@@ -35,10 +38,21 @@ public class BuyerOrderHistory implements Initializable {
     @Override
     public void initialize(URL location, ResourceBundle resources) {
         // TODO Auto-generated method stub        
-        Order order1 = new Order("O1234","Pending","B1233","","S1231","P1245","R1233",LocalDate.now());
-        Order order2 = new Order("O2234","Accepted","B7486","","S1111","P8975","R2585",LocalDate.now());
-        Order order3 = new Order("O7234","Completed","B7746","R1254","S1255","P8907","R3000",LocalDate.now());
-        ObservableList<Order> observableList = FXCollections.observableArrayList(order1,order2,order3);
+        if(data.getOrders().isEmpty()){ 
+            data.getBuyer().loadOrders();
+        }
+        // Order order1 = new Order("O1234","Pending","B1233","","S1231","P1245","R1233",LocalDate.now());
+        // Order order2 = new Order("O2234","Accepted","B7486","","S1111","P8975","R2585",LocalDate.now());
+        // Order order3 = new Order("O7234","Completed","B7746","R1254","S1255","P8907","R3000",LocalDate.now());
+        ObservableList<Order> observableList = FXCollections.observableArrayList(data.getOrders());        
+        // if(data.getOrders().isEmpty()){
+        //     data.loadOrders();
+        // }
+        // for(Order order : data.getOrders()){            
+        //     observableList.add(order);
+        // }                
+        
+        // Collections c = Collections.swap(orders, 0, orders.size()-1);
         
         tableView.setItems(observableList);
 
@@ -60,17 +74,16 @@ public class BuyerOrderHistory implements Initializable {
                 setGraphic(btnViewDetails);
                 btnViewDetails.setOnAction(e->{          
                     try {
+                        data.setOrder(order);                        
                         gui.toNextScene("View/BuyerOrderDetails.fxml");
                     } catch (IOException e1) {
                         // TODO Auto-generated catch block
                         e1.printStackTrace();
-                    }
-                    System.out.println("id"+order.getStatus());                    
+                    }                                      
                 });                                       
             }                     
         });     
-        // colAction.setCellValueFactory(new PropertyValueFactory<Order,Button>("button"));        
-
+        // colAction.setCellValueFactory(new PropertyValueFactory<Order,Button>("button"));                
         tableView.setItems(observableList);        
         // tableView.getColumns().addAll(colOrderId,colDate,colStatus,colAction); //not needed
     }    
