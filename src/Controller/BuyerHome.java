@@ -45,8 +45,8 @@ public class BuyerHome implements Initializable{
     @FXML private ImageView iconCart;   
 
     @Override
-    public void initialize(URL location, ResourceBundle resources) {        
-        
+    public void initialize(URL location, ResourceBundle resources) {                
+        lblWelcome.setText("Welcome "+data.getBuyer().getUsername());
     }
     
     public void initData(Object obj) throws NoSuchMethodException, SecurityException, IllegalAccessException, IllegalArgumentException, InvocationTargetException{
@@ -98,13 +98,13 @@ public class BuyerHome implements Initializable{
     }    
 
     @FXML
-    void back(MouseEvent event) throws IOException {
+    void toBack(MouseEvent event) throws IOException {
         gui.toPrevScene();
     }  
 
     @FXML
     void toBuyerOrderHistory(MouseEvent event) throws IOException {
-        gui.toNextScene("View/BuyerOrderHistory.fxml");                
+        gui.toNextScene("View/BuyerOrderHistory.fxml");          
     }   
 
     @FXML

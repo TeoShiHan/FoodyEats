@@ -20,7 +20,12 @@
          <font>
             <Font size="36.0" />
          </font>
-      </Label>      
+      </Label>
+      <ImageView fx:id="iconBack" fitHeight="80.0" fitWidth="80.0" layoutX="890.0" layoutY="20.0" onMouseClicked="#toBack" pickOnBounds="true" preserveRatio="true">
+         <image>
+            <Image url="@../Images/backIcon.png" />
+         </image>
+      </ImageView>      
       <ImageView fx:id="iconCart" fitHeight="80.0" fitWidth="80.0" layoutX="990.0" layoutY="20.0" onMouseClicked="#toCart" pickOnBounds="true" preserveRatio="true">
          <image>
             <Image url="@../Images/cartIcon.png" />
@@ -30,7 +35,7 @@
          <image>
             <Image url="@../Images/homeIcon.png" />
          </image>
-      </ImageView>
+      </ImageView>      
       <Button layoutX="824.0" layoutY="442.0" prefHeight="94.0" prefWidth="346.0" text="Rate">
          <font>
             <Font size="36.0" />
@@ -54,7 +59,7 @@
                   <Font size="24.0" />
                </font>
             </Label>
-            <Label alignment="CENTER" prefHeight="122.0" prefWidth="346.0" style="-fx-background-color: #FEBD5C; -fx-font-weight: 800;" text="RM 0.00" wrapText="true">
+            <Label fx:id="lblTotalAmount" alignment="CENTER" prefHeight="122.0" prefWidth="346.0" style="-fx-background-color: #FEBD5C; -fx-font-weight: 800;" text="RM 0.00" wrapText="true">
                <font>
                   <Font size="36.0" />
                </font>
@@ -68,12 +73,12 @@
                   <Font size="24.0" />
                </font>
             </Label>
-            <Label alignment="CENTER" prefHeight="65.0" prefWidth="346.0" style="-fx-background-color: #FEBD5C; -fx-font-weight: 800;" text="03/06/2020">
+            <Label fx:id="lblDateCreated" alignment="CENTER" prefHeight="65.0" prefWidth="346.0" style="-fx-background-color: #FEBD5C; -fx-font-weight: 800;" text="03/06/2020">
                <font>
                   <Font size="24.0" />
                </font>
             </Label>
-            <Label alignment="CENTER" prefHeight="56.0" prefWidth="346.0" style="-fx-background-color: #FEBD5C; -fx-font-weight: 800;" text="8:45pm">
+            <Label fx:id="lblTimeCreated" alignment="CENTER" prefHeight="56.0" prefWidth="346.0" style="-fx-background-color: #FEBD5C; -fx-font-weight: 800;" text="8:45pm">
                <font>
                   <Font size="24.0" />
                </font>
@@ -100,7 +105,7 @@
                         <Insets />
                      </HBox.margin>
                   </Label>
-                  <Label alignment="TOP_LEFT" prefHeight="91.0" prefWidth="239.0" style="-fx-background-color: #FEBD5C; -fx-font-weight: 800;" text="5662, Lorong Stampin 23d1A. 93350, Kuching, Sarawak" wrapText="true">
+                  <Label fx:id="lblBuyerAddress" alignment="TOP_LEFT" prefHeight="91.0" prefWidth="239.0" style="-fx-background-color: #FEBD5C; -fx-font-weight: 800;" text="5662, Lorong Stampin 23d1A. 93350, Kuching, Sarawak" wrapText="true">
                      <font>
                         <Font size="14.0" />
                      </font>
@@ -120,7 +125,7 @@
                         <Insets left="10.0" top="5.0" />
                      </padding>
                   </Label>
-                  <Label alignment="TOP_LEFT" prefHeight="91.0" prefWidth="239.0" style="-fx-background-color: #FEBD5C; -fx-font-weight: 800;" text="0194392616" wrapText="true">
+                  <Label fx:id="lblBuyerPhoneNo" alignment="TOP_LEFT" prefHeight="91.0" prefWidth="239.0" style="-fx-background-color: #FEBD5C; -fx-font-weight: 800;" text="0194392616" wrapText="true">
                      <font>
                         <Font size="14.0" />
                      </font>
@@ -132,11 +137,11 @@
             </HBox>
          </children>
       </VBox>
-      <TableView layoutX="30.0" layoutY="336.0" prefHeight="327.0" prefWidth="744.0">
+      <TableView fx:id="tableView" layoutX="30.0" layoutY="336.0" prefHeight="327.0" prefWidth="744.0">
         <columns>
-          <TableColumn prefWidth="68.79998397827148" text="No." />
-            <TableColumn prefWidth="565.6000213623047" text="Items" />
-            <TableColumn prefWidth="111.199951171875" text="Qty" />
+          <TableColumn fx:id="colNo" prefWidth="68" style="-fx-alignment: center;" text="No." />
+          <TableColumn fx:id="colItems" prefWidth="564" style="-fx-alignment: center;" text="Items" />
+          <TableColumn fx:id="colQty" prefWidth="110" style="-fx-alignment: center;" text="Qty" />
         </columns>
       </TableView>
    </children>

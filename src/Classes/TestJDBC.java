@@ -1,4 +1,5 @@
 package Classes;
+import Cache.*;
 
 import java.sql.SQLException;
 import java.time.LocalDate;
@@ -8,9 +9,12 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.UUID;
 
+
 public class TestJDBC {
     private static JDBC db = new JDBC();
     public static void main(String[] args) throws SQLException {
+        DataHolder data = DataHolder.getInstance();
+        System.out.println(data.getOrders().isEmpty());
         // JDBC buyerTable = new JDBC("SELECT * FROM Buyer");
         // List<HashMap<String,Object>> buyers = buyerTable.getAll();        
         // for(HashMap<String,Object> buyer: buyers){
@@ -44,8 +48,8 @@ public class TestJDBC {
         // LocalDate date = LocalDate.now();
         // System.out.println(date);        
 
-        // LocalTime time = LocalTime.now();        
-        // System.out.println(time);
+        LocalTime time = LocalTime.now();        
+        System.out.println(time);
 
         // String uniqueID = UUID.randomUUID().toString();
         // System.out.println(uniqueID);
@@ -65,31 +69,35 @@ public class TestJDBC {
 
         
         // select/read all row from table
-        ArrayList<HashMap<String,Object>> allBuyer = db.readAll("Buyer");
-        System.out.println(allBuyer);
+        // ArrayList<HashMap<String,Object>> allBuyer = db.readAll("`Buyer`");
+        // System.out.println(allBuyer);
 
         // insert/create 1 row into table
-        db.createOne("Buyer","lol","lol","lol","lol","lol");
+        // db.createOne("Buyer","lol","lol","lol","lol","lol");
 
-        // select/read 1 row from table
-        HashMap<String,Object> aBuyer = db.readOne("Buyer","lol");
-        System.out.println(aBuyer);
+        // // select/read 1 row from table
+        // HashMap<String,Object> aBuyer = db.readOne("Buyer","lol");
+        // System.out.println(aBuyer);
         
-        // modified/update 1 row table
-        aBuyer.put("address", "Taman Sentosaaaa");
-        aBuyer.put("accountID", "A23455");
-        db.updateOne("Buyer", aBuyer, (String)aBuyer.get("buyerID"));
+        // // modified/update 1 row table
+        // aBuyer.put("address", "Taman Sentosaaaa");
+        // aBuyer.put("accountID", "A23455");
+        // db.updateOne("Buyer", aBuyer, (String)aBuyer.get("buyerID"));
 
-        HashMap<String,Object> newBuyer = db.readOne("Buyer","lol");
-        System.out.println(newBuyer);
+        // HashMap<String,Object> newBuyer = db.readOne("Buyer","lol");
+        // System.out.println(newBuyer);
 
-        // remove/delete one row
-        db.deleteOne("Buyer", "lol");
+        // // remove/delete one row
+        // db.deleteOne("Buyer", "lol");
 
-        allBuyer = db.readAll("Buyer");
-        System.out.println(allBuyer);
+        // allBuyer = db.readAll("Buyer");
+        // System.out.println(allBuyer);
         
-        // to read the table last row id
-        System.out.println(db.getNextId("Buyer", 'a','b'));
+        // // to read the table last row id
+        // System.out.println(db.getNextId("Buyer", 'a','b'));
+        
+        // System.out.println(db.readAll("`OrderItem`", "orderID = 'O00002'"));
+
+        // System.out.println(db.readAll("`Order`", "AS o INNER JOIN OrderItem AS oi ON o.orderID = oi.orderID INNER JOIN Buyer as b ON o.buyerID = b.buyerID INNER JOIN Shop AS s ON o.shopID = s.shopID INNER JOIN Payment AS p ON o.paymentID = p.paymentID INNER JOIN Food AS f ON oi.foodID = f.foodID WHERE o.orderID = 'O00002'"));
     }    
 }

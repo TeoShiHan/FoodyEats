@@ -12,6 +12,8 @@ import java.text.Format.Field;
 
 import javax.swing.JOptionPane;
 
+import com.mysql.cj.protocol.x.SyncFlushDeflaterOutputStream;
+
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.fxml.FXML;
@@ -42,10 +44,8 @@ import javafx.util.Duration;
 import javafx.animation.PauseTransition;
 
 public class Login {    
-    private static GUI gui = GUI.getInstance();
-    private Stage stage;
-    // private Scene scene;
-    private Parent root;
+    private GUI gui = GUI.getInstance();
+    private DataHolder data = DataHolder.getInstance();
 
     @FXML private AnchorPane paneLogin;    
     @FXML private TextField inputUsername,inputPassword;
@@ -54,8 +54,12 @@ public class Login {
 
     @FXML
     void actionLogin(ActionEvent event) throws IOException, NoSuchMethodException, SecurityException, IllegalAccessException, IllegalArgumentException, InvocationTargetException{
-        // gui.toNextScene("View/BuyerHome.fxml");
-        gui.toNextScene("View/SellerHome.fxml");
+        // gui.toNextScene("View/BuyerHome.fxml");        
+        if(Account.login(inputUsername.getText().strip(), inputPassword.getText().strip())){
+            gui.toNextScene(String.format("View/%sHome.fxml",data.getObjectHolder("accType")));    
+        }else{
+            customPopupWarning("Warning","Invalid credentials!");
+        }
         // if(inputUsername.getText().strip().equals("khoo") && inputPassword.getText().strip().equals("ce")){            
         //     // BuyerHome controller = new BuyerHome();
         //     // controller.receiveData(this.p);            

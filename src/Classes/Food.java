@@ -3,34 +3,29 @@ package Classes;
 import java.time.LocalDate;
 
 public class Food {
-    private String id,name,desc,imgPath,category,shopId;
-    private double price;    
-    private LocalDate dateCreated; //is it needed?
+    private String id,name,desc,imgPath,category,shopID;
+    private double price;        
 
     public Food(){
-        this("","","","","","",0.0,LocalDate.now());
-    }        
-    public Food(String id, String name, String desc, String imgPath, String category, String shopId, double price,
-                LocalDate dateCreated){
+        this("","","","",0.0,"","");
+    }     
+    public Food(String id, String name, String desc, String imgPath, double price, String category, String shopID){
         this.id = id;
         this.name = name;
         this.desc = desc;
         this.imgPath = imgPath;
+        this.price = price;
         this.category = category;
-        this.shopId = shopId;
-        this.price = price;        
-        this.dateCreated = dateCreated;            
+        this.shopID = shopID;        
     }
-    public Food(Object id, Object name, Object desc, Object imgPath, Object category, Object shopId, Object price,
-                LocalDate dateCreated){
+    public Food(Object id, Object name, Object desc, Object imgPath, Object price, Object category, Object shopID){
         this.id = (String)id;
         this.name = (String)name;
         this.desc = (String)desc;
         this.imgPath = (String)imgPath;
+        this.price = (double)price;    
         this.category = (String)category;
-        this.shopId = (String)shopId;
-        this.price = (double)price;        
-        this.dateCreated = (LocalDate)dateCreated;
+        this.shopID = (String)shopID;                    
     }    
 
     public String getId() {
@@ -63,22 +58,16 @@ public class Food {
     public void setCategory(String category) {
         this.category = category;
     }
-    public String getShopId() {
-        return shopId;
+    public String getShopID() {
+        return shopID;
     }
-    public void setShopId(String shopId) {
-        this.shopId = shopId;
+    public void setShopID(String shopID) {
+        this.shopID = shopID;
     }
     public double getPrice() {
         return price;
     }
     public void setPrice(double price) {
         this.price = price;
-    }    
-    public LocalDate getDateCreated() {
-        return dateCreated;
-    }
-    public void setDateCreated(LocalDate dateCreated) {
-        this.dateCreated = dateCreated;
     }
 }
