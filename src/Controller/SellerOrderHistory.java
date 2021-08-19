@@ -5,6 +5,10 @@ import Classes.*;
 import java.io.IOException;
 import java.net.URL;
 import java.time.LocalDate;
+import java.time.LocalTime;
+import java.util.ArrayList;
+import java.util.Collections;
+import java.util.HashMap;
 import java.util.ResourceBundle;
 
 import javafx.beans.property.ReadOnlyObjectWrapper;
@@ -22,9 +26,10 @@ import javafx.scene.image.ImageView;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.AnchorPane;
 
-public class SellerOrderHistory implements Initializable {
+public class SellerOrderHistory implements Initializable {    
     GUI gui = GUI.getInstance();
     DataHolder data = DataHolder.getInstance();
+    JDBC db = new JDBC();
     @FXML private AnchorPane paneSellerOrderHistory;
     @FXML private Label lblWelcome;
     @FXML private ImageView iconCart,iconHome;
@@ -35,10 +40,16 @@ public class SellerOrderHistory implements Initializable {
     @Override
     public void initialize(URL location, ResourceBundle resources) {
         // TODO Auto-generated method stub        
-        Order order1 = new Order("O1234","Pending","B1233","","S1231","P1245","R1233",LocalDate.now());
-        Order order2 = new Order("O2234","Accepted","B7486","","S1111","P8975","R2585",LocalDate.now());
-        Order order3 = new Order("O7234","Completed","B7746","R1254","S1255","P8907","R3000",LocalDate.now());
+        Order order1 = new Order("O7234","Completed",LocalDate.now(),LocalTime.now(),"B7746","R1254","S1255","P8907","R3000");
+        Order order2 = new Order("O7234","Completed",LocalDate.now(),LocalTime.now(),"B7746","R1254","S1255","P8907","R3000");
+        Order order3 = new Order("O7234","Completed",LocalDate.now(),LocalTime.now(),"B7746","R1254","S1255","P8907","R3000");
         ObservableList<Order> observableList = FXCollections.observableArrayList(order1,order2,order3);
+        ArrayList<HashMap<String,Object>> orders = db.readAll("Order");
+        for(HashMap<String,Object> order : orders){
+            Order o = new Order(order.get("orderID"),order.get("orderStatus"),order.get("dateCreated"),order.get("timeCreated"),order.get("buyerID"),order.get("riderID"),order.get("shopID"),order.get("paymentID"),order.get("reviewID"));
+            observableList.add(o);
+        }
+        // Collections c = Collections.swap(orders, 0, orders.size()-1);
         
         tableView.setItems(observableList);
 

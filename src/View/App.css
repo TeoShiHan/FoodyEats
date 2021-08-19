@@ -11,8 +11,12 @@
     -fx-cursor: "hand";
 } */
 
-.table-row-cell:selected {
-    -fx-background-color: steelblue; 
+.table-view{
+    -fx-font-size: 20px;
+}
+/* https://stackoverflow.com/questions/18700478/set-row-height-in-javafx-tableview */
+.table-row-cell {
+    -fx-cell-size: 50px;
 }
 .table-row-cell:odd {
     -fx-background-color: #F4E3CE; 
@@ -20,7 +24,10 @@
 .table-row-cell:even {
     -fx-background-color: #FFFFFF; 
 }
+.table-row-cell:selected {
+    -fx-background-color: steelblue; 
+}
 
-.radio-button,#iconOrderHistory,#iconHome,#iconBack,#iconCart,#iconEdit,#iconProfile,#linkLogout,#linkToRegister,#linkToLogin{
+.button,.radio-button,#iconOrderHistory,#iconHome,#iconBack,#iconCart,#iconEdit,#iconProfile,#linkLogout,#linkToRegister,#linkToLogin{
     -fx-cursor: "hand";
 }
