@@ -6,7 +6,7 @@ public class Shop {
     private String 
     shopID, name, address, tel, imgPath, 
     startHour, endHour, foodID, reviewListID;
-
+    private Double deliveryFee;
     private boolean status;
     private LocalDate dateCreated;
     private ArrayList<Food> food;
@@ -14,16 +14,16 @@ public class Shop {
     private ArrayList<Order> orders;
     
      //  CONSTRUCTORS FOR DATABASE OBJECT
-    public Shop
-    (
+    public Shop(
         Object shopID, 
         Object address, 
         Object tel, 
         Object startHour, 
         Object endHour, 
         Object status,
-        Object dateCreated)
-    {
+        Object dateCreated,
+        Object deliveryFee
+    ){
         this.shopID = (String)shopID;
         this.address = (String)address;
         this.tel = (String)tel;
@@ -31,6 +31,7 @@ public class Shop {
         this.endHour = (String)endHour;
         this.status = (Boolean)status;
         this.dateCreated = (LocalDate)dateCreated;
+        this.deliveryFee = (Double) deliveryFee;
     }
 
     public String getShopID() {
@@ -107,6 +108,14 @@ public class Shop {
 
     public boolean isStatus() {
         return status;
+    }
+
+    public Double getDeliveryFee() {
+        return deliveryFee;
+    }
+
+    public void setDeliveryFee(Double deliveryFee) {
+        this.deliveryFee = deliveryFee;
     }
 
     public void setStatus(boolean status) {

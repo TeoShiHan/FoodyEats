@@ -6,7 +6,7 @@ import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.stage.Stage;
 
-public class buyer_openCartpage extends Application{
+public class buyer_openShopList extends Application{
     public static void main(String[] args) throws Exception  {
         System.out.println("Main method start");              
         launch(); 
@@ -16,7 +16,7 @@ public class buyer_openCartpage extends Application{
 
     @Override
     public void start(Stage primaryStage) throws Exception{
-        Parent root = FXMLLoader.load(getClass().getResource("../View/Login.fxml"));
+        Parent root = FXMLLoader.load(getClass().getResource("../View/shopList.fxml"));
         primaryStage.setTitle("Fruits Marker");
         Scene scene = new Scene(root);
         primaryStage.setScene(scene);

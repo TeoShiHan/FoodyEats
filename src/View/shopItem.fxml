@@ -1,0 +1,63 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.image.Image?>
+<?import javafx.scene.image.ImageView?>
+<?import javafx.scene.layout.HBox?>
+<?import javafx.scene.layout.VBox?>
+<?import javafx.scene.text.Font?>
+
+<HBox fx:id="shopItem" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="131.0" prefWidth="326.0" xmlns="http://javafx.com/javafx/16" xmlns:fx="http://javafx.com/fxml/1" fx:controller="shopItemController">
+   <children>
+      <VBox fx:id="shopImgContainer" alignment="CENTER" prefHeight="148.0" prefWidth="197.0">
+         <children>
+            <ImageView fx:id="shopImg" fitHeight="99.0" fitWidth="137.0" pickOnBounds="true" preserveRatio="true">
+               <image>
+                  <Image url="@../IMG/mcDonaldShop.jpg" />
+               </image>
+            </ImageView>
+         </children>
+      </VBox>
+      <VBox fx:id="shopDesc" alignment="CENTER" prefHeight="131.0" prefWidth="197.0">
+         <children>
+            <Label fx:id="shopName" prefHeight="30.0" prefWidth="305.0" text="Mc Donalds">
+               <font>
+                  <Font name="Arial Bold" size="17.0" />
+               </font>
+               <VBox.margin>
+                  <Insets top="15.0" />
+               </VBox.margin>
+            </Label>
+            <Label fx:id="categoryLabel" prefHeight="10.0" prefWidth="305.0" text="Fast food" />
+            <HBox fx:id="iconCentralizer" prefHeight="43.0" prefWidth="214.0">
+               <children>
+                  <VBox fx:id="deliveryVBox" alignment="CENTER_LEFT" prefHeight="50.0" prefWidth="53.0">
+                     <children>
+                        <ImageView fx:id="deliveryIcon" fitHeight="36.0" fitWidth="48.0" pickOnBounds="true" preserveRatio="true">
+                           <image>
+                              <Image url="@../IMG/deliveryIcon.png" />
+                           </image>
+                        </ImageView>
+                     </children>
+                     <HBox.margin>
+                        <Insets top="15.0" />
+                     </HBox.margin>
+                  </VBox>
+                  <VBox fx:id="priceVerticalAlign" prefHeight="28.0" prefWidth="240.0">
+                     <HBox.margin>
+                        <Insets left="15.0" top="15.0" />
+                     </HBox.margin>
+                     <children>
+                        <Label fx:id="deliveryFee" text="RM 10.00" textFill="#d0900f" />
+                     </children>
+                  </VBox>
+               </children>
+               <VBox.margin>
+                  <Insets />
+               </VBox.margin>
+            </HBox>
+         </children>
+      </VBox>
+   </children>
+</HBox>

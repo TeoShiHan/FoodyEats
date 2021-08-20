@@ -9,9 +9,9 @@ import java.util.List;
 public final class DataHolder {  
     JDBC db = new JDBC();
 
-    private Account account;
-    private Buyer buyer;
-    private Rider rider;
+    private Account account = new Account();
+    private Buyer buyer = new  Buyer();
+    private Rider rider = new Rider();
     // private Seller seller;
     private List<Order> orders = new ArrayList<>();
     private Order order = new Order();

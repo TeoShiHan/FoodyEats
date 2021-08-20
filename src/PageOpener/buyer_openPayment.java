@@ -45,10 +45,8 @@ public class buyer_openPayment extends Application{
 
         // <--------------FXMK Loader------------------->
         Parent root = FXMLLoader.load(getClass().getResource("../View/Payment.fxml"));  
-        String css = this.getClass().getResource("../View/App.css").toExternalForm();
         
         Scene scene = new Scene(root);
-        scene.getStylesheets().add(css);        
         // stage.initStyle(StageStyle.UTILITY);
         stage.setTitle("Foody Eats");   
         // stage.setWidth(1215);
