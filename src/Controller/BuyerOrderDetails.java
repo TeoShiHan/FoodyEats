@@ -53,12 +53,12 @@ public class BuyerOrderDetails implements Initializable {
     @Override
     public void initialize(URL location, ResourceBundle resources) {
         // TODO Auto-generated method stub        
-        if(data.getOrderItems().isEmpty() || data.getStringHolder("orderID")!=data.getOrder().getId()){
+        if(data.getOrderItems().isEmpty() || data.getStringHolder("orderID")!=data.getOrder().getOrderID()){
             data.getOrder().loadOrderItems();
-            data.addStringHolder("orderID", data.getOrder().getId());
+            data.addStringHolder("orderID", data.getOrder().getOrderID());
         }
         
-        lblOrderDetails.setText("Order #"+data.getOrder().getId());
+        lblOrderDetails.setText("Order #"+data.getOrder().getOrderID());
         lblDateCreated.setText(data.getOrder().getDateCreated().toString());
         lblTimeCreated.setText(data.getOrder().getTimeCreated().toString());              
         lblBuyerAddress.setText(data.getBuyer().getAddress());        

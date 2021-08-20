@@ -1,5 +1,8 @@
 
 import javafx.geometry.Insets;
+
+import java.io.File;
+
 import javafx.application.Application;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
@@ -9,6 +12,8 @@ import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.PasswordField;
 import javafx.scene.control.TextField;
+import javafx.scene.image.Image;
+import javafx.scene.image.ImageView;
 import javafx.scene.layout.GridPane;
 import javafx.scene.text.Font;
 import javafx.scene.text.FontWeight;
@@ -87,6 +92,16 @@ public class TestGUI extends Application {
         TextField email = new TextField();
         grid.add(email, 1, 7);
 
+        File file = new File("Images/shopImage.jpeg");
+        // System.out.println(file.getPath());
+        System.out.println(file.getName());
+        System.out.println("uri - "+file.toURI());
+        System.out.println("path - "+file.toPath());
+        System.out.println();
+        Image img = new Image(getClass().getResourceAsStream(file.toString()));
+        ImageView imgView = new ImageView(img);        
+        grid.add(imgView, 0, 9);
+
         Button register = new Button("Register");
         grid.add(register, 1, 9);
         
@@ -104,7 +119,7 @@ public class TestGUI extends Application {
         };
   
         // when button is pressed
-        register.setOnAction(event);
+        register.setOnAction(event);        
 
     }
     /**

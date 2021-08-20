@@ -5,9 +5,25 @@
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Font?>
 
-<VBox xmlns="http://javafx.com/javafx/16" xmlns:fx="http://javafx.com/fxml/1" fx:controller="Controller.Register.Seller">
+<VBox xmlns="http://javafx.com/javafx/16" xmlns:fx="http://javafx.com/fxml/1" fx:controller="Controller.Register.RegSeller">
    <children>
       <TextField fx:id="inputName" prefHeight="50.0" prefWidth="363.0" promptText="Name">
+         <font>
+            <Font size="20.0" />
+         </font>
+         <VBox.margin>
+            <Insets bottom="10.0" />
+         </VBox.margin>
+      </TextField>
+      <TextField fx:id="inputEmail" prefHeight="50.0" prefWidth="363.0" promptText="Email">
+         <font>
+            <Font size="20.0" />
+         </font>
+         <VBox.margin>
+            <Insets bottom="10.0" />
+         </VBox.margin>
+      </TextField>
+      <TextField fx:id="inputMobileNo" prefHeight="50.0" prefWidth="363.0" promptText="Mobile No.">
          <font>
             <Font size="20.0" />
          </font>
@@ -22,15 +38,7 @@
          <VBox.margin>
             <Insets bottom="10.0" />
          </VBox.margin>
-      </TextField>
-      <TextField fx:id="inputState" prefHeight="50.0" prefWidth="363.0" promptText="State">
-         <font>
-            <Font size="20.0" />
-         </font>
-         <VBox.margin>
-            <Insets bottom="10.0" />
-         </VBox.margin>
-      </TextField>
+      </TextField>      
       <TextField fx:id="inputNRIC" prefHeight="50.0" prefWidth="660.0" promptText="NRIC">
          <font>
             <Font size="20.0" />

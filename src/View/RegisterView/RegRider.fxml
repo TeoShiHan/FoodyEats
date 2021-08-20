@@ -7,9 +7,9 @@
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Font?>
 
-<VBox xmlns="http://javafx.com/javafx/16" xmlns:fx="http://javafx.com/fxml/1" fx:controller="Controller.Register.Rider">
+<VBox xmlns="http://javafx.com/javafx/16" xmlns:fx="http://javafx.com/fxml/1" fx:controller="Controller.Register.RegRider">
    <children>
-      <TextField fx:id="inputShopName" prefHeight="50.0" prefWidth="660.0" promptText="Name">
+      <TextField fx:id="inputName" prefHeight="50.0" prefWidth="660.0" promptText="Name">
          <font>
             <Font size="20.0" />
          </font>
@@ -25,7 +25,7 @@
             <Insets bottom="10.0" />
          </VBox.margin>
       </TextField>
-      <TextField fx:id="inputContactNo" prefHeight="50.0" prefWidth="660.0" promptText="Contact No.">
+      <TextField fx:id="inputMobileNo" prefHeight="50.0" prefWidth="660.0" promptText="Mobile No.">
          <font>
             <Font size="20.0" />
          </font>

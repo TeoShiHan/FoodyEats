@@ -10,45 +10,43 @@ public class Buyer extends Account{
     private DataHolder data = DataHolder.getInstance();
     private GUI gui = GUI.getInstance();
 
-    private String buyerId, address, accountId, cartId;
+    private String buyerID, address, cartID;
     private Cart cart;
     private ArrayList<Order> orders = new ArrayList<>();
 
     public Buyer() {  //No-arg Constructor        
     	this("","","","");
     }    
-    public Buyer(String buyerId, String address, String accountId, String cartId) {        
-        this.buyerId = buyerId;
+    public Buyer(String buyerID, String address, String accountID, String cartID) {        
+        this.buyerID = buyerID;
         this.address = address;
-        this.accountId = accountId;
-        this.cartId = cartId;        
+        this.accountID = accountID;
+        this.cartID = cartID;        
     }      
-    public Buyer(Object buyerId, Object address, Object accountId, Object cartId) {        
-        this.buyerId =(String)buyerId;
+    public Buyer(Object buyerID, Object address, Object accountID, Object cartID) {        
+        this.buyerID =(String)buyerID;
         this.address =(String)address;
-        this.accountId =(String)accountId;
-        this.cartId = (String)cartId;        
+        this.accountID =(String)accountID;
+        this.cartID = (String)cartID;        
     }
-    public Buyer(String accId, String username, String password, String email, String mobileNo, String accType, String buyerId, String address, String accountId, String cartId) {        
-        super(accId, username, password, email, mobileNo, accType);
-        this.buyerId = buyerId;
-        this.address = address;
-        this.accountId = accountId;
-        this.cartId = cartId;                
+    public Buyer(String accountID, String username, String password, String name, String email, String mobileNo, String accType, String buyerID, String address, String cartID) {        
+        super(accountID, username, password, name, email, mobileNo, accType);
+        this.buyerID = buyerID;
+        this.address = address;        
+        this.cartID = cartID;                
     }
-    public Buyer(Object accId, Object username, Object password, Object email, Object mobileNo, Object accType, Object buyerId, Object address, Object accountId, Object cartId) {
-        super(accId, username, password, email, mobileNo, accType);
-        this.buyerId =(String)buyerId;
-        this.address =(String)address;
-        this.accountId =(String)accountId;
-        this.cartId = (String)cartId;        
+    public Buyer(Object accountID, Object username, Object password, Object name, Object email, Object mobileNo, Object accType, Object buyerID, Object address, Object cartID) {
+        super(accountID, username, password, name, email, mobileNo, accType);
+        this.buyerID =(String)buyerID;
+        this.address =(String)address;        
+        this.cartID = (String)cartID;        
     }
 
-    public String getBuyerId() {
-        return buyerId;
+    public String getBuyerID() {
+        return buyerID;
     }
-    public void setBuyerId(String buyerId) {
-        this.buyerId = buyerId;
+    public void setBuyerID(String buyerID) {
+        this.buyerID = buyerID;
     }
 
     public String getAddress() {
@@ -58,18 +56,18 @@ public class Buyer extends Account{
         this.address = address;
     }
 
-    public String getAccountId() {
-        return accountId;
+    public String getAccountID() {
+        return accountID;
     }
-    public void setAccountId(String accountId) {
-        this.accountId = accountId;
+    public void setAccountID(String accountID) {
+        this.accountID = accountID;
     }
 
-    public String getCartId() {
-        return cartId;
+    public String getCartID() {
+        return cartID;
     }
-    public void setCartId(String cartId) {
-        this.cartId = cartId;
+    public void setCartID(String cartID) {
+        this.cartID = cartID;
     }
 
     public Cart getCart() {
@@ -86,15 +84,15 @@ public class Buyer extends Account{
         this.orders = orders;
     } 
     public void loadOrders() {
-        ArrayList<HashMap<String,Object>> os = db.readAll(String.format("SELECT * FROM `Order` WHERE buyerID='%s'",buyerId));
+        ArrayList<HashMap<String,Object>> os = db.readAll(String.format("SELECT * FROM `Order` WHERE buyerID='%s'",buyerID));
         for(HashMap<String,Object> o : os){
             this.orders.add(new Order(o.get("orderID"),o.get("status"), o.get("dateCreated"),o.get("timeCreated"),o.get("buyerID"),o.get("riderID"),o.get("shopID"),o.get("paymentID"),o.get("reviewID")));
         }   
         data.setOrders(this.orders);
     } 
 
-    // public static String getCart(String BuyerId) {
-    //     return BuyerId;
+    // public static String getCart(String BuyerID) {
+    //     return BuyerID;
     // }
 }
 

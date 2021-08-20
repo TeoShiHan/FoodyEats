@@ -1,7 +1,7 @@
 package Classes;
 
 public class CartItem {
-    private String foodId, orderId;
+    private String foodID, orderID;
     private int qty;
     private Food food; //indigo area
 
@@ -17,20 +17,20 @@ public class CartItem {
         
     }
 
-    public String getFoodId() {
-        return foodId;
+    public String getFoodID() {
+        return foodID;
     }
 
-    public void setFoodId(String foodId) {
-        this.foodId = foodId;
+    public void setFoodID(String foodID) {
+        this.foodID = foodID;
     }
 
-    public String getOrderId() {
-        return orderId;
+    public String getOrderID() {
+        return orderID;
     }
 
-    public void setOrderId(String orderId) {
-        this.orderId = orderId;
+    public void setOrderID(String orderID) {
+        this.orderID = orderID;
     }
 
     public int getQty() {

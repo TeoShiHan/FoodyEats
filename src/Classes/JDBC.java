@@ -58,33 +58,14 @@ public class JDBC {
         }finally{
             closeConnection();
         }
-    }
-
-    // public HashMap<String,Object> readLast(String table){     
-    //     openConnection();
-    //     HashMap<String,Object> hMap = new HashMap<String,Object>();        
-    //     try{  
-    //         this.queryRslt = this.SQLstatement.executeQuery(String.format("SELECT * FROM %s ORDER BY %sID DESC LIMIT 1",table,table.toLowerCase()));        
-    //         this.queryRslt.first();                                   
-    //         for (int i=1;i<=queryRslt.getMetaData().getColumnCount();i++) { 
-    //             Object obj=queryRslt.getObject(i); //get the value for whatever column the result has                   
-    //             hMap.put(queryRslt.getMetaData().getColumnName(i), obj);
-    //         }                            
-    //         return hMap;
-    //     }catch (Exception e) { 
-    //         System.out.println("A database error occured: " + e.getMessage());
-    //         return null;
-    //     }finally{
-    //         closeConnection();                        
-    //     }        
-    // }       
+    }    
 
     public HashMap<String,Object> readOne(String statement) {  
             openConnection();   
             HashMap<String,Object> hMap = new HashMap<String,Object>();        
             try{  
                 this.queryRslt = this.SQLstatement.executeQuery(statement);
-                this.queryRslt.first();                                   
+                this.queryRslt.first();
                 for (int i=1;i<=queryRslt.getMetaData().getColumnCount();i++) { 
                     Object obj=queryRslt.getObject(i); //get the value for whatever column the result has   
                     // hMap.put(rs.getMetaData().getColumnName(i), obj); 
@@ -121,9 +102,37 @@ public class JDBC {
         }finally{
             closeConnection();
         }
-    } 
+    }
+     
+    public String getNextId(String table) throws SQLException{                
+        openConnection();        
+        String column = table.toLowerCase()+"ID";
+        this.queryRslt = this.SQLstatement.executeQuery(String.format("SELECT MAX(`%s`) as %s FROM %s",table,column,column));
+        this.queryRslt.first();
+        String currId = (String)this.queryRslt.getObject(column);
+        int id = Integer.parseInt(currId.replaceAll("\\D+",""));
+        return String.format("%s%05d",table.substring(0,1).toUpperCase(),id+1);
+    }
 
     // // other method
+    // public HashMap<String,Object> readLast(String table){     
+    //     openConnection();
+    //     HashMap<String,Object> hMap = new HashMap<String,Object>();        
+    //     try{  
+    //         this.queryRslt = this.SQLstatement.executeQuery(String.format("SELECT * FROM %s ORDER BY %sID DESC LIMIT 1",table,table.toLowerCase()));        
+    //         this.queryRslt.first();                                   
+    //         for (int i=1;i<=queryRslt.getMetaData().getColumnCount();i++) { 
+    //             Object obj=queryRslt.getObject(i); //get the value for whatever column the result has                   
+    //             hMap.put(queryRslt.getMetaData().getColumnName(i), obj);
+    //         }                            
+    //         return hMap;
+    //     }catch (Exception e) { 
+    //         System.out.println("A database error occured: " + e.getMessage());
+    //         return null;
+    //     }finally{
+    //         closeConnection();                        
+    //     }        
+    // }           
     // public String getNextId(String table, char... chars){        
     //     HashMap<String,Object> lastBuyer = readLast(table);            
     //     Object buyerId = lastBuyer.get("buyerID");
@@ -143,7 +152,7 @@ public class JDBC {
     //     nextId += String.format("%05d", id+1);
         
     //     return nextId.toUpperCase();
-    // }
+    // }    
     
     public static void closeConnection() {
         if (JDBC.dbLink != null) {

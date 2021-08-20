@@ -57,7 +57,7 @@ public class BuyerOrderHistory implements Initializable {
         tableView.setItems(observableList);
 
         //to assign which property/attribute of the class to the table column
-        colOrderId.setCellValueFactory(new PropertyValueFactory<Order,Object>("id"));
+        colOrderId.setCellValueFactory(new PropertyValueFactory<Order,Object>("orderID"));
         colDate.setCellValueFactory(new PropertyValueFactory<Order,Object>("dateCreated"));
         colStatus.setCellValueFactory(new PropertyValueFactory<Order,Object>("status"));
         colAction.setCellValueFactory(param -> new ReadOnlyObjectWrapper<>(param.getValue()));        
