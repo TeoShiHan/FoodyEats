@@ -3,42 +3,42 @@ package Classes;
 import java.time.LocalDate;
 import java.util.HashMap;
 
-import javax.swing.text.DefaultStyledDocument.ElementSpec;
-
-import Cache.DataHolder;
+import Cache.*;
  
 public class Account {    
     private static JDBC db = new JDBC();
     private static DataHolder data = DataHolder.getInstance();
 
-    protected String id,username,password,email,mobileNo,accType;
+    protected String accountID,username,password,name,email,mobileNo,accType;
     private LocalDate regDate;    
 
     public Account(){
-        this("","","","","","");
+        this("","","","","","","");
     }
-    public Account(String id, String username, String password, String email, String mobileNo, String accType) {
-        this.id = id;
+    public Account(String accountID, String username, String password, String name, String email, String mobileNo, String accType) {
+        this.accountID = accountID;
         this.username = username;
         this.password = password;
+        this.name = name;
         this.email = email;
         this.mobileNo = mobileNo;    
         this.accType = accType;
     } 
-    public Account(Object id, Object username, Object password, Object email, Object mobileNo, Object accType) {
-        this.id = (String)id;
+    public Account(Object accountID, Object username, Object password, Object name, Object email, Object mobileNo, Object accType) {
+        this.accountID = (String)accountID;
         this.username = (String)username;
         this.password = (String)password;
+        this.name = (String)name;
         this.email = (String)email;
         this.mobileNo = (String)mobileNo;    
         this.accType = (String)accType;
     }    
 
-    public String getId() {
-        return id;
+    public String getAccountID() {
+        return accountID;
     }
-    public void setId(String id) {
-        this.id = id;
+    public void setAccountID(String accountID) {
+        this.accountID = accountID;
     }
 
     public String getUsername() {
@@ -53,8 +53,14 @@ public class Account {
     }
     public void setPassword(String password) {
         this.password = password;
-    }
+    }    
 
+    public String getName() {
+        return name;
+    }
+    public void setName(String name) {
+        this.name = name;
+    }
     public String getEmail() {
         return email;
     }
@@ -87,70 +93,39 @@ public class Account {
 
     }
 
-    public static boolean login(String username, String password){        
+    public static boolean login(String username, String password){                
         HashMap<String,Object> acc = db.readOne(String.format("SELECT * FROM Account WHERE username='%s' AND password='%s' LIMIT 1",username,password));
         if(acc==null){
             return false;
-        }else{                        
-            data.addObjectHolder("accType", acc.get("accType"));
-            HashMap<String,Object> childAcc = db.readOne(String.format("SELECT * FROM %s WHERE accountID='%s'",acc.get("accType"),acc.get("accountID")));            
-            if(acc.get("accType").equals("Buyer")){                
+        }else{
+            data.addObjectHolder("accountType", acc.get("type"));
+            HashMap<String,Object> childAcc = db.readOne(String.format("SELECT * FROM %s WHERE accountID='%s'",acc.get("type"),acc.get("accountID")));            
+            if(acc.get("type").equals("Buyer")){                
                 Buyer buyer = new Buyer(
-                    acc.get("accountID"),acc.get("username"),acc.get("password"),acc.get("email"),
-                    acc.get("mobileNo"),acc.get("accType"),childAcc.get("buyerID"),childAcc.get("address"),
-                    childAcc.get("accountID"),childAcc.get("cartID")
-                );
+                    acc.get("accountID"),acc.get("username"),acc.get("password"),acc.get("name"),
+                    acc.get("email"),acc.get("mobileNo"),acc.get("type"),childAcc.get("buyerID"),
+                    childAcc.get("address"),childAcc.get("cartID")
+                );                
                 data.setBuyer(buyer);                                
-            }else if(acc.get("accType").equals("Rider")){
+            }else if(acc.get("type").equals("Rider")){
                 Rider rider = new Rider(
-                    acc.get("accountID"),acc.get("username"),acc.get("password"),acc.get("email"),
-                    acc.get("mobileNo"),acc.get("accType"),childAcc.get("buyerID"),childAcc.get("address"),
-                    childAcc.get("accountID"),childAcc.get("cartID")
+                    acc.get("accountID"),acc.get("username"),acc.get("password"),acc.get("name"),
+                    acc.get("email"),acc.get("mobileNo"),acc.get("type"),childAcc.get("riderID"),
+                    childAcc.get("vehicleID")
                 );                      
                 data.setRider(rider);
-            }else if(acc.get("accType").equals("Seller")){                
+            }else if(acc.get("type").equals("Seller")){  
+                Seller seller = new Seller(
+                    acc.get("accountID"),acc.get("username"),acc.get("password"),acc.get("name"),
+                    acc.get("email"),acc.get("mobileNo"),acc.get("type"),childAcc.get("sellerID"),
+                    childAcc.get("address"),childAcc.get("NRIC"),childAcc.get("licenseNumber"),
+                    childAcc.get("bankAcc"),childAcc.get("shopID")
+                );                      
+                data.setSeller(seller);              
                 // data.setBuyer(new Buyer(...));                
             }
             return true;
-        }
-        // if(db.getFirstString("accountID")!=null){
-        //     String accId = db.getFirstString("accountID");
-        //     String username = db.getFirstString("userName");
-        //     String password = db.getFirstString("password");
-        //     String email = db.getFirstString("email");
-        //     String mobileNo = db.getFirstString("mobileNo");
-        //     int accType = db.getFirstInt("accType");            
-        //     data.setAccount(new Account(accId,username,password,email,mobileNo,accType));            
-        //     if(accType==0){
-        //         db = new JDBC(String.format("SELECT * FROM Buyer WHERE accountID='%s'",accId));
-        //         String id = db.getFirstString("buyerId");
-        //         String address = db.getFirstString("address");
-        //         String cartId = db.getFirstString("cartID");
-        //         data.setBuyer(new Buyer(id,address,accId,cartId));
-        //     }else if(accType==1){
-        //         db = new JDBC(String.format("SELECT * FROM Seller WHERE accountID='%s'",accId));
-        //         String id = db.getFirstString("sellerId");
-        //         String address = db.getFirstString("address");
-        //         String state = db.getFirstString("state");
-        //         String nric = db.getFirstString("NRIC");
-        //         String licenseNo = db.getFirstString("licenseNumber");
-        //         String bankAcc = db.getFirstString("bankAcc");                
-        //         String shopId = db.getFirstString("shopID");                
-        //         data.setSeller(new Seller(id,address,accId,state,nric,licenseNo,bankAcc,shopId));
-        //     }else if(accType==2){
-        //         db = new JDBC(String.format("SELECT * FROM Rider WHERE accountID='%s'",accId));
-        //         String id = db.getFirstString("riderID");
-        //         String name = db.getFirstString("riderName");
-        //         String vechId = db.getFirstString("vechicleID");
-        //         data.setRider(new Rider(id,name,accId,vechId));
-        //     }
-
-        //     JDBC.closeConnection();
-        //     return true;            
-        // }else{            
-        //     JDBC.closeConnection();
-        //     return false;
-        // }        
+        }         
     }    
 
     public void loadUser(){

@@ -1,35 +1,35 @@
 package Classes;
 
 public class Admin {
-    private String id;
+    private String adminID;
     private String name;
     private String NRIC;
     private String companyBranch;
-    private String accountId;
+    private String accountID;
 
     public Admin(){}
 
-    public Admin(String id,String name,String NRIC,String companyBranch,String accountId){
-        this.id = id;
+    public Admin(String adminID,String name,String NRIC,String companyBranch,String accountID){
+        this.adminID = adminID;
         this.name = name;
         this.NRIC = NRIC;
         this.companyBranch = companyBranch;
-        this.accountId = accountId;
+        this.accountID = accountID;
     }
 
-    public Admin(Object id,Object name,Object NRIC,Object companyBranch,Object accountId){
-        this.id = (String)id;
+    public Admin(Object adminID,Object name,Object NRIC,Object companyBranch,Object accountID){
+        this.adminID = (String)adminID;
         this.name = (String)name;
         this.NRIC = (String)NRIC;
         this.companyBranch = (String)companyBranch;
-        this.accountId = (String)accountId;
+        this.accountID = (String)accountID;
     }
 
-    public String getId() {
-        return id;
+    public String getadminID() {
+        return adminID;
     }
-    public void setId(String id) {
-        this.id = id;
+    public void setadminID(String adminID) {
+        this.adminID = adminID;
     }
     public String getName() {
         return name;
@@ -49,11 +49,11 @@ public class Admin {
     public void setCompanyBranch(String companyBranch) {
         this.companyBranch = companyBranch;
     }
-    public String getAccountId() {
-        return accountId;
+    public String getaccountID() {
+        return accountID;
     }
-    public void setAccountId(String accountId) {
-        this.accountId = accountId;
+    public void setaccountID(String accountID) {
+        this.accountID = accountID;
     }
 
     public void addRider(){
@@ -62,7 +62,5 @@ public class Admin {
 
     public void register(){
         
-    }
-
-    
+    }    
 }

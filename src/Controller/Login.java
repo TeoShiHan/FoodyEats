@@ -9,10 +9,7 @@ import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
 import java.lang.reflect.Parameter;
 import java.text.Format.Field;
-
-import javax.swing.JOptionPane;
-
-import com.mysql.cj.protocol.x.SyncFlushDeflaterOutputStream;
+import java.util.HashMap;
 
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
@@ -44,6 +41,7 @@ import javafx.util.Duration;
 import javafx.animation.PauseTransition;
 
 public class Login {    
+    private JDBC db = new JDBC();
     private GUI gui = GUI.getInstance();
     private DataHolder data = DataHolder.getInstance();
 
@@ -53,28 +51,41 @@ public class Login {
     @FXML private Label linkToRegister;
 
     @FXML
-    void actionLogin(ActionEvent event) throws IOException, NoSuchMethodException, SecurityException, IllegalAccessException, IllegalArgumentException, InvocationTargetException{
-        // gui.toNextScene("View/BuyerHome.fxml");        
-        if(Account.login(inputUsername.getText().strip(), inputPassword.getText().strip())){
-            gui.toNextScene(String.format("View/%sHome.fxml",data.getObjectHolder("accType")));    
-        }else{
-            customPopupWarning("Warning","Invalid credentials!");
-        }
-        // if(inputUsername.getText().strip().equals("khoo") && inputPassword.getText().strip().equals("ce")){            
-        //     // BuyerHome controller = new BuyerHome();
-        //     // controller.receiveData(this.p);            
-        //     // System.out.println(paneLogin.getChildren());                                                                                
-            
-        //     gui.toNextScene("View/BuyerHome.fxml");
-
-        //     // toNextScene("View/BuyerHome.fxml");
-        //     // sendData(event);                        
-        // }else{          
-        //     customRealPopup(event);
-        //     // customPopupMessage();
-        //     // customPopupWarning("Warning","Invalid credentials!");
-        //     // System.out.println("Invalid credentials!");
-        // }         
+    void actionLogin(ActionEvent event) throws IOException, NoSuchMethodException, SecurityException, IllegalAccessException, IllegalArgumentException, InvocationTargetException{        
+        HashMap<String,Object> acc = db.readOne(String.format("SELECT * FROM Account WHERE username='%s' AND password='%s' LIMIT 1",inputUsername.getText().strip(),inputPassword.getText().strip()));
+        if(acc!=null){                         
+            HashMap<String,Object> childAcc = db.readOne(String.format("SELECT * FROM %s WHERE accountID='%s'",acc.get("type"),acc.get("accountID")));            
+            if(acc.get("type").equals("Buyer")){                
+                Buyer buyer = new Buyer(
+                    acc.get("accountID"),acc.get("username"),acc.get("password"),acc.get("name"),
+                    acc.get("email"),acc.get("mobileNo"),acc.get("type"),childAcc.get("buyerID"),
+                    childAcc.get("address"),childAcc.get("cartID")
+                );                
+                data.setBuyer(buyer);                                
+            }else if(acc.get("type").equals("Rider")){
+                Rider rider = new Rider(
+                    acc.get("accountID"),acc.get("username"),acc.get("password"),acc.get("name"),
+                    acc.get("email"),acc.get("mobileNo"),acc.get("type"),childAcc.get("riderID"),
+                    childAcc.get("vehicleID")
+                );                      
+                data.setRider(rider);
+            }else if(acc.get("type").equals("Seller")){  
+                Seller seller = new Seller(
+                    acc.get("accountID"),acc.get("username"),acc.get("password"),acc.get("name"),
+                    acc.get("email"),acc.get("mobileNo"),acc.get("type"),childAcc.get("sellerID"),
+                    childAcc.get("address"),childAcc.get("NRIC"),childAcc.get("licenseNumber"),
+                    childAcc.get("bankAcc"),childAcc.get("shopID")
+                );                      
+                data.setSeller(seller);              
+                // data.setBuyer(new Buyer(...));                
+            }
+            gui.toNextScene(String.format("View/%sHome.fxml",acc.get("type")));    
+        }   
+        // if(Account.login(inputUsername.getText().strip(), inputPassword.getText().strip())){            
+        //     gui.toNextScene(String.format("View/%sHome.fxml",data.getObjectHolder("type")));    
+        // }else{
+        //     customPopupWarning("Warning","Invalid credentials!");
+        // }      
     }
 
     @FXML
@@ -180,68 +191,7 @@ public class Login {
         // PauseTransition delay = new PauseTransition(Duration.seconds(5));
         // delay.setOnFinished(e -> myDialog.close());
         // delay.play();
-    }    
-
-    // void sendData(ActionEvent event) throws IOException{
-    //     FXMLLoader loader = new FXMLLoader(getClass().getResource("../View/BuyerHome.fxml"));
-    //     root = loader.load();
-
-    //     BuyerHome controllerBuyerHome = (BuyerHome)loader.getController();
-    //     controllerBuyerHome.receiveData(this.p);
-
-    //     stage = (Stage)((Node)event.getSource()).getScene().getWindow();
-    //     scene = new Scene(root);         
-    //     stage.setScene(scene);        
-    //     stage.show();
-    // }    
-
-    // public void toNextScene(String ResourcePath) throws NoSuchMethodException, SecurityException, IOException, IllegalAccessException, IllegalArgumentException, InvocationTargetException{
-    //     stage = (Stage) paneLogin.getScene().getWindow();
-        
-    //     FXMLLoader loader = new FXMLLoader();
-    //     // loader.setLocation(getClass().getResource("/View/BuyerOrder.fxml"));  //this is similar to next line, this line should add '/' infront of the path
-    //     // loader.setLocation(getClass().getClassLoader().getResource("View/BuyerOrder.fxml"));
-    //     loader.setLocation(getClass().getClassLoader().getResource(ResourcePath));
-    //     root = loader.load();                        
-            
-    //     // passDataToNextScene(loader);        
-
-    //     // stage.setUserData(this.p);
-    //     stage.setScene(new Scene(root));   
-    // }
-
-    // public void passDataToNextScene(FXMLLoader loader) throws NoSuchMethodException, SecurityException, IllegalAccessException, IllegalArgumentException, InvocationTargetException{        
-    //     // Original way to get the controller of next scene
-    //     // BuyerHome ctrl = loader.getController();          
-    //     // System.out.println("crtl: "+ctrl);        
-
-    //     // More flexible way to get the controller of next scene (this could only pass 1 object as argument)
-    //     Class<?> classType = loader.getController().getClass();
-    //     Object controller = classType.cast(loader.getController());        
-    //     System.out.println("controller: "+controller.getClass().getMethods());
-    //     Method method = controller.getClass().getDeclaredMethod("initData",Object.class);
-    //     System.out.println(method);
-    //     System.out.println(method.getName());
-    //     method.invoke(controller, this.p);
-    //     // If want to invoke more than one method
-    //     // for(Method mtd : controller.getClass().getMethods()){
-    //     //     System.out.println(mtd.getName());
-    //     // }         
-
-    //     // // This is to detect passing many different Object as the arguments
-    //     // Class<?> classType = loader.getController().getClass();
-    //     // Object controller = classType.cast(loader.getController());    
-    //     // // System.out.println("controller: "+controller.getClass().getMethods());
-    //     // Method method = controller.getClass().getDeclaredMethod("initData",new Class[]{Object[].class});
-    //     // System.out.println(method);
-    //     // System.out.println(method.getName());
-    //     // Object[] arguments = {this.p,this.p};
-    //     // method.invoke(controller, arguments);
-    //     // // If want to invoke more than one method
-    //     // // for(Method mtd : controller.getClass().getMethods()){
-    //     // //     System.out.println(mtd.getName());
-    //     // // }         
-    // }
+    }
 
     // private <T> T castObject(Class<T> clazz, Object object) {
     //     return (T) object;

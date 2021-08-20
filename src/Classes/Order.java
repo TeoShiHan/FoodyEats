@@ -7,15 +7,11 @@ import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.HashMap;
 
-import javax.swing.text.DateFormatter;
-
-import javafx.scene.control.Button;
-
 public class Order {
     private JDBC db = new JDBC();
     private DataHolder data = DataHolder.getInstance();
 
-    private String id,status,buyerId,riderId,shopId,paymentId,reviewId;
+    private String orderID,status,buyerID,riderID,shopID,paymentID,reviewID;
     private LocalDate dateCreated;
     private LocalTime timeCreated;
     private Review review;
@@ -26,43 +22,43 @@ public class Order {
         this("","",LocalDate.now(),LocalTime.now(),"","","","","");
     }
     
-    public Order(String id, String status, LocalDate dateCreated, LocalTime timeCreated, String buyerId, String riderId,
-                 String shopId, String paymentId, String reviewId) {
-        this.id = id;
+    public Order(String orderID, String status, LocalDate dateCreated, LocalTime timeCreated, String buyerID, String riderID,
+                 String shopID, String paymentID, String reviewID) {
+        this.orderID = orderID;
         this.status = status;
         this.dateCreated = dateCreated;  
         this.timeCreated = timeCreated;  
-        this.buyerId = buyerId;
-        this.riderId = riderId;
-        this.shopId = shopId;
-        this.paymentId = paymentId;
-        this.reviewId = reviewId;              
+        this.buyerID = buyerID;
+        this.riderID = riderID;
+        this.shopID = shopID;
+        this.paymentID = paymentID;
+        this.reviewID = reviewID;              
         // this.button.setOnAction(e->{
-        //     System.out.println("id:"+this.id+"; status:"+this.status);
+        //     System.out.println("ID:"+this.ID+"; status:"+this.status);
         // });
     }    
 
-    public Order(Object id, Object status, Object dateCreated,  Object timeCreated, Object buyerId, Object riderId, 
-                Object shopId, Object paymentId, Object reviewId) {
-        this.id = (String)id;
+    public Order(Object orderID, Object status, Object dateCreated,  Object timeCreated, Object buyerID, Object riderID, 
+                Object shopID, Object paymentID, Object reviewID) {
+        this.orderID = (String)orderID;
         this.status = (String)status;
         this.dateCreated = LocalDate.parse((String)dateCreated);  
         this.timeCreated = LocalTime.parse((String)timeCreated,DateTimeFormatter.ofPattern("HH:mm:ss"));
-        this.buyerId = (String)buyerId;
-        this.riderId = (String)riderId;
-        this.shopId = (String)shopId;
-        this.paymentId = (String)paymentId;
-        this.reviewId = (String)reviewId;
+        this.buyerID = (String)buyerID;
+        this.riderID = (String)riderID;
+        this.shopID = (String)shopID;
+        this.paymentID = (String)paymentID;
+        this.reviewID = (String)reviewID;
         // this.button.setOnAction(e->{
-        //     System.out.println("id:"+this.id+"; status:"+this.status);
+        //     System.out.println("ID:"+this.ID+"; status:"+this.status);
         // });
     }
 
-    public String getId() {
-        return id;
+    public String getOrderID() {
+        return orderID;
     }
-    public void setId(String id) {
-        this.id = id;
+    public void setOrderID(String orderID) {
+        this.orderID = orderID;
     }    
 
     public String getStatus() {
@@ -86,39 +82,39 @@ public class Order {
         this.timeCreated = timeCreated;
     }
 
-    public String getBuyerId() {
-        return buyerId;
+    public String getBuyerID() {
+        return buyerID;
     }
-    public void setBuyerId(String buyerId) {
-        this.buyerId = buyerId;
-    }
-
-    public String getRiderId() {
-        return riderId;
-    }
-    public void setRiderId(String riderId) {
-        this.riderId = riderId;
+    public void setBuyerID(String buyerID) {
+        this.buyerID = buyerID;
     }
 
-    public String getShopId() {
-        return shopId;
+    public String getRiderID() {
+        return riderID;
     }
-    public void setShopId(String shopId) {
-        this.shopId = shopId;
-    }
-
-    public String getPaymentId() {
-        return paymentId;
-    }
-    public void setPaymentId(String paymentId) {
-        this.paymentId = paymentId;
+    public void setRiderID(String riderID) {
+        this.riderID = riderID;
     }
 
-    public String getReviewId() {
-        return reviewId;
+    public String getShopID() {
+        return shopID;
     }
-    public void setReviewId(String reviewId) {
-        this.reviewId = reviewId;
+    public void setShopID(String shopID) {
+        this.shopID = shopID;
+    }
+
+    public String getPaymentID() {
+        return paymentID;
+    }
+    public void setPaymentID(String paymentID) {
+        this.paymentID = paymentID;
+    }
+
+    public String getReviewID() {
+        return reviewID;
+    }
+    public void setReviewID(String reviewID) {
+        this.reviewID = reviewID;
     }    
     
     public Review getReview() {
@@ -136,7 +132,7 @@ public class Order {
     }
     public void loadOrderItems() {
         if(orderItems.isEmpty()){
-            ArrayList<HashMap<String,Object>> ois = db.readAll(String.format("SELECT * FROM `OrderItem` WHERE orderID='%s'",id));
+            ArrayList<HashMap<String,Object>> ois = db.readAll(String.format("SELECT * FROM `OrderItem` WHERE orderID='%s'",orderID));
             for(HashMap<String,Object> oi : ois){            
                 OrderItem o = new OrderItem(oi.get("orderID"),oi.get("foodID"),oi.get("quantity"));
                 o.loadFood();
