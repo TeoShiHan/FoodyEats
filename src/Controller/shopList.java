@@ -1,9 +1,10 @@
 package Controller;
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
 import java.util.ResourceBundle;
-
 import Classes.JDBC;
+import Classes.Shop;
 import javafx.fxml.Initializable;
 import java.net.URL;
 import java.util.ResourceBundle;
@@ -19,13 +20,17 @@ public class shopList implements Initializable {
     @FXML private ScrollPane shopScroll;
     @FXML private GridPane shopListGrid;
 
-    //  Variables
-    JDBC db = new JDBC();
-    ArrayList<HashMap<String,Object>> ShopTable = new ArrayList<HashMap<String,Object>>();
+    //  do database stuff
+    private JDBC db = new JDBC();
+    // Locally store the records in hashmap
+    private ArrayList<HashMap<String,Object>> ShopTable = new ArrayList<HashMap<String,Object>>();
+    //  List to store 'shop' object
+    private List<Shop> ShopObjectCollection = new ArrayList<>();
 
     @Override
     public void initialize(URL location, ResourceBundle resources) {
-        // TODO Auto-generated method stub
+        
+        // STEP 1: 
         
     }
 
