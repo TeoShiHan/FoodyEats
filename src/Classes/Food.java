@@ -1,14 +1,14 @@
 package Classes;
 
 public class Food {
-    private String id,name,desc,imgPath,category,shopID;
+    private String foodID,name,desc,imgPath,category,shopID;
     private double price;        
 
     public Food(){
         this("","","","",0.0,"","");
     }     
-    public Food(String id, String name, String desc, String imgPath, double price, String category, String shopID){
-        this.id = id;
+    public Food(String foodID, String name, String desc, String imgPath, double price, String category, String shopID){
+        this.foodID = foodID;
         this.name = name;
         this.desc = desc;
         this.imgPath = imgPath;
@@ -16,8 +16,8 @@ public class Food {
         this.category = category;
         this.shopID = shopID;        
     }
-    public Food(Object id, Object name, Object desc, Object imgPath, Object price, Object category, Object shopID){
-        this.id = (String)id;
+    public Food(Object foodID, Object name, Object desc, Object imgPath, Object price, Object category, Object shopID){
+        this.foodID = (String)foodID;
         this.name = (String)name;
         this.desc = (String)desc;
         this.imgPath = (String)imgPath;
@@ -27,11 +27,11 @@ public class Food {
     }    
 
     //  GETTER AND SETTER
-    public String getFoodID() {
+    public String getFoodId() {
         return foodID;
     }
 
-    public void setFoodID(String foodID) {
+    public void setId(String foodID) {
         this.foodID = foodID;
     }
 
