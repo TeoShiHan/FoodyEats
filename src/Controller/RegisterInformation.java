@@ -1,6 +1,7 @@
 package Controller;
 import Cache.*;
 import Classes.*;
+import Classes.Shop;
 import Controller.Register.*;
 
 import java.io.IOException;
