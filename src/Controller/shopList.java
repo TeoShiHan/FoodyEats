@@ -6,39 +6,139 @@ import java.util.ResourceBundle;
 import Classes.JDBC;
 import Classes.Shop;
 import javafx.fxml.Initializable;
+import javafx.geometry.Insets;
+
+import java.io.IOException;
 import java.net.URL;
-import java.util.ResourceBundle;
 import javafx.fxml.FXML;
+import javafx.fxml.FXMLLoader;
 import javafx.scene.control.ScrollPane;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.GridPane;
+import javafx.scene.layout.HBox;
+import javafx.scene.layout.Region;
 
 public class shopList implements Initializable {
     
-    //  FXML elements
+    //  FXML ITEMS
     @FXML private AnchorPane shopList;
     @FXML private ScrollPane shopScroll;
     @FXML private GridPane shopListGrid;
 
-    //  do database stuff
+    //  VARIABLES FOR PROGRAM
     private JDBC db = new JDBC();
-    // Locally store the records in hashmap
-    private ArrayList<HashMap<String,Object>> ShopTable = new ArrayList<HashMap<String,Object>>();
-    //  List to store 'shop' object
-    private List<Shop> ShopObjectCollection = new ArrayList<>();
+    private String query = "SELECT shopID, status, shopName, deliveryFee, imgPath FROM Shop";
+    private ArrayList<HashMap<String,Object>> shopTable = db.readAll(query);
+    private List<Shop> shopObjectCollection = new ArrayList<>();
 
+    //  FUNCTIONS
     @Override
     public void initialize(URL location, ResourceBundle resources) {
         
-        // STEP 1: 
+        createShopObjectCollection();
+
+        System.out.println("outa the create shop object function");
+
+        int gridCol = 0;
+        int gridRow = 1;
+
+        try{
         
+        System.out.println("go in try clause");
+
+            for(int i = 0 ; i < shopObjectCollection.size() ; i++){
+                
+                FXMLLoader fxmlLoader = new FXMLLoader();
+
+                System.out.println("successfully created the fxml loader");
+
+                fxmlLoader.setLocation(getClass().getResource("../View/shopItem.fxml"));
+
+                System.out.println("successfully set the location");
+
+                HBox shopItem = fxmlLoader.load();
+
+                System.out.println("successfully load the hbox");
+
+                shopItemController shopItemController = fxmlLoader.getController();
+
+                System.out.println("Got the shop ItemController");
+
+                System.out.println(shopObjectCollection.get(i).getName());
+                System.out.println(shopObjectCollection.get(i).getImgPath());
+                System.out.println(shopObjectCollection.get(i).getDeliveryFee());
+
+                System.out.println("finish output try");
+
+
+                shopItemController.setData(shopObjectCollection.get(i));
+
+                System.out.println("successfully set the data");
+
+
+                if (gridCol == 2){
+                    gridCol = 0;
+                    gridRow++;
+                }
+
+                 shopListGrid.add(shopItem, gridCol++, gridRow);
+
+                 System.out.println("successfully added the grid");
+
+
+                 //set grid width
+                 shopListGrid.setMinWidth(Region.USE_COMPUTED_SIZE);
+                 shopListGrid.setPrefWidth(Region.USE_COMPUTED_SIZE);
+                 shopListGrid.setMaxWidth(Region.USE_PREF_SIZE);
+ 
+                 //set grid height
+                 shopListGrid.setMinHeight(Region.USE_COMPUTED_SIZE);
+                 shopListGrid.setPrefHeight(Region.USE_COMPUTED_SIZE);
+                 shopListGrid.setMaxHeight(Region.USE_PREF_SIZE);
+ 
+                 GridPane.setMargin(shopItem, new Insets(20));
+            }
+            
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
     }
+    public void createShopObjectCollection(){
+        for(int i = 0; i < shopTable.size(); i++){
 
-    //  Store "Shop" instances
+            System.out.println("Runned");
 
+            //  GET DATA FROM TABE
+            String shopID      = (String)  shopTable.get(i).get("shopID");
+            System.out.println(shopID);
+            String shopName    = (String)  shopTable.get(i).get("shopName");
+            Double deliveryFee = (Double)  shopTable.get(i).get("deliveryFee");
+            String imgPath     = (String)  shopTable.get(i).get("imgPath");
+            System.out.println(imgPath);
+
+            System.out.println("pass through getting value assignatoin");
+
+
+            //  CREATE SHOP INSTANCE
+            Shop shopInstance = new Shop();
+
+            System.out.println("successfully create shop instance");
+
+
+            //  ASSIGN NEEDED VALUE INTO SHOP INSTANCE
+            shopInstance.setShopID(shopID);
+            shopInstance.setName(shopName);
+            shopInstance.setDeliveryFee(deliveryFee);
+            shopInstance.setImgPath(imgPath);
+
+            //  ADD THE SHOP INSTANCE INTO THE LIST
+            shopObjectCollection.add(shopInstance);
+            System.out.println(shopObjectCollection);
+        }
+    }
 }
 
-class shopListDriver{
+/* class shopListDriver{
     public static void main(String[] args) {
         ArrayList<HashMap<String,Object>> ShopTable = new ArrayList<HashMap<String,Object>>();
         JDBC test = new JDBC();
@@ -56,5 +156,5 @@ class shopListDriver{
                 System.out.println(ShopTable.get(i).get("status"));
         }
     }
-}
+} */
 

@@ -22,7 +22,7 @@ public class shopItemController {
 
     public void setData(Shop shop){
         Image shopImage = new Image(getClass().getResourceAsStream(shop.getImgPath()));
-        Image deliveryTruckIcon = new Image(getClass().getResourceAsStream("../Image/deliveryIcon.png"));
+        Image deliveryTruckIcon = new Image(getClass().getResourceAsStream("../Images/deliveryIcon.png"));
         deliveryIcon.setImage(deliveryTruckIcon);
         shopImg.setImage(shopImage);
         shopName.setText(shop.getName());

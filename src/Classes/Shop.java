@@ -14,6 +14,10 @@ public class Shop {
     private ArrayList<Order> orders;
     
      //  CONSTRUCTORS FOR DATABASE OBJECT
+     public Shop(){
+         this(null,null,null,null,null,false,null,null);
+     }
+
     public Shop(
         Object shopID, 
         Object address, 
@@ -158,4 +162,10 @@ public class Shop {
     public void addFood(){
 
     }    
+}
+
+class tester{
+    public static void main(String[] args) {
+        Shop test = new Shop();
+    }
 }
