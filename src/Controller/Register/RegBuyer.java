@@ -1,5 +1,6 @@
 package Controller.Register;
 import Cache.*;
+import Classes.*;
 
 import java.time.LocalDate;
 import java.util.HashMap;
@@ -46,11 +47,12 @@ public class RegBuyer {
         inputEmail.getText().isEmpty() || inputMobileNo.getText().isEmpty());
     }
 
-    public void getInfo(){        
-        data.addObjectHolder("accountName", inputName.getText());
-        data.addObjectHolder("accountEmail", inputEmail.getText());
-        data.addObjectHolder("accountMobileNo", inputMobileNo.getText());
-        // data.addObjectHolder("accountDateCreated", LocalDate.now());
-        data.addObjectHolder("buyerAddress", inputAddress.getText());
+    public void getInfo(){
+        data.setAccount(new Buyer());
+        data.getBuyer().setAccType("Buyer");
+        data.getBuyer().setName(inputName.getText());
+        data.getBuyer().setEmail(inputEmail.getText());
+        data.getBuyer().setMobileNo(inputMobileNo.getText());
+        data.getBuyer().setAddress(inputAddress.getText());
     }
 }

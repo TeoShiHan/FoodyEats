@@ -1,6 +1,10 @@
 package Controller;
+import java.io.IOException;
+
 import Cache.*;
 import Classes.Account;
+import Classes.Buyer;
+import Classes.Seller;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.control.Button;
@@ -14,14 +18,34 @@ public class RegisterAccount {
     @FXML private Button btnRegister;
 
     @FXML
-    void actionRegister(ActionEvent event) {
+    void actionRegister(ActionEvent event) throws IOException {
         String uname = inputUsername.getText();
         String pwd = inputPassword.getText();
         String confirmPwd = inputConfirmPassword.getText();
         if(!(uname.isEmpty() || pwd.isEmpty() || confirmPwd.isEmpty())){
-            if(pwd.equals(confirmPwd)){                
-                Account.register();
+            if(pwd.equals(confirmPwd)){                                
                 System.out.println(data.getWholeObjectHolder());
+                String className = data.getAccount().getClass().getName();
+                System.out.println(className.substring(className.indexOf(".")+1));
+                switch(className.substring(className.indexOf(".")+1)){
+                    case "Buyer":
+                        data.getBuyer().setUsername(uname);
+                        data.getBuyer().setPassword(pwd);
+                        data.getBuyer().register();
+                        break;           
+                    case "Rider":
+                        data.getRider().setUsername(uname);
+                        data.getRider().setPassword(pwd);
+                        data.getRider().register();
+                        break;           
+                    case "Seller":
+                        data.getSeller().setUsername(uname);
+                        data.getSeller().setPassword(pwd);
+                        data.getSeller().register();
+                        break;  
+                    default:
+
+                }
             }else{
                 // pop up window
             }
