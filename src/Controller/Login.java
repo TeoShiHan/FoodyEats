@@ -52,14 +52,20 @@ public class Login {
 
     @FXML
     void actionLogin(ActionEvent event) throws IOException, NoSuchMethodException, SecurityException, IllegalAccessException, IllegalArgumentException, InvocationTargetException{        
-        if(Account.login(inputUsername.getText().strip(), inputPassword.getText().strip())){            
-            gui.toNextScene(String.format("View/%sHome.fxml",data.getObjectHolder("accountType")));    
+        if(!(inputUsername.getText().isEmpty() || inputPassword.getText().isEmpty())){
+            if(Account.login(inputUsername.getText().strip(), inputPassword.getText().strip())){            
+                gui.toNextScene(String.format("View/%sHome.fxml",data.getObjectHolder("accountType")));    
+            }else{
+                // customPopupWarning("Warning","Invalid credentials!");
+                // customRealPopup(event);
+                // customPopupMessage();
+                // gui.popupWindow("title", "info");
+            }
+            System.out.println("yes");
         }else{
-            // customPopupWarning("Warning","Invalid credentials!");
-            // customRealPopup(event);
-            // customPopupMessage();
-            // gui.popupWindow("title", "info");
-        }  
+            System.out.println("no");
+            gui.informationPopup("Invalid Account", "Please try again");
+        }
         // HashMap<String,Object> acc = db.readOne(String.format("SELECT * FROM Account WHERE username='%s' AND password='%s' LIMIT 1",inputUsername.getText().strip(),inputPassword.getText().strip()));
         // if(acc!=null){                         
         //     HashMap<String,Object> childAcc = db.readOne(String.format("SELECT * FROM %s WHERE accountID='%s'",acc.get("type"),acc.get("accountID")));            
