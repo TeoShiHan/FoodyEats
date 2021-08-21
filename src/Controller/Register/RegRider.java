@@ -114,11 +114,11 @@ public class RegRider implements Initializable{
         this.dropdownVehicleType = dropdownVehicleType;
     }
 
-    public boolean isFilled(){                                    
+    public boolean isFilled(){                                                 
         return !(inputName.getText().isEmpty() || inputMobileNo.getText().isEmpty() || 
-                inputEmail.getText().isEmpty() || (!inputBrand.isDisabled() && 
-                inputBrand.getText().isEmpty() || inputModel.getText().isEmpty() ||
-                inputColor.getText().isEmpty() || inputPlateNo.getText().isEmpty()));
+                inputEmail.getText().isEmpty() || dropdownVehicleType.getSelectionModel().getSelectedItem()==null ||
+                (!inputBrand.isDisabled() && (inputBrand.getText().isEmpty() || inputModel.getText().isEmpty() ||
+                inputColor.getText().isEmpty() || inputPlateNo.getText().isEmpty())));
     }
 
     public void getInfo(){        

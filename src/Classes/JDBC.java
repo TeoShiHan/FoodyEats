@@ -107,13 +107,15 @@ public class JDBC {
     public String getNextId(String table) throws SQLException{                
         openConnection();        
         String column = table.toLowerCase()+"ID";
-        this.queryRslt = this.SQLstatement.executeQuery(String.format("SELECT MAX(`%s`) as %s FROM %s",table,column,column));
+        this.queryRslt = this.SQLstatement.executeQuery(String.format("SELECT MAX(`%s`) as %s FROM %s",column,column,table));
         this.queryRslt.first();
         String currId = (String)this.queryRslt.getObject(column);
         int id = Integer.parseInt(currId.replaceAll("\\D+",""));
+        closeConnection();
         return String.format("%s%05d",table.substring(0,1).toUpperCase(),id+1);
     }
 
+    //#region asdasdasd
     // // other method
     // public HashMap<String,Object> readLast(String table){     
     //     openConnection();
@@ -153,6 +155,7 @@ public class JDBC {
         
     //     return nextId.toUpperCase();
     // }    
+    // #endregion
     
     public static void closeConnection() {
         if (JDBC.dbLink != null) {

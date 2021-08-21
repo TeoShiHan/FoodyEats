@@ -83,7 +83,16 @@ public class BuyerOrderDetails implements Initializable {
         // HashMap<String,Object> account = db.readOne(String.format("SELECT * FROM `Account` WHERE accountID='%s'", (String)buyer.get("accountID")));
         // lblBuyerPhoneNo.setText((String)account.get("mobileNo"));
         // ObservableList<Map<String,Object>> observableList = FXCollections.observableArrayList();        
-        // ArrayList<HashMap<String,Object>> ois = db.readAll("SELECT * FROM `Order` AS o INNER JOIN `OrderItem` AS oi ON o.orderID = oi.orderID INNER JOIN `Buyer` as b ON o.buyerID = b.buyerID INNER JOIN `Shop` AS s ON o.shopID = s.shopID INNER JOIN `Payment` AS p ON o.paymentID = p.paymentID INNER JOIN `Food` AS f ON oi.foodID = f.foodID WHERE o.orderID = 'O00002'");
+        // ArrayList<HashMap<String,Object>> ois = 
+
+
+        // db.readAll("SELECT * FROM `Order` AS o INNER JOIN `OrderItem`
+        // AS oi ON o.orderID = oi.orderID INNER JOIN `Buyer` as b ON o.buyerID = b.buyerID INNER JOIN `Shop`
+        // AS s ON o.shopID = s.shopID INNER JOIN `Payment` AS p ON o.paymentID = p.paymentID INNER JOIN `Food` 
+        // AS f ON oi.foodID = f.foodID WHERE o.orderID = 'O00002'");
+
+        // SELECT O.orderID, A.name, A.mobileNo , B.address, O.dateCreated, O.timeCreated, F.foodName, F.price, OI.quantity, (F.price * OI.quantity) AS Total FROM Order O, OrderItems OI, Food F, Buyer B, Account A WHERE O.orderID=OI.orderID AND OI.foodID=f.foodID AND O.buyerID=B.buyerID B.accountID=A.accountID
+
         // int i = 1;
         // ArrayList<OrderItem> a =  new ArrayList<>();
         // for(HashMap<String,Object> oi : ois){            

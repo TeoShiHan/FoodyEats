@@ -52,40 +52,43 @@ public class Login {
 
     @FXML
     void actionLogin(ActionEvent event) throws IOException, NoSuchMethodException, SecurityException, IllegalAccessException, IllegalArgumentException, InvocationTargetException{        
-        HashMap<String,Object> acc = db.readOne(String.format("SELECT * FROM Account WHERE username='%s' AND password='%s' LIMIT 1",inputUsername.getText().strip(),inputPassword.getText().strip()));
-        if(acc!=null){                         
-            HashMap<String,Object> childAcc = db.readOne(String.format("SELECT * FROM %s WHERE accountID='%s'",acc.get("type"),acc.get("accountID")));            
-            if(acc.get("type").equals("Buyer")){                
-                Buyer buyer = new Buyer(
-                    acc.get("accountID"),acc.get("username"),acc.get("password"),acc.get("name"),
-                    acc.get("email"),acc.get("mobileNo"),acc.get("type"),childAcc.get("buyerID"),
-                    childAcc.get("address"),childAcc.get("cartID")
-                );                
-                data.setBuyer(buyer);                                
-            }else if(acc.get("type").equals("Rider")){
-                Rider rider = new Rider(
-                    acc.get("accountID"),acc.get("username"),acc.get("password"),acc.get("name"),
-                    acc.get("email"),acc.get("mobileNo"),acc.get("type"),childAcc.get("riderID"),
-                    childAcc.get("vehicleID")
-                );                      
-                data.setRider(rider);
-            }else if(acc.get("type").equals("Seller")){  
-                Seller seller = new Seller(
-                    acc.get("accountID"),acc.get("username"),acc.get("password"),acc.get("name"),
-                    acc.get("email"),acc.get("mobileNo"),acc.get("type"),childAcc.get("sellerID"),
-                    childAcc.get("address"),childAcc.get("NRIC"),childAcc.get("licenseNumber"),
-                    childAcc.get("bankAcc"),childAcc.get("shopID")
-                );                      
-                data.setSeller(seller);              
-                // data.setBuyer(new Buyer(...));                
-            }
-            gui.toNextScene(String.format("View/%sHome.fxml",acc.get("type")));    
-        }   
-        // if(Account.login(inputUsername.getText().strip(), inputPassword.getText().strip())){            
-        //     gui.toNextScene(String.format("View/%sHome.fxml",data.getObjectHolder("type")));    
-        // }else{
-        //     customPopupWarning("Warning","Invalid credentials!");
-        // }      
+        if(Account.login(inputUsername.getText().strip(), inputPassword.getText().strip())){            
+            gui.toNextScene(String.format("View/%sHome.fxml",data.getObjectHolder("accountType")));    
+        }else{
+            // customPopupWarning("Warning","Invalid credentials!");
+            // customRealPopup(event);
+            // customPopupMessage();
+            // gui.popupWindow("title", "info");
+        }  
+        // HashMap<String,Object> acc = db.readOne(String.format("SELECT * FROM Account WHERE username='%s' AND password='%s' LIMIT 1",inputUsername.getText().strip(),inputPassword.getText().strip()));
+        // if(acc!=null){                         
+        //     HashMap<String,Object> childAcc = db.readOne(String.format("SELECT * FROM %s WHERE accountID='%s'",acc.get("type"),acc.get("accountID")));            
+        //     if(acc.get("type").equals("Buyer")){                
+        //         Buyer buyer = new Buyer(
+        //             acc.get("accountID"),acc.get("username"),acc.get("password"),acc.get("name"),
+        //             acc.get("email"),acc.get("mobileNo"),acc.get("type"),childAcc.get("buyerID"),
+        //             childAcc.get("address"),childAcc.get("cartID")
+        //         );                
+        //         data.setBuyer(buyer);                                
+        //     }else if(acc.get("type").equals("Rider")){
+        //         Rider rider = new Rider(
+        //             acc.get("accountID"),acc.get("username"),acc.get("password"),acc.get("name"),
+        //             acc.get("email"),acc.get("mobileNo"),acc.get("type"),childAcc.get("riderID"),
+        //             childAcc.get("vehicleID")
+        //         );                      
+        //         data.setRider(rider);
+        //     }else if(acc.get("type").equals("Seller")){  
+        //         Seller seller = new Seller(
+        //             acc.get("accountID"),acc.get("username"),acc.get("password"),acc.get("name"),
+        //             acc.get("email"),acc.get("mobileNo"),acc.get("type"),childAcc.get("sellerID"),
+        //             childAcc.get("address"),childAcc.get("NRIC"),childAcc.get("licenseNumber"),
+        //             childAcc.get("bankAcc"),childAcc.get("shopID")
+        //         );                      
+        //         data.setSeller(seller);              
+        //         // data.setBuyer(new Buyer(...));                
+        //     }
+        //     gui.toNextScene(String.format("View/%sHome.fxml",acc.get("type")));    
+        // }               
     }
 
     @FXML

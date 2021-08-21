@@ -2,6 +2,9 @@ package Classes;
 
 import Cache.*;
 
+import java.io.IOException;
+import java.sql.SQLException;
+import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.HashMap;
 
@@ -91,12 +94,27 @@ public class Buyer extends Account{
         data.setOrders(this.orders);
     } 
 
+    @Override
+    public void register() throws IOException{
+        // TODO Auto-generated method stub
+        try {
+            String nextBuyerID = db.getNextId("Buyer");
+            String nextAccountID = db.getNextId("Account");
+            String nextCartID = db.getNextId("Cart");            
+            db.executeCUD(String.format("INSERT INTO Account VALUES ('%s','%s','%s','%s','%s','%s','%s','%s')",nextAccountID,username,password,name,email,mobileNo,LocalDate.now().toString(),accType));
+            db.executeCUD(String.format("INSERT INTO Buyer VALUES ('%s','%s','%s','%s')",nextBuyerID,address,nextAccountID,nextCartID));
+            this.accountID = nextAccountID;
+            this.buyerID = nextBuyerID;
+            this.cartID = nextCartID;
+            gui.toNextScene("View/BuyerHome.fxml");            
+        } catch (SQLException e) {
+            // TODO Auto-generated catch block
+            e.printStackTrace();
+            gui.informationPopup("Something wrong", "There is an error when inserting to database");
+        }
+    }
+
     // public static String getCart(String BuyerID) {
     //     return BuyerID;
     // }
 }
-
-
-
-
-

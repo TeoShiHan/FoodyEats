@@ -1,13 +1,13 @@
 package Classes;
 
+import java.io.IOException;
 import java.time.LocalDate;
 import java.util.HashMap;
 
 import Cache.*;
  
 public class Account {    
-    private static JDBC db = new JDBC();
-    private static DataHolder data = DataHolder.getInstance();
+    private static JDBC db = new JDBC();    
 
     protected String accountID,username,password,name,email,mobileNo,accType;
     private LocalDate regDate;    
@@ -89,11 +89,12 @@ public class Account {
         this.accType = accType;
     }
 
-    public static void register(){
-
+    public void register() throws IOException {
+        
     }
 
-    public static boolean login(String username, String password){                
+    public static boolean login(String username, String password){  
+        DataHolder data = DataHolder.getInstance();        
         HashMap<String,Object> acc = db.readOne(String.format("SELECT * FROM Account WHERE username='%s' AND password='%s' LIMIT 1",username,password));
         if(acc==null){
             return false;
