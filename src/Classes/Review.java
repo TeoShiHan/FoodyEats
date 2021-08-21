@@ -3,9 +3,8 @@ package Classes;
 import java.time.LocalDate;
 import java.time.LocalTime;
 
-public class Review {
-    // rating should be int or string???
-    private String id,comment,orderId,shopId;
+public class Review {    
+    private String reviewID,comment,orderID,shopID;
     private LocalDate date;
     private LocalTime time;
 
@@ -13,20 +12,20 @@ public class Review {
         this("","","","",LocalDate.now(),LocalTime.now());
     }
 
-    public Review(String id, String comment, String orderId, String shopId, LocalDate date, LocalTime time) {
-        this.id = id;
+    public Review(String reviewID, String comment, String orderID, String shopID, LocalDate date, LocalTime time) {
+        this.reviewID = reviewID;
         this.comment = comment;
-        this.orderId = orderId;
-        this.shopId = shopId;
+        this.orderID = orderID;
+        this.shopID = shopID;
         this.date = date;
         this.time = time;
     }
 
-    public String getId() {
-        return id;
+    public String getReviewID() {
+        return reviewID;
     }
-    public void setId(String id) {
-        this.id = id;
+    public void setReviewID(String reviewID) {
+        this.reviewID = reviewID;
     }
     public String getComment() {
         return comment;
@@ -34,17 +33,17 @@ public class Review {
     public void setComment(String comment) {
         this.comment = comment;
     }
-    public String getOrderId() {
-        return orderId;
+    public String getOrderID() {
+        return orderID;
     }
-    public void setOrderId(String orderId) {
-        this.orderId = orderId;
+    public void setOrderID(String orderID) {
+        this.orderID = orderID;
     }
-    public String getShopId() {
-        return shopId;
+    public String getShopID() {
+        return shopID;
     }
-    public void setShopId(String shopId) {
-        this.shopId = shopId;
+    public void setShopID(String shopID) {
+        this.shopID = shopID;
     }
     public LocalDate getDate() {
         return date;

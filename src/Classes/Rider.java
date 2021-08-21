@@ -1,49 +1,46 @@
 package Classes;
 
 import java.util.ArrayList;
+import java.util.HashMap;
+
+import Cache.DataHolder;
 
 public class Rider extends Account{
-    private String riderId;
-    private String name;
-    private String vehicleId;
-    private String accountId;
+    private JDBC db = new JDBC();
+    private DataHolder data = DataHolder.getInstance();
+
+    private String riderID;    
+    private String vehicleID;
     private Vehicle vehicle;
-    private ArrayList<Order> orders;
+    private ArrayList<Order> orders = new ArrayList<>();
 
     public Rider(){}
-    public Rider(String riderId, String name, String vehicleId, String accountId){
-        this.riderId = riderId;
-        this.name = name;
-        this.vehicleId = vehicleId;
-        this.accountId = accountId;        
+    public Rider(String riderID, String vehicleID, String accountID){
+        this.riderID = riderID;        
+        this.vehicleID = vehicleID;
+        this.accountID = accountID;        
     }
-    public Rider(Object riderId, Object name, Object vehicleId, Object accountId){
-        this.riderId = (String)riderId;
-        this.name = (String)name;
-        this.vehicleId = (String)vehicleId;
-        this.accountId = (String)accountId;
+    public Rider(Object riderID, Object vehicleID, Object accountID){
+        this.riderID = (String)riderID;        
+        this.vehicleID = (String)vehicleID;
+        this.accountID = (String)accountID;        
+    }
+    public Rider(String accountID, String username, String password, String name, String email, String mobileNo, String accType, String riderID, String vehicleID){
+        super(accountID, username, password, name, email, mobileNo, accType);
+        this.riderID = riderID;        
+        this.vehicleID = vehicleID;                
+    }
+    public Rider(Object accountID, Object username, Object password, Object name, Object email, Object mobileNo, Object accType, Object riderID, Object vehicleID){
+        super(accountID, username, password, name, email, mobileNo, accType);
+        this.riderID = (String)riderID;        
+        this.vehicleID = (String)vehicleID;        
         this.vehicle = (Vehicle)vehicle;
     }
-    public Rider(String accId, String username, String password, String email, String mobileNo, String accType, String riderId, String name, String vehicleId, String accountId){
-        super(accId, username, password, email, mobileNo, accType);
-        this.riderId = riderId;
-        this.name = name;
-        this.vehicleId = vehicleId;
-        this.accountId = accountId;        
+    public String getRiderID() {
+        return riderID;
     }
-    public Rider(Object accId, Object username, Object password, Object email, Object mobileNo, Object accType, Object riderId, Object name, Object vehicleId, Object accountId){
-        super(accId, username, password, email, mobileNo, accType);
-        this.riderId = (String)riderId;
-        this.name = (String)name;
-        this.vehicleId = (String)vehicleId;
-        this.accountId = (String)accountId;
-        this.vehicle = (Vehicle)vehicle;
-    }
-    public String getRiderId() {
-        return riderId;
-    }
-    public void setRiderId(String riderId) {
-        this.riderId = riderId;
+    public void setRiderID(String rIDerID) {
+        this.riderID = rIDerID;
     }
 
     public String getName() {
@@ -53,18 +50,18 @@ public class Rider extends Account{
         this.name = name;
     }
 
-    public String getVehicleId() {
-        return vehicleId;
+    public String getVehicleID() {
+        return vehicleID;
     }
-    public void setVehicleId(String vehicleId) {
-        this.vehicleId = vehicleId;
+    public void setVehicleID(String vehicleID) {
+        this.vehicleID = vehicleID;
     }
 
-    public String getAccountId() {
-        return accountId;
+    public String getAccountID() {
+        return accountID;
     }
-    public void setAccountId(String accountId) {
-        this.accountId = accountId;
+    public void setAccountID(String accountID) {
+        this.accountID = accountID;
     }
 
     public Vehicle getVehicle() {
@@ -80,6 +77,11 @@ public class Rider extends Account{
     public void setOrders(ArrayList<Order> orders) {
         this.orders = orders;
     }
-
-
+    public void loadOrders() {
+        ArrayList<HashMap<String,Object>> os = db.readAll(String.format("SELECT * FROM `Order` WHERE riderID='%s'",riderID));
+        for(HashMap<String,Object> o : os){
+            this.orders.add(new Order(o.get("orderID"),o.get("status"), o.get("dateCreated"),o.get("timeCreated"),o.get("buyerID"),o.get("riderID"),o.get("shopID"),o.get("paymentID"),o.get("reviewID")));
+        }   
+        data.setOrders(this.orders);
+    } 
 }

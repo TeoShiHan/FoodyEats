@@ -10,9 +10,9 @@ public final class DataHolder {
     JDBC db = new JDBC();
 
     private Account account = new Account();
-    private Buyer buyer = new  Buyer();
+    private Buyer buyer = new Buyer();
     private Rider rider = new Rider();
-    // private Seller seller;
+    private Seller seller = new Seller();
     private List<Order> orders = new ArrayList<>();
     private Order order = new Order();
     private List<OrderItem> orderItems = new ArrayList<>();
@@ -53,21 +53,26 @@ public final class DataHolder {
       return this.rider;
     }  
 
-    // public void setSeller(Seller seller) {
-    //   this.seller = seller;
-    // }    
-    // public Seller getSeller() {
-    //   return this.seller;
-    // }
-
+    public void setSeller(Seller seller) {
+      this.seller = seller;
+    }    
+    public Seller getSeller() {
+      return this.seller;
+    }
+    
     public void addObjectHolder(String key,Object value){
       this.objectHolder.put(key, value);
     }
-    public Object getObjectHolder(String key){
-      Object objectValue= objectHolder.get(key);      
-      return objectValue;
+    public void addWholeObjectHolder(HashMap<String,Object> items){
+      this.objectHolder.putAll(items);
     }
-
+    public Object getObjectHolder(String key){      
+      return objectHolder.get(key);
+    }
+    public HashMap<String,Object> getWholeObjectHolder(){
+      return this.objectHolder;
+    }
+    
     public void addStringHolder(String key,String value){
       this.stringHolder.put(key, value);
     }

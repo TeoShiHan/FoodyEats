@@ -53,7 +53,7 @@ public class App extends Application{
         stage.setResizable(false);
         stage.setScene(scene);                
         stage.show();         
-        stage.centerOnScreen();
+        stage.centerOnScreen();        
         // stage.setOnCloseRequest(event->{
         //     event.consume();
         //     Alert alert = new Alert(AlertType.CONFIRMATION);

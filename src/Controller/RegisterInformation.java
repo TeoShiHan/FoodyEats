@@ -3,16 +3,15 @@ import Cache.*;
 import Classes.*;
 import Classes.Shop;
 import Controller.Register.*;
-import Controller.Register.Account;
-import Controller.Register.Buyer;
-import Controller.Register.Rider;
-import Controller.Register.Seller;
 
 import java.io.IOException;
 import java.net.URL;
+import java.util.HashMap;
 import java.util.ResourceBundle;
 
 import javafx.event.ActionEvent;
+import javafx.event.Event;
+import javafx.event.EventHandler;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
@@ -24,84 +23,130 @@ import javafx.scene.control.Label;
 import javafx.scene.control.RadioButton;
 import javafx.scene.control.TextField;
 import javafx.scene.control.ToggleGroup;
+import javafx.scene.input.InputEvent;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.Region;
 import javafx.scene.layout.VBox;
+import javafx.stage.Modality;
+import javafx.stage.Popup;
+import javafx.stage.Stage;
 
 public class RegisterInformation implements Initializable{
     private GUI gui = GUI.getInstance();
     private DataHolder data = DataHolder.getInstance();
-
-    private Account accountRegisterController;
-    private Buyer buyerRegisterController;
-    private Rider riderRegisterController;
-    private Seller sellerRegisterController;
-    private Shop shopRegisterController;
-
-    FXMLLoader fxmlLoader;    
+    
+    private FXMLLoader fxmlLoader;        
+    private RegBuyer buyerRegisterController;
+    private RegRider riderRegisterController;
+    private RegSeller sellerRegisterController;
+    private RegShop shopRegisterController;
+    HashMap<String,Object> info = new HashMap<>();
 
     @FXML private AnchorPane paneRegisterInformation;
     @FXML private RadioButton radioBtnBuyer,radioBtnSeller,radioBtnRider;
     @FXML private ToggleGroup accountType;
     @FXML private VBox containerInformation;
-    @FXML private TextField inputShopName,inputEmail,inputContactNo,inputShopAddr,inputBankAccNo,inputLisenceNo;
-    @FXML private Button imageChooser;
-    @FXML private Button btnRegister;
+    // @FXML private TextField inputShopName,inputEmail,inputContactNo,inputShopAddr,inputBankAccNo,inputLisenceNo;
+    // @FXML private Button imageChooser;
+    @FXML private Button btnContinue;
     @FXML private Label linkToLogin;
 
     @Override
     public void initialize(URL location, ResourceBundle resources){
         try {
-            loadInformationFields("View/RegisterView/Buyer.fxml");
+            registerAsBuyer(new ActionEvent());
         } catch (IOException e) {
             // TODO Auto-generated catch block
             e.printStackTrace();
         }
-    }
+    }        
 
     @FXML
-    void actionRegister(ActionEvent event) {
-        
-    }
-    
-    @FXML
-    void actionImageChooser(ActionEvent event) {
-    }
-
-    @FXML
-    void registerAsBuyer(ActionEvent event) throws IOException {
-        btnRegister.setText("Register");
-        loadInformationFields("View/RegisterView/Buyer.fxml");        
+    void registerAsBuyer(ActionEvent event) throws IOException {        
+        loadInformationFields("View/RegisterView/RegBuyer.fxml");        
         this.buyerRegisterController = this.fxmlLoader.getController();
-        // this.buyerRegisterController.
-        System.out.println("You want to register as buyer");
+        btnContinue.setOnAction(evnt -> {
+            try {
+                if(buyerRegisterController.isFilled()){
+                    data.addObjectHolder("accountType", "Buyer");
+                    buyerRegisterController.getInfo();
+                    toRegisterAccount();
+                    gui.alertInProgress();
+                }else{
+                    gui.informationPopup("Attention", "Please fill in all the field!");                    
+                }  
+                
+            } catch (IOException e) {
+                // TODO Auto-generated catch block
+                e.printStackTrace();
+            }      
+        });                
     }
 
     @FXML
-    void registerAsRider(ActionEvent event) throws IOException {        
-        btnRegister.setText("Register");
-        loadInformationFields("View/RegisterView/Rider.fxml");   
+    void registerAsRider(ActionEvent event) throws IOException {                
+        loadInformationFields("View/RegisterView/RegRider.fxml");   
         this.riderRegisterController = this.fxmlLoader.getController();
-        // this.riderRegisterController.     
-        System.out.println("You want to register as rider");
-        // Parent parent = (Parent) gui.getStage().getScene().getRoot();
-        // gui.getStage().setScene(new Scene(parent));
+        btnContinue.setOnAction(evnt -> {
+            try {
+                if(riderRegisterController.isFilled()){
+                    data.addObjectHolder("accountType", "Rider");
+                    riderRegisterController.getInfo();                    
+                    toRegisterAccount();
+                    gui.alertInProgress();
+                }else{
+                    gui.informationPopup("Attention", "Please fill in all the field!");
+                }                
+            } catch (IOException e) {
+                // TODO Auto-generated catch block
+                e.printStackTrace();
+            }      
+        });         
     }
 
     @FXML
-    void registerAsSeller(ActionEvent event) throws IOException {
-        btnRegister.setText("Next");
-        btnRegister.setOnAction(e -> {
-            System.out.println("hello");
-        });
-        loadInformationFields("View/RegisterView/Seller.fxml");
-        System.out.println("You want to register as seller");
-    }
+    void registerAsSeller(ActionEvent event) throws IOException {          
+        loadInformationFields("View/RegisterView/RegSeller.fxml");
+        this.sellerRegisterController = this.fxmlLoader.getController();        
+        btnContinue.setOnAction(evnt -> {
+            try {          
+                if(sellerRegisterController.isFilled()){
+                    data.addObjectHolder("accountType", "Seller");
+                    sellerRegisterController.getInfo();
+                    gui.alertInProgress();
+                    loadInformationFields("View/RegisterView/RegShop.fxml");
+                    this.shopRegisterController = this.fxmlLoader.getController();                    
+                    btnContinue.setOnAction(ev -> {                    
+                        try {
+                            if(shopRegisterController.isFilled()){                                
+                                shopRegisterController.getInfo();                    
+                                toRegisterAccount();                                
+                            }else{
+                                gui.informationPopup("Attention", "Please fill in all the field!");
+                            }                             
+                        } catch (IOException e) {
+                            // TODO Auto-generated catch block
+                            e.printStackTrace();
+                        }                    
+                    });
+                }else{
+                    gui.informationPopup("Attention", "Please fill in all the field!");
+                }                       
+            } catch (IOException e1) {
+                // TODO Auto-generated catch block
+                e1.printStackTrace();
+            }            
+        });        
+    }        
 
     @FXML
-    void toRegsiter(MouseEvent event) throws IOException {
+    void toLogin(MouseEvent event) throws IOException {
         gui.toNextScene("View/Login.fxml");        
+    }
+
+    public void toRegisterAccount() throws IOException{        
+        gui.toNextScene("View/RegisterAccount.fxml");
     }
 
     public void loadInformationFields(String filePath) throws IOException{

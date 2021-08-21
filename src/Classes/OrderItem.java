@@ -8,53 +8,53 @@ public class OrderItem {
     private JDBC db = new JDBC();    
     private DataHolder data = DataHolder.getInstance();
 
-    // private SimpleStringProperty orderId,foodId;
+    // private SimpleStringProperty orderID,foodID;
     // private SimpleIntegerProperty quantity;
-    // this.orderId = new SimpleStringProperty(orderId);
-    // this.foodId = new SimpleStringProperty(foodId);
+    // this.orderID = new SimpleStringProperty(orderID);
+    // this.foodID = new SimpleStringProperty(foodID);
     // this.quantity = new SimpleIntegerProperty(quantity);  
 
-    private String orderId,foodId;
+    private String orderID,foodID;
     private int quantity;
     private Food food = new Food();
 
     public OrderItem(){
         this("","",0);
     }    
-    public OrderItem(String orderId, String foodId, int quantity) {
-        this.orderId = orderId;
-        this.foodId = foodId;
+    public OrderItem(String orderID, String foodID, int quantity) {
+        this.orderID = orderID;
+        this.foodID = foodID;
         this.quantity = quantity;        
     }
-    public OrderItem(String orderId, String foodId, int quantity, Food food) {
-        this.orderId = orderId;
-        this.foodId = foodId;
+    public OrderItem(String orderID, String foodID, int quantity, Food food) {
+        this.orderID = orderID;
+        this.foodID = foodID;
         this.quantity = quantity;               
         this.food = food;
     }
-    public OrderItem(Object orderId, Object foodId, Object quantity) {
-        this.orderId = (String)orderId;
-        this.foodId = (String)foodId;
+    public OrderItem(Object orderID, Object foodID, Object quantity) {
+        this.orderID = (String)orderID;
+        this.foodID = (String)foodID;
         this.quantity = (int)quantity;                
     }
-    public OrderItem(Object orderId, Object foodId, Object quantity, Food food) {
-        this.orderId = (String)orderId;
-        this.foodId = (String)foodId;
+    public OrderItem(Object orderID, Object foodID, Object quantity, Food food) {
+        this.orderID = (String)orderID;
+        this.foodID = (String)foodID;
         this.quantity = (int)quantity;        
         this.food = food;
     }
 
-    public String getOrderId() {
-        return orderId;
+    public String getOrderID() {
+        return orderID;
     }
-    public void setOrderId(String orderId) {
-        this.orderId = orderId;
+    public void setOrderID(String orderID) {
+        this.orderID = orderID;
     }
-    public String getFoodId() {
-        return foodId;
+    public String getFoodID() {
+        return foodID;
     }
-    public void setFoodId(String foodId) {
-        this.foodId = foodId;
+    public void setFoodID(String foodID) {
+        this.foodID = foodID;
     }
     public int getQuantity() {
         return quantity;
@@ -69,7 +69,7 @@ public class OrderItem {
         this.food = food;
     }
     public void loadFood() {
-        HashMap<String,Object> f = db.readOne(String.format("SELECT * FROM `Food` WHERE foodID='%s'",this.foodId));
+        HashMap<String,Object> f = db.readOne(String.format("SELECT * FROM `Food` WHERE foodID='%s'",this.foodID));
         this.food = new Food(f.get("foodID"),f.get("foodName"),f.get("foodDesc"),f.get("imgPath"),f.get("price"),f.get("category"),f.get("shopID"));        
         data.setFood(this.food);        
     }    
