@@ -78,9 +78,7 @@ public class Rider extends Account{
     public ArrayList<Order> getOrders() {
         return orders;
     }
-    public void setOrders(ArrayList<Order> orders) {
-        this.orders = orders;
-    }
+
     public void loadOrders() {
         ArrayList<HashMap<String,Object>> os = db.readAll(String.format("SELECT * FROM `Order` WHERE riderID='%s'",riderID));
         for(HashMap<String,Object> o : os){
@@ -88,6 +86,18 @@ public class Rider extends Account{
         }   
         data.setOrders(this.orders);
     } 
+
+    public void acceptedOrder(String oRDerID){
+        db.executeCUD(String.format("UPDATE `Order` SET status='Rider Accepted', riderID='%s' WHERE orderID='%s'",this.riderID,oRDerID));
+    }
+
+    public void collectedOrder(String oRDerID){
+        db.executeCUD(String.format("UPDATE `Order` SET status='Rider Collected', riderID='%s' WHERE orderID='%s'",this.riderID,oRDerID));
+    }
+
+    public void deliveredOrder(String oRDerID){
+        db.executeCUD(String.format("UPDATE `Order` SET status='Completed', riderID='%s' WHERE orderID='%s'",this.riderID,oRDerID));
+    }
 
     @Override
     public void register() throws IOException{
