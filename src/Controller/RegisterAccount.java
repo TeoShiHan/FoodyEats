@@ -9,13 +9,14 @@ import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.control.Button;
 import javafx.scene.control.TextField;
+import javafx.scene.input.MouseEvent;
 
 public class RegisterAccount {
     private GUI gui = GUI.getInstance();
     private DataHolder data = DataHolder.getInstance();
 
     @FXML private TextField inputUsername,inputPassword,inputConfirmPassword;
-    @FXML private Button btnRegister;
+    @FXML private Button btnRegister,btnBack;
 
     @FXML
     void actionRegister(ActionEvent event) throws IOException {
@@ -47,12 +48,19 @@ public class RegisterAccount {
 
                 }
             }else{
+                gui.informationPopup("Warning", "Password aren't match, please try again!");
                 // pop up window
             }
         }else{
+            gui.informationPopup("Attention", "Please fill in all the blank.");
             // pop up window
         }
     }
+
+    @FXML
+    void toBack(ActionEvent event) throws IOException {
+        gui.toPrevScene();
+    }  
 
     // public TextField getInputUsername() {
     //     return inputUsername;

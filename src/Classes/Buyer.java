@@ -16,7 +16,7 @@ public class Buyer extends Account{
     private String buyerID, address, cartID;
     private Cart cart;
     private ArrayList<Order> orders = new ArrayList<>();
-
+    
     public Buyer() {  //No-arg Constructor        
     	this("","","","");
     }    
@@ -97,10 +97,10 @@ public class Buyer extends Account{
     @Override
     public void register() throws IOException{
         // TODO Auto-generated method stub
-        try {
+        try {            
             String nextBuyerID = db.getNextId("Buyer");
             String nextAccountID = db.getNextId("Account");
-            String nextCartID = db.getNextId("Cart");            
+            String nextCartID = db.getNextId("Cart");
             db.executeCUD(String.format("INSERT INTO Account VALUES ('%s','%s','%s','%s','%s','%s','%s','%s')",nextAccountID,username,password,name,email,mobileNo,LocalDate.now().toString(),accType));
             db.executeCUD(String.format("INSERT INTO Buyer VALUES ('%s','%s','%s','%s')",nextBuyerID,address,nextAccountID,nextCartID));
             this.accountID = nextAccountID;

@@ -57,6 +57,7 @@ public final class GUI {
   public void toPrevScene() throws IOException{        
     stage.setScene(getPrevScene());
     prevScenes.remove(prevScenes.size()-1);
+    this.stage.centerOnScreen();
   }
 
   public void toNextScene(String filePath) throws IOException{        

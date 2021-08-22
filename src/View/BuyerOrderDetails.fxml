@@ -36,7 +36,7 @@
             <Image url="@../Images/homeIcon.png" />
          </image>
       </ImageView>      
-      <Button layoutX="824.0" layoutY="442.0" prefHeight="94.0" prefWidth="346.0" text="Rate">
+      <Button fx:id="btnRate" layoutX="824.0" layoutY="442.0" prefHeight="94.0" prefWidth="346.0" text="Rate">
          <font>
             <Font size="36.0" />
          </font>
@@ -44,7 +44,7 @@
             <Insets />
          </opaqueInsets>
       </Button>
-      <Button layoutX="824.0" layoutY="568.0" prefHeight="94.0" prefWidth="346.0" style="-fx-background-color: #FE5C5C;" text="Cancel">
+      <Button fx:id="btnCancel" layoutX="824.0" layoutY="568.0" prefHeight="94.0" prefWidth="346.0" style="-fx-background-color: #FE5C5C;" text="Cancel">
          <font>
             <Font size="36.0" />
          </font>
@@ -85,16 +85,16 @@
             </Label>
          </children>
       </VBox>
-      <VBox layoutX="427.0" layoutY="120.0" prefHeight="177.0" prefWidth="346.0">
+      <VBox layoutX="427.0" layoutY="120.0" prefHeight="177.0" prefWidth="346.0" style="-fx-background-color: #FEBD5C;">
          <children>
-            <Label alignment="CENTER" prefHeight="54.0" prefWidth="346.0" style="-fx-background-color: #FF8719; -fx-font-weight: 800;" text="Buyer Info">
+            <Label alignment="CENTER" prefHeight="58.0" prefWidth="346.0" style="-fx-background-color: #FF8719; -fx-font-weight: 800;" text="Buyer Info">
                <font>
                   <Font size="24.0" />
                </font>
             </Label>
-            <HBox prefHeight="82.0" prefWidth="346.0">
+            <HBox prefWidth="346.0" VBox.vgrow="ALWAYS">
                <children>
-                  <Label alignment="TOP_LEFT" prefHeight="88.0" prefWidth="107.0" style="-fx-background-color: #FEBD5C; -fx-font-weight: 800;" text="Address">
+                  <Label alignment="TOP_LEFT" prefWidth="107.0" style="-fx-font-weight: 800;" text="Name">
                      <font>
                         <Font size="14.0" />
                      </font>
@@ -105,7 +105,7 @@
                         <Insets />
                      </HBox.margin>
                   </Label>
-                  <Label fx:id="lblBuyerAddress" alignment="TOP_LEFT" prefHeight="91.0" prefWidth="239.0" style="-fx-background-color: #FEBD5C; -fx-font-weight: 800;" text="5662, Lorong Stampin 23d1A. 93350, Kuching, Sarawak" wrapText="true">
+                  <Label fx:id="lblBuyerName" alignment="TOP_LEFT" prefWidth="239.0" style="-fx-font-weight: 800;" text="Khoo" wrapText="true">
                      <font>
                         <Font size="14.0" />
                      </font>
@@ -115,9 +115,9 @@
                   </Label>
                </children>
             </HBox>
-            <HBox prefHeight="41.0" prefWidth="346.0">
+            <HBox prefWidth="346.0" VBox.vgrow="ALWAYS">
                <children>
-                  <Label alignment="TOP_LEFT" prefHeight="88.0" prefWidth="107.0" style="-fx-background-color: #FEBD5C; -fx-font-weight: 800;" text="Phone no.">
+                  <Label alignment="TOP_LEFT" prefWidth="107.0" style="-fx-font-weight: 800;" text="Mobile no.">
                      <font>
                         <Font size="14.0" />
                      </font>
@@ -125,7 +125,30 @@
                         <Insets left="10.0" top="5.0" />
                      </padding>
                   </Label>
-                  <Label fx:id="lblBuyerPhoneNo" alignment="TOP_LEFT" prefHeight="91.0" prefWidth="239.0" style="-fx-background-color: #FEBD5C; -fx-font-weight: 800;" text="0194392616" wrapText="true">
+                  <Label fx:id="lblBuyerMobileNo" alignment="TOP_LEFT" prefWidth="239.0" style="-fx-font-weight: 800;" text="0194392616" wrapText="true">
+                     <font>
+                        <Font size="14.0" />
+                     </font>
+                     <padding>
+                        <Insets top="5.0" />
+                     </padding>
+                  </Label>
+               </children>
+            </HBox>
+            <HBox prefWidth="346.0" VBox.vgrow="ALWAYS">
+               <children>
+                  <Label alignment="TOP_LEFT" prefWidth="107.0" style="-fx-font-weight: 800;" text="Address">
+                     <font>
+                        <Font size="14.0" />
+                     </font>
+                     <padding>
+                        <Insets left="10.0" top="5.0" />
+                     </padding>
+                     <HBox.margin>
+                        <Insets />
+                     </HBox.margin>
+                  </Label>
+                  <Label fx:id="lblBuyerAddress" alignment="TOP_LEFT" prefWidth="239.0" style="-fx-font-weight: 800;" text="5662, Lorong Stampin 23d1A. 93350, Kuching, Sarawak " wrapText="true">
                      <font>
                         <Font size="14.0" />
                      </font>

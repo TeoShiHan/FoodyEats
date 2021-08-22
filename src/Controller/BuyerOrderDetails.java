@@ -25,6 +25,7 @@ import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
+import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.TableCell;
 import javafx.scene.control.TableColumn;
@@ -42,8 +43,9 @@ public class BuyerOrderDetails implements Initializable {
     DataHolder data = DataHolder.getInstance();    
     
     @FXML private AnchorPane paneBuyerOrder;    
-    @FXML private Label linkLogout,lblOrderDetails,lblBuyerAddress,lblBuyerPhoneNo,lblTotalAmount,lblDateCreated,lblTimeCreated;
+    @FXML private Label linkLogout,lblOrderDetails,lblBuyerName,lblBuyerMobileNo,lblBuyerAddress,lblTotalAmount,lblDateCreated,lblTimeCreated;
     @FXML private ImageView iconProfile,iconHome,iconCart;            
+    @FXML private Button btnRate,btnCancel;    
     // @FXML private TableView<RowData> tableView;    
     @FXML private TableView<OrderItem> tableView;
     @FXML private TableColumn<OrderItem,Number> colNo;
@@ -53,27 +55,29 @@ public class BuyerOrderDetails implements Initializable {
     @Override
     public void initialize(URL location, ResourceBundle resources) {
         // TODO Auto-generated method stub        
-        if(data.getOrderItems().isEmpty() || data.getStringHolder("orderID")!=data.getOrder().getOrderID()){
+        // if(data.getOrderItems().isEmpty() || data.getStringHolder("orderID")!=data.getOrder().getOrderID()){
+        if(data.getOrder().getOrderItems().isEmpty()){
             data.getOrder().loadOrderItems();
             data.addStringHolder("orderID", data.getOrder().getOrderID());
         }
         
         lblOrderDetails.setText("Order #"+data.getOrder().getOrderID());
         lblDateCreated.setText(data.getOrder().getDateCreated().toString());
-        lblTimeCreated.setText(data.getOrder().getTimeCreated().toString());              
+        lblTimeCreated.setText(data.getOrder().getTimeCreated().toString());
+        lblBuyerName.setText(data.getBuyer().getName());
         lblBuyerAddress.setText(data.getBuyer().getAddress());        
-        lblBuyerPhoneNo.setText(data.getBuyer().getMobileNo());        
+        lblBuyerMobileNo.setText(data.getBuyer().getMobileNo());        
 
         // https://stackoverflow.com/questions/36629522/convert-arraylist-to-observable-list-for-javafx-program
-        ObservableList<OrderItem> observableList = FXCollections.observableArrayList(data.getOrderItems());        
+        ObservableList<OrderItem> observableList = FXCollections.observableArrayList(data.getOrder().getOrderItems());        
         
         tableView.setItems(observableList);
 
         //to assign which property/attribute of the class to the table column                    
-        // https://stackoverflow.com/questions/16384879/auto-numbered-table-rows-javafx for the next line (line 75)
+        // https://stackoverflow.com/questions/16384879/auto-numbered-table-rows-javafx, for the next line (line 75)
         colNo.setCellValueFactory(dt -> new ReadOnlyObjectWrapper<Number>(tableView.getItems().indexOf(dt.getValue())+1));        
         colItems.setCellValueFactory(dt -> new SimpleStringProperty(dt.getValue().getFood().getName()));        
-        // https://stackoverflow.com/questions/14413040/converting-integer-to-observablevalueinteger-in-javafx/14413339 for the next line (line 80)
+        // https://stackoverflow.com/questions/14413040/converting-integer-to-observablevalueinteger-in-javafx/14413339, for the next line (line 80)
         colQty.setCellValueFactory(dt -> new SimpleIntegerProperty(dt.getValue().getQuantity()).asObject());
         
         lblTotalAmount.setText(String.format("RM %.2f",data.getOrder().getTotalAmount()));

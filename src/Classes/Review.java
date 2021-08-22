@@ -5,20 +5,20 @@ import java.time.LocalTime;
 
 public class Review {    
     private String reviewID,comment,orderID,shopID;
-    private LocalDate date;
-    private LocalTime time;
+    private LocalDate dateCreated;
+    private LocalTime timeCreated;
 
     public Review() {
-        this("","","","",LocalDate.now(),LocalTime.now());
+        this("","",LocalDate.now(),LocalTime.now(),"","");
     }
 
-    public Review(String reviewID, String comment, String orderID, String shopID, LocalDate date, LocalTime time) {
+    public Review(String reviewID, String comment, LocalDate dateCreated, LocalTime timeCreated, String orderID, String shopID) {
         this.reviewID = reviewID;
         this.comment = comment;
+        this.dateCreated = dateCreated;
+        this.timeCreated = timeCreated;
         this.orderID = orderID;
         this.shopID = shopID;
-        this.date = date;
-        this.time = time;
     }
 
     public String getReviewID() {
@@ -45,18 +45,18 @@ public class Review {
     public void setShopID(String shopID) {
         this.shopID = shopID;
     }
-    public LocalDate getDate() {
-        return date;
+    public LocalDate getDateCreated() {
+        return dateCreated;
     }
-    public void setDate(LocalDate date) {
-        this.date = date;
+    public void setDateCreated(LocalDate dateCreated) {
+        this.dateCreated = dateCreated;
     }
-    public LocalTime getTime() {
-        return time;
+    public LocalTime getTimeCreated() {
+        return timeCreated;
     }
-    public void setTime(LocalTime time) {
-        this.time = time;
-    }
+    public void setTimeCreated(LocalTime timeCreated) {
+        this.timeCreated = timeCreated;
+    }    
     public void displayReviewImage() {
         // show normal image
     }

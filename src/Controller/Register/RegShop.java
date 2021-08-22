@@ -1,4 +1,5 @@
 package Controller.Register;
+import Classes.*;
 import Cache.*;
 
 import java.io.File;
@@ -16,6 +17,7 @@ import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.Button;
 import javafx.scene.control.DatePicker;
+import javafx.scene.control.Label;
 import javafx.scene.control.Spinner;
 import javafx.scene.control.SpinnerValueFactory;
 import javafx.scene.control.TextField;
@@ -27,9 +29,10 @@ public class RegShop implements Initializable{
 
     @FXML private TextField inputShopName,inputShopAddr,inputShopTelNo;
     @FXML private Spinner<Double> spinnerDeliveryFee = new Spinner<>();
-    @FXML private Spinner<Integer> spinnerStartHour,spinnerEndHour = new Spinner<Integer>();
-    @FXML private Button imageChooser;
+    @FXML private Spinner<Integer> spinnerStartHour,spinnerEndHour = new Spinner<Integer>();    
     @FXML private DatePicker datePicker;
+    @FXML private Button imageChooser;
+    @FXML private Label lblImage;
     private File shopImageFile;
 
     @Override
@@ -40,7 +43,7 @@ public class RegShop implements Initializable{
         SpinnerValueFactory<Integer> endHourValueFactory = new SpinnerValueFactory.IntegerSpinnerValueFactory(0, 23, 17);        
         spinnerDeliveryFee.setValueFactory(deliveryValueFactory);
         spinnerStartHour.setValueFactory(startHourValueFactory);
-        spinnerEndHour.setValueFactory(endHourValueFactory);                    
+        spinnerEndHour.setValueFactory(endHourValueFactory);
 
         spinnerDeliveryFee.getEditor().textProperty().addListener((obs, oldValue, newValue) -> {
             spinnerDeliveryFee.getEditor().setText(newValue.replaceAll("[^0-9.]+",""));
@@ -59,7 +62,9 @@ public class RegShop implements Initializable{
             if(spinnerEndHour.getEditor().getText().isEmpty()){
                 spinnerEndHour.getEditor().setText("0");
             }
-        });            
+        });
+        
+        datePicker.setValue(LocalDate.now());
     }     
 
     @FXML
@@ -77,10 +82,14 @@ public class RegShop implements Initializable{
             // ImageIO.write(shopImageFile, extension, new File(shopImageFile.getPath()));
             // copy(shopImageFile.getAbsolutePath(), "C:\\Users\\Asus\\Downloads\\SEM 3 - OOP\\FoodyEats\\src\\Images\\shopImageFile.png");
             
+            lblImage.setText(shopImageFile.getName());
+
             // https://stackoverflow.com/questions/36991165/how-to-set-the-save-path-for-a-file-chosen-in-filechooser-javafx/36991844#36991844
-            Path path = Paths.get("C:/Users/Asus/Downloads/SEM 3 - OOP/FoodyEats/src/Images", shopImageFile.getName());
-            Files.copy(shopImageFile.toPath(), path);
-        }                               
+            String currentPath = Paths.get("").toAbsolutePath().toString().replaceAll("\\\\", "/");
+            System.out.println(currentPath+"/src/Images");
+            Path path = Paths.get(currentPath+"/src/Images", shopImageFile.getName());
+            Files.copy(shopImageFile.toPath(), path);            
+        }
     }   
               
     // @FXML private TextField inputShopName,inputShopAddr,inputShopTelNo;
@@ -88,19 +97,21 @@ public class RegShop implements Initializable{
     // @FXML private Spinner<Integer> spinnerStartHour,spinnerEndHour = new Spinner<Integer>();
     // @FXML private Button imageChooser;
     public boolean isFilled(){                
+        System.out.println(shopImageFile);
         return !(inputShopName.getText().isEmpty() || inputShopAddr.getText().isEmpty() || 
-                inputShopTelNo.getText().isEmpty() || shopImageFile.length()==0 || 
-                datePicker.getValue().isBefore(LocalDate.now()));                
+                inputShopTelNo.getText().isEmpty() || shopImageFile==null || 
+                datePicker.getValue().isAfter(LocalDate.now()));                
     }
 
-    public void getInfo(){        
-        data.addObjectHolder("shopName", inputShopName.getText());
-        data.addObjectHolder("shopAddress", inputShopAddr.getText());
-        data.addObjectHolder("shopTelNo", inputShopTelNo.getText());                      
-        data.addObjectHolder("shopStartHour", spinnerStartHour.getValue());
-        data.addObjectHolder("shopEndHour", spinnerEndHour.getValue());
+    public void getInfo(){
+        // Shop shop = new Shop();        
+        // shop.setName(inputShopName.getText());
+        // shop.setAddress(inputShopAddr.getText());
+        // shop.setTel(inputShopTelNo.getText());                      
+        // shop.setStartHour(spinnerStartHour.getValue().toString());
+        // shop.setEndHour(spinnerEndHour.getValue().toString());
+        // shop.setDateCreated(datePicker.getValue());
+        // shop.setDeliveryFee(spinnerDeliveryFee.getValue());        
         // data.addObjectHolder("shopImgPath", "/Images/"+shopImageFile.getName());
-        data.addObjectHolder("shopDateCreated", datePicker.getValue());
-        data.addObjectHolder("shopDeliveryFee", spinnerDeliveryFee.getValue());        
     }       
 }

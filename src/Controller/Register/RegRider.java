@@ -1,5 +1,7 @@
 package Controller.Register;
 import Cache.*;
+import Classes.Rider;
+import Classes.Vehicle;
 
 import java.net.URL;
 import java.util.HashMap;
@@ -121,15 +123,18 @@ public class RegRider implements Initializable{
                 inputColor.getText().isEmpty() || inputPlateNo.getText().isEmpty())));
     }
 
-    public void getInfo(){        
-        data.addObjectHolder("accountName", inputName.getText());
-        data.addObjectHolder("accountEmail", inputEmail.getText());
-        data.addObjectHolder("accountMobileNo", inputMobileNo.getText());
-        data.addObjectHolder("vehicleType", dropdownVehicleType.getSelectionModel().getSelectedItem());
-        data.addObjectHolder("vehicleBrand", inputBrand.getText());
-        data.addObjectHolder("vehicleModel", inputModel.getText());
-        data.addObjectHolder("vehiclePlateNo", inputPlateNo.getText());
-        data.addObjectHolder("vehicleColor", inputColor.getText());
+    public void getInfo(){    
+        Rider rider = new Rider();
+        rider.setAccType("Rider");
+        rider.setName(inputName.getText());
+        rider.setEmail(inputEmail.getText());
+        rider.setMobileNo(inputMobileNo.getText());        
+        data.setAccount(rider);
+        data.getVehicle().setType(dropdownVehicleType.getSelectionModel().getSelectedItem());
+        data.getVehicle().setBrand(inputBrand.getText());
+        data.getVehicle().setModel(inputModel.getText());
+        data.getVehicle().setPlateNo(inputPlateNo.getText());
+        data.getVehicle().setColor(inputColor.getText());                        
     }
     
 }

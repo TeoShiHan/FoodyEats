@@ -3,6 +3,7 @@ import Cache.*;
 import javafx.scene.image.Image;
 
 import java.io.File;
+import java.nio.file.Paths;
 import java.sql.SQLException;
 import java.text.DateFormat;
 import java.text.ParseException;
@@ -108,5 +109,8 @@ public class TestJDBC {
         // System.out.println(db.readAll("`OrderItem`", "orderID = 'O00002'"));
 
         // System.out.println(db.readAll("`Order`", "AS o INNER JOIN OrderItem AS oi ON o.orderID = oi.orderID INNER JOIN Buyer as b ON o.buyerID = b.buyerID INNER JOIN Shop AS s ON o.shopID = s.shopID INNER JOIN Payment AS p ON o.paymentID = p.paymentID INNER JOIN Food AS f ON oi.foodID = f.foodID WHERE o.orderID = 'O00002'"));
+
+        System.out.println(Paths.get("").toAbsolutePath().toString().replaceAll("\\\\", "/"));
+        System.out.println("C:\\Users\\Asus\\Downloads\\SEM 3 - OOP\\FoodyEats".replaceAll("\\\\", "/"));
     }    
 }
