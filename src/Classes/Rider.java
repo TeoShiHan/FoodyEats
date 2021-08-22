@@ -1,13 +1,17 @@
 package Classes;
 
+import Cache.*;
+
+import java.io.IOException;
+import java.sql.SQLException;
+import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.HashMap;
-
-import Cache.DataHolder;
 
 public class Rider extends Account{
     private JDBC db = new JDBC();
     private DataHolder data = DataHolder.getInstance();
+    private GUI gui = GUI.getInstance();
 
     private String riderID;    
     private String vehicleID;
@@ -84,4 +88,25 @@ public class Rider extends Account{
         }   
         data.setOrders(this.orders);
     } 
+
+    @Override
+    public void register() throws IOException{
+        // TODO Auto-generated method stub
+        try {
+            String nextRiderID = db.getNextId("Rider");
+            String nextAccountID = db.getNextId("Account"); 
+            String nextVehicleID = db.getNextId("Vehicle");         
+            db.executeCUD(String.format("INSERT INTO Account VALUES ('%s','%s','%s','%s','%s','%s','%s','%s')",nextAccountID,username,password,name,email,mobileNo,LocalDate.now().toString(),accType));
+            db.executeCUD(String.format("INSERT INTO Vehicle VALUES ('%s','%s','%s','%s''%s')",nextVehicleID, vehicle.getPlateNo(), vehicle.getBrand(), vehicle.getModel(), vehicle.getColor()));
+            db.executeCUD(String.format("INSERT INTO Rider VALUES ('%s','%s','%s','%s')",nextRiderID,nextAccountID,nextVehicleID, 0));
+            this.accountID = nextAccountID;
+            this.riderID = nextRiderID;
+            this.vehicleID = nextVehicleID;
+                       
+        } catch (SQLException e) {
+            // TODO Auto-generated catch block
+            e.printStackTrace();
+            gui.informationPopup("Something wrong", "There is an error when inserting to database");
+        }
+    }
 }

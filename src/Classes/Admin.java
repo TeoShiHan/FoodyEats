@@ -1,6 +1,16 @@
 package Classes;
 
-public class Admin {
+import Cache.*;
+
+import java.io.IOException;
+import java.sql.SQLException;
+import java.time.LocalDate;
+import java.util.ArrayList;
+import java.util.HashMap;
+
+public class Admin extends Account {
+    private JDBC db = new JDBC();
+
     private String adminID;
     private String name;
     private String NRIC;
@@ -56,11 +66,14 @@ public class Admin {
         this.accountID = accountID;
     }
 
-    public void addRider(){
+    public void verifySeller(String seLLerID){
+        db.executeCUD(String.format("UPDATE Seller SET status=1 WHERE sellerID='%s'",seLLerID));
+    }
+
+    public void verifyRider(String rIDerID){
+        db.executeCUD(String.format("UPDATE Rider SET status=1 WHERE riderID='%s'",rIDerID));
 
     }
 
-    public void register(){
-        
-    }    
+ 
 }
