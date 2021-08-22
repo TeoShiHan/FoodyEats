@@ -1,6 +1,7 @@
 package Classes;
 
 public class Vehicle {
+    private String vehicleID;
     private String plateNo;
     private String brand;
     private String model;
@@ -8,18 +9,28 @@ public class Vehicle {
 
     public Vehicle(){}
 
-    public Vehicle(String plateNo, String brand, String model, String color){
+    public Vehicle(String vehicleID, String plateNo, String type, String brand, String model, String color){
+        this.vehicleID = vehicleID;
         this.plateNo = plateNo;
         this.brand = brand;
         this.model = model;
         this.color = color;
     }
 
-    public Vehicle(Object plateNo, Object brand, Object model, Object color){
+    public Vehicle(Object vehicleID, Object plateNo, Object brand, Object model, Object color){
+        this.vehicleID = (String)vehicleID;
         this.plateNo = (String)plateNo;
         this.brand = (String)brand;
         this.model = (String)model;
         this.color = (String)color;
+    }
+
+    
+    public String getVehicleID() {
+        return vehicleID;
+    }
+    public void setVehicleID(String vehicleID) {
+        this.vehicleID = vehicleID;
     }
     public String getPlateNo() {
         return plateNo;
@@ -44,7 +55,5 @@ public class Vehicle {
     }
     public void setColor(String color) {
         this.color = color;
-    }
-
-    
+    }   
 }

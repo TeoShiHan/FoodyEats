@@ -1,7 +1,12 @@
 package Classes;
 import Cache.*;
+import javafx.scene.image.Image;
 
+import java.io.File;
 import java.sql.SQLException;
+import java.text.DateFormat;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.time.LocalDate;
 import java.time.LocalTime;
 import java.util.ArrayList;
@@ -12,7 +17,7 @@ import java.util.UUID;
 
 public class TestJDBC {
     private static JDBC db = new JDBC();
-    public static void main(String[] args) throws SQLException {
+    public static void main(String[] args) throws SQLException, ParseException {
         DataHolder data = DataHolder.getInstance();
         System.out.println(data.getOrders().isEmpty());
         // JDBC buyerTable = new JDBC("SELECT * FROM Buyer");
@@ -48,8 +53,12 @@ public class TestJDBC {
         // LocalDate date = LocalDate.now();
         // System.out.println(date);        
 
-        LocalTime time = LocalTime.now();        
-        System.out.println(time);
+        LocalTime time = LocalTime.of(21,50);   
+        DateFormat indf = new SimpleDateFormat("HH:mm");
+        DateFormat outdf = new SimpleDateFormat("hh:mm aa");
+        System.out.println(indf.parse(time.toString()));
+        System.out.println(outdf.format(indf.parse(time.toString())));
+        System.out.println(time);        
 
         // String uniqueID = UUID.randomUUID().toString();
         // System.out.println(uniqueID);
