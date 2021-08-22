@@ -67,11 +67,11 @@ public class Admin extends Account {
     }
 
     public void verifySeller(String seLLerID){
-        db.executeCUD(String.format("UPDATE Seller SET status=1 WHERE sellerID='%s'",seLLerID));
+        db.executeCUD(String.format("UPDATE `Seller` SET status=1 WHERE sellerID='%s'",seLLerID));
     }
 
     public void verifyRider(String rIDerID){
-        db.executeCUD(String.format("UPDATE Rider SET status=1 WHERE riderID='%s'",rIDerID));
+        db.executeCUD(String.format("UPDATE `Rider` SET status=1 WHERE riderID='%s'",rIDerID));
 
     }
 
