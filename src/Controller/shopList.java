@@ -112,7 +112,7 @@ public class shopList implements Initializable {
             String shopID      = (String)  shopTable.get(i).get("shopID");
             System.out.println(shopID);
             String shopName    = (String)  shopTable.get(i).get("shopName");
-            Double deliveryFee = (Double)  shopTable.get(i).get("deliveryFee");
+            double deliveryFee = (double)  shopTable.get(i).get("deliveryFee");
             String imgPath     = (String)  shopTable.get(i).get("imgPath");
             System.out.println(imgPath);
 

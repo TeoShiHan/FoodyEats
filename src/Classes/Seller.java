@@ -1,8 +1,22 @@
 package Classes;
 
+import Cache.DataHolder;
+import Cache.GUI;
+
+import java.io.File;
+import java.io.IOException;
+import java.nio.file.Files;
+import java.nio.file.Path;
+import java.nio.file.Paths;
+import java.sql.SQLException;
+import java.time.LocalDate;
 import java.util.ArrayList;
 
 public class Seller extends Account{
+    private JDBC db = new JDBC();
+    private DataHolder data = DataHolder.getInstance();
+    private GUI gui = GUI.getInstance();
+
     private String sellerID;
     private String name;
     private String address;    
@@ -11,6 +25,8 @@ public class Seller extends Account{
     private String bankAcc;
     private String accountID;
     private String shopID;
+    private Shop shop;
+    // private List<Shop> shop = new ArrayList<>();
     private ArrayList<Order> order = new ArrayList<>();
 
     public Seller(){}
@@ -181,6 +197,39 @@ public class Seller extends Account{
         this.order = order;
     }
 
+    public Shop getShop() {
+        return shop;
+    }
+
+    public void setShop(Shop shop) {
+        this.shop = shop;
+    }
+
     //  METHODS
-    
+    @Override
+    public void register() throws IOException {
+        // TODO Auto-generated method stub
+        super.register();
+        try {                        
+            String nextSellerID = db.getNextId("Seller");
+            String nextShopID = db.getNextId("Shop");
+            db.executeCUD(String.format("INSERT INTO Seller VALUES ('%s','%s','%s','%s','%s','%s','%s',%d)",nextSellerID,address,NRIC,licenseNumber,bankAcc,accountID,nextShopID,0));                                    
+            shop.setImgPath("Images/"+nextShopID+shop.getImgPath());
+            db.executeCUD(String.format("INSERT INTO Shop VALUES ('%s','%s','%s','%s','%s','%s','%s',%.2f,%d,'%s')",nextShopID,shop.getName(),LocalDate.now(),shop.getStartHour().toString(),shop.getEndHour().toString(),shop.getTel(),shop.getAddress(),shop.getDeliveryFee(),shop.getStatus(),shop.getImgPath()));  //shop.getDeliveryFee()
+
+            this.sellerID = nextSellerID;
+            this.shop.setShopID(nextShopID);
+            gui.toNextScene("View/Login.fxml");
+
+            Path source = Paths.get(Paths.get("").toAbsolutePath().toString()+"/src/Images/temp"+shop.getImgPath().substring(shop.getImgPath().indexOf(".")).replaceAll("\\\\", "/"));            
+            // https://stackoverflow.com/questions/1158777/rename-a-file-using-java/20260300#20260300
+            Files.move(source, source.resolveSibling(nextShopID+shop.getImgPath().substring(shop.getImgPath().indexOf("."))));            
+            gui.informationPopup("Account created successfully", "You have to wait about 48hours to verify your account. Thank you!");
+            gui.notAlertInProgress();
+        } catch (SQLException e) {
+            // TODO Auto-generated catch block
+            e.printStackTrace();
+            gui.informationPopup("Something wrong", "There is an error when inserting to database");
+        }        
+    }
 }

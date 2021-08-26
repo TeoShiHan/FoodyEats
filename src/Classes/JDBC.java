@@ -69,7 +69,7 @@ public class JDBC {
                 for (int i=1;i<=queryRslt.getMetaData().getColumnCount();i++) { 
                     Object obj=queryRslt.getObject(i); //get the value for whatever column the result has   
                     // hMap.put(rs.getMetaData().getColumnName(i), obj); 
-                    hMap.put(queryRslt.getMetaData().getColumnName(i), obj);
+                    hMap.put(queryRslt.getMetaData().getColumnLabel(i), obj); 
                 }                            
                 return hMap;
             }catch (Exception e) { 
@@ -86,13 +86,13 @@ public class JDBC {
         try{                        
             this.queryRslt = this.SQLstatement.executeQuery(statement);
             while(queryRslt.next()){           
-                HashMap<String, Object> hmap = new HashMap<String,Object>();
-                for (int i=1;i<=queryRslt.getMetaData().getColumnCount();i++) { 
+                HashMap<String, Object> hMap = new HashMap<String,Object>();
+                for (int i=1;i<=queryRslt.getMetaData().getColumnCount();i++) {                     
                     Object obj=queryRslt.getObject(i); //get the value for whatever column the result has (so that no need identify whats the value type)  
                     // hMap.put(rs.getMetaData().getColumnName(i), obj); 
-                    hmap.put(queryRslt.getMetaData().getColumnName(i), obj);                    
-                }                
-                hMapList.add(hmap);
+                    hMap.put(queryRslt.getMetaData().getColumnLabel(i), obj);                    
+                }                             
+                hMapList.add(hMap);
             }                
             this.queryRslt.beforeFirst();
             return hMapList;        
@@ -115,7 +115,7 @@ public class JDBC {
         return String.format("%s%05d",table.substring(0,1).toUpperCase(),id+1);
     }
 
-    //#region asdasdasd
+    //#region used to readLast row of table, an old method used for getting nextRowId
     // // other method
     // public HashMap<String,Object> readLast(String table){     
     //     openConnection();

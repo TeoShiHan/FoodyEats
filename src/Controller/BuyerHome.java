@@ -46,7 +46,7 @@ public class BuyerHome implements Initializable{
 
     @Override
     public void initialize(URL location, ResourceBundle resources) {                
-        lblWelcome.setText("Welcome "+data.getBuyer().getUsername());
+        lblWelcome.setText("Welcome "+data.getAccount().getUsername());
     }
     
     public void initData(Object obj) throws NoSuchMethodException, SecurityException, IllegalAccessException, IllegalArgumentException, InvocationTargetException{

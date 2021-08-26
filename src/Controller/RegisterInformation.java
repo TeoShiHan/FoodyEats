@@ -69,7 +69,7 @@ public class RegisterInformation implements Initializable{
         btnContinue.setOnAction(evnt -> {
             try {
                 if(buyerRegisterController.isFilled()){
-                    data.addObjectHolder("accountType", "Buyer");
+                    // data.addObjectHolder("accountType", "Buyer");
                     buyerRegisterController.getInfo();
                     toRegisterAccount();
                     gui.alertInProgress();
@@ -91,7 +91,7 @@ public class RegisterInformation implements Initializable{
         btnContinue.setOnAction(evnt -> {
             try {
                 if(riderRegisterController.isFilled()){
-                    data.addObjectHolder("accountType", "Rider");
+                    // data.addObjectHolder("accountType", "Rider");
                     riderRegisterController.getInfo();                    
                     toRegisterAccount();
                     gui.alertInProgress();
@@ -112,7 +112,7 @@ public class RegisterInformation implements Initializable{
         btnContinue.setOnAction(evnt -> {
             try {          
                 if(sellerRegisterController.isFilled()){
-                    data.addObjectHolder("accountType", "Seller");
+                    // data.addObjectHolder("accountType", "Seller");
                     sellerRegisterController.getInfo();
                     gui.alertInProgress();
                     loadInformationFields("View/RegisterView/RegShop.fxml");

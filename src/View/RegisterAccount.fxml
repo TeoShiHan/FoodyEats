@@ -1,17 +1,25 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
 <?import javafx.geometry.Insets?>
+<?import javafx.scene.Cursor?>
 <?import javafx.scene.control.Button?>
 <?import javafx.scene.control.Label?>
 <?import javafx.scene.control.PasswordField?>
 <?import javafx.scene.control.TextField?>
 <?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.layout.HBox?>
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.shape.Rectangle?>
 <?import javafx.scene.text.Font?>
 
 <AnchorPane fx:id="paneRegisterAccount" maxHeight="-Infinity" maxWidth="-Infinity" prefWidth="800.0" style="-fx-background-color: #FAF0E4;" xmlns="http://javafx.com/javafx/16" xmlns:fx="http://javafx.com/fxml/1" fx:controller="Controller.RegisterAccount">
    <children>
+      <Rectangle arcHeight="5.0" arcWidth="5.0" fill="#ff9819" height="98.0" stroke="BLACK" strokeType="INSIDE" strokeWidth="0.0" width="800.0" />
+      <Label layoutX="1.0" layoutY="14.0" prefHeight="70.0" prefWidth="800.0" style="-fx-font-weight: 800; -fx-alignment: center;" text="Register Account" textAlignment="CENTER">
+         <font>
+            <Font size="48.0" />
+         </font>
+      </Label>
       <VBox alignment="TOP_CENTER" layoutX="103.0" layoutY="120.0">
          <children>
             <VBox prefHeight="82.0" prefWidth="596.0">
@@ -44,15 +52,36 @@
                <VBox.margin>
                   <Insets bottom="10.0" />
                </VBox.margin>
-            </VBox>                         
-            <Button fx:id="btnRegister" mnemonicParsing="false" onAction="#actionRegister" prefHeight="1.0" prefWidth="239.0" text="Register">
-               <font>
-                  <Font size="24.0" />
-               </font>
+            </VBox>
+            <HBox alignment="CENTER" prefWidth="200.0" VBox.vgrow="ALWAYS">
+               <children>
+                  <Button fx:id="btnBack" mnemonicParsing="false" onAction="#toBack" prefWidth="239.0" style="-fx-font-weight: 800; -fx-font-size: 24px; -fx-background-color: #FEBD5C;" text="Back" HBox.hgrow="ALWAYS">
+                     <font>
+                        <Font size="24.0" />
+                     </font>
+                     <HBox.margin>
+                        <Insets left="20.0" right="20.0" />
+                     </HBox.margin>
+                     <cursor>
+                        <Cursor fx:constant="HAND" />
+                     </cursor>
+                  </Button>
+                  <Button fx:id="btnRegister" mnemonicParsing="false" onAction="#actionRegister" prefWidth="239.0" style="-fx-background-color: #8FC875; -fx-font-weight: 800; -fx-font-size: 24px;" text="Register">
+                     <font>
+                        <Font size="24.0" />
+                     </font>
+                     <cursor>
+                        <Cursor fx:constant="HAND" />
+                     </cursor>
+                     <HBox.margin>
+                        <Insets left="20.0" right="20.0" />
+                     </HBox.margin>
+                  </Button>
+               </children>
                <VBox.margin>
-                  <Insets top="15.0" />
+                  <Insets top="20.0" />
                </VBox.margin>
-            </Button>
+            </HBox>
             <!-- <Label fx:id="linkToLogin" alignment="CENTER" onMouseClicked="#toLogin" prefHeight="32.0" prefWidth="318.0" style="-fx-font-weight: 800; -fx-text-fill: #2E989F; -fx-alignment: center;" text="Already have an account? Login here" underline="true">
                <font>
                   <Font size="18.0" />
@@ -62,13 +91,10 @@
                </VBox.margin>
             </Label> -->
          </children>
+         <padding>
+            <Insets bottom="20.0" top="20.0" />
+         </padding>
       </VBox>
-      <Rectangle arcHeight="5.0" arcWidth="5.0" fill="#ff9819" height="98.0" stroke="BLACK" strokeType="INSIDE" strokeWidth="0.0" width="800.0" />
-      <Label layoutX="1.0" layoutY="14.0" prefHeight="70.0" prefWidth="800.0" style="-fx-font-weight: 800; -fx-alignment: center;" text="Register Account" textAlignment="CENTER">
-         <font>
-            <Font size="48.0" />
-         </font>
-      </Label>
    </children>
    <padding>
       <Insets bottom="30.0" />

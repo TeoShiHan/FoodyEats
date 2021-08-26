@@ -1,13 +1,16 @@
 package Classes;
 
 import java.io.IOException;
+import java.sql.SQLException;
 import java.time.LocalDate;
 import java.util.HashMap;
 
 import Cache.*;
  
 public class Account {    
-    private static JDBC db = new JDBC();    
+    private static JDBC db = new JDBC();
+    private DataHolder data = DataHolder.getInstance();
+    private static GUI gui = GUI.getInstance();
 
     protected String accountID,username,password,name,email,mobileNo,accType;
     private LocalDate regDate;    
@@ -89,43 +92,60 @@ public class Account {
         this.accType = accType;
     }
 
-    public void register() throws IOException {
-        
+    public void register() throws IOException {        
+        try {
+            String nextAccountID = db.getNextId("Account");
+            db.executeCUD(String.format("INSERT INTO Account VALUES ('%s','%s','%s','%s','%s','%s','%s','%s')",nextAccountID,username,password,name,email,mobileNo,LocalDate.now().toString(),accType));
+            this.accountID = nextAccountID;            
+        } catch (SQLException e) {
+            // TODO Auto-generated catch block
+            e.printStackTrace();
+        }
     }
 
-    public static boolean login(String username, String password){  
+    public static void login(String username, String password) throws IOException{  
         DataHolder data = DataHolder.getInstance();        
-        HashMap<String,Object> acc = db.readOne(String.format("SELECT * FROM Account WHERE username='%s' AND password='%s' LIMIT 1",username,password));
+        HashMap<String,Object> acc = db.readOne(String.format("SELECT * FROM `Account` WHERE username='%s' AND password='%s' LIMIT 1",username,password));
         if(acc==null){
-            return false;
-        }else{
+            gui.informationPopup("Invalid Account", "Please try again");
+        }else{            
             data.addObjectHolder("accountType", acc.get("type"));
-            HashMap<String,Object> childAcc = db.readOne(String.format("SELECT * FROM %s WHERE accountID='%s'",acc.get("type"),acc.get("accountID")));            
-            if(acc.get("type").equals("Buyer")){                
+            HashMap<String,Object> childAcc = db.readOne(String.format("SELECT * FROM `%s` WHERE accountID='%s'",acc.get("type"),acc.get("accountID")));            
+            if(acc.get("type").equals("Buyer")){                  
                 Buyer buyer = new Buyer(
                     acc.get("accountID"),acc.get("username"),acc.get("password"),acc.get("name"),
                     acc.get("email"),acc.get("mobileNo"),acc.get("type"),childAcc.get("buyerID"),
                     childAcc.get("address"),childAcc.get("cartID")
-                );                
-                data.setBuyer(buyer);                                
-            }else if(acc.get("type").equals("Rider")){
-                Rider rider = new Rider(
-                    acc.get("accountID"),acc.get("username"),acc.get("password"),acc.get("name"),
-                    acc.get("email"),acc.get("mobileNo"),acc.get("type"),childAcc.get("riderID"),
-                    childAcc.get("vehicleID")
-                );                      
-                data.setRider(rider);
-            }else if(acc.get("type").equals("Seller")){  
-                Seller seller = new Seller(
-                    acc.get("accountID"),acc.get("username"),acc.get("password"),acc.get("name"),
-                    acc.get("email"),acc.get("mobileNo"),acc.get("type"),childAcc.get("sellerID"),
-                    childAcc.get("address"),childAcc.get("NRIC"),childAcc.get("licenseNumber"),
-                    childAcc.get("bankAcc"),childAcc.get("shopID")
-                );                      
-                data.setSeller(seller);              
-                // data.setBuyer(new Buyer(...));                
-            }
-            return true;
+                );   
+                data.setAccount(buyer);
+                data.setBuyer(buyer);
+                gui.toNextScene(String.format("View/%sHome.fxml",acc.get("type")));
+            }else{
+                if((int)childAcc.get("status")==1){                    
+                    if(acc.get("type").equals("Rider")){
+                        Rider rider = new Rider(
+                            acc.get("accountID"),acc.get("username"),acc.get("password"),acc.get("name"),
+                            acc.get("email"),acc.get("mobileNo"),acc.get("type"),childAcc.get("riderID"),
+                            childAcc.get("vehicleID")
+                        );
+                        Vehicle vehicle = new Vehicle();
+                        data.setAccount(rider);   
+                        data.setRider(rider);
+                    }else if(acc.get("type").equals("Seller")){  
+                        Seller seller = new Seller(
+                            acc.get("accountID"),acc.get("username"),acc.get("password"),acc.get("name"),
+                            acc.get("email"),acc.get("mobileNo"),acc.get("type"),childAcc.get("sellerID"),
+                            childAcc.get("address"),childAcc.get("NRIC"),childAcc.get("licenseNumber"),
+                            childAcc.get("bankAcc"),childAcc.get("shopID")
+                        );
+                        data.setAccount(seller);
+                        data.setSeller(seller);
+                    }
+                    gui.toNextScene(String.format("View/%sHome.fxml",acc.get("type")));
+                }else{
+                    gui.informationPopup("Account Pending", "Your account has been verifying");
+                }                
+            }            
         }         
     }    
 

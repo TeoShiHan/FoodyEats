@@ -9,10 +9,18 @@ import java.util.List;
 public final class DataHolder {  
     JDBC db = new JDBC();
 
-    private Account account = new Account();
-    private Buyer buyer = new Buyer();
-    private Rider rider = new Rider();
-    private Seller seller = new Seller();
+    private Account account = new Account();  // used for stored logged in user account, whether it is buyer/rider/seller
+    private Buyer buyer = new Buyer();  // used for get the info of specified buyer
+    private Rider rider = new Rider();  // used for get the info of specified rider
+    private Seller seller = new Seller();  // used for get the info of specified seller
+    private Admin admin = new Admin();
+    private Vehicle vehicle = new Vehicle();
+    private List<Cart> carts = new ArrayList<>(); 
+    private Cart cart = new Cart();
+    private List<CartItem> cartItems = new ArrayList<>(); 
+    private CartItem cartItem = new CartItem();
+    private List<Shop> shops = new ArrayList<>();
+    private Shop shop = new Shop();    
     private List<Order> orders = new ArrayList<>();
     private Order order = new Order();
     private List<OrderItem> orderItems = new ArrayList<>();
@@ -60,6 +68,104 @@ public final class DataHolder {
       return this.seller;
     }
     
+    public Admin getAdmin() {
+      return admin;
+    }
+    public void setAdmin(Admin admin) {
+      this.admin = admin;
+    }
+
+    public Vehicle getVehicle() {
+      return vehicle;
+    }
+    public void setVehicle(Vehicle vehicle) {
+      this.vehicle = vehicle;
+    }
+
+    public List<Cart> getCarts() {
+      return carts;
+    }
+    public void setCarts(List<Cart> carts) {
+      this.carts = carts;
+    }
+
+    public Cart getCart() {
+      return cart;
+    }
+    public void setCart(Cart cart) {
+      this.cart = cart;
+    }
+
+    public List<CartItem> getCartItems() {
+      return cartItems;
+    }
+    public void setCartItems(List<CartItem> cartItems) {
+      this.cartItems = cartItems;
+    }
+
+    public CartItem getCartItem() {
+      return cartItem;
+    }
+    public void setCartItem(CartItem cartItem) {
+      this.cartItem = cartItem;
+    }
+
+    public List<Shop> getShops() {
+      return shops;
+    }
+    public void setShops(List<Shop> shops) {
+      this.shops = shops;
+    }
+
+    public Shop getShop() {
+      return shop;
+    }
+    public void setShop(Shop shop) {
+      this.shop = shop;
+    }
+
+    public List<Order> getOrders(){
+      return orders;
+    }    
+    public void setOrders(List<Order> orders) {
+      this.orders = orders;
+    }
+
+    public Order getOrder(){
+      return order;
+    }
+    public void setOrder(Order order){
+      this.order = order;
+    }
+
+    public List<OrderItem> getOrderItems(){
+      return orderItems;
+    }    
+    public void setOrderItems(List<OrderItem> orderItems) {
+      this.orderItems = orderItems;
+    }
+
+    public OrderItem getOrderItem(){
+      return orderItem;
+    }
+    public void setOrderItem(OrderItem orderItem){
+      this.orderItem = orderItem;
+    }    
+
+    public List<Food> getFoods(){
+      return foods;
+    }
+    public void setFoods(ArrayList<Food> foods){
+      this.foods = foods;
+    }
+
+    public Food getFood(){
+      return food;
+    }
+    public void setFood(Food Food){
+      this.food = Food;
+    }
+
     public void addObjectHolder(String key,Object value){
       this.objectHolder.put(key, value);
     }
@@ -73,84 +179,61 @@ public final class DataHolder {
       return this.objectHolder;
     }
     
-    public void addStringHolder(String key,String value){
-      this.stringHolder.put(key, value);
-    }
-    public String getStringHolder(String key){
-      String stringValue= stringHolder.get(key);      
-      return stringValue;
-    }
+    //#region StringHolder,DoubleHolder,BooleanHolder, not sure is it needed, maybe ObjectHolder enough?
+    // public void addStringHolder(String key,String value){
+    //   this.stringHolder.put(key, value);
+    // }
+    // public String getStringHolder(String key){
+    //   String stringValue= stringHolder.get(key);      
+    //   return stringValue;
+    // }
 
-    public void addDoubleHolder(String key,double value){
-      this.doubleHolder.put(key, value);
-    }
-    public double getDoubleHolder(String key){
-      double doubleValue= doubleHolder.get(key);      
-      return doubleValue;
-    }
+    // public void addDoubleHolder(String key,double value){
+    //   this.doubleHolder.put(key, value);
+    // }
+    // public double getDoubleHolder(String key){
+    //   double doubleValue= doubleHolder.get(key);      
+    //   return doubleValue;
+    // }
 
-    public void addBooleanHolder(String key,boolean value){
-      this.booleanHolder.put(key, value);
-    }
-    public boolean getBooleanHolder(String key){
-      boolean booleanValue = booleanHolder.get(key);      
-      return booleanValue;
-    }
-
-    public List<Order> getOrders(){
-      return orders;
-    }
-    public void setOrders(ArrayList<Order> orders){
-      this.orders = orders;
-    }
+    // public void addBooleanHolder(String key,boolean value){
+    //   this.booleanHolder.put(key, value);
+    // }
+    // public boolean getBooleanHolder(String key){
+    //   boolean booleanValue = booleanHolder.get(key);      
+    //   return booleanValue;
+    // }
+    //#endregion
+    
+    //#region not sure is it needed in here,...
+    // since load from database can be done in the classes,
+    // can refer to Buyer Class loadOrders() method
+    
     // public void loadOrders(){
     //   ArrayList<HashMap<String,Object>> os = db.readAll("SELECT * FROM `Order`");
     //   for(HashMap<String,Object> o : os){
     //     orders.add(new Order(o.get("orderID"),o.get("status"),o.get("dateCreated"),o.get("timeCreated"),o.get("buyerID"),o.get("riderID"),o.get("shopID"),o.get("paymentID"),o.get("reviewID")));
     //   }
     // }
-     
-    public Order getOrder(){
-      return order;
-    }
-    public void setOrder(Order order){
-      this.order = order;
-    }
+
     // public void loadOrder(String id){
     //   HashMap<String,Object> o = db.readOne(String.format("SELECT * FROM `Order` WHERE orderID='%s'",id));
     //   this.order = new Order(o.get("orderID"),o.get("status"),o.get("dateCreated"),o.get("timeCreated"),o.get("buyerID"),o.get("riderID"),o.get("shopID"),o.get("paymentID"),o.get("reviewID"));
     // }
 
-    public List<OrderItem> getOrderItems(){
-      return orderItems;
-    }
-    public void setOrderItems(ArrayList<OrderItem> orderItems){
-      this.orderItems = orderItems;
-    }
+    
     // public void loadOrderItems(String id){
     //   ArrayList<HashMap<String,Object>> os = db.readAll(String.format("SELECT * FROM `OrderItem` WHERE orderID='%s'",id));
     //   for(HashMap<String,Object> o : os){                
     //     orderItems.add(new OrderItem(o.get("orderID"),o.get("foodID"),o.get("quantity")));
     //   }
     // }
-     
-    public OrderItem getOrderItem(){
-      return orderItem;
-    }
-    public void setOrderItem(OrderItem orderItem){
-      this.orderItem = orderItem;
-    }
+         
     // public void loadOrderItem(String id){
     //   HashMap<String,Object> o = db.readOne("SELECT * FROM `OrderItem` WHERE ");
     //   this.orderItem = new OrderItem(o.get("orderID"),o.get("foodID"),o.get("quantity"));
     // }
 
-    public List<Food> getFoods(){
-      return foods;
-    }
-    public void setFoods(ArrayList<Food> foods){
-      this.foods = foods;
-    }
     // public void loadFoods(){
     //   ArrayList<HashMap<String,Object>> fs = db.readAll("SELECT * FROM `Food`");
     //   for(HashMap<String,Object> f : fs){
@@ -163,26 +246,20 @@ public final class DataHolder {
     //     foods.add(new Food(f.get("foodID"),f.get("foodName"),f.get("foodDesc"),f.get("imgPath"),f.get("price"),f.get("category"),f.get("shopID")));
     //   }
     // }
-     
-    public Food getFood(){
-      return food;
-    }
-    public void setFood(Food Food){
-      this.food = Food;
-    }
+        
     // public void loadFood(String id){
     //   HashMap<String,Object> f = db.readOne(String.format("SELECT * FROM `Food` WHERE foodID='%s'",id));
     //   this.food = new Food(f.get("foodID"),f.get("foodName"),f.get("foodDesc"),f.get("imgPath"),f.get("price"),f.get("category"),f.get("shopID"));
     // }
+    //#endregion
     
     
     public void clear(){
       DataHolder.getInstance();
       this.account = new Account();
-      // this.account = new Account();
-      // this.account = new Account();
-      // this.account = new Account();
-      // this.account = new Account();
-      // this.account = new Account();
+      this.account = new Admin();
+      this.buyer = new Buyer();
+      this.rider = new Rider();
+      this.seller = new Seller();      
     }
   }

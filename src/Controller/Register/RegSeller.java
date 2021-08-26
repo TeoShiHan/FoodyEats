@@ -1,4 +1,5 @@
 package Controller.Register;
+import Classes.*;
 import Cache.*;
 
 import java.util.HashMap;
@@ -58,20 +59,22 @@ public class RegSeller {
     }    
 
     public boolean isFilled(){                
-        return !(inputName.getText().isEmpty() || inputEmail.getText().isEmpty() || 
-                inputMobileNo.getText().isEmpty() || inputAddress.getText().isEmpty() ||
-                inputNRIC.getText().isEmpty() || inputLicenseNo.getText().isEmpty() ||
-                inputBankAccNo.getText().isEmpty());
+        return !(inputName.getText().strip().isEmpty() || inputEmail.getText().strip().isEmpty() || 
+                inputMobileNo.getText().strip().isEmpty() || inputAddress.getText().strip().isEmpty() ||
+                inputNRIC.getText().strip().isEmpty() || inputLicenseNo.getText().strip().isEmpty() ||
+                inputBankAccNo.getText().strip().isEmpty());
     }
 
     public void getInfo(){        
-        data.addObjectHolder("accountName", inputName.getText());
-        data.addObjectHolder("accountEmail", inputEmail.getText());
-        data.addObjectHolder("accountMobileNo", inputMobileNo.getText());
-        // data.addObjectHolder("accountRegDate", LocalDate.now());
-        data.addObjectHolder("sellerAddress", inputAddress.getText());
-        data.addObjectHolder("sellerNRIC", inputNRIC.getText());
-        data.addObjectHolder("sellerLicenseNo", inputLicenseNo.getText());
-        data.addObjectHolder("sellerBankAccNo", inputBankAccNo.getText());        
+        Seller seller = new Seller();
+        seller.setAccType("Seller");
+        seller.setName(inputName.getText());
+        seller.setEmail(inputEmail.getText());
+        seller.setMobileNo(inputMobileNo.getText());
+        seller.setAddress(inputAddress.getText());
+        seller.setNRIC(inputNRIC.getText());
+        seller.setLicenseNumber(inputLicenseNo.getText());
+        seller.setBankAcc(inputBankAccNo.getText());
+        data.setAccount(seller);
     }
 }
