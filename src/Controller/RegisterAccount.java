@@ -1,10 +1,11 @@
 package Controller;
-import java.io.IOException;
-
 import Cache.*;
-import Classes.Account;
-import Classes.Buyer;
-import Classes.Seller;
+import Classes.*;
+
+import java.io.File;
+import java.io.IOException;
+import java.nio.file.Files;
+
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.control.Button;
@@ -12,6 +13,7 @@ import javafx.scene.control.TextField;
 import javafx.scene.input.MouseEvent;
 
 public class RegisterAccount {
+    private JDBC db = new JDBC();
     private GUI gui = GUI.getInstance();
     private DataHolder data = DataHolder.getInstance();
 
@@ -20,32 +22,33 @@ public class RegisterAccount {
 
     @FXML
     void actionRegister(ActionEvent event) throws IOException {
-        String uname = inputUsername.getText();
-        String pwd = inputPassword.getText();
-        String confirmPwd = inputConfirmPassword.getText();
+        String uname = inputUsername.getText().strip();
+        String pwd = inputPassword.getText().strip();
+        String confirmPwd = inputConfirmPassword.getText().strip();
         if(!(uname.isEmpty() || pwd.isEmpty() || confirmPwd.isEmpty())){
-            if(pwd.equals(confirmPwd)){                                
-                System.out.println(data.getWholeObjectHolder());
-                String className = data.getAccount().getClass().getName();
-                System.out.println(className.substring(className.indexOf(".")+1));
-                switch(className.substring(className.indexOf(".")+1)){
-                    case "Buyer":
-                        data.getBuyer().setUsername(uname);
-                        data.getBuyer().setPassword(pwd);
-                        data.getBuyer().register();
-                        break;           
-                    case "Rider":
-                        data.getRider().setUsername(uname);
-                        data.getRider().setPassword(pwd);
-                        data.getRider().register();
-                        break;           
-                    case "Seller":
-                        data.getSeller().setUsername(uname);
-                        data.getSeller().setPassword(pwd);
-                        data.getSeller().register();
-                        break;  
-                    default:
-
+            if(pwd.equals(confirmPwd)){                                                
+                // if(data.getAccount() instanceof Buyer){                    
+                //     data.getBuyer().setUsername(uname);
+                //     data.getBuyer().setPassword(pwd);
+                //     data.getBuyer().register();                        
+                // }else if(data.getAccount() instanceof Rider){
+                //     data.getRider().setUsername(uname);
+                //     data.getRider().setPassword(pwd);
+                //     data.getRider().register();            
+                // }else if(data.getAccount() instanceof Seller){
+                //     System.out.println(data.getAccount());
+                //     System.out.println(data.getSeller());
+                //     data.getAccount().setUsername(uname);
+                //     data.getAccount().setPassword(pwd);
+                //     data.getAccount().register();
+                // }
+                if(db.readOne(String.format("SELECT * FROM Account WHERE username='%s'",uname))==null){                    
+                    data.getAccount().setUsername(uname);
+                    data.getAccount().setPassword(pwd);
+                    data.getAccount().register();
+                }else{
+                    System.out.println("not alloweds");
+                    gui.informationPopup("Account Registered", "The username has been used, please use another username");        
                 }
             }else{
                 gui.informationPopup("Warning", "Password aren't match, please try again!");

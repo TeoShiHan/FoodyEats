@@ -9,10 +9,10 @@ import java.util.List;
 public final class DataHolder {  
     JDBC db = new JDBC();
 
-    private Account account = new Account();
-    private Buyer buyer = new Buyer();
-    private Rider rider = new Rider();
-    private Seller seller = new Seller();
+    private Account account = new Account();  // used for stored logged in user account, whether it is buyer/rider/seller
+    private Buyer buyer = new Buyer();  // used for get the info of specified buyer
+    private Rider rider = new Rider();  // used for get the info of specified rider
+    private Seller seller = new Seller();  // used for get the info of specified seller
     private Admin admin = new Admin();
     private Vehicle vehicle = new Vehicle();
     private List<Cart> carts = new ArrayList<>(); 
@@ -257,10 +257,9 @@ public final class DataHolder {
     public void clear(){
       DataHolder.getInstance();
       this.account = new Account();
-      // this.account = new Account();
-      // this.account = new Account();
-      // this.account = new Account();
-      // this.account = new Account();
-      // this.account = new Account();
+      this.account = new Admin();
+      this.buyer = new Buyer();
+      this.rider = new Rider();
+      this.seller = new Seller();      
     }
   }

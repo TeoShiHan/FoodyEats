@@ -110,7 +110,12 @@ public class TestJDBC {
 
         // System.out.println(db.readAll("`Order`", "AS o INNER JOIN OrderItem AS oi ON o.orderID = oi.orderID INNER JOIN Buyer as b ON o.buyerID = b.buyerID INNER JOIN Shop AS s ON o.shopID = s.shopID INNER JOIN Payment AS p ON o.paymentID = p.paymentID INNER JOIN Food AS f ON oi.foodID = f.foodID WHERE o.orderID = 'O00002'"));
 
-        System.out.println(Paths.get("").toAbsolutePath().toString().replaceAll("\\\\", "/"));
-        System.out.println("C:\\Users\\Asus\\Downloads\\SEM 3 - OOP\\FoodyEats".replaceAll("\\\\", "/"));
+        // System.out.println(Paths.get("").toAbsolutePath().toString().replaceAll("\\\\", "/"));
+        // System.out.println("C:\\Users\\Asus\\Downloads\\SEM 3 - OOP\\FoodyEats".replaceAll("\\\\", "/"));
+        // File file = new File("Images/temp.jpeg");
+        // System.out.println(file.getAbsolutePath());
+
+        ArrayList<HashMap<String,Object>> ods = db.readAll(String.format("SELECT s.address AS `shopAddress`,s.imgPath AS `shopImagePath`,a.name AS `buyerName`,b.address AS `buyerAddress`,f.imgPath AS `foodImagePath`,s.*,a.*,b.*,oi.*,f.* FROM `Order` o, `Shop` s, `Buyer` b, `OrderItem` oi, `Food` f, `Account` a WHERE o.orderID='%s' AND o.orderID=oi.orderID AND o.shopID=s.shopID AND o.buyerID=b.buyerID AND oi.foodID=f.foodID AND b.accountID=a.accountID","O00009"));
+        System.out.println(ods);
     }    
 }

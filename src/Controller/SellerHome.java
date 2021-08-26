@@ -40,7 +40,8 @@ public class SellerHome implements Initializable{
     public void initialize(URL arg0, ResourceBundle arg1) {
         // TODO Auto-generated method stub    
         toggleSwitch.setAlignment(Pos.CENTER_RIGHT);
-        toggleSwitch.getChildren().setAll(new SwitchButton());        
+        toggleSwitch.getChildren().setAll(new SwitchButton());  
+        lblWelcome.setText("Welcome "+data.getAccount().getUsername());      
     }
 
     @FXML

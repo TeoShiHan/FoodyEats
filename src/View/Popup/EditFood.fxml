@@ -14,13 +14,13 @@
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Font?>
 
-<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefWidth="600.0" xmlns="http://javafx.com/javafx/16" xmlns:fx="http://javafx.com/fxml/1">
+<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefWidth="600.0" xmlns="http://javafx.com/javafx/16" xmlns:fx="http://javafx.com/fxml/1" fx:controller="Controller.Popup.EditFood">
    <children>
       <HBox alignment="CENTER" prefWidth="600.0">
          <children>
             <VBox alignment="CENTER" prefWidth="455.0">
                <children>
-                  <Label fx:id="lblHeading" prefWidth="600.0" style="-fx-font-weight: 800; -fx-alignment: center;" text="Edit Food">
+                  <Label prefWidth="600.0" style="-fx-font-weight: 800; -fx-alignment: center;" text="Edit Food">
                      <font>
                         <Font size="36.0" />
                      </font>

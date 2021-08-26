@@ -117,24 +117,26 @@ public class RegRider implements Initializable{
     }
 
     public boolean isFilled(){                                                 
-        return !(inputName.getText().isEmpty() || inputMobileNo.getText().isEmpty() || 
-                inputEmail.getText().isEmpty() || dropdownVehicleType.getSelectionModel().getSelectedItem()==null ||
-                (!inputBrand.isDisabled() && (inputBrand.getText().isEmpty() || inputModel.getText().isEmpty() ||
-                inputColor.getText().isEmpty() || inputPlateNo.getText().isEmpty())));
+        return !(inputName.getText().strip().isEmpty() || inputMobileNo.getText().strip().isEmpty() || 
+                inputEmail.getText().strip().isEmpty() || dropdownVehicleType.getSelectionModel().getSelectedItem()==null ||
+                (!inputBrand.isDisabled() && (inputBrand.getText().strip().isEmpty() || inputModel.getText().strip().isEmpty() ||
+                inputColor.getText().strip().isEmpty() || inputPlateNo.getText().strip().isEmpty())));
     }
 
     public void getInfo(){    
+        Vehicle vehicle = new Vehicle();          
+        vehicle.setType(dropdownVehicleType.getSelectionModel().getSelectedItem());
+        vehicle.setBrand(inputBrand.getText());
+        vehicle.setModel(inputModel.getText());
+        vehicle.setPlateNo(inputPlateNo.getText());
+        vehicle.setColor(inputColor.getText());  
         Rider rider = new Rider();
         rider.setAccType("Rider");
         rider.setName(inputName.getText());
         rider.setEmail(inputEmail.getText());
-        rider.setMobileNo(inputMobileNo.getText());        
-        data.setAccount(rider);
-        data.getVehicle().setType(dropdownVehicleType.getSelectionModel().getSelectedItem());
-        data.getVehicle().setBrand(inputBrand.getText());
-        data.getVehicle().setModel(inputModel.getText());
-        data.getVehicle().setPlateNo(inputPlateNo.getText());
-        data.getVehicle().setColor(inputColor.getText());                        
+        rider.setMobileNo(inputMobileNo.getText());      
+        rider.setVehicle(vehicle);
+        data.setAccount(rider);                      
     }
     
 }

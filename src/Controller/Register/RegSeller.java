@@ -59,10 +59,10 @@ public class RegSeller {
     }    
 
     public boolean isFilled(){                
-        return !(inputName.getText().isEmpty() || inputEmail.getText().isEmpty() || 
-                inputMobileNo.getText().isEmpty() || inputAddress.getText().isEmpty() ||
-                inputNRIC.getText().isEmpty() || inputLicenseNo.getText().isEmpty() ||
-                inputBankAccNo.getText().isEmpty());
+        return !(inputName.getText().strip().isEmpty() || inputEmail.getText().strip().isEmpty() || 
+                inputMobileNo.getText().strip().isEmpty() || inputAddress.getText().strip().isEmpty() ||
+                inputNRIC.getText().strip().isEmpty() || inputLicenseNo.getText().strip().isEmpty() ||
+                inputBankAccNo.getText().strip().isEmpty());
     }
 
     public void getInfo(){        

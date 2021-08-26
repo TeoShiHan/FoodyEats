@@ -18,19 +18,36 @@ import javafx.scene.control.Spinner;
 import javafx.scene.control.SpinnerValueFactory;
 import javafx.scene.control.TextArea;
 import javafx.scene.control.TextField;
+import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.stage.FileChooser;
 
 public class EditFood implements Initializable{    
     private GUI gui = GUI.getInstance();
+    private DataHolder data = DataHolder.getInstance();
 
-    @FXML private Spinner<Double> spinnerPrice = new Spinner<>();
-    @FXML private Label lblHeading;
+    @FXML private Spinner<Double> spinnerPrice = new Spinner<>();    
     @FXML private ImageView Image;
     @FXML private TextField inputName,inputCategory;
     @FXML private TextArea inputDescription;
     @FXML private Button btnChangeImage,btnYes,btnNo;    
     private File shopImageFile;
+
+    public Button getBtnYes() {
+        return btnYes;
+    }
+
+    public void setBtnYes(Button btnYes) {
+        this.btnYes = btnYes;
+    }
+
+    public Button getBtnNo() {
+        return btnNo;
+    }
+
+    public void setBtnNo(Button btnNo) {
+        this.btnNo = btnNo;
+    }
 
     @Override
     public void initialize(URL location, ResourceBundle resources) {
@@ -43,6 +60,8 @@ public class EditFood implements Initializable{
                 spinnerPrice.getEditor().setText("0");
             }
         });        
+        // https://stackoverflow.com/questions/22710053/how-can-i-show-an-image-using-the-imageview-component-in-javafx-and-fxml
+        Image.setImage(new Image(getClass().getResourceAsStream("/Images/temp.jpg"))); 
     }    
 
     @FXML

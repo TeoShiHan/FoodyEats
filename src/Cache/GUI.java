@@ -5,23 +5,25 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.function.Consumer;
 
-import javax.swing.text.DefaultStyledDocument.ElementSpec;
-
 import javafx.animation.PauseTransition;
 import javafx.fxml.FXMLLoader;
+import javafx.geometry.Insets;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.Alert;
 import javafx.scene.control.ButtonType;
+import javafx.scene.control.Label;
 import javafx.scene.control.Alert.AlertType;
+import javafx.scene.text.Font;
+import javafx.scene.text.FontWeight;
 import javafx.stage.Modality;
+import javafx.stage.Popup;
 import javafx.stage.Stage;
 import javafx.util.Duration;
 
 public final class GUI {
   private final static GUI INSTANCE = new GUI();
-  private Stage stage;
-  private Parent root;
+  private Stage stage;  
   private ArrayList<Scene> prevScenes = new ArrayList<Scene>();        
   
   private GUI() {}
@@ -76,6 +78,38 @@ public final class GUI {
     this.stage.setScene(nextScene);
     this.stage.centerOnScreen();
   }
+
+  public void refreshScene(String fxmlPath) throws IOException{        
+    FXMLLoader loader = new FXMLLoader();    
+    loader.setLocation(getClass().getClassLoader().getResource(fxmlPath));
+
+    Scene nextScene = new Scene(loader.load());
+    String css = this.getClass().getResource("/View/App.css").toExternalForm();
+    nextScene.getStylesheets().add(css);
+    // stage.setUserData(this.p);
+    this.stage.setScene(nextScene);
+    this.stage.centerOnScreen();
+  }  
+
+  public void miniPopup(String message){
+    Label lblText = new Label(message);
+    lblText.setFont(Font.font("message", FontWeight.BOLD, 25));
+    lblText.setMinHeight(100);
+    lblText.setMinWidth(100);
+    lblText.setPadding(new Insets(10, 20, 10, 20));
+    lblText.setStyle(" -fx-background-color: #4BB543;");
+
+    Popup popup = new Popup();
+    popup.getContent().add(lblText);            
+            
+    popup.show(stage);
+    popup.setY(100);    
+
+    // link:https://stackoverflow.com/questions/27334455/how-to-close-a-stage-after-a-certain-amount-of-time-javafx
+    PauseTransition delay = new PauseTransition(Duration.seconds(5));
+    delay.setOnFinished(e -> popup.hide());
+    delay.play();
+}
 
   public void informationPopup(String heading,String message) throws IOException{      
     final Stage myDialog = new Stage();
@@ -144,10 +178,12 @@ public final class GUI {
     
     controller.getBtnYes().setOnAction(e->{      
       passback.accept(true);
+      myDialog.close();
     });
     
     controller.getBtnNo().setOnAction(e->{      
       passback.accept(false);
+      myDialog.close();
     });
     
     myDialog.setScene(dialogScene);
@@ -172,11 +208,13 @@ public final class GUI {
     controller.getBtnYes().setText(btnYesText);
     controller.getBtnYes().setOnAction(e->{      
       passback.accept(true);
+      myDialog.close();
     });
 
     controller.getBtnNo().setText(btnNoText);
     controller.getBtnNo().setOnAction(e->{      
       passback.accept(false);
+      myDialog.close();
     });
     
     myDialog.setScene(dialogScene);

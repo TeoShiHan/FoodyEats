@@ -27,6 +27,6 @@ public class shopItemController {
         shopImg.setImage(shopImage);
         shopName.setText(shop.getName());
         categoryLabel.setText("Not yet include this feature");
-        deliveryFee.setText(shop.getDeliveryFee().toString());
+        deliveryFee.setText("10.0");
     }
 }
