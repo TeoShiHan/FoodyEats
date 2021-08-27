@@ -37,7 +37,7 @@ import javafx.scene.image.ImageView;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.AnchorPane;
 
-public class BuyerOrderDetails implements Initializable {    
+public class SellerOrderDetails implements Initializable {    
     JDBC db = new JDBC();
     GUI gui = GUI.getInstance();    
     DataHolder data = DataHolder.getInstance();    
@@ -82,7 +82,6 @@ public class BuyerOrderDetails implements Initializable {
         
         lblTotalAmount.setText(String.format("RM %.2f",data.getOrder().getTotalAmount()));
 
-        //#region direct select data from database (old method)
         // HashMap<String,Object> buyer = db.readOne(String.format("SELECT * FROM `Buyer` WHERE buyerID='%s'", data.getOrder().getBuyerId()));
         // lblBuyerAddress.setText((String)buyer.get("address"));  
         // HashMap<String,Object> account = db.readOne(String.format("SELECT * FROM `Account` WHERE accountID='%s'", (String)buyer.get("accountID")));
@@ -113,7 +112,6 @@ public class BuyerOrderDetails implements Initializable {
         // colNo.setCellValueFactory(new MapValueFactory<>("no"));
         // colItems.setCellValueFactory(new MapValueFactory<>("foodName"));
         // colQty.setCellValueFactory(new MapValueFactory<>("quantity")); 
-        //#endregion
     }    
 
     @FXML

@@ -40,19 +40,9 @@ public class BuyerOrderHistory implements Initializable {
         // TODO Auto-generated method stub        
         if(data.getOrders().isEmpty()){ 
             data.getBuyer().loadOrders();
-        }
-        // Order order1 = new Order("O1234","Pending","B1233","","S1231","P1245","R1233",LocalDate.now());
-        // Order order2 = new Order("O2234","Accepted","B7486","","S1111","P8975","R2585",LocalDate.now());
-        // Order order3 = new Order("O7234","Completed","B7746","R1254","S1255","P8907","R3000",LocalDate.now());
-        ObservableList<Order> observableList = FXCollections.observableArrayList(data.getOrders());        
-        // if(data.getOrders().isEmpty()){
-        //     data.loadOrders();
-        // }
-        // for(Order order : data.getOrders()){            
-        //     observableList.add(order);
-        // }                
-        
-        // Collections c = Collections.swap(orders, 0, orders.size()-1);
+        }   
+
+        ObservableList<Order> observableList = FXCollections.observableArrayList(data.getOrders());                
         
         tableView.setItems(observableList);
 
@@ -74,7 +64,7 @@ public class BuyerOrderHistory implements Initializable {
                 setGraphic(btnViewDetails);
                 btnViewDetails.setOnAction(e->{          
                     try {
-                        data.setOrder(order);                        
+                        data.setOrder(order);
                         gui.toNextScene("View/BuyerOrderDetails.fxml");
                     } catch (IOException e1) {
                         // TODO Auto-generated catch block
@@ -82,8 +72,7 @@ public class BuyerOrderHistory implements Initializable {
                     }                                      
                 });                                       
             }                     
-        });     
-        // colAction.setCellValueFactory(new PropertyValueFactory<Order,Button>("button"));                
+        });                          
         tableView.setItems(observableList);        
         // tableView.getColumns().addAll(colOrderId,colDate,colStatus,colAction); //not needed
     }    

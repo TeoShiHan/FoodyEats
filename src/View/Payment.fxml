@@ -8,78 +8,146 @@
 <?import javafx.scene.control.RadioButton?>
 <?import javafx.scene.control.ToggleGroup?>
 <?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.layout.HBox?>
+<?import javafx.scene.layout.VBox?>
 <?import javafx.scene.shape.Rectangle?>
 <?import javafx.scene.text.Font?>
 
-<AnchorPane fx:id="panePayment" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="700.0" prefWidth="1200.0" style="-fx-background-color: #FAF0E4;" xmlns="http://javafx.com/javafx/16" xmlns:fx="http://javafx.com/fxml/1" fx:controller="Controller.Payment">
+<AnchorPane fx:id="panePayment" maxHeight="-Infinity" maxWidth="-Infinity" prefWidth="800.0" style="-fx-background-color: #FAF0E4;" xmlns="http://javafx.com/javafx/16" xmlns:fx="http://javafx.com/fxml/1" fx:controller="Controller.Payment">
    <children>
-      <Rectangle arcHeight="5.0" arcWidth="5.0" fill="#ff9819" height="125.0" stroke="BLACK" strokeType="INSIDE" strokeWidth="0.0" width="1200.0" />
-      <Label fx:id="lblCart" layoutX="30.0" layoutY="33.0" prefHeight="46.0" prefWidth="466.0" style="-fx-font-weight: 800;" text="Payment">
+      <VBox alignment="TOP_CENTER" layoutX="108.0" layoutY="132.0" prefWidth="585.0">
+         <children>
+            <HBox alignment="CENTER_LEFT" prefHeight="50.0">
+               <children>
+                  <Label alignment="CENTER_RIGHT" prefHeight="35.0" prefWidth="148.0" style="-fx-font-weight: 800;" text="Total">
+                     <font>
+                        <Font size="24.0" />
+                     </font>
+                  </Label>
+                  <Label text="RM">
+                     <font>
+                        <Font size="24.0" />
+                     </font>
+                     <HBox.margin>
+                        <Insets left="20.0" />
+                     </HBox.margin>
+                  </Label>
+                  <Label fx:id="lblTotal" style="-fx-font-weight: 800;" text="0.00">
+                     <font>
+                        <Font size="24.0" />
+                     </font>
+                     <HBox.margin>
+                        <Insets left="5.0" />
+                     </HBox.margin>
+                  </Label>
+               </children>
+               <VBox.margin>
+                  <Insets bottom="10.0" />
+               </VBox.margin>
+            </HBox>
+            <HBox prefHeight="50.0">
+               <children>
+                  <VBox prefHeight="80.0" prefWidth="148.0">
+                     <children>
+                        <Label alignment="CENTER_RIGHT" prefWidth="196.0" style="-fx-font-weight: 800;" text="Payment">
+                           <font>
+                              <Font size="24.0" />
+                           </font>
+                        </Label>
+                        <Label alignment="CENTER_RIGHT" prefWidth="196.0" style="-fx-font-weight: 800;" text="Method">
+                           <font>
+                              <Font size="24.0" />
+                           </font>
+                        </Label>
+                     </children>
+                  </VBox>
+                  <VBox HBox.hgrow="ALWAYS">
+                     <children>
+                        <RadioButton fx:id="radioBtnSeller" mnemonicParsing="false" prefHeight="50.0" selected="true" text="Credit/Debit Card" VBox.vgrow="ALWAYS">
+                           <font>
+                              <Font size="20.0" />
+                           </font>
+                           <toggleGroup>
+                              <ToggleGroup fx:id="paymentType" />
+                           </toggleGroup>
+                        </RadioButton>
+                        <RadioButton fx:id="radioBtnBuyer" mnemonicParsing="false" prefHeight="50.0" text="Online Banking" toggleGroup="$paymentType" VBox.vgrow="ALWAYS">
+                           <font>
+                              <Font size="20.0" />
+                           </font>
+                        </RadioButton>
+                     </children>
+                     <HBox.margin>
+                        <Insets left="20.0" />
+                     </HBox.margin>
+                     <opaqueInsets>
+                        <Insets left="20.0" />
+                     </opaqueInsets>
+                  </VBox>
+               </children>
+               <VBox.margin>
+                  <Insets bottom="10.0" />
+               </VBox.margin>
+            </HBox>
+            <HBox alignment="CENTER_LEFT" prefHeight="50.0">
+               <children>
+                  <Label alignment="CENTER_RIGHT" prefHeight="35.0" prefWidth="148.0" style="-fx-font-weight: 800;" text="Bank" HBox.hgrow="ALWAYS">
+                     <font>
+                        <Font size="24.0" />
+                     </font>
+                  </Label>
+                  <ComboBox fx:id="dropdownBank" prefHeight="50.0" prefWidth="303.0" promptText="Select Yout Bank" HBox.hgrow="ALWAYS">
+                     <cursor>
+                        <Cursor fx:constant="DEFAULT" />
+                     </cursor>
+                     <HBox.margin>
+                        <Insets left="20.0" />
+                     </HBox.margin>
+                  </ComboBox>
+               </children>
+               <VBox.margin>
+                  <Insets bottom="10.0" />
+               </VBox.margin>
+            </HBox>
+            <HBox alignment="CENTER" prefWidth="600.0">
+               <children>
+                  <Button fx:id="btnCancel" mnemonicParsing="false" onAction="#toBack" prefHeight="64.0" prefWidth="142.0" style="-fx-font-weight: 800; -fx-background-color: #CF6262; -fx-font-size: 24px;" text="Cancel" HBox.hgrow="ALWAYS">
+                     <font>
+                        <Font size="24.0" />
+                     </font>
+                     <HBox.margin>
+                        <Insets left="30.0" right="30.0" />
+                     </HBox.margin>
+                     <cursor>
+                        <Cursor fx:constant="HAND" />
+                     </cursor>
+                  </Button>
+                  <Button fx:id="btnProceed" mnemonicParsing="false" onAction="#actionProceedPayment" prefHeight="64.0" prefWidth="142.0" style="-fx-font-weight: 800; -fx-background-color: #8FC875; -fx-font-size: 24px;" text="Proceed" HBox.hgrow="ALWAYS">
+                     <font>
+                        <Font size="24.0" />
+                     </font>
+                     <HBox.margin>
+                        <Insets left="30.0" right="30.0" />
+                     </HBox.margin>
+                     <cursor>
+                        <Cursor fx:constant="HAND" />
+                     </cursor>
+                  </Button>
+               </children>
+               <VBox.margin>
+                  <Insets top="30.0" />
+               </VBox.margin>
+            </HBox>
+         </children>
+      </VBox>
+      <Rectangle arcHeight="5.0" arcWidth="5.0" fill="#ff9819" height="98.0" stroke="BLACK" strokeType="INSIDE" strokeWidth="0.0" width="800.0" />
+      <Label layoutX="1.0" layoutY="14.0" prefHeight="70.0" prefWidth="800.0" style="-fx-font-weight: 800; -fx-alignment: center;" text="Payment" textAlignment="CENTER">
          <font>
-            <Font size="36.0" />
+            <Font size="48.0" />
          </font>
       </Label>
-      <Label layoutX="30.0" layoutY="164.0" prefHeight="60.0" prefWidth="291.0" style="-fx-font-weight: 800;" text="Total">
-         <font>
-            <Font size="24.0" />
-         </font>
-      </Label>
-      <Label layoutX="29.0" layoutY="420.0" prefHeight="60.0" prefWidth="291.0" style="-fx-font-weight: 800;" text="Payment method">
-         <font>
-            <Font size="24.0" />
-         </font>
-      </Label>
-      <Label layoutX="263.0" layoutY="164.0" prefHeight="87.0" prefWidth="895.0" style="-fx-background-color: lightgray;" text="Total">
-         <font>
-            <Font size="24.0" />
-         </font>
-         <padding>
-            <Insets left="10.0" />
-         </padding>
-      </Label>
-      <RadioButton layoutX="263.0" layoutY="479.0" mnemonicParsing="false" prefHeight="60.0" prefWidth="895.0" text="Online Banking">
-         <font>
-            <Font size="24.0" />
-         </font>
-         <toggleGroup>
-            <ToggleGroup fx:id="paymentMethod" />
-         </toggleGroup>
-      </RadioButton>
-      <RadioButton layoutX="263.0" layoutY="420.0" mnemonicParsing="false" prefHeight="60.0" prefWidth="895.0" selected="true" text="Credit / Debit Bank" toggleGroup="$paymentMethod">
-         <font>
-            <Font size="24.0" />
-         </font>
-      </RadioButton>
-      <Label layoutX="29.0" layoutY="294.0" prefHeight="60.0" prefWidth="291.0" style="-fx-font-weight: 800;" text="Bank">
-         <font>
-            <Font size="24.0" />
-         </font>
-      </Label>
-      <ComboBox layoutX="263.0" layoutY="294.0" prefHeight="87.0" prefWidth="895.0" promptText="Select Yout Bank">
-         <cursor>
-            <Cursor fx:constant="DEFAULT" />
-         </cursor>
-      </ComboBox>
-      <Button layoutX="263.0" layoutY="567.0" mnemonicParsing="false" prefHeight="87.0" prefWidth="291.0" text="Proceed">
-         <font>
-            <Font size="24.0" />
-         </font>
-      </Button>
-      <Button layoutX="600.0" layoutY="567.0" mnemonicParsing="false" prefHeight="87.0" prefWidth="291.0" text="Cancel">
-         <font>
-            <Font size="24.0" />
-         </font>
-      </Button>      
-      <!-- <ImageView fx:id="iconCart" fitHeight="80.0" fitWidth="80.0" layoutX="990.0" layoutY="20.0" onMouseClicked="#toCart" pickOnBounds="true" preserveRatio="true">
-         <image>
-            <Image url="@Images/orderHistoryIcon.png" />
-         </image>
-      </ImageView>
-      <ImageView fx:id="iconHome" fitHeight="80.0" fitWidth="80.0" layoutX="1090.0" layoutY="20.0" onMouseClicked="#toHome" pickOnBounds="true" preserveRatio="true">
-         <image>
-            <Image url="@Images/homeIcon.png" />
-         </image>
-      </ImageView> -->
-            
    </children>
+   <padding>
+      <Insets bottom="30.0" />
+   </padding>   
 </AnchorPane>

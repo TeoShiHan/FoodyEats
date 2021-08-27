@@ -87,32 +87,35 @@ public class Rider extends Account{
         data.setOrders(this.orders);
     } 
 
-    public void acceptedOrder(String oRDerID){
-        db.executeCUD(String.format("UPDATE `Order` SET status='Rider Accepted', riderID='%s' WHERE orderID='%s'",this.riderID,oRDerID));
+    public void acceptOrder(String oRDerID){
+        data.getOrder().setRiderID(this.riderID);
+        db.executeCUD(String.format("UPDATE `Order` SET status='Rider Accepted', riderID='%s' WHERE orderID='%s'",this.riderID,oRDerID));        
     }
 
-    public void collectedOrder(String oRDerID){
+    public void collectOrder(String oRDerID){
         db.executeCUD(String.format("UPDATE `Order` SET status='Rider Collected', riderID='%s' WHERE orderID='%s'",this.riderID,oRDerID));
     }
 
-    public void deliveredOrder(String oRDerID){
+    public void deliveredOrder(String oRDerID){        
         db.executeCUD(String.format("UPDATE `Order` SET status='Completed', riderID='%s' WHERE orderID='%s'",this.riderID,oRDerID));
     }
 
     @Override
     public void register() throws IOException{
         // TODO Auto-generated method stub
-        try {
-            String nextRiderID = db.getNextId("Rider");
-            String nextAccountID = db.getNextId("Account"); 
-            String nextVehicleID = db.getNextId("Vehicle");         
-            db.executeCUD(String.format("INSERT INTO Account VALUES ('%s','%s','%s','%s','%s','%s','%s','%s')",nextAccountID,username,password,name,email,mobileNo,LocalDate.now().toString(),accType));
-            db.executeCUD(String.format("INSERT INTO Vehicle VALUES ('%s','%s','%s','%s''%s')",nextVehicleID, vehicle.getPlateNo(), vehicle.getBrand(), vehicle.getModel(), vehicle.getColor()));
-            db.executeCUD(String.format("INSERT INTO Rider VALUES ('%s','%s','%s','%s')",nextRiderID,nextAccountID,nextVehicleID, 0));
-            this.accountID = nextAccountID;
+        super.register();
+        try {            
+            String nextRiderID = db.getNextId("Rider");            
+            String nextVehicleID = db.getNextId("Vehicle");                     
+            db.executeCUD(String.format("INSERT INTO Rider VALUES ('%s','%s','%s',%d)",nextRiderID,accountID,nextVehicleID, 0));            
+            db.executeCUD(String.format("INSERT INTO Vehicle VALUES ('%s','%s','%s','%s','%s','%s')",nextVehicleID, vehicle.getType(), vehicle.getBrand(), vehicle.getModel(), vehicle.getPlateNo(), vehicle.getColor()));
             this.riderID = nextRiderID;
             this.vehicleID = nextVehicleID;
-                       
+            this.vehicle.setVehicleID(nextVehicleID);            
+            gui.toNextScene("View/Login.fxml");
+            gui.informationPopup("Account created successfully", "You have to wait about 48hours to verify your account. Thank you!");
+            gui.notAlertInProgress();
+            data.setRider(this);
         } catch (SQLException e) {
             // TODO Auto-generated catch block
             e.printStackTrace();
