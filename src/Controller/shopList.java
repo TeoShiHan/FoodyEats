@@ -13,10 +13,13 @@ import java.net.URL;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.control.ScrollPane;
+import javafx.scene.effect.DropShadow;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.GridPane;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.Region;
+import javafx.scene.layout.StackPane;
+import javafx.scene.paint.Color;
 
 public class shopList implements Initializable {
     
@@ -56,7 +59,9 @@ public class shopList implements Initializable {
 
                 System.out.println("successfully set the location");
 
-                HBox shopItem = fxmlLoader.load();
+                StackPane shadowPane = fxmlLoader.load();
+
+                shopList.setEffect(new DropShadow(10,Color.BLACK));
 
                 System.out.println("successfully load the hbox");
 
@@ -81,7 +86,7 @@ public class shopList implements Initializable {
                     gridRow++;
                 }
 
-                 shopListGrid.add(shopItem, gridCol++, gridRow);
+                 shopListGrid.add(shadowPane, gridCol++, gridRow);
 
                  System.out.println("successfully added the grid");
 
@@ -96,7 +101,7 @@ public class shopList implements Initializable {
                  shopListGrid.setPrefHeight(Region.USE_COMPUTED_SIZE);
                  shopListGrid.setMaxHeight(Region.USE_PREF_SIZE);
  
-                 GridPane.setMargin(shopItem, new Insets(20));
+                 GridPane.setMargin(shadowPane, new Insets(10));
             }
             
         } catch (IOException e) {
