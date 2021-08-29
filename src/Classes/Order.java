@@ -163,7 +163,7 @@ public class Order {
                 this.shop=new Shop(od.get("shopID"), od.get("shopName"), od.get("shopAddress"), od.get("tel"), od.get("startHour"), od.get("endHour"), od.get("status"), od.get("dateCreated"), od.get("deliveryFee"),od.get("shopImagePath"));
                 Food food=new Food(od.get("foodID"), od.get("foodName"), od.get("foodDesc"), od.get("foodImagePath"), od.get("price"), od.get("category"), od.get("shopID"));            
                 this.orderItems.add(new OrderItem(od.get("orderID"), od.get("foodID"), od.get("quantity"), food));                            
-            }            
+            }
         }
         data.setOrder(this);
     }

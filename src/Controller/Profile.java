@@ -52,8 +52,8 @@ public class Profile implements Initializable{
 
     @FXML
     void actionEditProfile(MouseEvent event) throws IOException {
-        gui.alertInProgress();
         Stage myDialog = new Stage();
+        gui.alertInProgress(myDialog);
         myDialog.initModality(Modality.APPLICATION_MODAL);  //make user unable to press the original stage/window unless close the current stage/window
         myDialog.initOwner(gui.getStage());
         
@@ -65,21 +65,38 @@ public class Profile implements Initializable{
         controller.getBtnYes().setOnAction(e->{      
             // passback.accept(true);
             myDialog.close();            
+
+            if(data.getAccount() instanceof Seller){ 
+                ((Seller)data.getAccount()).edit(controller.getInputUsername().getText(), controller.getInputPassword().getText(),
+                    controller.getInputName().getText(), controller.getInputEmail().getText(), controller.getInputMobileNo().getText(),
+                    controller.getInputAddress().getText(), controller.getInputBankAccNo().getText(),
+                    controller.getInputNRIC().getText(), controller.getInputLicenseNo().getText()
+                );                
+            }else if(data.getAccount() instanceof Buyer){
+                ((Buyer)data.getAccount()).edit(controller.getInputUsername().getText(), controller.getInputPassword().getText(),
+                    controller.getInputName().getText(), controller.getInputEmail().getText(), controller.getInputMobileNo().getText(),
+                    controller.getInputAddress().getText()
+                ); 
+            }else if(data.getAccount() instanceof Rider){
+                data.getAccount().edit(controller.getInputUsername().getText(), controller.getInputPassword().getText(),
+                    controller.getInputName().getText(), controller.getInputEmail().getText(), controller.getInputMobileNo().getText()                               
+                );          
+            }             
             try {
                 gui.refreshScene(currentFXMLPath);
             } catch (IOException e1) {
                 // TODO Auto-generated catch block
                 e1.printStackTrace();
             }
-            gui.notAlertInProgress();
+            gui.notAlertInProgress(myDialog);
         });
         
         controller.getBtnNo().setOnAction(e->{      
             // passback.accept(false);
             myDialog.close();
-            gui.notAlertInProgress();
+            gui.notAlertInProgress(myDialog);
         });  
-        
+                
         myDialog.setScene(dialogScene);
         myDialog.setMaximized(false);
         myDialog.show();

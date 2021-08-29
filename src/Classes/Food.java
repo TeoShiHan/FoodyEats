@@ -1,6 +1,7 @@
 package Classes;
 
 public class Food {
+    private JDBC db = new JDBC();
     private String foodID,name,desc,imgPath,category,shopID;
     private double price;        
 
@@ -80,5 +81,18 @@ public class Food {
 
     public void setPrice(Double price) {
         this.price = price;
+    }
+
+    public void edit(String name, String desc, double price, String category, String imgPath){        
+        this.name = name;
+        this.desc = desc;        
+        this.price = price;
+        this.category = category;
+        this.imgPath = imgPath;
+        db.executeCUD(String.format("UPDATE `Food` SET foodName='%s', foodDesc='%s', price=%.2f, category='%s',imgPath='%s' WHERE foodID='%s'",name,desc,price,category,imgPath,foodID));
+    }    
+
+    public void delete(){
+        db.executeCUD(String.format("DELETE FROM `Food` WHERE foodID='%s'",foodID));
     }
 }

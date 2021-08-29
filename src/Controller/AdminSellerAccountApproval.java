@@ -4,6 +4,8 @@ import Classes.*;
 
 import java.io.IOException;
 import java.net.URL;
+import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.ResourceBundle;
 
 import javafx.beans.property.ReadOnlyObjectWrapper;
@@ -23,62 +25,65 @@ import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.HBox;
 
-public class SellerOrderHistory implements Initializable {    
+public class AdminSellerAccountApproval implements Initializable {    
     private JDBC db = new JDBC();
     private GUI gui = GUI.getInstance();
     private DataHolder data = DataHolder.getInstance();
-    private String currentFXMLPath = "View/SellerOrderHistory.fxml";
+    private String currentFXMLPath = "View/AdminSellerAccountApproval.fxml";
 
     @FXML private AnchorPane paneRiderOrderHistory;
     @FXML private Label lblWelcome;
     @FXML private ImageView iconCart,iconHome;
-    @FXML private TableView<Order> tableView;
-    @FXML private TableColumn<Order,Object> colOrderId,colDate,colTime,colStatus;
-    @FXML private TableColumn<Order,Order> colAction;
+    @FXML private TableView<Seller> tableView;
+    @FXML private TableColumn<Seller,Object> colAccountId,colName,colEmail,colMobileNo,colAccountType;
+    @FXML private TableColumn<Seller,Seller> colAction;
 
     @Override
     public void initialize(URL location, ResourceBundle resources) {                
-        data.getShop().loadAcceptedOrders();
-        data.setOrders(data.getShop().getOrders());
+        ArrayList<HashMap<String,Object>> as = db.readAll(String.format("SELECT s.address AS sellerAddress,sh.address AS shopAddress,s.status AS sellerStatus,sh.status AS shopStatus,a.*,s.*,sh.* FROM `Account` a, `Seller` s, `Shop` sh WHERE a.type='Seller' AND a.accountID=s.accountID AND s.shopID=sh.shopID AND s.status=0"));
+        for(HashMap<String,Object> a : as){
+            Shop shop = new Shop(a.get("shopID"), a.get("shopName"), a.get("address"), a.get("tel"), a.get("startHour"), a.get("endHour"), a.get("status"), a.get("dateCreated"), a.get("deliveryFee"), a.get("imgPath"));
+            Seller seller = new Seller(a.get("accountID"), a.get("username"), a.get("password"), a.get("name"), a.get("email"), a.get("mobileNo"), a.get("accType"), a.get("sellerID"), a.get("address"), a.get("NRIC"), a.get("licenseNumber"), a.get("bankAcc"), a.get("shopID"));        
+            seller.setShop(shop);
+            data.getSellers().add(seller);            
+        }
 
-        ObservableList<Order> observableList = FXCollections.observableArrayList(data.getOrders());
+        ObservableList<Seller> observableList = FXCollections.observableArrayList(data.getSellers());
         
         tableView.setItems(observableList);
 
         //to assign which property/attribute of the class to the table column
-        colOrderId.setCellValueFactory(new PropertyValueFactory<Order,Object>("orderID"));
-        colDate.setCellValueFactory(new PropertyValueFactory<Order,Object>("dateCreated"));        
-        colTime.setCellValueFactory(new PropertyValueFactory<Order,Object>("timeCreated")); 
-        colStatus.setCellValueFactory(new PropertyValueFactory<Order,Object>("status")); 
+        colAccountId.setCellValueFactory(new PropertyValueFactory<Seller,Object>("SellerID"));
+        colName.setCellValueFactory(new PropertyValueFactory<Seller,Object>("name"));        
+        colEmail.setCellValueFactory(new PropertyValueFactory<Seller,Object>("email")); 
+        colMobileNo.setCellValueFactory(new PropertyValueFactory<Seller,Object>("mobileNo")); 
+        colAccountType.setCellValueFactory(new PropertyValueFactory<Seller,Object>("accType")); 
         colAction.setCellValueFactory(param -> new ReadOnlyObjectWrapper<>(param.getValue()));        
         // to set what to display in each table cell, instead string only, because by default it display string (https://stackoverflow.com/questions/32282230/fxml-javafx-8-tableview-make-a-delete-button-in-each-row-and-delete-the-row-a)        
-        colAction.setCellFactory(param -> new TableCell<Order,Order>(){            
-            Button btnReady = new Button("Ready");
+        colAction.setCellFactory(param -> new TableCell<Seller,Seller>(){            
+            Button btnApprove = new Button("Approve");
             Button btnViewDetails = new Button("View Details");
             @Override
-            public void updateItem(Order order, boolean empty){
-                super.updateItem(order, empty);
+            public void updateItem(Seller seller, boolean empty){
+                super.updateItem(seller, empty);
                 if (empty) {
                     setGraphic(null);
                     return;
                 } 
                 HBox pane = new HBox();
                 pane.setSpacing(20);                
-                pane.setAlignment(Pos.CENTER);                                    
-                if(order.getStatus().equals("Rider Accepted")){                    
-                    pane.getChildren().add(btnReady);
-                }
+                pane.setAlignment(Pos.CENTER);                                                    
                 pane.getChildren().add(btnViewDetails);
                 setGraphic(pane);                
-                btnReady.setOnAction(e->{  
-                    order.setStatus("Seller Ready");                  
-                    data.getShop().readyOrder(order.getOrderID());
+                btnApprove.setOnAction(e->{  
+                    data.getAdmin().verifySeller(seller.getSellerID());
+                    tableView.getItems().remove(seller);
                     tableView.refresh();
                 });                
                 btnViewDetails.setOnAction(e->{          
                     try {
-                        data.setOrder(order);
-                        gui.toNextScene("View/RiderOrderDetails.fxml");
+                        data.setSeller(seller);
+                        gui.toNextScene("View/AdminSellerAccountDetails.fxml");
                     } catch (IOException e1) {
                         // TODO Auto-generated catch block
                         e1.printStackTrace();

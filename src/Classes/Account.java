@@ -108,8 +108,7 @@ public class Account {
         HashMap<String,Object> acc = db.readOne(String.format("SELECT * FROM `Account` WHERE username='%s' AND password='%s' LIMIT 1",username,password));
         if(acc==null){
             gui.informationPopup("Invalid Account", "Please try again");
-        }else{            
-            data.addObjectHolder("accountType", acc.get("type"));
+        }else{                        
             HashMap<String,Object> childAcc = db.readOne(String.format("SELECT * FROM `%s` WHERE accountID='%s'",acc.get("type"),acc.get("accountID")));            
             if(acc.get("type").equals("Buyer")){                  
                 Buyer buyer = new Buyer(
@@ -120,6 +119,11 @@ public class Account {
                 data.setAccount(buyer);
                 data.setBuyer(buyer);
                 gui.toNextScene(String.format("View/%sHome.fxml",acc.get("type")));
+            }else if(acc.get("type").equals("Admin")){
+                // Admin admin = new Admin(adminID, name, NRIC, companyBranch, accountID);
+                // data.setAccount(admin);
+                // data.setBuyer(admin);
+                gui.toNextScene(String.format("View/%sHome.fxml",acc.get("type")));
             }else{
                 if((int)childAcc.get("status")==1){                    
                     if(acc.get("type").equals("Rider")){
@@ -127,8 +131,7 @@ public class Account {
                             acc.get("accountID"),acc.get("username"),acc.get("password"),acc.get("name"),
                             acc.get("email"),acc.get("mobileNo"),acc.get("type"),childAcc.get("riderID"),
                             childAcc.get("vehicleID")
-                        );
-                        Vehicle vehicle = new Vehicle();
+                        );                        
                         data.setAccount(rider);   
                         data.setRider(rider);
                     }else if(acc.get("type").equals("Seller")){  
@@ -148,6 +151,14 @@ public class Account {
             }            
         }         
     }    
+
+    public void edit(String username, String password, String name, String email, String mobileNo){
+        this.username = username;
+        this.password = password;
+        this.name = name;
+        this.email = email;
+        this.mobileNo = mobileNo;
+    }
 
     public void loadUser(){
 

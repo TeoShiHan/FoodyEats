@@ -4,6 +4,8 @@ import Classes.*;
 
 import java.io.IOException;
 import java.net.URL;
+import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.ResourceBundle;
 
 import javafx.beans.property.ReadOnlyObjectWrapper;
@@ -23,62 +25,65 @@ import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.HBox;
 
-public class SellerOrderHistory implements Initializable {    
+public class AdminRiderAccountApproval implements Initializable {    
     private JDBC db = new JDBC();
     private GUI gui = GUI.getInstance();
     private DataHolder data = DataHolder.getInstance();
-    private String currentFXMLPath = "View/SellerOrderHistory.fxml";
+    private String currentFXMLPath = "View/AdminRiderAccountApproval.fxml";
 
     @FXML private AnchorPane paneRiderOrderHistory;
     @FXML private Label lblWelcome;
     @FXML private ImageView iconCart,iconHome;
-    @FXML private TableView<Order> tableView;
-    @FXML private TableColumn<Order,Object> colOrderId,colDate,colTime,colStatus;
-    @FXML private TableColumn<Order,Order> colAction;
+    @FXML private TableView<Rider> tableView;
+    @FXML private TableColumn<Rider,Object> colAccountId,colName,colEmail,colMobileNo,colAccountType;
+    @FXML private TableColumn<Rider,Rider> colAction;
 
     @Override
     public void initialize(URL location, ResourceBundle resources) {                
-        data.getShop().loadAcceptedOrders();
-        data.setOrders(data.getShop().getOrders());
+        ArrayList<HashMap<String,Object>> as = db.readAll(String.format("SELECT r.*,v.*,a.* FROM `Account` a, `Rider` r, `Vehicle` v WHERE a.type='Rider' AND a.accountID=r.accountID AND r.vehicleID=v.vehicleID AND r.status=0"));            
+        for(HashMap<String,Object> a : as){
+            Vehicle vehicle = new Vehicle(a.get("vehicleID"), a.get("type"), a.get("plateNo"), a.get("brand"), a.get("model"), a.get("color"));
+            Rider rider = new Rider(a.get("accountID"), a.get("username"), a.get("password"), a.get("name"), a.get("email"), a.get("mobileNo"), a.get("accType"), a.get("riderID"), a.get("vehicleID"));
+            rider.setVehicle(vehicle);
+            data.getRiders().add(rider);
+        }
 
-        ObservableList<Order> observableList = FXCollections.observableArrayList(data.getOrders());
+        ObservableList<Rider> observableList = FXCollections.observableArrayList(data.getRiders());
         
         tableView.setItems(observableList);
 
         //to assign which property/attribute of the class to the table column
-        colOrderId.setCellValueFactory(new PropertyValueFactory<Order,Object>("orderID"));
-        colDate.setCellValueFactory(new PropertyValueFactory<Order,Object>("dateCreated"));        
-        colTime.setCellValueFactory(new PropertyValueFactory<Order,Object>("timeCreated")); 
-        colStatus.setCellValueFactory(new PropertyValueFactory<Order,Object>("status")); 
+        colAccountId.setCellValueFactory(new PropertyValueFactory<Rider,Object>("accountID"));
+        colName.setCellValueFactory(new PropertyValueFactory<Rider,Object>("name"));        
+        colEmail.setCellValueFactory(new PropertyValueFactory<Rider,Object>("email")); 
+        colMobileNo.setCellValueFactory(new PropertyValueFactory<Rider,Object>("mobileNo")); 
+        colAccountType.setCellValueFactory(new PropertyValueFactory<Rider,Object>("accType")); 
         colAction.setCellValueFactory(param -> new ReadOnlyObjectWrapper<>(param.getValue()));        
         // to set what to display in each table cell, instead string only, because by default it display string (https://stackoverflow.com/questions/32282230/fxml-javafx-8-tableview-make-a-delete-button-in-each-row-and-delete-the-row-a)        
-        colAction.setCellFactory(param -> new TableCell<Order,Order>(){            
-            Button btnReady = new Button("Ready");
+        colAction.setCellFactory(param -> new TableCell<Rider,Rider>(){            
+            Button btnApprove = new Button("Approve");
             Button btnViewDetails = new Button("View Details");
             @Override
-            public void updateItem(Order order, boolean empty){
-                super.updateItem(order, empty);
+            public void updateItem(Rider rider, boolean empty){
+                super.updateItem(rider, empty);
                 if (empty) {
                     setGraphic(null);
                     return;
                 } 
                 HBox pane = new HBox();
                 pane.setSpacing(20);                
-                pane.setAlignment(Pos.CENTER);                                    
-                if(order.getStatus().equals("Rider Accepted")){                    
-                    pane.getChildren().add(btnReady);
-                }
+                pane.setAlignment(Pos.CENTER);                                                    
                 pane.getChildren().add(btnViewDetails);
                 setGraphic(pane);                
-                btnReady.setOnAction(e->{  
-                    order.setStatus("Seller Ready");                  
-                    data.getShop().readyOrder(order.getOrderID());
+                btnApprove.setOnAction(e->{  
+                    data.getAdmin().verifyRider(rider.getRiderID());
+                    tableView.getItems().remove(rider);
                     tableView.refresh();
                 });                
                 btnViewDetails.setOnAction(e->{          
                     try {
-                        data.setOrder(order);
-                        gui.toNextScene("View/RiderOrderDetails.fxml");
+                        data.setRider(rider);
+                        gui.toNextScene("View/AdminRiderAccountDetails.fxml");
                     } catch (IOException e1) {
                         // TODO Auto-generated catch block
                         e1.printStackTrace();

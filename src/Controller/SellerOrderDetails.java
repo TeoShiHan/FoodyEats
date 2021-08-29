@@ -44,7 +44,7 @@ public class SellerOrderDetails implements Initializable {
     
     @FXML private AnchorPane paneBuyerOrder;    
     @FXML private Label linkLogout,lblOrderDetails,lblBuyerName,lblBuyerMobileNo,lblBuyerAddress,lblTotalAmount,lblDateCreated,lblTimeCreated;
-    @FXML private ImageView iconProfile,iconHome,iconCart;            
+    @FXML private ImageView iconProfile,iconHome;            
     @FXML private Button btnRate,btnCancel;    
     // @FXML private TableView<RowData> tableView;    
     @FXML private TableView<OrderItem> tableView;
@@ -54,11 +54,8 @@ public class SellerOrderDetails implements Initializable {
 
     @Override
     public void initialize(URL location, ResourceBundle resources) {
-        // TODO Auto-generated method stub        
-        // if(data.getOrderItems().isEmpty() || data.getStringHolder("orderID")!=data.getOrder().getOrderID()){
         if(data.getOrder().getOrderItems().isEmpty()){
-            data.getOrder().loadOrderItems();
-            data.addObjectHolder("orderID", data.getOrder().getOrderID());
+            data.getOrder().loadAllDetails();            
         }
         
         lblOrderDetails.setText("Order #"+data.getOrder().getOrderID());
@@ -67,6 +64,7 @@ public class SellerOrderDetails implements Initializable {
         lblBuyerName.setText(data.getBuyer().getName());
         lblBuyerAddress.setText(data.getBuyer().getAddress());        
         lblBuyerMobileNo.setText(data.getBuyer().getMobileNo());        
+        lblTotalAmount.setText(String.format("RM %.2f",data.getOrder().getTotalAmount()));
 
         // https://stackoverflow.com/questions/36629522/convert-arraylist-to-observable-list-for-javafx-program
         ObservableList<OrderItem> observableList = FXCollections.observableArrayList(data.getOrder().getOrderItems());        
@@ -80,8 +78,8 @@ public class SellerOrderDetails implements Initializable {
         // https://stackoverflow.com/questions/14413040/converting-integer-to-observablevalueinteger-in-javafx/14413339, for the next line (line 80)
         colQty.setCellValueFactory(dt -> new SimpleIntegerProperty(dt.getValue().getQuantity()).asObject());
         
-        lblTotalAmount.setText(String.format("RM %.2f",data.getOrder().getTotalAmount()));
-
+        
+        //#region old method to read data from database 
         // HashMap<String,Object> buyer = db.readOne(String.format("SELECT * FROM `Buyer` WHERE buyerID='%s'", data.getOrder().getBuyerId()));
         // lblBuyerAddress.setText((String)buyer.get("address"));  
         // HashMap<String,Object> account = db.readOne(String.format("SELECT * FROM `Account` WHERE accountID='%s'", (String)buyer.get("accountID")));
@@ -112,6 +110,7 @@ public class SellerOrderDetails implements Initializable {
         // colNo.setCellValueFactory(new MapValueFactory<>("no"));
         // colItems.setCellValueFactory(new MapValueFactory<>("foodName"));
         // colQty.setCellValueFactory(new MapValueFactory<>("quantity")); 
+        //#endregion
     }    
 
     @FXML
@@ -129,14 +128,3 @@ public class SellerOrderDetails implements Initializable {
         gui.toPrevScene();
     }  
 }
-
-// class RowData {
-//     private OrderItem orderItem;
-//     private Food food;
-//     public RowData(OrderItem orderItem, Food food) {
-//         this.orderItem = orderItem;
-//         this.food = food;
-//     }
-//     public OrderItem getOrderItem(){ return orderItem; }
-//     public Food getFood(){ return food; }
-// }

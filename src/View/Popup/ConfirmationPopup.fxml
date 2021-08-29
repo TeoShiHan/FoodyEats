@@ -41,7 +41,7 @@
             </Button>
          </children>
       </HBox>
-      <Label fx:id="lblMessage" alignment="TOP_CENTER" contentDisplay="TOP" layoutY="149.0" prefHeight="120.0" prefWidth="600.0" text="Message" textAlignment="CENTER" wrapText="true">
+      <Label fx:id="lblMessage" alignment="TOP_CENTER" contentDisplay="TOP" layoutX="53.0" layoutY="149.0" prefHeight="120.0" prefWidth="494.0" text="Message" textAlignment="CENTER" wrapText="true">
          <font>
             <Font size="24.0" />
          </font>

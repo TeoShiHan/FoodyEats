@@ -37,7 +37,6 @@ public class RegShop implements Initializable{
     @FXML private Button imageChooser;
     @FXML private Label lblImage;
     private File shopImageFile;
-    private String shopImageFileName;
     private List<String> imgExtensions = new ArrayList<>(){
         {
             add(".png");
@@ -107,7 +106,7 @@ public class RegShop implements Initializable{
                 }                            
             }                        
             // shopImageFileName = currentPath+"/src/Images/temp"+shopImageFile.getName().substring(shopImageFile.getName().lastIndexOf("."));
-            Files.copy(shopImageFile.toPath(), Paths.get(currentPath,"temp"+shopImageFile.getName().substring(shopImageFile.getName().indexOf("."))));            
+            Files.copy(shopImageFile.toPath(), Paths.get(currentPath,"temp"+shopImageFile.getName().substring(shopImageFile.getName().indexOf("."))));
         }
     }   
               

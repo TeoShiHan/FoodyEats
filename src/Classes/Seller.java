@@ -11,6 +11,7 @@ import java.nio.file.Paths;
 import java.sql.SQLException;
 import java.time.LocalDate;
 import java.util.ArrayList;
+import java.util.HashMap;
 
 public class Seller extends Account{
     private JDBC db = new JDBC();
@@ -231,5 +232,19 @@ public class Seller extends Account{
             e.printStackTrace();
             gui.informationPopup("Something wrong", "There is an error when inserting to database");
         }        
+    }
+
+    public void loadShop(){
+        HashMap<String,Object> s = db.readOne(String.format("SELECT * FROM `Shop` WHERE shopID='%s'",shopID));
+        this.shop = new Shop(s.get("shopID"), s.get("shopName"), s.get("address"), s.get("tel"), s.get("startHour"), s.get("endHour"), s.get("status"), s.get("dateCreated"), s.get("deliveryFee"), s.get("imgPath"));
+    }
+    
+    public void edit(String username, String password, String name, String email, String mobileNo, String address, String bankAcc, String NRIC, String licenseNumber) {
+        super.edit(username, password, name, email, mobileNo);
+        this.address = address;
+        this.bankAcc = bankAcc;
+        this.NRIC = NRIC;
+        this.licenseNumber = licenseNumber;
+        db.executeCUD(String.format("UPDATE `Account` a, `Seller` s SET a.username='%s', a.password='%s', a.name='%s', a.email='%s', a.mobileNo='%s', s.address='%s', s.bankAcc='%s', s.NRIC='%s', s.licenseNumber='%s' WHERE a.accountID='%s' AND a.accountID=s.accountID",username,password,name,email,mobileNo,address,bankAcc,NRIC,licenseNumber,accountID));
     }
 }

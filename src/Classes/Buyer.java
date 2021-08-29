@@ -113,6 +113,12 @@ public class Buyer extends Account{
             gui.informationPopup("Something wrong", "There is an error when inserting to database");
         }
     }
+    
+    public void edit(String username, String password, String name, String email, String mobileNo, String address) {        
+        super.edit(username, password, name, email, mobileNo);
+        this.address = address;
+        db.executeCUD(String.format("UPDATE `Account` a, `Buyer` b SET a.username='%s', a.password='%s', a.name='%s', a.email='%s', a.mobileNo='%s', b.address='%s' WHERE a.accountID='%s' AND a.accountID=b.accountID",username,password,name,email,mobileNo,address,accountID));
+    }
 
     // public static String getCart(String BuyerID) {
     //     return BuyerID;

@@ -6,7 +6,11 @@ import java.io.IOException;
 import java.net.URL;
 import java.util.ResourceBundle;
 
+import javafx.beans.binding.Binding;
+import javafx.beans.binding.Bindings;
+import javafx.beans.property.BooleanProperty;
 import javafx.beans.property.SimpleBooleanProperty;
+import javafx.concurrent.Task;
 import javafx.event.Event;
 import javafx.event.EventHandler;
 import javafx.fxml.FXML;
@@ -27,8 +31,9 @@ import javafx.scene.shape.Circle;
 import javafx.scene.shape.Rectangle;
 
 public class SellerHome implements Initializable{
-    GUI gui = GUI.getInstance();
-    DataHolder data = DataHolder.getInstance();
+    private JDBC db = new JDBC();
+    private GUI gui = GUI.getInstance();    
+    private DataHolder data = DataHolder.getInstance();
     
     @FXML private AnchorPane paneSellerHome;
     @FXML private ImageView iconProfile;
@@ -38,10 +43,14 @@ public class SellerHome implements Initializable{
 
     @Override
     public void initialize(URL arg0, ResourceBundle arg1) {
-        // TODO Auto-generated method stub    
+        // TODO Auto-generated method stub
+        if(data.getSeller().getShop()==null){
+            data.getSeller().loadShop();
+            data.setShop(data.getSeller().getShop());
+        }        
         toggleSwitch.setAlignment(Pos.CENTER_RIGHT);
-        toggleSwitch.getChildren().setAll(new SwitchButton());  
-        lblWelcome.setText("Welcome "+data.getAccount().getUsername());      
+        toggleSwitch.getChildren().setAll(new SwitchButton());
+        lblWelcome.setText("Welcome "+data.getAccount().getUsername());
     }
 
     @FXML
@@ -66,12 +75,130 @@ public class SellerHome implements Initializable{
     }
 
     @FXML
-    void toSellerManageProduct(MouseEvent event) throws IOException {
-        gui.toNextScene("View/SellerManageProduct.fxml");
+    void toSellerManageFood(MouseEvent event) throws IOException {
+        gui.toNextScene("View/SellerManageFood.fxml");
     }
     
 }
 
+// https://stackoverflow.com/questions/30593193/creating-sliding-on-off-switch-button-in-javafx
+class SwitchButton extends StackPane {
+    private JDBC db = new JDBC();
+    private GUI gui = GUI.getInstance();    
+    private DataHolder data = DataHolder.getInstance();
+    private final Rectangle back = new Rectangle(100, 40, Color.RED);
+    private final Button button = new Button();
+    private final Label label = new Label();
+    private String buttonStyleOff = "-fx-effect: dropshadow(three-pass-box, rgba(0,0,0,0.2), 0.2, 0.0, 0.0, 2); -fx-background-color: WHITE;";
+    private String buttonStyleOn = "-fx-effect: dropshadow(three-pass-box, rgba(0,0,0,0.2), 0.2, 0.0, 0.0, 2); -fx-background-color: #00893d;";
+    private BooleanProperty state = new SimpleBooleanProperty(false);
+    private int limitCount = 4;
+
+    public BooleanProperty getState() {
+        return state;
+    }
+
+    public void setState(Boolean state) {
+        this.state.setValue(state);
+    }
+
+    public boolean getStatePropValue(){
+        return this.state.getValue();
+    }
+
+    private void init() {
+        getChildren().addAll(back,button,label);
+        setMinSize(30, 15);
+        back.maxWidth(30);
+        back.minWidth(30);
+        back.maxHeight(10);
+        back.minHeight(10);
+        back.setArcHeight(back.getHeight());
+        back.setArcWidth(back.getHeight());        
+        Double r = 25.0;
+        button.setShape(new Circle(r));        
+        button.setMaxSize(50, 50);
+        button.setMinSize(50, 50);        
+        
+        //  https://stackoverflow.com/questions/43910652/change-label-depending-on-boolean-javafx
+        this.alignmentProperty().bind(Bindings.createObjectBinding(()->{
+            return getState().get()?Pos.CENTER_RIGHT:Pos.CENTER_LEFT;
+        }, getState()));        
+        label.textProperty().bind(Bindings.createStringBinding(()->{
+            return getState().get()?"ON":"OFF";
+        },getState()));
+        button.styleProperty().bind(Bindings.createStringBinding(()->{
+            return getState().get()?buttonStyleOn:buttonStyleOff;
+        }, getState()));
+        back.styleProperty().bind(Bindings.createStringBinding(()->{
+            return getState().get()?"-fx-fill: #80C49E":"-fx-fill: #ced5da";
+        },getState()));        
+        label.styleProperty().bind(Bindings.createStringBinding(()->{
+            return getState().get() 
+                    ? "-fx-font-weight:bold; -fx-font-size:20px; -fx-text-fill:white; -fx-padding:0 10px 0 10px;"
+                    : "-fx-font-weight:bold; -fx-font-size:20px; -fx-text-fill:black; -fx-padding: 0 10px 0 5px;";
+
+        }, getState()));        
+    }
+
+    public SwitchButton() {
+        init();
+        this.setCursor(Cursor.HAND);
+        EventHandler<Event> click = new EventHandler<Event>() {
+            @Override
+            public void handle(Event event) {                
+                if(limitCount-->0){
+                    if(state.get()){
+                        gui.getStage().getScene().getRoot().setDisable(true);
+                        gui.getStage().getScene().setCursor(Cursor.WAIT);
+                        Task<Void> task = new Task<Void>() {
+                            @Override
+                            public Void call() {                                
+                                data.getSeller().getShop().closeShop();                                                    
+                                return null ;
+                            }
+                        };
+                        task.setOnSucceeded(e -> {
+                            setState(false);
+                            gui.getStage().getScene().setCursor(Cursor.DEFAULT);
+                            gui.getStage().getScene().getRoot().setDisable(false);
+                        });
+                        new Thread(task).start();
+                    }else{
+                        gui.getStage().getScene().getRoot().setDisable(true);
+                        gui.getStage().getScene().setCursor(Cursor.WAIT);
+                        Task<Void> task = new Task<Void>() {
+                            @Override
+                            public Void call() {                                
+                                data.getSeller().getShop().openShop();                                                 
+                                return null ;
+                            }
+                        };
+                        task.setOnSucceeded(e -> {
+                            setState(true);
+                            gui.getStage().getScene().setCursor(Cursor.DEFAULT);
+                            gui.getStage().getScene().getRoot().setDisable(false);
+                        });
+                        new Thread(task).start();                                                
+                    }
+                }else{
+                    try {
+                        gui.informationPopup("Attention", "You cannot frequently open and close the shop");
+                    } catch (IOException e1) {
+                        // TODO Auto-generated catch block
+                        e1.printStackTrace();
+                    }
+                }
+            }
+        };
+
+        button.setFocusTraversable(false);
+        setOnMouseClicked(click);
+        button.setOnMouseClicked(click);
+    }
+}
+
+//#region another method to make a toggle switch
 // https://stackoverflow.com/questions/20556945/changing-cursor-in-javafx-application-for-long-operations
 // class ToggleSwitch extends HBox {
 	
@@ -130,66 +257,4 @@ public class SellerHome implements Initializable{
 // 		});
 // 	}    
 // }
-
-// https://stackoverflow.com/questions/30593193/creating-sliding-on-off-switch-button-in-javafx
-class SwitchButton extends StackPane {
-    private final Rectangle back = new Rectangle(100, 40, Color.RED);
-    private final Button button = new Button();
-    private final Label label = new Label();
-    private String buttonStyleOff = "-fx-effect: dropshadow(three-pass-box, rgba(0,0,0,0.2), 0.2, 0.0, 0.0, 2); -fx-background-color: WHITE;";
-    private String buttonStyleOn = "-fx-effect: dropshadow(three-pass-box, rgba(0,0,0,0.2), 0.2, 0.0, 0.0, 2); -fx-background-color: #00893d;";
-    private boolean state;
-
-    private void init() {
-        getChildren().addAll(back,button,label);
-        setMinSize(30, 15);
-        back.maxWidth(30);
-        back.minWidth(30);
-        back.maxHeight(10);
-        back.minHeight(10);
-        back.setArcHeight(back.getHeight());
-        back.setArcWidth(back.getHeight());
-        back.setFill(Color.valueOf("#ced5da"));
-        Double r = 25.0;
-        button.setShape(new Circle(r));
-        setAlignment(button, Pos.CENTER_LEFT);
-        button.setMaxSize(50, 50);
-        button.setMinSize(50, 50);
-        button.setStyle(buttonStyleOff);
-        
-        label.setText("OFF");        
-        label.setStyle("-fx-font-weight:bold; -fx-font-size:20px; -fx-padding: 0 10px 0 5px; -fx-text-fill:black;");
-        setAlignment(label, Pos.CENTER_LEFT);
-    }
-
-    public SwitchButton() {
-        init();
-        this.setCursor(Cursor.HAND);
-        EventHandler<Event> click = new EventHandler<Event>() {
-            @Override
-            public void handle(Event e) {
-                if (state) {
-                    button.setStyle(buttonStyleOff);
-                    back.setFill(Color.valueOf("#ced5da"));
-                    setAlignment(button, Pos.CENTER_LEFT);
-                    label.setText("OFF");                    
-                    label.setStyle("-fx-text-fill:black; -fx-font-weight:bold; -fx-font-size:20px; -fx-padding: 0 10px 0 5px;");
-                    setAlignment(label,Pos.CENTER_LEFT);
-                    state = false;                    
-                } else {
-                    button.setStyle(buttonStyleOn);
-                    back.setFill(Color.valueOf("#80C49E"));
-                    setAlignment(button, Pos.CENTER_RIGHT);
-                    label.setText("ON");
-                    label.setStyle("-fx-text-fill:white; -fx-font-weight:bold; -fx-font-size:20px; -fx-padding: 0 10px 0 10px;");
-                    setAlignment(label, Pos.CENTER_RIGHT);
-                    state = true;
-                }
-            }
-        };
-
-        button.setFocusTraversable(false);
-        setOnMouseClicked(click);
-        button.setOnMouseClicked(click);
-    }
-}
+//#endregion

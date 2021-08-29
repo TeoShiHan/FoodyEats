@@ -9,10 +9,12 @@ import java.util.List;
 public final class DataHolder {  
     JDBC db = new JDBC();
 
-    private Account account = new Account();  // used for stored logged in user account, whether it is buyer/rider/seller
+    private Account account = new Account();  // used for stored logged in user account, whether it is buyer/rider/seller    
     private Buyer buyer = new Buyer();  // used for get the info of specified buyer
     private Rider rider = new Rider();  // used for get the info of specified rider
+    private List<Rider> riders = new ArrayList<>();  // used for display the list of rider used for admin
     private Seller seller = new Seller();  // used for get the info of specified seller
+    private List<Seller> sellers = new ArrayList<>();  // used for display the list of rider used for admin
     private Admin admin = new Admin();
     private Vehicle vehicle = new Vehicle();
     private List<Cart> carts = new ArrayList<>(); 
@@ -45,7 +47,7 @@ public final class DataHolder {
     }    
     public Account getAccount() {
       return this.account;
-    }
+    }    
 
     public void setBuyer(Buyer buyer) {
       this.buyer = buyer;
@@ -54,6 +56,13 @@ public final class DataHolder {
       return this.buyer;
     }    
 
+    public List<Rider> getRiders() {
+      return riders;
+    }
+    public void setRiders(List<Rider> riders) {
+      this.riders = riders;
+    }
+    
     public void setRider(Rider rider) {
       this.rider = rider;
     }    
@@ -61,6 +70,13 @@ public final class DataHolder {
       return this.rider;
     }  
 
+    public List<Seller> getSellers() {
+      return sellers;
+    }
+    public void setSellers(List<Seller> sellers) {
+      this.sellers = sellers;
+    }
+    
     public void setSeller(Seller seller) {
       this.seller = seller;
     }    

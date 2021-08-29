@@ -122,4 +122,10 @@ public class Rider extends Account{
             gui.informationPopup("Something wrong", "There is an error when inserting to database");
         }
     }
+
+    @Override
+    public void edit(String username, String password, String name, String email, String mobileNo) {        
+        super.edit(username, password, name, email, mobileNo);
+        db.executeCUD(String.format("UPDATE `Account` SET username='%s', password='%s', name='%s', email='%s', mobileNo='%s' WHERE accountID='%s'",username,password,name,email,mobileNo,accountID));
+    }
 }

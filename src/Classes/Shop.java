@@ -1,9 +1,16 @@
 package Classes;
+import Cache.*;
+
 import java.time.LocalDate;
 import java.time.LocalTime;
 import java.util.ArrayList;
+import java.util.HashMap;
 
 public class Shop {
+    private JDBC db = new JDBC();
+    private DataHolder data = DataHolder.getInstance();
+    private GUI gui = GUI.getInstance();
+
     private String 
     shopID, name, address, tel, 
     imgPath, foodID, reviewListID;
@@ -11,7 +18,7 @@ public class Shop {
     private double deliveryFee;
     private int status;
     private LocalDate dateCreated;
-    private ArrayList<Food> food;
+    private ArrayList<Food> foods;
     private ArrayList<Review> reviews;
     private ArrayList<Order> orders;
     
@@ -163,12 +170,12 @@ public class Shop {
         this.dateCreated = dateCreated;
     }
 
-    public ArrayList<Food> getFood() {
-        return food;
+    public ArrayList<Food> getFoods() {
+        return foods;
     }
 
-    public void setFood(ArrayList<Food> food) {
-        this.food = food;
+    public void setFoods(ArrayList<Food> foods) {
+        this.foods = foods;
     }
 
     public ArrayList<Review> getReviews() {
@@ -193,6 +200,59 @@ public class Shop {
     public void addFood(){
 
     }    
+    
+    public void loadFoods(){
+        this.foods = new ArrayList<>();
+        ArrayList<HashMap<String,Object>> fs = db.readAll(String.format("SELECT * FROM `Food` WHERE shopID='%s'",shopID));
+        for(HashMap<String,Object> f : fs){
+            this.foods.add(new Food(f.get("foodID"), f.get("foodName"), f.get("foodDesc"), f.get("imgPath"), f.get("price"), f.get("category"), f.get("shopID")));
+        }
+        try{
+            data.setFoods(this.foods);
+        }catch(Exception e){
+            System.out.println("something wrong to set foods to dataholder");
+        }
+    }
+
+    public void openShop(){
+        this.status=1;
+        db.executeCUD(String.format("UPDATE `Shop` SET status=1 WHERE shopID='%s'",shopID));
+    }
+
+    public void closeShop(){
+        this.status=0;
+        db.executeCUD(String.format("UPDATE `Shop` SET status=0 WHERE shopID='%s'",shopID));
+    }
+
+    public void loadPendingOrders(){
+        this.orders = new ArrayList<>();
+        // https://stackoverflow.com/questions/19196475/custom-order-by-in-sql-server-like-p-a-l-h (select data order by the custom sequence)
+        ArrayList<HashMap<String,Object>> os = db.readAll(String.format("SELECT * FROM `Order` WHERE shopID='%s' AND status='Pending'",shopID));
+        for(HashMap<String,Object> o : os){
+            this.orders.add(new Order(o.get("orderID"),o.get("status"), o.get("dateCreated"),o.get("timeCreated"),o.get("buyerID"),o.get("riderID"),o.get("shopID"),o.get("paymentID"),o.get("reviewID")));
+        }
+    }
+
+    public void loadAcceptedOrders(){
+        this.orders = new ArrayList<>();
+        // https://stackoverflow.com/questions/19196475/custom-order-by-in-sql-server-like-p-a-l-h (select data order by the custom sequence)
+        ArrayList<HashMap<String,Object>> os = db.readAll(String.format("SELECT * FROM `Order` WHERE shopID='%s' AND status<>'Pending' ORDER BY CASE WHEN status='Rider Accepted' THEN 1 WHEN status='Seller Accepted' THEN 2 WHEN status='Seller Ready' THEN 3 WHEN status='Rider Collected' THEN 4 WHEN status='Completed' THEN 5 ELSE 6 END ASC",shopID));
+        for(HashMap<String,Object> o : os){
+            this.orders.add(new Order(o.get("orderID"),o.get("status"), o.get("dateCreated"),o.get("timeCreated"),o.get("buyerID"),o.get("riderID"),o.get("shopID"),o.get("paymentID"),o.get("reviewID")));
+        }
+    }
+
+    public void acceptOrder(String oRDerID){        
+        db.executeCUD(String.format("UPDATE `Order` SET status='Seller Accepted' WHERE orderID='%s'",oRDerID));        
+    }
+
+    public void declineOrder(String oRDerID){
+        db.executeCUD(String.format("UPDATE `Order` SET status='Seller Declined' WHERE orderID='%s'",oRDerID));
+    }
+
+    public void readyOrder(String oRDerID){        
+        db.executeCUD(String.format("UPDATE `Order` SET status='Seller Ready' WHERE orderID='%s'",oRDerID));
+    }
 }
 
 class tester{
