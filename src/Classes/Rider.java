@@ -18,7 +18,9 @@ public class Rider extends Account{
     private Vehicle vehicle;
     private ArrayList<Order> orders = new ArrayList<>();
 
-    public Rider(){}
+    public Rider(){
+        this("","","");
+    }
     public Rider(String riderID, String vehicleID, String accountID){
         this.riderID = riderID;        
         this.vehicleID = vehicleID;
