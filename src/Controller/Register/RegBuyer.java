@@ -43,16 +43,17 @@ public class RegBuyer {
     }    
 
     public boolean isFilled(){                
-        return !(inputName.getText().isEmpty() || inputAddress.getText().isEmpty() || 
-        inputEmail.getText().isEmpty() || inputMobileNo.getText().isEmpty());
+        return !(inputName.getText().strip().isEmpty() || inputAddress.getText().strip().isEmpty() || 
+        inputEmail.getText().strip().isEmpty() || inputMobileNo.getText().strip().isEmpty());
     }
 
-    public void getInfo(){
-        data.setAccount(new Buyer());
-        data.getBuyer().setAccType("Buyer");
-        data.getBuyer().setName(inputName.getText());
-        data.getBuyer().setEmail(inputEmail.getText());
-        data.getBuyer().setMobileNo(inputMobileNo.getText());
-        data.getBuyer().setAddress(inputAddress.getText());
+    public void getInfo(){                
+        Buyer buyer = new Buyer();        
+        buyer.setAccType("Buyer");
+        buyer.setName(inputName.getText());
+        buyer.setEmail(inputEmail.getText());
+        buyer.setMobileNo(inputMobileNo.getText());
+        buyer.setAddress(inputAddress.getText());
+        data.setAccount(buyer);
     }
 }

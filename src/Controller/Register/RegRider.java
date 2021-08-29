@@ -1,5 +1,7 @@
 package Controller.Register;
 import Cache.*;
+import Classes.Rider;
+import Classes.Vehicle;
 
 import java.net.URL;
 import java.util.HashMap;
@@ -115,21 +117,26 @@ public class RegRider implements Initializable{
     }
 
     public boolean isFilled(){                                                 
-        return !(inputName.getText().isEmpty() || inputMobileNo.getText().isEmpty() || 
-                inputEmail.getText().isEmpty() || dropdownVehicleType.getSelectionModel().getSelectedItem()==null ||
-                (!inputBrand.isDisabled() && (inputBrand.getText().isEmpty() || inputModel.getText().isEmpty() ||
-                inputColor.getText().isEmpty() || inputPlateNo.getText().isEmpty())));
+        return !(inputName.getText().strip().isEmpty() || inputMobileNo.getText().strip().isEmpty() || 
+                inputEmail.getText().strip().isEmpty() || dropdownVehicleType.getSelectionModel().getSelectedItem()==null ||
+                (!inputBrand.isDisabled() && (inputBrand.getText().strip().isEmpty() || inputModel.getText().strip().isEmpty() ||
+                inputColor.getText().strip().isEmpty() || inputPlateNo.getText().strip().isEmpty())));
     }
 
-    public void getInfo(){        
-        data.addObjectHolder("accountName", inputName.getText());
-        data.addObjectHolder("accountEmail", inputEmail.getText());
-        data.addObjectHolder("accountMobileNo", inputMobileNo.getText());
-        data.addObjectHolder("vehicleType", dropdownVehicleType.getSelectionModel().getSelectedItem());
-        data.addObjectHolder("vehicleBrand", inputBrand.getText());
-        data.addObjectHolder("vehicleModel", inputModel.getText());
-        data.addObjectHolder("vehiclePlateNo", inputPlateNo.getText());
-        data.addObjectHolder("vehicleColor", inputColor.getText());
+    public void getInfo(){    
+        Vehicle vehicle = new Vehicle();          
+        vehicle.setType(dropdownVehicleType.getSelectionModel().getSelectedItem());
+        vehicle.setBrand(inputBrand.getText());
+        vehicle.setModel(inputModel.getText());
+        vehicle.setPlateNo(inputPlateNo.getText());
+        vehicle.setColor(inputColor.getText());  
+        Rider rider = new Rider();
+        rider.setAccType("Rider");
+        rider.setName(inputName.getText());
+        rider.setEmail(inputEmail.getText());
+        rider.setMobileNo(inputMobileNo.getText());      
+        rider.setVehicle(vehicle);
+        data.setAccount(rider);                      
     }
     
 }

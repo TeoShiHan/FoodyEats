@@ -1,5 +1,6 @@
 package Classes;
 import java.time.LocalDate;
+import java.time.LocalTime;
 import java.util.ArrayList;
 import java.util.HashMap;
 
@@ -7,10 +8,11 @@ public class Shop {
     
     //region  : VARIABLES
     private String 
-    shopID, name, address, tel, imgPath, 
-    startHour, endHour, foodID, reviewListID;
-    private Double deliveryFee;
-    private boolean status;
+    shopID, name, address, tel, 
+    imgPath, foodID, reviewListID;
+    private LocalTime startHour, endHour;
+    private double deliveryFee;
+    private int status;
     private LocalDate dateCreated;
     private ArrayList<Food> food;
     private ArrayList<Review> reviews;
@@ -19,27 +21,55 @@ public class Shop {
     
     //region  : CONSTRUCTORS
      public Shop(){
-         this(null,null,null,null,null,false,null,null);
+         
      }
 
     public Shop(
         Object shopID, 
+        Object name,
         Object address, 
         Object tel, 
         Object startHour, 
         Object endHour, 
         Object status,
         Object dateCreated,
-        Object deliveryFee
+        Object deliveryFee,
+        Object imgPath
     ){
         this.shopID = (String)shopID;
+        this.name = (String)name;
         this.address = (String)address;
         this.tel = (String)tel;
-        this.startHour = (String)startHour;
-        this.endHour = (String)endHour;
-        this.status = (Boolean)status;
+        this.startHour = LocalTime.parse(startHour.toString());
+        this.endHour = LocalTime.parse(endHour.toString());
+        this.status = (int)status;
+        this.dateCreated = LocalDate.parse(dateCreated.toString());
+        this.deliveryFee = (double) deliveryFee;
+        this.imgPath = (String) imgPath;
+    }
+
+    public Shop(
+        String shopID, 
+        String name,
+        String address, 
+        String tel, 
+        LocalTime startHour, 
+        LocalTime endHour, 
+        int status,
+        LocalDate dateCreated,
+        double deliveryFee,
+        String imgPath
+    ){
+        this.shopID = (String)shopID;
+        this.name = (String)name;
+        this.address = (String)address;
+        this.tel = (String)tel;
+        this.startHour = (LocalTime)startHour;
+        this.endHour = (LocalTime)endHour;
+        this.status = (int)status;
         this.dateCreated = (LocalDate)dateCreated;
-        this.deliveryFee = (Double) deliveryFee;
+        this.deliveryFee = (double) deliveryFee;
+        this.imgPath = (String) imgPath;
     }
     //#endregion
 
@@ -84,19 +114,19 @@ public class Shop {
         this.imgPath = imgPath;
     }
 
-    public String getStartHour() {
+    public LocalTime getStartHour() {
         return startHour;
     }
 
-    public void setStartHour(String startHour) {
+    public void setStartHour(LocalTime startHour) {
         this.startHour = startHour;
     }
 
-    public String getEndHour() {
+    public LocalTime getEndHour() {
         return endHour;
     }
 
-    public void setEndHour(String endHour) {
+    public void setEndHour(LocalTime endHour) {
         this.endHour = endHour;
     }
 
@@ -115,20 +145,19 @@ public class Shop {
     public void setReviewListID(String reviewListID) {
         this.reviewListID = reviewListID;
     }
-
-    public boolean isStatus() {
-        return status;
-    }
-
-    public Double getDeliveryFee() {
+    
+    public double getDeliveryFee() {
         return deliveryFee;
     }
-
-    public void setDeliveryFee(Double deliveryFee) {
+    
+    public void setDeliveryFee(double deliveryFee) {
         this.deliveryFee = deliveryFee;
     }
-
-    public void setStatus(boolean status) {
+    
+    public int getStatus() {
+        return status;
+    }
+    public void setStatus(int status) {
         this.status = status;
     }
 

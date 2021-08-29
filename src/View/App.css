@@ -11,23 +11,34 @@
     -fx-cursor: "hand";
 } */
 
-.table-view{
+.table-view, .list-view{
     -fx-font-size: 20px;
 }
 /* https://stackoverflow.com/questions/18700478/set-row-height-in-javafx-tableview */
-.table-row-cell {
+.table-row-cell, .list-cell{
     -fx-cell-size: 50px;
 }
-.table-row-cell:odd {
+.table-row-cell:odd, .list-cell:odd {
     -fx-background-color: #F4E3CE; 
 }
-.table-row-cell:even {
+.table-row-cell:even, .list-cell:even {
     -fx-background-color: #FFFFFF; 
 }
-.table-row-cell:selected {
+.table-row-cell:selected, .list-cell:selected {
     -fx-background-color: steelblue; 
+    -fx-text-fill: white;
 }
 
 .button,.radio-button,#iconOrderHistory,#iconHome,#iconBack,#iconCart,#iconEdit,#iconProfile,#linkLogout,#linkToRegister,#linkToLogin{
     -fx-cursor: "hand";
+}
+
+/* rider & seller HomeScreen Pane("big" button) */
+#btnIncomingOrder,#btnManageProduct,#btnOrderHistory,#btnIncomingOrder,#btnManageProduct,#btnOrderHistory{    
+    -fx-background-color: white;
+    -fx-font-size: 36px;
+}
+#btnIncomingOrder:hover,#btnManageProduct:hover,#btnOrderHistory:hover,#btnIncomingOrder:hover,#btnManageProduct:hover,#btnOrderHistory:hover{
+    -fx-cursor: "hand";
+    -fx-background-color: #de7a00;
 }

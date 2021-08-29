@@ -53,19 +53,11 @@ public class Login {
     @FXML
     void actionLogin(ActionEvent event) throws IOException, NoSuchMethodException, SecurityException, IllegalAccessException, IllegalArgumentException, InvocationTargetException{        
         if(!(inputUsername.getText().isEmpty() || inputPassword.getText().isEmpty())){
-            if(Account.login(inputUsername.getText().strip(), inputPassword.getText().strip())){            
-                gui.toNextScene(String.format("View/%sHome.fxml",data.getObjectHolder("accountType")));    
-            }else{
-                // customPopupWarning("Warning","Invalid credentials!");
-                // customRealPopup(event);
-                // customPopupMessage();
-                // gui.popupWindow("title", "info");
-            }
-            System.out.println("yes");
-        }else{
-            System.out.println("no");
-            gui.informationPopup("Invalid Account", "Please try again");
+            Account.login(inputUsername.getText().strip(), inputPassword.getText().strip());                            
+        }else{            
+            gui.informationPopup("Attention", "Please fill all the blank");
         }
+        //#region account login old method
         // HashMap<String,Object> acc = db.readOne(String.format("SELECT * FROM Account WHERE username='%s' AND password='%s' LIMIT 1",inputUsername.getText().strip(),inputPassword.getText().strip()));
         // if(acc!=null){                         
         //     HashMap<String,Object> childAcc = db.readOne(String.format("SELECT * FROM %s WHERE accountID='%s'",acc.get("type"),acc.get("accountID")));            
@@ -94,7 +86,8 @@ public class Login {
         //         // data.setBuyer(new Buyer(...));                
         //     }
         //     gui.toNextScene(String.format("View/%sHome.fxml",acc.get("type")));    
-        // }               
+        // }     
+        //#endregion          
     }
 
     @FXML
@@ -102,6 +95,7 @@ public class Login {
         gui.toNextScene("View/RegisterInformation.fxml");        
     }
 
+    //#region old custom popup
     void customRealPopup(ActionEvent event){
         Label lblText = new Label("Login Successfully");
         lblText.setMinHeight(100);
@@ -201,8 +195,11 @@ public class Login {
         // delay.setOnFinished(e -> myDialog.close());
         // delay.play();
     }
+    //#endregion
 
+    //#region Generic type
     // private <T> T castObject(Class<T> clazz, Object object) {
     //     return (T) object;
     //   }
+    //#endregion
 }

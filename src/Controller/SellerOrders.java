@@ -59,6 +59,7 @@ public class SellerOrders implements Initializable {
                 setGraphic(btnViewDetails);
                 btnViewDetails.setOnAction(e->{          
                     try {
+                        data.setOrder(order);
                         gui.toNextScene("View/SellerOrderDetails.fxml");
                     } catch (IOException e1) {
                         // TODO Auto-generated catch block

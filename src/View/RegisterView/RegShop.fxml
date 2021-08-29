@@ -71,17 +71,20 @@
             <Insets bottom="10.0" />
          </VBox.margin>
       </HBox> 
-      <HBox prefHeight="44.0" prefWidth="596.0">
+      <HBox alignment="CENTER_LEFT" prefHeight="44.0" prefWidth="596.0">
         <children>
             <Label prefHeight="35.0" style="-fx-font-weight: 800;" text="Shop Image" textAlignment="CENTER">
                 <font>
                     <Font size="24.0" />
                 </font>
             </Label>
-            <Label disable="true">
+            <Label fx:id="lblImage" disable="true">
                 <font>
                     <Font size="14.0" />
                 </font>
+               <HBox.margin>
+                  <Insets left="20.0" />
+               </HBox.margin>
             </Label>
             <!-- onAction="#actionImageChooser" -->
             <Button fx:id="imageChooser" mnemonicParsing="false" onAction="#chooseImage" prefHeight="40.0" prefWidth="142.0" text="Choose Image">
@@ -89,7 +92,7 @@
                     <Font size="14.0" />
                 </font>
                <HBox.margin>
-                  <Insets left="20.0" />
+                  <Insets left="5.0" />
                </HBox.margin>
             </Button>
             </children>
@@ -126,12 +129,12 @@
                   <Font size="24.0" />
                </font>
                <HBox.margin>
-                  <Insets left="30.0" />
+                  <Insets left="20.0" />
                </HBox.margin>
             </Label>
             <Spinner fx:id="spinnerDeliveryFee" editable="true" prefHeight="50.0">
                <HBox.margin>
-                  <Insets left="10.0" />
+                  <Insets left="5.0" />
                </HBox.margin>
             </Spinner>
          </children>

@@ -13,7 +13,7 @@
 <?import javafx.scene.shape.Rectangle?>
 <?import javafx.scene.text.Font?>
 
-<AnchorPane fx:id="paneBuyerOrderDetails" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="700.0" prefWidth="1200.0" style="-fx-background-color: #FAF0E4;" xmlns="http://javafx.com/javafx/16" xmlns:fx="http://javafx.com/fxml/1" fx:controller="Controller.BuyerOrderDetails">
+<AnchorPane fx:id="paneRiderOrderDetails" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="700.0" prefWidth="1200.0" style="-fx-background-color: #FAF0E4;" xmlns="http://javafx.com/javafx/16" xmlns:fx="http://javafx.com/fxml/1" fx:controller="Controller.RiderOrderDetails">
    <children>
       <Rectangle arcHeight="5.0" arcWidth="5.0" fill="#ff9819" height="245.0" layoutY="455.0" stroke="BLACK" strokeType="INSIDE" strokeWidth="0.0" width="1200.0" />
       <Label fx:id="lblOrderDetails" layoutX="30.0" layoutY="30.0" prefHeight="46.0" prefWidth="466.0" style="-fx-font-weight: 800;" text="Order #">
@@ -21,22 +21,17 @@
             <Font size="36.0" />
          </font>
       </Label>
-      <ImageView fx:id="iconBack" fitHeight="80.0" fitWidth="80.0" layoutX="890.0" layoutY="20.0" onMouseClicked="#toBack" pickOnBounds="true" preserveRatio="true">
+      <ImageView fx:id="iconBack" fitHeight="80.0" fitWidth="80.0" layoutX="990.0" layoutY="20.0" onMouseClicked="#toBack" pickOnBounds="true" preserveRatio="true">
          <image>
             <Image url="@../Images/backIcon.png" />
          </image>
-      </ImageView>      
-      <ImageView fx:id="iconCart" fitHeight="80.0" fitWidth="80.0" layoutX="990.0" layoutY="20.0" onMouseClicked="#toCart" pickOnBounds="true" preserveRatio="true">
-         <image>
-            <Image url="@../Images/cartIcon.png" />
-         </image>
-      </ImageView>
+      </ImageView>            
       <ImageView fx:id="iconHome" fitHeight="80.0" fitWidth="80.0" layoutX="1090.0" layoutY="20.0" onMouseClicked="#toHome" pickOnBounds="true" preserveRatio="true">
          <image>
             <Image url="@../Images/homeIcon.png" />
          </image>
       </ImageView>      
-      <Button fx:id="btnRate" layoutX="824.0" layoutY="442.0" prefHeight="94.0" prefWidth="346.0" text="Rate">
+      <Button fx:id="btnAction" layoutX="824.0" layoutY="568.0" prefHeight="94.0" prefWidth="346.0" text="Accept">
          <font>
             <Font size="36.0" />
          </font>
@@ -44,48 +39,26 @@
             <Insets />
          </opaqueInsets>
       </Button>
-      <Button fx:id="btnCancel" layoutX="824.0" layoutY="568.0" prefHeight="94.0" prefWidth="346.0" style="-fx-background-color: #FE5C5C;" text="Cancel">
-         <font>
-            <Font size="36.0" />
-         </font>
-         <opaqueInsets>
-            <Insets />
-         </opaqueInsets>
-      </Button>
-      <VBox layoutX="824.0" layoutY="120.0">
-         <children>
-            <Label alignment="CENTER" prefHeight="54.0" prefWidth="346.0" style="-fx-background-color: #FF8719; -fx-font-weight: 800;" text="Total Amount">
-               <font>
-                  <Font size="24.0" />
-               </font>
-            </Label>
-            <Label fx:id="lblTotalAmount" alignment="CENTER" prefHeight="122.0" prefWidth="346.0" style="-fx-background-color: #FEBD5C; -fx-font-weight: 800;" text="RM 0.00" wrapText="true">
-               <font>
-                  <Font size="36.0" />
-               </font>
-            </Label>
-         </children>
-      </VBox>
       <VBox layoutX="30.0" layoutY="120.0" prefHeight="177.0" prefWidth="346.0">
          <children>
-            <Label alignment="CENTER" prefHeight="54.0" prefWidth="346.0" style="-fx-background-color: #FF8719; -fx-font-weight: 800;" text="Date &amp; Time">
+            <Label alignment="CENTER" prefHeight="58.0" prefWidth="346.0" style="-fx-background-color: #FF8719; -fx-font-weight: 800;" text="Date &amp; Time">
                <font>
                   <Font size="24.0" />
                </font>
             </Label>
-            <Label fx:id="lblDateCreated" alignment="CENTER" prefHeight="65.0" prefWidth="346.0" style="-fx-background-color: #FEBD5C; -fx-font-weight: 800;" text="03/06/2020">
+            <Label fx:id="lblDateCreated" alignment="CENTER" prefHeight="60.0" prefWidth="346.0" style="-fx-background-color: #FEBD5C; -fx-font-weight: 800;" text="03/06/2020">
                <font>
                   <Font size="24.0" />
                </font>
             </Label>
-            <Label fx:id="lblTimeCreated" alignment="CENTER" prefHeight="56.0" prefWidth="346.0" style="-fx-background-color: #FEBD5C; -fx-font-weight: 800;" text="8:45pm">
+            <Label fx:id="lblTimeCreated" alignment="CENTER" prefHeight="60.0" prefWidth="346.0" style="-fx-background-color: #FEBD5C; -fx-font-weight: 800;" text="8:45pm">
                <font>
                   <Font size="24.0" />
                </font>
             </Label>
          </children>
       </VBox>
-      <VBox layoutX="427.0" layoutY="120.0" prefHeight="177.0" prefWidth="346.0" style="-fx-background-color: #FEBD5C;">
+      <VBox layoutX="824.0" layoutY="336.0" prefHeight="177.0" prefWidth="346.0" style="-fx-background-color: #FEBD5C;">
          <children>
             <Label alignment="CENTER" prefHeight="58.0" prefWidth="346.0" style="-fx-background-color: #FF8719; -fx-font-weight: 800;" text="Buyer Info">
                <font>
@@ -167,5 +140,98 @@
           <TableColumn fx:id="colQty" prefWidth="110" style="-fx-alignment: center;" text="Qty" />
         </columns>
       </TableView>
+      <VBox layoutX="824.0" layoutY="120.0" prefHeight="177.0" prefWidth="346.0" style="-fx-background-color: #FEBD5C;">
+         <children>
+            <Label alignment="CENTER" prefHeight="58.0" prefWidth="346.0" style="-fx-background-color: #FF8719; -fx-font-weight: 800;" text="Shop Info">
+               <font>
+                  <Font size="24.0" />
+               </font>
+            </Label>
+            <HBox prefWidth="346.0" VBox.vgrow="ALWAYS">
+               <children>
+                  <Label alignment="TOP_LEFT" prefWidth="107.0" style="-fx-font-weight: 800;" text="Name">
+                     <font>
+                        <Font size="14.0" />
+                     </font>
+                     <padding>
+                        <Insets left="10.0" top="5.0" />
+                     </padding>
+                     <HBox.margin>
+                        <Insets />
+                     </HBox.margin>
+                  </Label>
+                  <Label fx:id="lblShopName" alignment="TOP_LEFT" prefWidth="239.0" style="-fx-font-weight: 800;" text="Khoo" wrapText="true">
+                     <font>
+                        <Font size="14.0" />
+                     </font>
+                     <padding>
+                        <Insets top="5.0" />
+                     </padding>
+                  </Label>
+               </children>
+            </HBox>
+            <HBox prefWidth="346.0" VBox.vgrow="ALWAYS">
+               <children>
+                  <Label alignment="TOP_LEFT" prefWidth="107.0" style="-fx-font-weight: 800;" text="Tel no.">
+                     <font>
+                        <Font size="14.0" />
+                     </font>
+                     <padding>
+                        <Insets left="10.0" top="5.0" />
+                     </padding>
+                  </Label>
+                  <Label fx:id="lblShopTelNo" alignment="TOP_LEFT" prefWidth="239.0" style="-fx-font-weight: 800;" text="0194392616" wrapText="true">
+                     <font>
+                        <Font size="14.0" />
+                     </font>
+                     <padding>
+                        <Insets top="5.0" />
+                     </padding>
+                  </Label>
+               </children>
+            </HBox>
+            <HBox prefWidth="346.0" VBox.vgrow="ALWAYS">
+               <children>
+                  <Label alignment="TOP_LEFT" prefWidth="107.0" style="-fx-font-weight: 800;" text="Address">
+                     <font>
+                        <Font size="14.0" />
+                     </font>
+                     <padding>
+                        <Insets left="10.0" top="5.0" />
+                     </padding>
+                     <HBox.margin>
+                        <Insets />
+                     </HBox.margin>
+                  </Label>
+                  <Label fx:id="lblShopAddress" alignment="TOP_LEFT" prefWidth="239.0" style="-fx-font-weight: 800;" text="5662, Lorong Stampin 23d1A. 93350, Kuching, Sarawak " wrapText="true">
+                     <font>
+                        <Font size="14.0" />
+                     </font>
+                     <padding>
+                        <Insets top="5.0" />
+                     </padding>
+                  </Label>
+               </children>
+            </HBox>
+         </children>
+      </VBox>
+      <VBox layoutX="426.0" layoutY="120.0" prefHeight="177.0" prefWidth="346.0" style="-fx-background-color: #FEBD5C;">
+         <children>
+            <Label alignment="CENTER" prefHeight="58.0" prefWidth="346.0" style="-fx-background-color: #FF8719; -fx-font-weight: 800;" text="Delivery Fee">
+               <font>
+                  <Font size="24.0" />
+               </font>
+            </Label>
+            <HBox alignment="CENTER" prefHeight="89.0" prefWidth="346.0" VBox.vgrow="ALWAYS">
+               <children>
+                  <Label fx:id="lblDeliveryFee" alignment="CENTER" prefWidth="372.0" style="-fx-font-weight: 800;" text="RM 0.00" wrapText="true">
+                     <font>
+                        <Font size="24.0" />
+                     </font>
+                  </Label>
+               </children>
+            </HBox>
+         </children>
+      </VBox>
    </children>
 </AnchorPane>

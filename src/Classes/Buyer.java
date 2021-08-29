@@ -16,7 +16,7 @@ public class Buyer extends Account{
     private String buyerID, address, cartID;
     private Cart cart;
     private ArrayList<Order> orders = new ArrayList<>();
-
+    
     public Buyer() {  //No-arg Constructor        
     	this("","","","");
     }    
@@ -96,17 +96,17 @@ public class Buyer extends Account{
 
     @Override
     public void register() throws IOException{
+        super.register();
         // TODO Auto-generated method stub
-        try {
-            String nextBuyerID = db.getNextId("Buyer");
-            String nextAccountID = db.getNextId("Account");
-            String nextCartID = db.getNextId("Cart");            
-            db.executeCUD(String.format("INSERT INTO Account VALUES ('%s','%s','%s','%s','%s','%s','%s','%s')",nextAccountID,username,password,name,email,mobileNo,LocalDate.now().toString(),accType));
-            db.executeCUD(String.format("INSERT INTO Buyer VALUES ('%s','%s','%s','%s')",nextBuyerID,address,nextAccountID,nextCartID));
-            this.accountID = nextAccountID;
+        try {                                                
+            String nextBuyerID = db.getNextId("Buyer");            
+            String nextCartID = db.getNextId("Cart");
+            db.executeCUD(String.format("INSERT INTO Buyer VALUES ('%s','%s','%s','%s')",nextBuyerID,address,accountID,nextCartID));            
             this.buyerID = nextBuyerID;
-            this.cartID = nextCartID;
-            gui.toNextScene("View/BuyerHome.fxml");            
+            this.cartID = nextCartID;           
+            data.setBuyer(this);
+            gui.toNextScene("View/BuyerHome.fxml");
+            gui.notAlertInProgress();
         } catch (SQLException e) {
             // TODO Auto-generated catch block
             e.printStackTrace();

@@ -39,6 +39,7 @@ public class RiderHome implements Initializable{
     @Override
     public void initialize(URL arg0, ResourceBundle arg1) {
         // TODO Auto-generated method stub            
+        lblWelcome.setText("Welcome "+data.getAccount().getUsername());
     }
 
     @FXML
@@ -53,8 +54,8 @@ public class RiderHome implements Initializable{
     }
 
     @FXML
-    void toRiderIncomingOrder(MouseEvent event) throws IOException {
-        gui.toNextScene("View/RiderIncomingOrder.fxml");
+    void toRiderOrders(MouseEvent event) throws IOException {
+        gui.toNextScene("View/RiderOrders.fxml");
     }    
 
     @FXML
