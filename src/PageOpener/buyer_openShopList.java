@@ -22,4 +22,6 @@ public class buyer_openShopList extends Application{
         primaryStage.setScene(scene);
         primaryStage.show();
     }
+
+    
 }

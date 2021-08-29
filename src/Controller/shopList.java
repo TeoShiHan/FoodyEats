@@ -7,7 +7,6 @@ import Classes.JDBC;
 import Classes.Shop;
 import javafx.fxml.Initializable;
 import javafx.geometry.Insets;
-
 import java.io.IOException;
 import java.net.URL;
 import javafx.fxml.FXML;
@@ -122,7 +121,6 @@ public class shopList implements Initializable {
             System.out.println(imgPath);
 
             System.out.println("pass through getting value assignatoin");
-
 
             //  CREATE SHOP INSTANCE
             Shop shopInstance = new Shop();
