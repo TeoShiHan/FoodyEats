@@ -31,6 +31,7 @@ import java.util.ArrayList; // import the ArrayList class
 
 public class App extends Application{
     private static GUI gui = GUI.getInstance();
+    
     public static void main(String[] args) throws Exception  {
         System.out.println("Main method start");              
         launch(); 

@@ -27,11 +27,11 @@ public class Food {
     }    
 
     //  GETTER AND SETTER
-    public String getFoodID() {
+    public String getFoodId() {
         return foodID;
     }
 
-    public void setFoodID(String foodID) {
+    public void setId(String foodID) {
         this.foodID = foodID;
     }
 
