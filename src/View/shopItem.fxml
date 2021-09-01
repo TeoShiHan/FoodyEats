@@ -39,7 +39,7 @@
                      <children>
                         <VBox alignment="CENTER_LEFT" prefHeight="43.0" prefWidth="265.0">
                            <children>
-                              <Button mnemonicParsing="false" prefHeight="71.0" prefWidth="113.0" style="-fx-background-color: #ffae78;" text="View Shop">
+                              <Button fx:id="viewShopBtn" mnemonicParsing="false" prefHeight="71.0" prefWidth="113.0" style="-fx-background-color: #ffae78;" text="View Shop">
                                  <VBox.margin>
                                     <Insets top="8.0" />
                                  </VBox.margin>

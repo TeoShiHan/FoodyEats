@@ -1,10 +1,6 @@
 package Controller.Register;
 import Cache.*;
 import Classes.*;
-
-import java.time.LocalDate;
-import java.util.HashMap;
-
 import javafx.fxml.FXML;
 import javafx.scene.control.TextField;
 

@@ -1,6 +1,7 @@
 package Controller;
 import Classes.Shop;
 import javafx.fxml.FXML;
+import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.effect.BlurType;
 import javafx.scene.effect.DropShadow;
@@ -24,7 +25,7 @@ public class shopItemController {
     @FXML private VBox priceVerticalAlign;
     @FXML private Label deliveryFee;
     @FXML private StackPane shadowPane;
-
+    @FXML private Button viewShopBtn;
 
     public void setData(Shop shop){
         Image shopImage = new Image(getClass().getResourceAsStream(shop.getImgPath()));
@@ -36,4 +37,13 @@ public class shopItemController {
         categoryLabel.setText("Not yet include this feature");
         deliveryFee.setText("10.0");
     }
+
+    public Button getViewShopBtn() {
+        return viewShopBtn;
+    }
+
+    public void setViewShopBtn(Button viewShopBtn) {
+        this.viewShopBtn = viewShopBtn;
+    }
+    
 }

@@ -1,38 +1,17 @@
-import Classes.*;
 import Cache.*;
-
-import java.io.IOException;
 import javafx.application.Application;
-import javafx.event.ActionEvent;
-import javafx.event.EventHandler;
 import javafx.fxml.FXMLLoader;
-import javafx.scene.Group;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
-import javafx.scene.control.Alert;
-import javafx.scene.control.Button;
-import javafx.scene.control.ButtonType;
-import javafx.scene.control.TableColumn;
-import javafx.scene.control.TableView;
-import javafx.scene.control.Alert.AlertType;
-import javafx.scene.image.Image;
-import javafx.scene.image.ImageView;
-import javafx.scene.layout.HBox;
-import javafx.scene.layout.StackPane;
-import javafx.scene.layout.VBox;
-import javafx.scene.paint.Color;
-import javafx.scene.web.WebView;
 import javafx.stage.Stage;
-import javafx.stage.StageStyle;
-import Controller.Payment;
- 
-import java.util.ArrayList; // import the ArrayList class
+import SQL.CreateTableQuery.SQL;
 
 
 public class App extends Application{
     private static GUI gui = GUI.getInstance();
     
     public static void main(String[] args) throws Exception  {
+        loadFromDatabase();
         System.out.println("Main method start");              
         launch(); 
         // launch(args);  // same with line above
@@ -41,12 +20,16 @@ public class App extends Application{
 
     @Override
     public void start(Stage stage) throws Exception {   
+        
         gui.setStage(stage);
 
         // <--------------FXMK Loader------------------->
         Parent root = FXMLLoader.load(getClass().getResource("View/Login.fxml"));  
         String css = this.getClass().getResource("View/App.css").toExternalForm();
         
+        System.out.println(getClass().getResource("/View/App.css"));
+
+
         Scene scene = new Scene(root);
         scene.getStylesheets().add(css);        
         // stage.initStyle(StageStyle.UTILITY);
@@ -68,5 +51,17 @@ public class App extends Application{
         //         stage.close();
         //     }          
         // });                  
-    }   
+    }
+
+    private static void loadFromDatabase(){
+        SQL sql = SQL.getInstance();
+        DataHolder data = DataHolder.getInstance();
+        data.setAccountTable(sql.fetchAccountTable());
+        data.setBuyerTable(sql.fetchBuyerTable());
+        data.setSellerTable(sql.fetchSellerTable());
+        data.setAdminTable(sql.fetchAdminTable());
+        data.setRiderTable(sql.fetchRiderTable());
+        data.setShopTable(sql.fetchShopTable());
+    }
+
 }

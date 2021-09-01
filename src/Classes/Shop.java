@@ -1,4 +1,5 @@
 package Classes;
+import java.sql.SQLException;
 import java.time.LocalDate;
 import java.time.LocalTime;
 import java.util.ArrayList;
@@ -21,7 +22,7 @@ public class Shop {
     
     //region  : CONSTRUCTORS
      public Shop(){
-         
+         this("","","","",null, null,0,null,0.0,"");
      }
 
     public Shop(
@@ -70,6 +71,19 @@ public class Shop {
         this.dateCreated = (LocalDate)dateCreated;
         this.deliveryFee = (double) deliveryFee;
         this.imgPath = (String) imgPath;
+    }
+
+    public Shop(HashMap<String,Object>shop){
+        this.shopID = (String) shop.get("shopID");
+        this.name = (String) shop.get("shopName");
+        this.address = (String) shop.get("address");
+        this.tel = (String) shop.get("tel");
+        this.startHour = (LocalTime) shop.get("startHour");
+        this.endHour = (LocalTime) shop.get("endHour");
+        this.status = (int) shop.get("status");
+        this.dateCreated = (LocalDate) shop.get("dateCreated");
+        this.deliveryFee = (double) shop.get("deliveryFee");
+        this.imgPath = (String) shop.get("imgPath");
     }
     //#endregion
 
@@ -192,6 +206,17 @@ public class Shop {
     public void setOrders(ArrayList<Order> orders) {
         this.orders = orders;
     }
+
+    public static String getNextID() {
+        JDBC db = new JDBC();
+        String nextShopID = "";
+        try {
+            nextShopID = db.getNextId("Shop");
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return nextShopID;
+    }
     //#endregion
 
     //#region : METHODS
@@ -256,7 +281,6 @@ public class Shop {
         }
         return categorizedFood;
     }
-    
     //#endregion
 
 }
