@@ -31,7 +31,7 @@ public class Food {
         return foodID;
     }
 
-    public void setId(String foodID) {
+    public void setFoodID(String foodID) {
         this.foodID = foodID;
     }
 

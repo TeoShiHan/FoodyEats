@@ -15,7 +15,6 @@ import javafx.scene.control.ScrollPane;
 import javafx.scene.effect.DropShadow;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.GridPane;
-import javafx.scene.layout.HBox;
 import javafx.scene.layout.Region;
 import javafx.scene.layout.StackPane;
 import javafx.scene.paint.Color;
@@ -52,33 +51,31 @@ public class shopList implements Initializable {
                 
                 FXMLLoader fxmlLoader = new FXMLLoader();
 
-                System.out.println("successfully created the fxml loader");
+                    /*DEBUG OUTPUT*/System.out.println("successfully created the fxml loader");
 
                 fxmlLoader.setLocation(getClass().getResource("../View/shopItem.fxml"));
 
-                System.out.println("successfully set the location");
+                    /*DEBUG OUTPUT*/System.out.println("successfully set the location");
 
                 StackPane shadowPane = fxmlLoader.load();
 
                 shopList.setEffect(new DropShadow(10,Color.BLACK));
 
-                System.out.println("successfully load the hbox");
+                    /*DEBUG OUTPUT*/System.out.println("successfully load the hbox");
 
                 shopItemController shopItemController = fxmlLoader.getController();
 
-                System.out.println("Got the shop ItemController");
+                shopItemController.getViewShopBtn().setOnAction(e -> {});
 
-                System.out.println(shopObjectCollection.get(i).getName());
-                System.out.println(shopObjectCollection.get(i).getImgPath());
-                System.out.println(shopObjectCollection.get(i).getDeliveryFee());
-
-                System.out.println("finish output try");
-
+                    /*DEBUG OUTPUT*/System.out.println("Got the shop ItemController");
+                    /*DEBUG OUTPUT*/System.out.println(shopObjectCollection.get(i).getName());
+                    /*DEBUG OUTPUT*/System.out.println(shopObjectCollection.get(i).getImgPath());
+                    /*DEBUG OUTPUT*/System.out.println(shopObjectCollection.get(i).getDeliveryFee());
+                    /*DEBUG OUTPUT*/System.out.println("finish output try");
 
                 shopItemController.setData(shopObjectCollection.get(i));
 
-                System.out.println("successfully set the data");
-
+                    /*DEBUG OUTPUT*/System.out.println("successfully set the data");
 
                 if (gridCol == 2){
                     gridCol = 0;
@@ -87,8 +84,7 @@ public class shopList implements Initializable {
 
                  shopListGrid.add(shadowPane, gridCol++, gridRow);
 
-                 System.out.println("successfully added the grid");
-
+                    /*DEBUG OUTPUT*/System.out.println("successfully added the grid");
 
                  //set grid width
                  shopListGrid.setMinWidth(Region.USE_COMPUTED_SIZE);
@@ -110,11 +106,13 @@ public class shopList implements Initializable {
     public void createShopObjectCollection(){
         for(int i = 0; i < shopTable.size(); i++){
 
-            System.out.println("Runned");
+                /*DEBUG OUTPUT*/System.out.println("Runned");
 
             //  GET DATA FROM TABE
             String shopID      = (String)  shopTable.get(i).get("shopID");
-            System.out.println(shopID);
+
+                /*DEBUG OUTPUT*/System.out.println(shopID);
+
             String shopName    = (String)  shopTable.get(i).get("shopName");
             double deliveryFee = (double)  shopTable.get(i).get("deliveryFee");
             String imgPath     = (String)  shopTable.get(i).get("imgPath");
@@ -125,8 +123,7 @@ public class shopList implements Initializable {
             //  CREATE SHOP INSTANCE
             Shop shopInstance = new Shop();
 
-            System.out.println("successfully create shop instance");
-
+                /*DEBUG OUTPUT*/System.out.println("successfully create shop instance");
 
             //  ASSIGN NEEDED VALUE INTO SHOP INSTANCE
             shopInstance.setShopID(shopID);
@@ -140,24 +137,3 @@ public class shopList implements Initializable {
         }
     }
 }
-
-/* class shopListDriver{
-    public static void main(String[] args) {
-        ArrayList<HashMap<String,Object>> ShopTable = new ArrayList<HashMap<String,Object>>();
-        JDBC test = new JDBC();
-        ShopTable = test.readAll("SELECT * FROM Shop");
-
-        //  Print out the key the hasmap has
-        for(int i = 0; i < ShopTable.size(); i++){
-                System.out.println(ShopTable.get(i).get("address"));
-                System.out.println(ShopTable.get(i).get("deliveryFee"));
-                System.out.println(ShopTable.get(i).get("startHour"));
-                System.out.println(ShopTable.get(i).get("imgPath"));
-                System.out.println(ShopTable.get(i).get("name"));
-                System.out.println(ShopTable.get(i).get("shopID"));
-                System.out.println(ShopTable.get(i).get("telNo"));
-                System.out.println(ShopTable.get(i).get("status"));
-        }
-    }
-} */
-
