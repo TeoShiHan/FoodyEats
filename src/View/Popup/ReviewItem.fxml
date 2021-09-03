@@ -1,0 +1,64 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.image.Image?>
+<?import javafx.scene.image.ImageView?>
+<?import javafx.scene.layout.HBox?>
+<?import javafx.scene.layout.VBox?>
+<?import javafx.scene.text.Font?>
+
+<VBox maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefWidth="600.0" xmlns="http://javafx.com/javafx/16" xmlns:fx="http://javafx.com/fxml/1">
+   <children>
+      <HBox alignment="CENTER_LEFT">
+         <children>
+            <Label fx:id="lblUsername" text="Buyer Username" textFill="#333333">
+               <font>
+                  <Font size="20.0" />
+               </font>
+            </Label>
+            <Label fx:id="lblDateCreated" style="-fx-font-style: italic;" text="2021-08-31" textFill="#707070">
+               <HBox.margin>
+                  <Insets left="10.0" />
+               </HBox.margin>
+               <font>
+                  <Font size="14.0" />
+               </font>
+            </Label>
+         </children>
+         <VBox.margin>
+            <Insets bottom="5.0" />
+         </VBox.margin>
+      </HBox>
+      <HBox alignment="CENTER_LEFT">
+         <children>
+            <ImageView fitHeight="20.0" fitWidth="20.0" pickOnBounds="true" preserveRatio="true">
+               <image>
+                  <Image url="@../../Images/starIcon.png" />
+               </image></ImageView>
+            <Label fx:id="lblRating" text="1/5" textFill="#707070">
+               <HBox.margin>
+                  <Insets left="10.0" />
+               </HBox.margin>
+               <font>
+                  <Font size="14.0" />
+               </font>
+            </Label>
+         </children>
+         <VBox.margin>
+            <Insets bottom="5.0" />
+         </VBox.margin>
+      </HBox>
+      <Label fx:id="lblComment" alignment="TOP_LEFT" text="skdfh kajhsdfkhaskdhflk ahsdlkfhak sdhfkljhasdklfh aklsjdhf lkjhasdklfh aklsjhdfkl jhasd skdfh kajhsdfkhaskdhflk ahsdlkfhak sdhfkljhasdklfh aklsjdhf lkjhasdklfh aklsjhdfkl jhasd skdfh kajhsdfkhaskdhflk ahsdlkfhak sdhfkljhasdklfh aklsjdhf lkjhasdklfh aklsjhdfkl jhasd" textAlignment="JUSTIFY" textFill="#707070" wrapText="true" VBox.vgrow="ALWAYS">
+         <font>
+            <Font size="18.0" />
+         </font>
+         <VBox.margin>
+            <Insets bottom="10.0" />
+         </VBox.margin>
+      </Label>
+   </children>
+   <padding>
+      <Insets bottom="25.0" />
+   </padding>
+</VBox>

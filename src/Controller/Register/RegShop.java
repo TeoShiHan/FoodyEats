@@ -97,16 +97,18 @@ public class RegShop implements Initializable{
             
             lblImage.setText(shopImageFile.getName());
             
-            // https://stackoverflow.com/questions/36991165/how-to-set-the-save-path-for-a-file-chosen-in-filechooser-javafx/36991844#36991844
-            String currentPath = Paths.get("").toAbsolutePath().toString()+"/src/Images/".replaceAll("\\\\", "/");                                 
-            for(String ext: imgExtensions){
-                Path path = Paths.get(currentPath, "temp"+ext);
-                if(Files.exists(path)){
-                    Files.delete(path);
-                }                            
-            }                        
-            // shopImageFileName = currentPath+"/src/Images/temp"+shopImageFile.getName().substring(shopImageFile.getName().lastIndexOf("."));
-            Files.copy(shopImageFile.toPath(), Paths.get(currentPath,"temp"+shopImageFile.getName().substring(shopImageFile.getName().indexOf("."))));
+            data.addObjectHolder("choosenImagePath", shopImageFile.toPath());
+            data.addObjectHolder("choosenImageExtension", shopImageFile.getName().substring(shopImageFile.getName().lastIndexOf(".")));
+            // // https://stackoverflow.com/questions/36991165/how-to-set-the-save-path-for-a-file-chosen-in-filechooser-javafx/36991844#36991844
+            // String currentPath = System.getProperty("user.dir");
+            // for(String ext: imgExtensions){
+            //     Path path = Paths.get(currentPath, "temp"+ext);
+            //     if(Files.exists(path)){
+            //         Files.delete(path);
+            //     }                            
+            // }                        
+            // // shopImageFileName = currentPath+"/src/Images/temp"+shopImageFile.getName().substring(shopImageFile.getName().lastIndexOf("."));
+            // Files.copy(shopImageFile.toPath(), Paths.get(currentPath,"temp"+shopImageFile.getName().substring(shopImageFile.getName().indexOf("."))));
         }
     }   
               

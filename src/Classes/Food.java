@@ -1,5 +1,7 @@
 package Classes;
 
+import java.sql.SQLException;
+
 public class Food {
     private JDBC db = new JDBC();
     private String foodID,name,desc,imgPath,category,shopID;
@@ -26,6 +28,15 @@ public class Food {
         this.category = (String)category;
         this.shopID = (String)shopID;                    
     }    
+
+    // for creating food
+    public Food(String name, String desc, double price, String category, String shopID){
+        this.name = name;
+        this.desc = desc;        
+        this.price = price;
+        this.category = category;
+        this.shopID = shopID;        
+    }
 
     //  GETTER AND SETTER
     public String getFoodID() {
@@ -82,6 +93,10 @@ public class Food {
     public void setPrice(Double price) {
         this.price = price;
     }
+
+    public void create() throws SQLException{                
+        db.executeCUD(String.format("INSERT INTO `Food` VALUES (%s,%s,%s,%s,%.2f,%s,%s)",foodID,name,desc,imgPath,price,category,shopID));
+    }    
 
     public void edit(String name, String desc, double price, String category, String imgPath){        
         this.name = name;

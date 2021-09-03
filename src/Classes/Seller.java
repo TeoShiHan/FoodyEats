@@ -212,6 +212,7 @@ public class Seller extends Account{
         // TODO Auto-generated method stub
         super.register();
         try {                        
+            System.out.println("seller account ID: "+accountID);
             String nextSellerID = db.getNextId("Seller");
             String nextShopID = db.getNextId("Shop");
             db.executeCUD(String.format("INSERT INTO Seller VALUES ('%s','%s','%s','%s','%s','%s','%s',%d)",nextSellerID,address,NRIC,licenseNumber,bankAcc,accountID,nextShopID,0));                                    
@@ -222,9 +223,15 @@ public class Seller extends Account{
             this.shop.setShopID(nextShopID);
             gui.toNextScene("View/Login.fxml");
 
-            Path source = Paths.get(Paths.get("").toAbsolutePath().toString()+"/src/Images/temp"+shop.getImgPath().substring(shop.getImgPath().indexOf(".")).replaceAll("\\\\", "/"));            
-            // https://stackoverflow.com/questions/1158777/rename-a-file-using-java/20260300#20260300
-            Files.move(source, source.resolveSibling(nextShopID+shop.getImgPath().substring(shop.getImgPath().indexOf("."))));            
+            if(data.getObjectHolder("choosenImagePath")!=null){
+                String currentPath = System.getProperty("user.dir");                                                
+                Files.copy((Path)data.getObjectHolder("choosenImagePath"),Paths.get(currentPath,nextShopID+data.getObjectHolder("choosenImageExtension")));
+                data.getWholeObjectHolder().remove("choosenImagePath");
+                data.getWholeObjectHolder().remove("choosenImageExtension");
+            }
+            // Path source = Paths.get(Paths.get("").toAbsolutePath().toString()+"/src/Images/temp"+shop.getImgPath().substring(shop.getImgPath().indexOf(".")).replaceAll("\\\\", "/"));            
+            // // https://stackoverflow.com/questions/1158777/rename-a-file-using-java/20260300#20260300
+            // Files.move(source, source.resolveSibling(nextShopID+shop.getImgPath().substring(shop.getImgPath().indexOf("."))));            
             gui.informationPopup("Account created successfully", "You have to wait about 48hours to verify your account. Thank you!");
             gui.notAlertInProgress();
         } catch (SQLException e) {

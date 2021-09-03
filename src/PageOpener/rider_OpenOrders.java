@@ -25,7 +25,6 @@ import javafx.scene.paint.Color;
 import javafx.scene.web.WebView;
 import javafx.stage.Stage;
 import javafx.stage.StageStyle;
-import Controller.Payment;
  
 import java.util.ArrayList; // import the ArrayList class
 

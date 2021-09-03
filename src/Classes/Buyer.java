@@ -15,7 +15,7 @@ public class Buyer extends Account{
 
     private String buyerID, address, cartID;
     private Cart cart;
-    private ArrayList<Order> orders = new ArrayList<>();
+    private ArrayList<Order> orders;
     
     public Buyer() {  //No-arg Constructor        
     	this("","","","");
@@ -79,6 +79,10 @@ public class Buyer extends Account{
     public void setCart(Cart cart) {
         this.cart = cart;
     }
+    public void loadCart() {
+        HashMap<String,Object> c = db.readOne(String.format("SELECT * FROM `Cart` WHERE buyerID='%s'",buyerID));
+        this.cart = new Cart(c.get("cartID"), c.get("buyerID"), c.get("shopID"));        
+    }
 
     public ArrayList<Order> getOrders() {
         return orders;
@@ -87,6 +91,7 @@ public class Buyer extends Account{
         this.orders = orders;
     } 
     public void loadOrders() {
+        this.orders = new ArrayList<>();
         ArrayList<HashMap<String,Object>> os = db.readAll(String.format("SELECT * FROM `Order` WHERE buyerID='%s'",buyerID));
         for(HashMap<String,Object> o : os){
             this.orders.add(new Order(o.get("orderID"),o.get("status"), o.get("dateCreated"),o.get("timeCreated"),o.get("buyerID"),o.get("riderID"),o.get("shopID"),o.get("paymentID"),o.get("reviewID")));
@@ -100,10 +105,13 @@ public class Buyer extends Account{
         // TODO Auto-generated method stub
         try {                                                
             String nextBuyerID = db.getNextId("Buyer");            
-            String nextCartID = db.getNextId("Cart");
-            db.executeCUD(String.format("INSERT INTO Buyer VALUES ('%s','%s','%s','%s')",nextBuyerID,address,accountID,nextCartID));            
+            String nextCartID = db.getNextId("Cart");            
+            db.executeCUD(String.format("INSERT INTO Buyer VALUES ('%s','%s','%s','%s')",nextBuyerID,address,accountID,nextCartID));
+            db.executeCUD(String.format("INSERT INTO Cart VALUES ('%s','%s','%s')",nextCartID,nextBuyerID,null));            
+            this.cart = new Cart(nextCartID, nextBuyerID);
             this.buyerID = nextBuyerID;
-            this.cartID = nextCartID;           
+            this.cartID = nextCartID;
+            data.setAccount(this);
             data.setBuyer(this);
             gui.toNextScene("View/BuyerHome.fxml");
             gui.notAlertInProgress();
@@ -119,8 +127,4 @@ public class Buyer extends Account{
         this.address = address;
         db.executeCUD(String.format("UPDATE `Account` a, `Buyer` b SET a.username='%s', a.password='%s', a.name='%s', a.email='%s', a.mobileNo='%s', b.address='%s' WHERE a.accountID='%s' AND a.accountID=b.accountID",username,password,name,email,mobileNo,address,accountID));
     }
-
-    // public static String getCart(String BuyerID) {
-    //     return BuyerID;
-    // }
 }

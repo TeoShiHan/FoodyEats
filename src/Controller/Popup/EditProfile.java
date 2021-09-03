@@ -15,7 +15,7 @@ public class EditProfile implements Initializable{
     private GUI gui = GUI.getInstance();
     private DataHolder data = DataHolder.getInstance();
 
-    @FXML private TextField inputUsername,inputPassword,inputName,inputEmail,inputMobileNo,inputAddress,inputBankAccNo,inputNRIC,inputLicenseNo;    
+    @FXML private TextField inputUsername,inputPassword,inputName,inputEmail,inputMobileNo,inputAddress,inputBankAccNo,inputNRIC,inputLicenseNo,inputCompanyBranch;
     @FXML private Button btnYes,btnNo;
     @FXML private VBox vboxBankAcc,vboxAddress,vboxNRIC,vboxLicenseNo,vboxCompanyBranch;
 
@@ -35,9 +35,7 @@ public class EditProfile implements Initializable{
             vboxNRIC.setManaged(false);
             vboxNRIC.setVisible(false);
             vboxLicenseNo.setManaged(false);
-            vboxLicenseNo.setVisible(false);
-            vboxCompanyBranch.setManaged(false);
-            vboxCompanyBranch.setVisible(false);
+            vboxLicenseNo.setVisible(false);            
         }
         if(data.getAccount() instanceof Buyer){
             vboxAddress.setManaged(true);
@@ -52,11 +50,14 @@ public class EditProfile implements Initializable{
             inputNRIC.setText(((Seller)data.getAccount()).getNRIC());
             inputLicenseNo.setText(((Seller)data.getAccount()).getLicenseNumber());            
         }
-        if(data.getAccount() instanceof Seller){
+        if(data.getAccount() instanceof Admin){
             vboxNRIC.setManaged(true);
-            vboxNRIC.setVisible(true);
-            vboxCompanyBranch.setManaged(true);
-            vboxCompanyBranch.setVisible(true);
+            vboxNRIC.setVisible(true);            
+            inputNRIC.setText(((Admin)data.getAccount()).getNRIC());
+            inputCompanyBranch.setText(((Admin)data.getAccount()).getCompanyBranch());            
+        }else{
+            vboxCompanyBranch.setManaged(false);
+            vboxCompanyBranch.setVisible(false);
         }                
     }
 
@@ -147,4 +148,13 @@ public class EditProfile implements Initializable{
     public void setInputLicenseNo(TextField inputLicenseNo) {
         this.inputLicenseNo = inputLicenseNo;
     }
+
+    public TextField getInputCompanyBranch() {
+        return inputCompanyBranch;
+    }
+
+    public void setInputCompanyBranch(TextField inputCompanyBranch) {
+        this.inputCompanyBranch = inputCompanyBranch;
+    }
+    
 }

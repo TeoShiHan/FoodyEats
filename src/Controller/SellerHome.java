@@ -39,7 +39,7 @@ public class SellerHome implements Initializable{
     @FXML private ImageView iconProfile;
     @FXML private Label lblWelcome,linkLogout;
     @FXML private HBox toggleSwitch;
-    @FXML private Pane btnIncomingOrder,btnManageProduct,btnOrderHistory;   
+    @FXML private Pane btnIncomingOrder,btnManageProduct,btnOrderHistory,btnMyShop;
 
     @Override
     public void initialize(URL arg0, ResourceBundle arg1) {
@@ -79,6 +79,10 @@ public class SellerHome implements Initializable{
         gui.toNextScene("View/SellerManageFood.fxml");
     }
     
+    @FXML
+    void toSellerShopProfile(MouseEvent event) throws IOException {
+        gui.toNextScene("View/SellerShopProfile.fxml");
+    }
 }
 
 // https://stackoverflow.com/questions/30593193/creating-sliding-on-off-switch-button-in-javafx

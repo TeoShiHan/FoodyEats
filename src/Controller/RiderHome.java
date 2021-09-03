@@ -65,7 +65,7 @@ public class RiderHome implements Initializable{
 
     @FXML
     void toRiderManageProduct(MouseEvent event) throws IOException {
-        gui.toNextScene("View/RiderManageProduct.fxml");
+        gui.toNextScene("View/RiderVehicleDetails.fxml");
     }
     
 }

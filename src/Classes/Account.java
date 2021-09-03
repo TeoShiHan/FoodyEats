@@ -94,9 +94,8 @@ public class Account {
 
     public void register() throws IOException {        
         try {
-            String nextAccountID = db.getNextId("Account");
-            db.executeCUD(String.format("INSERT INTO Account VALUES ('%s','%s','%s','%s','%s','%s','%s','%s')",nextAccountID,username,password,name,email,mobileNo,LocalDate.now().toString(),accType));
-            this.accountID = nextAccountID;            
+            this.accountID = db.getNextId("Account");
+            db.executeCUD(String.format("INSERT INTO Account VALUES ('%s','%s','%s','%s','%s','%s','%s','%s')",accountID,username,password,name,email,mobileNo,LocalDate.now().toString(),accType));            
         } catch (SQLException e) {
             // TODO Auto-generated catch block
             e.printStackTrace();
@@ -120,9 +119,11 @@ public class Account {
                 data.setBuyer(buyer);
                 gui.toNextScene(String.format("View/%sHome.fxml",acc.get("type")));
             }else if(acc.get("type").equals("Admin")){
-                // Admin admin = new Admin(adminID, name, NRIC, companyBranch, accountID);
-                // data.setAccount(admin);
-                // data.setBuyer(admin);
+                System.out.println("Account.java ln 123 - "+acc.get("type"));
+                Admin admin = new Admin(acc.get("accountID"), acc.get("username"), acc.get("password"), acc.get("name"), acc.get("email"), acc.get("mobileNo"), acc.get("type"), childAcc.get("adminID"), childAcc.get("NRIC"), childAcc.get("companyBranch"));
+                System.out.println("Account.java ln 125 - "+admin.getAccType());
+                data.setAccount(admin);
+                data.setAdmin(admin);
                 gui.toNextScene(String.format("View/%sHome.fxml",acc.get("type")));
             }else{
                 if((int)childAcc.get("status")==1){                    

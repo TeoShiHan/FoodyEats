@@ -2,6 +2,8 @@ import Classes.*;
 import Cache.*;
 
 import java.io.IOException;
+import java.nio.file.Paths;
+
 import javafx.application.Application;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
@@ -24,7 +26,6 @@ import javafx.scene.paint.Color;
 import javafx.scene.web.WebView;
 import javafx.stage.Stage;
 import javafx.stage.StageStyle;
-import Controller.Payment;
  
 import java.util.ArrayList; // import the ArrayList class
 
@@ -45,7 +46,6 @@ public class App extends Application{
         // <--------------FXMK Loader------------------->
         Parent root = FXMLLoader.load(getClass().getResource("View/Login.fxml"));  
         String css = this.getClass().getResource("View/App.css").toExternalForm();
-        
         Scene scene = new Scene(root);
         scene.getStylesheets().add(css);        
         // stage.initStyle(StageStyle.UTILITY);

@@ -3,24 +3,21 @@
 <?import javafx.geometry.Insets?>
 <?import javafx.scene.Cursor?>
 <?import javafx.scene.control.Button?>
+<?import javafx.scene.control.ComboBox?>
 <?import javafx.scene.control.Label?>
-<?import javafx.scene.control.Spinner?>
-<?import javafx.scene.control.TextArea?>
 <?import javafx.scene.control.TextField?>
-<?import javafx.scene.image.Image?>
-<?import javafx.scene.image.ImageView?>
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.layout.HBox?>
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Font?>
 
-<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefWidth="600.0" xmlns="http://javafx.com/javafx/16" xmlns:fx="http://javafx.com/fxml/1">
+<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefWidth="600.0" xmlns="http://javafx.com/javafx/16" xmlns:fx="http://javafx.com/fxml/1"> 
    <children>
       <HBox alignment="CENTER" prefWidth="600.0">
          <children>
             <VBox alignment="CENTER" prefWidth="455.0">
                <children>
-                  <Label fx:id="lblHeading" prefWidth="600.0" style="-fx-font-weight: 800; -fx-alignment: center;" text="Review">
+                  <Label prefWidth="600.0" style="-fx-font-weight: 800; -fx-alignment: center;" text="Edit Vehicle Details">
                      <font>
                         <Font size="36.0" />
                      </font>
@@ -28,7 +25,12 @@
                         <Insets bottom="20.0" top="20.0" />
                      </VBox.margin>
                   </Label>
-                  <TextField fx:id="inputName" prefHeight="50.0" prefWidth="363.0" promptText="Name">
+                  <ComboBox fx:id="dropdownVehicleType" onAction="#selectVehicleType" prefHeight="50.0" prefWidth="660.0" promptText="Vehicle Type">
+                     <VBox.margin>
+                        <Insets bottom="10.0" />
+                     </VBox.margin>
+                  </ComboBox>
+                  <TextField fx:id="inputBrand" prefHeight="50.0" prefWidth="363.0" promptText="Brand">
                      <font>
                         <Font size="20.0" />
                      </font>
@@ -36,32 +38,7 @@
                         <Insets bottom="10.0" />
                      </VBox.margin>
                   </TextField>
-                  <HBox alignment="CENTER_LEFT">
-                     <children>
-                        <Label alignment="CENTER" style="-fx-font-weight: 800;" text="Price">
-                           <font>
-                              <Font size="24.0" />
-                           </font>
-                        </Label>
-                        <Label alignment="CENTER" style="-fx-font-weight: 800;" text="RM">
-                           <font>
-                              <Font size="24.0" />
-                           </font>
-                           <HBox.margin>
-                              <Insets left="20.0" />
-                           </HBox.margin>
-                        </Label>
-                        <Spinner fx:id="spinnerPrice" editable="true" prefHeight="50.0">
-                           <HBox.margin>
-                              <Insets left="5.0" />
-                           </HBox.margin>
-                        </Spinner>
-                     </children>
-                     <VBox.margin>
-                        <Insets bottom="10.0" />
-                     </VBox.margin>
-                  </HBox>
-                  <TextField fx:id="inputCategory" prefHeight="50.0" prefWidth="363.0" promptText="Category">
+                  <TextField fx:id="inputModel" prefHeight="50.0" prefWidth="363.0" promptText="Model">
                      <font>
                         <Font size="20.0" />
                      </font>
@@ -69,31 +46,23 @@
                         <Insets bottom="10.0" />
                      </VBox.margin>
                   </TextField>
-                  <TextArea fx:id="inputDescription" prefHeight="165.0" prefWidth="455.0" promptText="Description">
+                  <TextField fx:id="inputPlateNo" prefHeight="50.0" prefWidth="363.0" promptText="Plate No.">
                      <font>
                         <Font size="20.0" />
                      </font>
                      <VBox.margin>
                         <Insets bottom="10.0" />
                      </VBox.margin>
-                  </TextArea>
-                  <HBox alignment="CENTER" prefWidth="600.0">
-                     <children>
-                        <ImageView fx:id="Image" fitHeight="150.0" fitWidth="277.0" pickOnBounds="true" preserveRatio="true">
-                           <HBox.margin>
-                              <Insets right="40.0" />
-                           </HBox.margin>
-                           <image>
-                              <Image url="@../../Images/profileIcon.png" />
-                           </image>
-                        </ImageView>
-                        <Button fx:id="btnChangeImage" mnemonicParsing="false" onAction="#chooseImage" prefHeight="40.0" prefWidth="142.0" text="Change Image">
-                           <font>
-                              <Font size="14.0" />
-                           </font>
-                        </Button>
-                     </children>
-                  </HBox>
+                  </TextField>
+                  <TextField fx:id="inputColor" prefHeight="50.0" prefWidth="363.0" promptText="Color">
+                     <font>
+                        <Font size="20.0" />
+                     </font>
+                     <VBox.margin>
+                        <Insets bottom="10.0" />
+                     </VBox.margin>
+                  </TextField>
+                  <VBox />
                   <HBox alignment="CENTER" prefWidth="600.0">
                      <children>
                         <Button fx:id="btnNo" mnemonicParsing="false" prefHeight="64.0" prefWidth="142.0" style="-fx-font-weight: 800; -fx-background-color: #CF6262; -fx-font-size: 24px;" text="No" HBox.hgrow="ALWAYS">

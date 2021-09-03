@@ -17,6 +17,7 @@ public final class DataHolder {
     private List<Seller> sellers = new ArrayList<>();  // used for display the list of rider used for admin
     private Admin admin = new Admin();
     private Vehicle vehicle = new Vehicle();
+    private Payment payment = new Payment();
     private List<Cart> carts = new ArrayList<>(); 
     private Cart cart = new Cart();
     private List<CartItem> cartItems = new ArrayList<>(); 
@@ -29,6 +30,7 @@ public final class DataHolder {
     private OrderItem orderItem = new OrderItem();
     private List<Food> foods = new ArrayList<>();
     private Food food = new Food();
+    private List<Review> reviews = new ArrayList<>();
     private HashMap<String,Object> objectHolder = new HashMap<String,Object>();
     private HashMap<String,String> stringHolder = new HashMap<String,String>();
     private HashMap<String,Double> doubleHolder = new HashMap<String,Double>();
@@ -96,6 +98,14 @@ public final class DataHolder {
     }
     public void setVehicle(Vehicle vehicle) {
       this.vehicle = vehicle;
+    }    
+
+    public Payment getPayment() {
+      return payment;
+    }
+
+    public void setPayment(Payment payment) {
+      this.payment = payment;
     }
 
     public List<Cart> getCarts() {
@@ -180,6 +190,13 @@ public final class DataHolder {
     }
     public void setFood(Food Food){
       this.food = Food;
+    }    
+
+    public List<Review> getReviews() {
+      return reviews;
+    }
+    public void setReviews(List<Review> reviews) {
+      this.reviews = reviews;
     }
 
     public void addObjectHolder(String key,Object value){

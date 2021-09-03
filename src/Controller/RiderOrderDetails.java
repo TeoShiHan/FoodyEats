@@ -97,8 +97,11 @@ public class RiderOrderDetails implements Initializable {
                     e1.printStackTrace();
                 }                                
             });
-        }else if(data.getOrder().getStatus().equals("Seller Ready")){
+        }else if(data.getOrder().getStatus().equals("Seller Ready") || data.getOrder().getStatus().equals("Rider Accepted")){
             btnAction.setText("Collect");
+            if(data.getOrder().getStatus().equals("Rider Accepted")){
+                btnAction.setDisable(true);
+            }
             btnAction.setOnAction(e->{
                 data.getOrder().setStatus("Rider Collected");
                 data.getRider().collectOrder(data.getOrder().getOrderID());         

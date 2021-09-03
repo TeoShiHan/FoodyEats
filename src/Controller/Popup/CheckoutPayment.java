@@ -1,4 +1,4 @@
-package Controller;
+package Controller.Popup;
 import Cache.*;
 import Classes.*;
 
@@ -32,7 +32,7 @@ import java.net.URL;
 import java.util.HashMap;
 import java.util.ResourceBundle;
 
-public class Payment implements Initializable{
+public class CheckoutPayment implements Initializable{
     private JDBC db = new JDBC();
     private DataHolder data = DataHolder.getInstance();
     private GUI gui = GUI.getInstance();
@@ -40,7 +40,7 @@ public class Payment implements Initializable{
     @FXML private AnchorPane paneLogin;
     @FXML private Label lblTotal;
     @FXML private ToggleGroup paymentType;
-    @FXML private Button btnCancel,btnProceed;
+    @FXML private Button btnYes,btnNo;
     @FXML private ComboBox<String> dropdownBank = new ComboBox<>();    
     private HashMap<String,String> banks = new HashMap<String,String>(){{
         put("Citi Bank", "https://www.citibank.com.my/MYGCB/JSO/username/signon/flow.action?JFP_TOKEN=SBYTWE4R");
@@ -57,39 +57,55 @@ public class Payment implements Initializable{
         lblTotal.setText(String.format("%.2f",1000.00));
         ObservableList<String> options = FXCollections.observableArrayList(banks.keySet());
         dropdownBank.getItems().addAll(options);        
+    }       
+
+    public Button getBtnYes() {
+        return btnYes;
     }
+
+    public void setBtnYes(Button btnYes) {
+        this.btnYes = btnYes;
+    }
+
+    public Button getBtnNo() {
+        return btnNo;
+    }
+
+    public void setBtnNo(Button btnNo) {
+        this.btnNo = btnNo;
+    }
+
+    public Label getLblTotal() {
+        return lblTotal;
+    }
+
+    public void setLblTotal(Label lblTotal) {
+        this.lblTotal = lblTotal;
+    }
+
+    public ToggleGroup getPaymentType() {
+        return paymentType;
+    }
+
+    public void setPaymentType(ToggleGroup paymentType) {
+        this.paymentType = paymentType;
+    }
+
+    public ComboBox<String> getDropdownBank() {
+        return dropdownBank;
+    }
+
+    public void setDropdownBank(ComboBox<String> dropdownBank) {
+        this.dropdownBank = dropdownBank;
+    }
+
+    public HashMap<String, String> getBanks() {
+        return banks;
+    }
+
+    public void setBanks(HashMap<String, String> banks) {
+        this.banks = banks;
+    }
+
     
-    @FXML
-    void actionProceedPayment(ActionEvent event) {
-        Stage newStage = new Stage();
-        newStage.initModality(Modality.APPLICATION_MODAL);  //make user unable to press the original stage/window unless close the current stage/window
-        newStage.initOwner(gui.getStage());
-        WebView wv = new WebView();
-        wv.getEngine().load(banks.get(dropdownBank.getValue()));        
-
-        Pane pane = new Pane(wv);
-
-        Scene scene = new Scene(pane);        
-        newStage.setScene(scene);
-        newStage.setMaximized(false);
-        newStage.show();
-
-        // link:https://stackoverflow.com/questions/27334455/how-to-close-a-stage-after-a-certain-amount-of-time-javafx
-        PauseTransition delay = new PauseTransition(Duration.seconds(8));
-        delay.setOnFinished(e -> {
-            newStage.close();
-            try {
-                gui.toNextScene("View/BuyerOrderHistory.fxml");
-            } catch (IOException e1) {
-                // TODO Auto-generated catch block
-                e1.printStackTrace();
-            }
-        });
-        delay.play();
-    }
-
-    @FXML
-    void toBack(ActionEvent event) throws IOException {
-        gui.toPrevScene();
-    }
 }

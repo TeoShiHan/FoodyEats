@@ -1,6 +1,8 @@
 package Classes;
 import Cache.*;
 
+import java.sql.SQLException;
+import java.text.DateFormat;
 import java.time.LocalDate;
 import java.time.LocalTime;
 import java.time.format.DateTimeFormatter;
@@ -15,14 +17,25 @@ public class Order {
     private LocalDate dateCreated;
     private LocalTime timeCreated;
     private Review review;    
-    private ArrayList<OrderItem> orderItems = new ArrayList<OrderItem>();    
-    // for details uses
+    private ArrayList<OrderItem> orderItems;    
+    // for order details uses
     private Buyer buyer;
+    private Rider rider;
     private Shop shop;    
-    private int loadOrderItemCount,loadAllDetailsCount;    
+    private int loadOrderItemCount,loadAllDetailsCount;
+    private static boolean ordersHaveChange = false;
 
     public Order(){
-        this("","",LocalDate.now(),LocalTime.now(),"","","","","");
+        
+    }
+
+    // for converting cart to order and insert into mysql database
+    public Order(String status, LocalDate dateCreated, LocalTime timeCreated, String buyerID, String shopID){
+        this.status = status;
+        this.dateCreated = dateCreated;
+        this.timeCreated = LocalTime.parse(timeCreated.format(DateTimeFormatter.ofPattern("HH:mm:ss"))); 
+        this.buyerID = buyerID;
+        this.shopID = shopID;
     }
     
     public Order(String orderID, String status, LocalDate dateCreated, LocalTime timeCreated, String buyerID, String riderID,
@@ -30,7 +43,7 @@ public class Order {
         this.orderID = orderID;
         this.status = status;
         this.dateCreated = dateCreated;  
-        this.timeCreated = timeCreated;  
+        this.timeCreated = LocalTime.parse(timeCreated.format(DateTimeFormatter.ofPattern("HH:mm:ss")));  
         this.buyerID = buyerID;
         this.riderID = riderID;
         this.shopID = shopID;
@@ -43,7 +56,7 @@ public class Order {
         this.orderID = (String)orderID;
         this.status = (String)status;
         this.dateCreated = LocalDate.parse((String)dateCreated);  
-        this.timeCreated = LocalTime.parse((String)timeCreated,DateTimeFormatter.ofPattern("HH:mm:ss"));
+        this.timeCreated = LocalTime.parse((String)timeCreated,DateTimeFormatter.ofPattern("HH:mm:ss")); //Default format is like HH:mm:ss.ns, example: 13:28:04.177786900
         this.buyerID = (String)buyerID;
         this.riderID = (String)riderID;
         this.shopID = (String)shopID;
@@ -75,8 +88,8 @@ public class Order {
     public LocalTime getTimeCreated() {
         return timeCreated;
     }
-    public void setTimeCreated(LocalTime timeCreated) {
-        this.timeCreated = timeCreated;
+    public void setTimeCreated(LocalTime timeCreated) {        
+        this.timeCreated = LocalTime.parse(timeCreated.format(DateTimeFormatter.ofPattern("HH:mm:ss"))); 
     }
 
     public String getBuyerID() {
@@ -129,12 +142,28 @@ public class Order {
         this.buyer = buyer;
     }
 
+    public Rider getRider() {
+        return rider;
+    }
+
+    public void setRider(Rider rider) {
+        this.rider = rider;
+    }
+
     public Shop getShop() {
         return shop;
     }
 
     public void setShop(Shop shop) {
         this.shop = shop;
+    }
+    
+    public static boolean isOrdersHaveChange() {
+        return ordersHaveChange;
+    }
+
+    public static void setOrdersHaveChange(boolean ordersHaveChange) {
+        Order.ordersHaveChange = ordersHaveChange;
     }
 
     public ArrayList<OrderItem> getOrderItems() {
@@ -144,6 +173,7 @@ public class Order {
         this.orderItems = orderItems;
     }
     public void loadOrderItems() {        
+        orderItems = new ArrayList<OrderItem>();
         if(loadOrderItemCount++==0 && orderItems.isEmpty()){
             ArrayList<HashMap<String,Object>> ois = db.readAll(String.format("SELECT * FROM `OrderItem` WHERE orderID='%s'",orderID));
             for(HashMap<String,Object> oi : ois){            
@@ -156,8 +186,18 @@ public class Order {
     }
 
     public void loadAllDetails(){        
-        if(loadAllDetailsCount++==0){                        
-            ArrayList<HashMap<String,Object>> ods = db.readAll(String.format("SELECT s.address AS shopAddress,s.imgPath AS shopImagePath,a.name AS buyerName,b.address AS buyerAddress,f.imgPath AS foodImagePath,s.*,a.*,b.*,oi.*,f.* FROM `Order` o, `Shop` s, `Buyer` b, `OrderItem` oi, `Food` f, `Account` a WHERE o.orderID='%s' AND o.orderID=oi.orderID AND o.shopID=s.shopID AND o.buyerID=b.buyerID AND oi.foodID=f.foodID AND b.accountID=a.accountID",data.getOrder().getOrderID()));            
+        if(loadAllDetailsCount++==0){
+            orderItems = new ArrayList<OrderItem>();
+            ArrayList<HashMap<String,Object>> ods = db.readAll(String.format("SELECT s.address AS shopAddress,s.imgPath AS shopImagePath,a.name AS buyerName,b.address AS buyerAddress,f.imgPath AS foodImagePath,s.*,a.*,b.*,oi.*,f.* FROM `Order` o, `Shop` s, `Buyer` b, `OrderItem` oi, `Food` f, `Account` a WHERE o.orderID='%s' AND o.orderID=oi.orderID AND o.shopID=s.shopID AND o.buyerID=b.buyerID AND oi.foodID=f.foodID AND b.accountID=a.accountID",data.getOrder().getOrderID()));
+            this.buyer=new Buyer(ods.get(0).get("accountID"), ods.get(0).get("username"), ods.get(0).get("password"), ods.get(0).get("buyerName"), ods.get(0).get("email"), ods.get(0).get("mobileNo"), ods.get(0).get("accType"), ods.get(0).get("buyerID"), ods.get(0).get("buyerAddress"), ods.get(0).get("cartID"));
+            this.shop=new Shop(ods.get(0).get("shopID"), ods.get(0).get("shopName"), ods.get(0).get("shopAddress"), ods.get(0).get("tel"), ods.get(0).get("startHour"), ods.get(0).get("endHour"), ods.get(0).get("status"), ods.get(0).get("dateCreated"), ods.get(0).get("deliveryFee"),ods.get(0).get("shopImagePath"));
+            if(!(riderID==null||riderID.isEmpty()||riderID.isBlank())){
+                HashMap<String,Object> r = db.readOne(String.format("SELECT r.*,v.*,a.* FROM `Rider` r, `Vehicle` v, `Account` a WHERE r.riderID='%s' AND r.vehicleID=v.vehicleID AND r.accountID=a.accountID",riderID));
+                Vehicle vehicle = new Vehicle(r.get("vehicleID"), r.get("type"), r.get("plateNo"), r.get("brand"), r.get("model"), r.get("color"));
+                Rider rider = new Rider(r.get("accountID"), r.get("username"), r.get("password"), r.get("name"), r.get("email"), r.get("mobileNo"), r.get("accType"), r.get("riderID"), r.get("vehicleID"));
+                rider.setVehicle(vehicle);
+                this.rider = rider;
+            }
             for(HashMap<String,Object> od : ods){
                 this.buyer=new Buyer(od.get("accountID"), od.get("username"), od.get("password"), od.get("buyerName"), od.get("email"), od.get("mobileNo"), od.get("accType"), od.get("buyerID"), od.get("buyerAddress"), od.get("cartID"));
                 this.shop=new Shop(od.get("shopID"), od.get("shopName"), od.get("shopAddress"), od.get("tel"), od.get("startHour"), od.get("endHour"), od.get("status"), od.get("dateCreated"), od.get("deliveryFee"),od.get("shopImagePath"));
@@ -174,5 +214,32 @@ public class Order {
             totalAmount += orderItem.getAmount();
         }
         return totalAmount;
+    }
+
+    public void create() throws SQLException{
+        String nextOrderID = db.getNextId("Order");
+        String nextPaymentID = db.getNextId("Payment");
+        this.orderID = nextOrderID;
+        this.paymentID = nextPaymentID;
+        // https://stackoverflow.com/questions/5178697/mysql-insert-into-multiple-tables-database-normalization    
+        String deleteOrderItemQuery = "";
+        String query = "START TRANSACTION; ";        
+        query += String.format("INSERT INTO `Order` (orderID,status,dateCreated,timeCreated,buyerID,shopID,paymentID) VALUES ('%s','%s','%s','%s','%s','%s','%s'); ",orderID,status,dateCreated.toString(),timeCreated.toString(),buyerID,shopID,paymentID);        
+        query += String.format("INSERT INTO `Payment` (paymentID,method,orderID) VALUES ('%s','%s','%s'); ",paymentID,data.getPayment().getMethod(),orderID);        
+        for(CartItem c : data.getCartItems()){
+            query += String.format("INSERT INTO `OrderItem` (orderID,foodID,quantity) VALUES ('%s','%s',%d); ",orderID,c.getFood().getFoodID(),c.getQuantity());
+            deleteOrderItemQuery += String.format("DELETE FROM `CartItem` WHERE cartID='%s' AND foodID='%s'; ",c.getCartID(),c.getFood().getFoodID());
+        }
+        query += "COMMIT;";
+        System.out.println(query);
+        System.out.println(deleteOrderItemQuery);
+        db.executeCUD(query);
+        db.executeCUD(deleteOrderItemQuery);
+        Order.ordersHaveChange = true;
+        Cart.setCartHaveChange(true);
+    }
+
+    public void delete(){
+        db.executeCUD(String.format("DELETE FROM `Order` WHERE orderID='%s'; DELETE FROM `OrderItem` WHERE orderID='%s'",orderID,orderID));
     }
 }

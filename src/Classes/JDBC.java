@@ -24,7 +24,7 @@ import java.util.Optional;
 public class JDBC {
     private ResultSet queryRslt;
     private static Connection dbLink;
-    private static String url = "jdbc:mysql://37.59.55.185:3306/fCe5HJjPF6";
+    private static String url = "jdbc:mysql://37.59.55.185:3306/fCe5HJjPF6?allowMultiQueries=true&rewriteBatchedStatements=true";
     private static String user = "fCe5HJjPF6";
     private static String pwrd = "iKXuA6Ozsj";
     private String userSQLstatement;    
@@ -52,6 +52,7 @@ public class JDBC {
         openConnection();
         try{            
             int row = this.SQLstatement.executeUpdate(statement);
+            System.out.println("row affected: "+row);
         } catch (SQLException e) {
             // TODO Auto-generated catch block
             e.printStackTrace();
@@ -107,7 +108,7 @@ public class JDBC {
     public String getNextId(String table) throws SQLException{                
         openConnection();        
         String column = table.toLowerCase()+"ID";
-        this.queryRslt = this.SQLstatement.executeQuery(String.format("SELECT MAX(`%s`) as %s FROM %s",column,column,table));
+        this.queryRslt = this.SQLstatement.executeQuery(String.format("SELECT MAX(`%s`) as %s FROM `%s`",column,column,table));
         this.queryRslt.first();
         String currId = (String)this.queryRslt.getObject(column);
         int id = Integer.parseInt(currId.replaceAll("\\D+",""));

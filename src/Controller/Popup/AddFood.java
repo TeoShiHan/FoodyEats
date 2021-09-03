@@ -22,7 +22,7 @@ import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.stage.FileChooser;
 
-public class EditFood implements Initializable{    
+public class AddFood implements Initializable{    
     private GUI gui = GUI.getInstance();
     private DataHolder data = DataHolder.getInstance();
 
@@ -44,26 +44,18 @@ public class EditFood implements Initializable{
                 spinnerPrice.getEditor().setText("0");
             }
         });  
-        
-        inputName.setText(data.getFood().getName());
-        spinnerPrice.getValueFactory().setValue(data.getFood().getPrice());
-        inputCategory.setText(data.getFood().getCategory());
-        inputDescription.setText(data.getFood().getDesc());
-        
-        // https://stackoverflow.com/questions/22710053/how-can-i-show-an-image-using-the-imageview-component-in-javafx-and-fxml
-        // Image.setImage(new Image(getClass().getResourceAsStream("/Images/temp.jpg"))); 
-        Image.setImage(new Image(getClass().getResourceAsStream(data.getFood().getImgPath())));
+                
     }    
 
     @FXML
     void chooseImage(ActionEvent event) throws IOException {
-     foodImageFile = null;
+        foodImageFile = null;
         FileChooser fileChooser = new FileChooser();
         fileChooser.setTitle("Choose your shop image");
         fileChooser.getExtensionFilters().addAll(
             new FileChooser.ExtensionFilter("Images", "*.png", "*.jpg", "*.gif", "*.jpeg")
         );
-     foodImageFile = fileChooser.showOpenDialog(gui.getStage());
+        foodImageFile = fileChooser.showOpenDialog(gui.getStage());
         if(foodImageFile!=null){                                    
             // https://stackoverflow.com/questions/36991165/how-to-set-the-save-path-for-a-file-chosen-in-filechooser-javafx/36991844#36991844
             // String currentPath = Paths.get("").toAbsolutePath().toString().replaceAll("\\\\", "/");            

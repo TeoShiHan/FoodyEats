@@ -10,6 +10,7 @@ import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.time.LocalDate;
 import java.time.LocalTime;
+import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -17,10 +18,12 @@ import java.util.UUID;
 
 
 public class TestJDBC {
+    private static DataHolder data = DataHolder.getInstance();
+    private static DataHolder data1 = DataHolder.getInstance();
     private static JDBC db = new JDBC();
     public static void main(String[] args) throws SQLException, ParseException {
-        DataHolder data = DataHolder.getInstance();
-        System.out.println(data.getOrders().isEmpty());
+        // DataHolder data = DataHolder.getInstance();
+        // System.out.println(data.getOrders().isEmpty());
         // JDBC buyerTable = new JDBC("SELECT * FROM Buyer");
         // List<HashMap<String,Object>> buyers = buyerTable.getAll();        
         // for(HashMap<String,Object> buyer: buyers){
@@ -59,7 +62,10 @@ public class TestJDBC {
         DateFormat outdf = new SimpleDateFormat("hh:mm aa");
         System.out.println(indf.parse(time.toString()));
         System.out.println(outdf.format(indf.parse(time.toString())));
-        System.out.println(time);        
+        System.out.println(time);       
+        System.out.println(LocalTime.now());
+        System.out.println(LocalTime.now().format(DateTimeFormatter.ofPattern("HH:mm:ss")));
+        System.out.println(LocalTime.parse(LocalTime.now().format(DateTimeFormatter.ofPattern("HH:mm:ss"))));
 
         // String uniqueID = UUID.randomUUID().toString();
         // System.out.println(uniqueID);
@@ -115,7 +121,7 @@ public class TestJDBC {
         // File file = new File("Images/temp.jpeg");
         // System.out.println(file.getAbsolutePath());
 
-        ArrayList<HashMap<String,Object>> ods = db.readAll(String.format("SELECT s.address AS `shopAddress`,s.imgPath AS `shopImagePath`,a.name AS `buyerName`,b.address AS `buyerAddress`,f.imgPath AS `foodImagePath`,s.*,a.*,b.*,oi.*,f.* FROM `Order` o, `Shop` s, `Buyer` b, `OrderItem` oi, `Food` f, `Account` a WHERE o.orderID='%s' AND o.orderID=oi.orderID AND o.shopID=s.shopID AND o.buyerID=b.buyerID AND oi.foodID=f.foodID AND b.accountID=a.accountID","O00009"));
-        System.out.println(ods);
+        // ArrayList<HashMap<String,Object>> ods = db.readAll(String.format("SELECT s.address AS `shopAddress`,s.imgPath AS `shopImagePath`,a.name AS `buyerName`,b.address AS `buyerAddress`,f.imgPath AS `foodImagePath`,s.*,a.*,b.*,oi.*,f.* FROM `Order` o, `Shop` s, `Buyer` b, `OrderItem` oi, `Food` f, `Account` a WHERE o.orderID='%s' AND o.orderID=oi.orderID AND o.shopID=s.shopID AND o.buyerID=b.buyerID AND oi.foodID=f.foodID AND b.accountID=a.accountID","O00009"));
+        // System.out.println(ods);
     }    
 }
