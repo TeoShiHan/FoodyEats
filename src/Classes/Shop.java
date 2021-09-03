@@ -1,6 +1,7 @@
 package Classes;
 import Cache.*;
 
+import java.sql.SQLException;
 import java.time.LocalDate;
 import java.time.LocalTime;
 import java.util.ArrayList;
@@ -11,6 +12,8 @@ public class Shop {
     private DataHolder data = DataHolder.getInstance();
     private GUI gui = GUI.getInstance();
 
+    
+    //region  : VARIABLES
     private String 
     shopID, name, address, tel, 
     imgPath, reviewID;
@@ -21,10 +24,11 @@ public class Shop {
     private ArrayList<Food> foods;
     private ArrayList<Review> reviews;
     private ArrayList<Order> orders;
+    //#endregion
     
-     //  CONSTRUCTORS FOR DATABASE OBJECT
+    //region  : CONSTRUCTORS
      public Shop(){
-         
+         this("","","","",null, null,0,null,0.0,"");
      }
 
     public Shop(
@@ -75,6 +79,21 @@ public class Shop {
         this.imgPath = (String) imgPath;
     }
 
+    public Shop(HashMap<String,Object>shop){
+        this.shopID = (String) shop.get("shopID");
+        this.name = (String) shop.get("shopName");
+        this.address = (String) shop.get("address");
+        this.tel = (String) shop.get("tel");
+        this.startHour = (LocalTime) shop.get("startHour");
+        this.endHour = (LocalTime) shop.get("endHour");
+        this.status = (int) shop.get("status");
+        this.dateCreated = (LocalDate) shop.get("dateCreated");
+        this.deliveryFee = (double) shop.get("deliveryFee");
+        this.imgPath = (String) shop.get("imgPath");
+    }
+    //#endregion
+
+    //#region ：GETTER　AND SETTER
     public String getShopID() {
         return shopID;
     }
@@ -186,9 +205,19 @@ public class Shop {
         this.orders = orders;
     }
 
+    public static String getNextID() {
+        JDBC db = new JDBC();
+        String nextShopID = "";
+        try {
+            nextShopID = db.getNextId("Shop");
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return nextShopID;
+    }
+    //#endregion
 
-
-    //  METHODS
+    //#region : METHODS
     public void addFood(){
 
     }    
@@ -208,12 +237,12 @@ public class Shop {
 
     public void openShop(){
         this.status=1;
-        db.executeCUD(String.format("UPDATE `Shop` SET status=1 WHERE shopID='%s'",shopID));
+        db.executeCUD(String.format("UPDATE `Shop` SET status=1 WHERE shopID='%s'",shopID),gui);
     }
 
     public void closeShop(){
         this.status=0;
-        db.executeCUD(String.format("UPDATE `Shop` SET status=0 WHERE shopID='%s'",shopID));
+        db.executeCUD(String.format("UPDATE `Shop` SET status=0 WHERE shopID='%s'",shopID),gui);
     }
 
     public void loadPendingOrders(){
@@ -235,15 +264,15 @@ public class Shop {
     }
 
     public void acceptOrder(String oRDerID){        
-        db.executeCUD(String.format("UPDATE `Order` SET status='Seller Accepted' WHERE orderID='%s'",oRDerID));        
+        db.executeCUD(String.format("UPDATE `Order` SET status='Seller Accepted' WHERE orderID='%s'",oRDerID),gui);        
     }
 
     public void declineOrder(String oRDerID){
-        db.executeCUD(String.format("UPDATE `Order` SET status='Seller Declined' WHERE orderID='%s'",oRDerID));
+        db.executeCUD(String.format("UPDATE `Order` SET status='Seller Declined' WHERE orderID='%s'",oRDerID),gui);
     }
 
     public void readyOrder(String oRDerID){        
-        db.executeCUD(String.format("UPDATE `Order` SET status='Seller Ready' WHERE orderID='%s'",oRDerID));
+        db.executeCUD(String.format("UPDATE `Order` SET status='Seller Ready' WHERE orderID='%s'",oRDerID),gui);
     }
     
     public void loadReviews(){
@@ -275,12 +304,73 @@ public class Shop {
         this.endHour = endHour;        
         this.deliveryFee =  deliveryFee;
         this.imgPath =  imgPath;
-        db.executeCUD(String.format("UPDATE `Shop` SET shopName='%s', address='%s', tel='%s', startHour='%s', endHour='%s', deliveryFee=%.2f, imgPath='%s' WHERE shopID='%s'",name,address,tel,startHour,endHour,deliveryFee,imgPath,shopID));
-    } 
+        db.executeCUD(String.format("UPDATE `Shop` SET shopName='%s', address='%s', tel='%s', startHour='%s', endHour='%s', deliveryFee=%.2f, imgPath='%s' WHERE shopID='%s'",name,address,tel,startHour,endHour,deliveryFee,imgPath,shopID),gui);
+    }     
+
+    public static ArrayList<String> getAvailableFoodCategoryInShop(String shopID){
+        JDBC db = new JDBC();
+        ArrayList<String> categoryArr = new ArrayList<String>();
+        ArrayList<HashMap<String,Object>> categoryList = db.readAll(String.format(
+            "SELECT DISTINCT category " +
+            "FROM Food F, Shop S "      +
+            "WHERE S.shopID = F.shopID AND S.shopID = '%s'", shopID)
+        );
+        for(int i = 0 ; i < categoryList.size() ; i++){
+            categoryArr.add((String)categoryList.get(i).get("category"));
+        }
+        return categoryArr;
+    }
+
+    public static HashMap<String,ArrayList<Food>> getFoodObjArrThatMapWithCategory(String shopID){
+        JDBC db = new JDBC();
+        ArrayList<String> categoryArr = new ArrayList<String>();
+        HashMap<String,ArrayList<Food>> categorizedFood = new HashMap<String,ArrayList<Food>>();
+        
+        ArrayList<HashMap<String,Object>> foodTable = db.readAll(String.format(
+            "SELECT foodID, foodName, foodDesc, price,  F.imgPath, category " +
+            "FROM Food F, Shop S "      +
+            "WHERE S.shopID = F.shopID AND S.shopID = '%s'", shopID)
+        );
+
+        System.out.println(foodTable);
+        System.out.println("test fetch category : " + foodTable.get(0).get("category"));
+        categoryArr = getAvailableFoodCategoryInShop(shopID);
+        System.out.println("test fetch categoryV2 : " + categoryArr.get(0));
+
+        for(int i = 0 ; i < categoryArr.size() ; i++){
+            
+            ArrayList<Food> tempFoodArr = new ArrayList<Food>();
+            
+            for(int t = 0 ; t < foodTable.size() ; t++){
+    
+                Object foodCategoryObj = foodTable.get(t).get("category");
+                String foodCategoryStr = categoryArr.get(i);
+
+                if (foodCategoryObj.toString().equals(foodCategoryStr.toString())){
+                    
+                    System.out.println("go in if clause");
+                    
+                    Food tempFoodObj = new Food();
+                    tempFoodObj.setFoodID((String)foodTable.get(t).get("foodID"));
+                    tempFoodObj.setName((String)foodTable.get(t).get("foodName"));
+                    tempFoodObj.setDesc((String)foodTable.get(t).get("foodDesc"));
+                    tempFoodObj.setImgPath((String)foodTable.get(t).get("imgPath"));
+                    tempFoodObj.setPrice((Double)foodTable.get(t).get("price"));
+                    tempFoodObj.setCategory((String)foodTable.get(t).get("category"));
+                    tempFoodArr.add(tempFoodObj);
+                }
+                categorizedFood.put(categoryArr.get(i),tempFoodArr);
+            }
+        }
+        return categorizedFood;
+    }
+    //#endregion
+
 }
+
 
 class tester{
     public static void main(String[] args) {
-        Shop test = new Shop();
+        System.out.println(Shop.getFoodObjArrThatMapWithCategory("S00001"));
     }
 }

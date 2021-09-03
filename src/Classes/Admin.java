@@ -1,16 +1,9 @@
 package Classes;
-
 import Cache.*;
-
-import java.io.IOException;
-import java.sql.SQLException;
-import java.time.LocalDate;
-import java.util.ArrayList;
-import java.util.HashMap;
 
 public class Admin extends Account {
     private JDBC db = new JDBC();
-
+    private GUI gui = GUI.getInstance();
     private String adminID;
     private String NRIC;
     private String companyBranch;
@@ -68,11 +61,11 @@ public class Admin extends Account {
     }
  
     public void verifySeller(String seLLerID){
-        db.executeCUD(String.format("UPDATE `Seller` SET status=1 WHERE sellerID='%s'",seLLerID));
+        db.executeCUD(String.format("UPDATE `Seller` SET status=1 WHERE sellerID='%s'",seLLerID),gui);
     }
 
     public void verifyRider(String rIDerID){
-        db.executeCUD(String.format("UPDATE `Rider` SET status=1 WHERE riderID='%s'",rIDerID));
+        db.executeCUD(String.format("UPDATE `Rider` SET status=1 WHERE riderID='%s'",rIDerID),gui);
 
     }
 
@@ -81,6 +74,6 @@ public class Admin extends Account {
         super.edit(username, password, name, email, mobileNo);
         this.NRIC = NRIC;
         this.companyBranch = companyBranch;
-        db.executeCUD(String.format("UPDATE `Account` a, `Admin` ad SET a.username='%s', a.password='%s', a.name='%s', a.email='%s', a.mobileNo='%s', ad.NRIC='%s', ad.companyBranch='%s' WHERE a.accountID='%s' AND a.accountID=ad.accountID",username,password,name,email,mobileNo,NRIC,companyBranch,accountID));
+        db.executeCUD(String.format("UPDATE `Account` a, `Admin` ad SET a.username='%s', a.password='%s', a.name='%s', a.email='%s', a.mobileNo='%s', ad.NRIC='%s', ad.companyBranch='%s' WHERE a.accountID='%s' AND a.accountID=ad.accountID",username,password,name,email,mobileNo,NRIC,companyBranch,accountID),gui);
     }
 }

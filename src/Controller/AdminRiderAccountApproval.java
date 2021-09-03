@@ -43,7 +43,7 @@ public class AdminRiderAccountApproval implements Initializable {
         ArrayList<HashMap<String,Object>> as = db.readAll(String.format("SELECT r.*,v.*,a.* FROM `Account` a, `Rider` r, `Vehicle` v WHERE a.type='Rider' AND a.accountID=r.accountID AND r.vehicleID=v.vehicleID AND r.status=0"));            
         for(HashMap<String,Object> a : as){
             Vehicle vehicle = new Vehicle(a.get("vehicleID"), a.get("type"), a.get("plateNo"), a.get("brand"), a.get("model"), a.get("color"));
-            Rider rider = new Rider(a.get("accountID"), a.get("username"), a.get("password"), a.get("name"), a.get("email"), a.get("mobileNo"), a.get("accType"), a.get("riderID"), a.get("vehicleID"));
+            Rider rider = new Rider(a.get("accountID"), a.get("username"), a.get("password"), a.get("name"), a.get("email"), a.get("mobileNo"), a.get("accType"), a.get("riderID"), a.get("vehicleID"),a.get("status"));
             rider.setVehicle(vehicle);
             data.getRiders().add(rider);
         }

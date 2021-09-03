@@ -1,12 +1,11 @@
 package Cache;
 import Classes.*;
-
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 
-
 public final class DataHolder {  
+    
     JDBC db = new JDBC();
 
     private Account account = new Account();  // used for stored logged in user account, whether it is buyer/rider/seller    
@@ -31,19 +30,29 @@ public final class DataHolder {
     private List<Food> foods = new ArrayList<>();
     private Food food = new Food();
     private List<Review> reviews = new ArrayList<>();
+    private ArrayList<HashMap<String,Object>> loginInfo;
+    
+    
+    private ArrayList<HashMap<String,Object>> accountTable = new ArrayList<HashMap<String,Object>>();
+    private ArrayList<HashMap<String,Object>> buyerTable = new ArrayList<HashMap<String,Object>>();
+    private ArrayList<HashMap<String,Object>> sellerTable = new ArrayList<HashMap<String,Object>>();
+    private ArrayList<HashMap<String,Object>> riderTable = new ArrayList<HashMap<String,Object>>();
+    private ArrayList<HashMap<String,Object>> adminTable = new ArrayList<HashMap<String,Object>>();
+    private ArrayList<HashMap<String,Object>> shopTable = new ArrayList<HashMap<String,Object>>();
+
+
     private HashMap<String,Object> objectHolder = new HashMap<String,Object>();
     private HashMap<String,String> stringHolder = new HashMap<String,String>();
     private HashMap<String,Double> doubleHolder = new HashMap<String,Double>();
     private HashMap<String,Boolean> booleanHolder = new HashMap<String,Boolean>();
-
     private final static DataHolder INSTANCE = new DataHolder();
-    
     private DataHolder() {}
     
+    //#region : GETTER AND SETTER
     public static DataHolder getInstance() {
       return INSTANCE;
     }
-    
+
     public void setAccount(Account acc) {
       this.account = acc;
     }    
@@ -164,6 +173,57 @@ public final class DataHolder {
       this.order = order;
     }
 
+    //#region : TABLES
+    public ArrayList<HashMap<String, Object>> getSellerTable() {
+      return sellerTable;
+    }
+
+    public void setSellerTable(ArrayList<HashMap<String, Object>> sellerTable) {
+      this.sellerTable = sellerTable;
+    }
+
+    public ArrayList<HashMap<String, Object>> getRiderTable() {
+      return riderTable;
+    }
+
+    public void setRiderTable(ArrayList<HashMap<String, Object>> riderTable) {
+      this.riderTable = riderTable;
+    }
+
+    public ArrayList<HashMap<String, Object>> getAdminTable() {
+      return adminTable;
+    }
+
+    public void setAdminTable(ArrayList<HashMap<String, Object>> adminTable) {
+      this.adminTable = adminTable;
+    }
+
+    public ArrayList<HashMap<String,Object>> getAccountTable() {
+      return accountTable;
+    }
+
+    public void setAccountTable(ArrayList<HashMap<String,Object>> accountTable) {
+      this.accountTable = accountTable;
+    }
+
+    public ArrayList<HashMap<String,Object>> getBuyerTable() {
+      return buyerTable;
+    }
+
+    public void setBuyerTable(ArrayList<HashMap<String,Object>> buyerTable) {
+      this.buyerTable = buyerTable;
+    }
+
+    public ArrayList<HashMap<String, Object>> getShopTable() {
+      return shopTable;
+    }
+
+    public void setShopTable(ArrayList<HashMap<String, Object>> shopTable) {
+      this.shopTable = shopTable;
+    }
+    
+    //#endregion
+
     public List<OrderItem> getOrderItems(){
       return orderItems;
     }    
@@ -202,6 +262,7 @@ public final class DataHolder {
     public void addObjectHolder(String key,Object value){
       this.objectHolder.put(key, value);
     }
+
     public void addWholeObjectHolder(HashMap<String,Object> items){
       this.objectHolder.putAll(items);
     }
@@ -211,6 +272,7 @@ public final class DataHolder {
     public HashMap<String,Object> getWholeObjectHolder(){
       return this.objectHolder;
     }
+    //#endregion
     
     //#region StringHolder,DoubleHolder,BooleanHolder, not sure is it needed, maybe ObjectHolder enough?
     // public void addStringHolder(String key,String value){
@@ -294,5 +356,9 @@ public final class DataHolder {
       this.buyer = new Buyer();
       this.rider = new Rider();
       this.seller = new Seller();      
+    }
+
+    public void fetchDataFromDatabase() {
+
     }
   }

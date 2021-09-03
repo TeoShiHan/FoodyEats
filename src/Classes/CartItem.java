@@ -1,7 +1,10 @@
 package Classes;
 
+import Cache.GUI;
+
 public class CartItem {
     private JDBC db = new JDBC();
+    private GUI gui = GUI.getInstance();
 
     private String cartID,foodID;
     private int quantity;
@@ -78,10 +81,10 @@ public class CartItem {
     }
 
     public void delete(){
-        db.executeCUD(String.format("DELETE FROM `CartItem` WHERE cartID='%s' AND foodID='%s'",cartID,foodID));
+        db.executeCUD(String.format("DELETE FROM `CartItem` WHERE cartID='%s' AND foodID='%s'",cartID,foodID),gui);
     }
 
     public void update(){        
-        db.executeCUD(String.format("UPDATE `CartItem` SET quantity=%d WHERE cartID='%s' AND foodID='%s'",quantity,cartID,foodID));
+        db.executeCUD(String.format("UPDATE `CartItem` SET quantity=%d WHERE cartID='%s' AND foodID='%s'",quantity,cartID,foodID),gui);
     }
 }

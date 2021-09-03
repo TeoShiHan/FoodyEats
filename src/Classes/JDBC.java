@@ -1,13 +1,13 @@
 package Classes;
 
+import java.io.IOException;
 import java.sql.*;
 import java.util.ArrayList;
 import java.util.HashMap;
-import java.util.Iterator;
-import java.util.List;
 //Syntax to crate javadoc
 //    javadoc -d <directory of HTML files> <directory to .java files> -author
-import java.util.Optional;
+
+import Cache.GUI;
 
 /**
  * This class focus on simplify the usage of JDBC.
@@ -48,14 +48,17 @@ public class JDBC {
         }        
     }
     
-    public void executeCUD(String statement){
+    public void executeCUD(String statement, GUI gui){
         openConnection();
         try{            
-            int row = this.SQLstatement.executeUpdate(statement);
-            System.out.println("row affected: "+row);
+           this.SQLstatement.executeUpdate(statement);
         } catch (SQLException e) {
-            // TODO Auto-generated catch block
             e.printStackTrace();
+            try {
+                gui.informationPopup("Something wrong", "There is an error when inserting or updating the database");
+            } catch (IOException e1) {
+                e1.printStackTrace();
+            }
         }finally{
             closeConnection();
         }

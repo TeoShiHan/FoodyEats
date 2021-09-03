@@ -9,41 +9,67 @@ import java.util.ArrayList;
 import java.util.HashMap;
 
 public class Buyer extends Account{
+    
+    //#region : COMPOSITION / AGGREGATION VARIABLES
     private JDBC db = new JDBC();
     private DataHolder data = DataHolder.getInstance();
     private GUI gui = GUI.getInstance();
-
-    private String buyerID, address, cartID;
     private Cart cart;
-    private ArrayList<Order> orders;
+    //#endregion
+
+    //#region : PROGRAM VARIABLES
+    private String buyerID, address, cartID;    
+    private ArrayList<Order> orders;    
+    //#endregion
     
+    //#region : CONSTRUCTORS
     public Buyer() {  //No-arg Constructor        
     	this("","","","");
-    }    
+    }
+
     public Buyer(String buyerID, String address, String accountID, String cartID) {        
         this.buyerID = buyerID;
         this.address = address;
         this.accountID = accountID;
         this.cartID = cartID;        
     }      
+
     public Buyer(Object buyerID, Object address, Object accountID, Object cartID) {        
         this.buyerID =(String)buyerID;
         this.address =(String)address;
         this.accountID =(String)accountID;
         this.cartID = (String)cartID;        
     }
+
     public Buyer(String accountID, String username, String password, String name, String email, String mobileNo, String accType, String buyerID, String address, String cartID) {        
         super(accountID, username, password, name, email, mobileNo, accType);
         this.buyerID = buyerID;
         this.address = address;        
         this.cartID = cartID;                
     }
+    
     public Buyer(Object accountID, Object username, Object password, Object name, Object email, Object mobileNo, Object accType, Object buyerID, Object address, Object cartID) {
         super(accountID, username, password, name, email, mobileNo, accType);
         this.buyerID =(String)buyerID;
         this.address =(String)address;        
         this.cartID = (String)cartID;        
     }
+
+    public Buyer(HashMap<String,Object> account, HashMap<String,Object> buyer){
+        super(
+            (String)account.get("accountID"),
+            (String)account.get("username"),
+            (String)account.get("password"),
+            (String)account.get("name"),
+            (String)account.get("email"),
+            (String)account.get("mobileNo"),
+            (String)account.get("type")
+        );
+        this.buyerID = (String)buyer.get("buyerID");
+        this.address = (String)buyer.get("address");
+        this.cartID  = (String)buyer.get("cartID");
+    }
+    //#endregion
 
     public String getBuyerID() {
         return buyerID;
@@ -105,10 +131,10 @@ public class Buyer extends Account{
         // TODO Auto-generated method stub
         try {                                                
             String nextBuyerID = db.getNextId("Buyer");            
-            String nextCartID = db.getNextId("Cart");            
-            db.executeCUD(String.format("INSERT INTO Buyer VALUES ('%s','%s','%s','%s')",nextBuyerID,address,accountID,nextCartID));
-            db.executeCUD(String.format("INSERT INTO Cart VALUES ('%s','%s','%s')",nextCartID,nextBuyerID,null));            
-            this.cart = new Cart(nextCartID, nextBuyerID);
+            String nextCartID = db.getNextId("Cart");                        
+            db.executeCUD(String.format("INSERT INTO Cart VALUES ('%s','%s','%s')",nextCartID,nextBuyerID,null),gui);            
+            this.cart = new Cart(nextCartID, nextBuyerID);            
+            db.executeCUD(String.format("INSERT INTO Buyer VALUES ('%s','%s','%s','%s')",nextBuyerID,address,accountID,nextCartID),gui);            
             this.buyerID = nextBuyerID;
             this.cartID = nextCartID;
             data.setAccount(this);
@@ -125,6 +151,18 @@ public class Buyer extends Account{
     public void edit(String username, String password, String name, String email, String mobileNo, String address) {        
         super.edit(username, password, name, email, mobileNo);
         this.address = address;
-        db.executeCUD(String.format("UPDATE `Account` a, `Buyer` b SET a.username='%s', a.password='%s', a.name='%s', a.email='%s', a.mobileNo='%s', b.address='%s' WHERE a.accountID='%s' AND a.accountID=b.accountID",username,password,name,email,mobileNo,address,accountID));
+        db.executeCUD(String.format("UPDATE `Account` a, `Buyer` b SET a.username='%s', a.password='%s', a.name='%s', a.email='%s', a.mobileNo='%s', b.address='%s' WHERE a.accountID='%s' AND a.accountID=b.accountID",username,password,name,email,mobileNo,address,accountID),gui);
     }
+
+    @Override
+    public String toString() {
+
+        return super.toString() + "Buyer [address=" + address + ", buyerID=" + buyerID + ", cart=" + cart + ", cartID=" + cartID + "]";
+    }
+
+    
+
+    // public static String getCart(String BuyerID) {
+    //     return BuyerID;
+    // }
 }

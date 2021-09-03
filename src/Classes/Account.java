@@ -1,20 +1,28 @@
 package Classes;
-
 import java.io.IOException;
 import java.sql.SQLException;
 import java.time.LocalDate;
+import java.util.ArrayList;
 import java.util.HashMap;
-
 import Cache.*;
+import PageOpener.seller_openHome;
+import SQL.CreateTableQuery.SQL;
  
 public class Account {    
+    
+    //#region : AGGREGATED / COMPOSITION VARIABLES
     private static JDBC db = new JDBC();
     private DataHolder data = DataHolder.getInstance();
     private static GUI gui = GUI.getInstance();
-
+    //#endregion
+    
+    //#region : PROGRAM VARIABLES
     protected String accountID,username,password,name,email,mobileNo,accType;
-    private LocalDate regDate;    
+    private LocalDate regDate;
+    private HashMap<String,Object>accMap;
+    //#endregion
 
+    //#region : CONSTRUCTORS
     public Account(){
         this("","","","","","","");
     }
@@ -35,8 +43,10 @@ public class Account {
         this.email = (String)email;
         this.mobileNo = (String)mobileNo;    
         this.accType = (String)accType;
-    }    
+    }
+    //#endregion
 
+    //#region : GETTER AND SETTERS
     public String getAccountID() {
         return accountID;
     }
@@ -91,67 +101,100 @@ public class Account {
     public void setAccType(String accType) {
         this.accType = accType;
     }
-
-    public void register() throws IOException {        
+    
+    public static String getNextAccID() {
+        String nextAccId = "";
         try {
-            this.accountID = db.getNextId("Account");
-            db.executeCUD(String.format("INSERT INTO Account VALUES ('%s','%s','%s','%s','%s','%s','%s','%s')",accountID,username,password,name,email,mobileNo,LocalDate.now().toString(),accType));            
+            nextAccId = db.getNextId("Account");
         } catch (SQLException e) {
-            // TODO Auto-generated catch block
             e.printStackTrace();
         }
+        return nextAccId;
+    }
+
+    public void setAccMap(HashMap<String,Object> acc){
+        this.accMap = acc;
+    }
+
+    public HashMap<String,Object> getAccMap(){
+        return accMap;
+    }
+    //#endregion
+
+    //#region : METHODS
+    public void register() throws IOException {     
+        SQL sql = SQL.getInstance();   
+        String nextAccountID = Account.getNextAccID();
+        this.accountID = nextAccountID;         
+        db.executeCUD(sql.insertNewAccount(this),gui);
     }
 
     public static void login(String username, String password) throws IOException{  
-        DataHolder data = DataHolder.getInstance();        
-        HashMap<String,Object> acc = db.readOne(String.format("SELECT * FROM `Account` WHERE username='%s' AND password='%s' LIMIT 1",username,password));
-        if(acc==null){
+        
+        //#region ： PROGRAM VARIABLES
+        DataHolder data = DataHolder.getInstance();
+        ArrayList<HashMap<String,Object>> accountTable =  data.getAccountTable();
+        ArrayList<HashMap<String,Object>> shopTable =  data.getShopTable();
+        ArrayList<HashMap<String,Object>> childAccTable =  new ArrayList<HashMap<String,Object>>();
+        HashMap<String,Object> accMap = new HashMap<String,Object>();
+        HashMap<String,Object> childAccMap = new HashMap<String,Object>();
+        HashMap<String,Object> shopMap = new HashMap<String,Object>();
+        String accID;
+        //#endregion
+
+        if(wrongLoginInfoProvided(accountTable, username, password)){
             gui.informationPopup("Invalid Account", "Please try again");
-        }else{                        
-            HashMap<String,Object> childAcc = db.readOne(String.format("SELECT * FROM `%s` WHERE accountID='%s'",acc.get("type"),acc.get("accountID")));            
-            if(acc.get("type").equals("Buyer")){                  
-                Buyer buyer = new Buyer(
-                    acc.get("accountID"),acc.get("username"),acc.get("password"),acc.get("name"),
-                    acc.get("email"),acc.get("mobileNo"),acc.get("type"),childAcc.get("buyerID"),
-                    childAcc.get("address"),childAcc.get("cartID")
-                );   
+        } else{            
+            
+            accMap = getAccMap(username, accountTable);
+            accID = (String)accMap.get("accountID");
+            
+            if (accMap.get("type").equals("Buyer")) {
+
+                // #region : CONSTRUCT BUYER OBJECT AND SAVE INTO DATA HOLDER
+                childAccTable = data.getBuyerTable();
+                childAccMap = getChildAccMap(accID, childAccTable);
+                Buyer buyer = new Buyer(accMap, childAccMap);
                 data.setAccount(buyer);
                 data.setBuyer(buyer);
-                gui.toNextScene(String.format("View/%sHome.fxml",acc.get("type")));
-            }else if(acc.get("type").equals("Admin")){
-                System.out.println("Account.java ln 123 - "+acc.get("type"));
-                Admin admin = new Admin(acc.get("accountID"), acc.get("username"), acc.get("password"), acc.get("name"), acc.get("email"), acc.get("mobileNo"), acc.get("type"), childAcc.get("adminID"), childAcc.get("NRIC"), childAcc.get("companyBranch"));
-                System.out.println("Account.java ln 125 - "+admin.getAccType());
-                data.setAccount(admin);
-                data.setAdmin(admin);
-                gui.toNextScene(String.format("View/%sHome.fxml",acc.get("type")));
-            }else{
-                if((int)childAcc.get("status")==1){                    
-                    if(acc.get("type").equals("Rider")){
-                        Rider rider = new Rider(
-                            acc.get("accountID"),acc.get("username"),acc.get("password"),acc.get("name"),
-                            acc.get("email"),acc.get("mobileNo"),acc.get("type"),childAcc.get("riderID"),
-                            childAcc.get("vehicleID")
-                        );                        
-                        data.setAccount(rider);   
-                        data.setRider(rider);
-                    }else if(acc.get("type").equals("Seller")){  
-                        Seller seller = new Seller(
-                            acc.get("accountID"),acc.get("username"),acc.get("password"),acc.get("name"),
-                            acc.get("email"),acc.get("mobileNo"),acc.get("type"),childAcc.get("sellerID"),
-                            childAcc.get("address"),childAcc.get("NRIC"),childAcc.get("licenseNumber"),
-                            childAcc.get("bankAcc"),childAcc.get("shopID")
-                        );
-                        data.setAccount(seller);
-                        data.setSeller(seller);
-                    }
-                    gui.toNextScene(String.format("View/%sHome.fxml",acc.get("type")));
-                }else{
-                    gui.informationPopup("Account Pending", "Your account has been verifying");
-                }                
-            }            
-        }         
-    }    
+                // #endregion
+                
+                gui.toNextScene("View/BuyerHome.fxml");
+
+            } else if (accMap.get("type").equals("Rider")) {
+                
+                // #region : CONSTRUCT BUYER OBJECT AND SAVE INTO DATA HOLDER
+                childAccTable = data.getRiderTable();
+                childAccMap = getChildAccMap(accID, childAccTable);
+                Rider rider = new Rider(accMap,childAccMap);
+                data.setAccount(rider);
+                data.setRider(rider);
+                //#endregion
+                
+                goToAccHome(rider.isApprovedRider(), gui, "Rider");
+
+            } else{
+
+                //#region : CREATE SELLER INSTATNCE AND STORE INTO DATA HOLDER
+                childAccTable = data.getSellerTable();
+                childAccMap = getChildAccMap(accID, childAccTable);
+                
+                //#region : CREATE SHOP INSTANCE
+                String shopID = (String)childAccMap.get("shopID");
+                shopMap = getShopMap(shopID, shopTable);
+                Shop shop = new Shop(shopMap);
+                //#endregion
+
+                Seller seller = new Seller(accMap, childAccMap, shop);
+                data.setAccount(seller);
+                data.setSeller(seller);
+                //#endregion
+            
+                goToAccHome(seller.isApprovedSeller(), gui, "Seller");
+
+            }
+        }
+    }
 
     public void edit(String username, String password, String name, String email, String mobileNo){
         this.username = username;
@@ -164,4 +207,92 @@ public class Account {
     public void loadUser(){
 
     }
+
+    public void notifyAccCreated(GUI gui) throws IOException{
+
+    }
+
+    private static boolean isMatch(String str1, String str2){
+        return str1.equals(str2);
+    }
+
+    private static boolean wrongLoginInfoProvided(ArrayList<HashMap<String,Object>> accountTable,String username, String password){
+        for(int i = 0 ; i < accountTable.size() ; i++) {
+            String username1 = username;
+            String username2 = (String)accountTable.get(i).get("username");
+            
+            if(isMatch(username1,username2)){
+
+                /**/System.out.println("username1 :" + username1);
+                /**/System.out.println("username2 :" + username2);
+                /**/System.out.println("equalty   :"  + isMatch(username1,username2));
+
+                String correctPassword = (String)accountTable.get(i).get("password");
+                if(isMatch(password, correctPassword)){
+                    return false;
+                }
+            }
+        }
+        return true;
+    }
+
+    private static HashMap<String,Object> getAccMap(String username, ArrayList<HashMap<String,Object>> accountTable){
+        HashMap<String,Object> accMap = new HashMap<String,Object>();
+        for(int i = 0 ; i < accountTable.size() ; i++) {
+            String username2 = (String)accountTable.get(i).get("username");
+           if(isMatch(username, username2)){
+                accMap = accountTable.get(i);
+                break;
+           }
+        }
+        return accMap;
+    }
+
+    private static HashMap<String,Object> getChildAccMap(String accountID, ArrayList<HashMap<String,Object>> childAccTable){
+        HashMap<String,Object> childAccMap = new HashMap<String,Object>();
+        for(int i = 0 ; i < childAccTable.size() ; i++) {
+           String accountID2 = (String)childAccTable.get(i).get("accountID");
+           if(isMatch(accountID, accountID2)){
+            childAccMap = childAccTable.get(i);
+                break;
+           }
+        }
+        return childAccMap;
+    }
+
+    private static HashMap<String,Object> getShopMap(String shopID, ArrayList<HashMap<String,Object>> shopTable){
+        HashMap<String,Object> shopMap = new HashMap<String,Object>();
+        for(int i = 0 ; i < shopTable.size() ; i++) {
+           String shopID2 = (String)shopTable.get(i).get("shopID");
+           if(isMatch(shopID, shopID2)){
+            shopMap = shopTable.get(i);
+                break;
+           }
+        }
+        return shopMap;
+    }
+
+    public String toString() {
+        return "Account [accType=" + accType + ", accountID=" + accountID + ", email=" + email + ", mobileNo="
+                + mobileNo + ", name=" + name + ", password=" + password + ", regDate=" + regDate + ", username="
+                + username + "]";
+    }
+
+    private static void goToAccHome(boolean isApproved, GUI gui, String accType) {
+        if (isApproved) {
+            try {
+                gui.toNextScene(String.format("View/%sHome.fxml", accType));
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+        }
+        else {
+            try {
+                gui.informationPopup("Account Pending", "Your account has been verifying");
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+        }
+    }
+    //#endregion
 }

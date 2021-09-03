@@ -2,7 +2,6 @@ package Classes;
 import Cache.*;
 
 import java.sql.SQLException;
-import java.text.DateFormat;
 import java.time.LocalDate;
 import java.time.LocalTime;
 import java.time.format.DateTimeFormatter;
@@ -11,6 +10,7 @@ import java.util.HashMap;
 
 public class Order {
     private JDBC db = new JDBC();
+    private GUI gui = GUI.getInstance();
     private DataHolder data = DataHolder.getInstance();
 
     private String orderID,status,buyerID,riderID,shopID,paymentID,reviewID;
@@ -194,7 +194,7 @@ public class Order {
             if(!(riderID==null||riderID.isEmpty()||riderID.isBlank())){
                 HashMap<String,Object> r = db.readOne(String.format("SELECT r.*,v.*,a.* FROM `Rider` r, `Vehicle` v, `Account` a WHERE r.riderID='%s' AND r.vehicleID=v.vehicleID AND r.accountID=a.accountID",riderID));
                 Vehicle vehicle = new Vehicle(r.get("vehicleID"), r.get("type"), r.get("plateNo"), r.get("brand"), r.get("model"), r.get("color"));
-                Rider rider = new Rider(r.get("accountID"), r.get("username"), r.get("password"), r.get("name"), r.get("email"), r.get("mobileNo"), r.get("accType"), r.get("riderID"), r.get("vehicleID"));
+                Rider rider = new Rider(r.get("accountID"), r.get("username"), r.get("password"), r.get("name"), r.get("email"), r.get("mobileNo"), r.get("accType"), r.get("riderID"), r.get("vehicleID"), r.get("status"));
                 rider.setVehicle(vehicle);
                 this.rider = rider;
             }
@@ -233,13 +233,13 @@ public class Order {
         query += "COMMIT;";
         System.out.println(query);
         System.out.println(deleteOrderItemQuery);
-        db.executeCUD(query);
-        db.executeCUD(deleteOrderItemQuery);
+        db.executeCUD(query,gui);
+        db.executeCUD(deleteOrderItemQuery,gui);
         Order.ordersHaveChange = true;
         Cart.setCartHaveChange(true);
     }
 
     public void delete(){
-        db.executeCUD(String.format("DELETE FROM `Order` WHERE orderID='%s'; DELETE FROM `OrderItem` WHERE orderID='%s'",orderID,orderID));
+        db.executeCUD(String.format("DELETE FROM `Order` WHERE orderID='%s'; DELETE FROM `OrderItem` WHERE orderID='%s'",orderID,orderID),gui);
     }
 }

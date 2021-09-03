@@ -22,8 +22,10 @@ public class TestJDBC {
     private static DataHolder data1 = DataHolder.getInstance();
     private static JDBC db = new JDBC();
     public static void main(String[] args) throws SQLException, ParseException {
-        // DataHolder data = DataHolder.getInstance();
-        // System.out.println(data.getOrders().isEmpty());
+        
+        
+        DataHolder data = DataHolder.getInstance();
+        System.out.println(data.getOrders().isEmpty());
         // JDBC buyerTable = new JDBC("SELECT * FROM Buyer");
         // List<HashMap<String,Object>> buyers = buyerTable.getAll();        
         // for(HashMap<String,Object> buyer: buyers){

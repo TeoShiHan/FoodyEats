@@ -1,7 +1,10 @@
 package Classes;
 
+import Cache.GUI;
+
 public class Vehicle {
     private JDBC db = new JDBC();
+    private GUI gui = GUI.getInstance();
 
     private String vehicleID;
     private String plateNo;
@@ -70,6 +73,6 @@ public class Vehicle {
     }   
 
     public void edit(String type, String brand, String model, String plateNo, String color){        
-        db.executeCUD(String.format("UPDATE `Vehicle` SET type='%s',brand='%s',model='%s',plateNo='%s',color='%s' WHERE vehicleID='%s'",type,brand,model,plateNo,color,vehicleID));
+        db.executeCUD(String.format("UPDATE `Vehicle` SET type='%s',brand='%s',model='%s',plateNo='%s',color='%s' WHERE vehicleID='%s'",type,brand,model,plateNo,color,vehicleID),gui);
     }
 }

@@ -2,8 +2,11 @@ package Classes;
 
 import java.sql.SQLException;
 
+import Cache.GUI;
+
 public class Food {
     private JDBC db = new JDBC();
+    private GUI gui = GUI.getInstance();
     private String foodID,name,desc,imgPath,category,shopID;
     private double price;        
 
@@ -95,7 +98,7 @@ public class Food {
     }
 
     public void create() throws SQLException{                
-        db.executeCUD(String.format("INSERT INTO `Food` VALUES (%s,%s,%s,%s,%.2f,%s,%s)",foodID,name,desc,imgPath,price,category,shopID));
+        db.executeCUD(String.format("INSERT INTO `Food` VALUES (%s,%s,%s,%s,%.2f,%s,%s)",foodID,name,desc,imgPath,price,category,shopID),gui);
     }    
 
     public void edit(String name, String desc, double price, String category, String imgPath){        
@@ -104,10 +107,10 @@ public class Food {
         this.price = price;
         this.category = category;
         this.imgPath = imgPath;
-        db.executeCUD(String.format("UPDATE `Food` SET foodName='%s', foodDesc='%s', price=%.2f, category='%s',imgPath='%s' WHERE foodID='%s'",name,desc,price,category,imgPath,foodID));
+        db.executeCUD(String.format("UPDATE `Food` SET foodName='%s', foodDesc='%s', price=%.2f, category='%s',imgPath='%s' WHERE foodID='%s'",name,desc,price,category,imgPath,foodID),gui);
     }    
 
     public void delete(){
-        db.executeCUD(String.format("DELETE FROM `Food` WHERE foodID='%s'",foodID));
+        db.executeCUD(String.format("DELETE FROM `Food` WHERE foodID='%s'",foodID),gui);
     }
 }

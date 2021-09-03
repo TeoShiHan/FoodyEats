@@ -3,10 +3,12 @@ package Classes;
 import java.sql.SQLException;
 import java.time.LocalDate;
 import java.time.LocalTime;
-import java.time.format.DateTimeFormatter;
+
+import Cache.GUI;
 
 public class Review {  
     private JDBC db = new JDBC();    
+    private GUI gui = GUI.getInstance();
     
     private String reviewID,comment,orderID,shopID;
     private int rating;
@@ -103,7 +105,7 @@ public class Review {
         this.dateCreated = LocalDate.now();
         this.timeCreated = LocalTime.now();        
         this.reviewID = db.getNextId("Review");
-        db.executeCUD(String.format("INSERT INTO `Review` VALUES(%s,%s,%s,%s,%s,%s,%s)",reviewID,rating,comment,dateCreated.toString(),timeCreated.toString(),orderID,shopID));
+        db.executeCUD(String.format("INSERT INTO `Review` VALUES(%s,%s,%s,%s,%s,%s,%s)",reviewID,rating,comment,dateCreated.toString(),timeCreated.toString(),orderID,shopID),gui);
     }
     
 }

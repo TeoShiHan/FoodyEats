@@ -1,11 +1,6 @@
 package Controller.Register;
 import Classes.*;
 import Cache.*;
-
-import java.util.HashMap;
-
-import javax.imageio.ImageIO;
-
 import javafx.fxml.FXML;
 import javafx.scene.control.TextField;
 
@@ -69,6 +64,7 @@ public class RegSeller {
         Seller seller = new Seller();
         seller.setAccType("Seller");
         seller.setName(inputName.getText());
+            /*DEBUG LINE*/System.out.println("THE INPUT NAME IS : " + inputName.getText());
         seller.setEmail(inputEmail.getText());
         seller.setMobileNo(inputMobileNo.getText());
         seller.setAddress(inputAddress.getText());
