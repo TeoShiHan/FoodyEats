@@ -177,6 +177,26 @@
                         </TextField>
                      </children>
                   </VBox>
+                  <VBox fx:id="vboxCompanyBranch">
+                     <children>
+                        <Label text="Company Branch">
+                           <font>
+                              <Font size="18.0" />
+                           </font>
+                        </Label>
+                        <TextField fx:id="inputCompanyBranch" prefHeight="50.0" prefWidth="363.0" promptText="Company Branch">
+                           <font>
+                              <Font size="20.0" />
+                           </font>
+                           <VBox.margin>
+                              <Insets bottom="10.0" />
+                           </VBox.margin>
+                        </TextField>
+                     </children>
+                     <VBox.margin>
+                        <Insets />
+                     </VBox.margin>
+                  </VBox>
                   <HBox alignment="CENTER" prefWidth="600.0">
                      <children>
                         <Button fx:id="btnNo" mnemonicParsing="false" prefHeight="64.0" prefWidth="142.0" style="-fx-font-weight: 800; -fx-background-color: #CF6262; -fx-font-size: 24px;" text="Cancel" HBox.hgrow="ALWAYS">

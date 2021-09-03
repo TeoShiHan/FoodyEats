@@ -3,7 +3,7 @@ import Cache.*;
 
 public class Admin extends Account {
     private JDBC db = new JDBC();
-    private GUI gui;
+    private GUI gui = GUI.getInstance();
     private String adminID;
     private String NRIC;
     private String companyBranch;
@@ -67,5 +67,13 @@ public class Admin extends Account {
     public void verifyRider(String rIDerID){
         db.executeCUD(String.format("UPDATE `Rider` SET status=1 WHERE riderID='%s'",rIDerID),gui);
 
+    }
+
+    public void edit(String username, String password, String name, String email, String mobileNo, String NRIC, String companyBranch) {
+        // TODO Auto-generated method stub
+        super.edit(username, password, name, email, mobileNo);
+        this.NRIC = NRIC;
+        this.companyBranch = companyBranch;
+        db.executeCUD(String.format("UPDATE `Account` a, `Admin` ad SET a.username='%s', a.password='%s', a.name='%s', a.email='%s', a.mobileNo='%s', ad.NRIC='%s', ad.companyBranch='%s' WHERE a.accountID='%s' AND a.accountID=ad.accountID",username,password,name,email,mobileNo,NRIC,companyBranch,accountID),gui);
     }
 }

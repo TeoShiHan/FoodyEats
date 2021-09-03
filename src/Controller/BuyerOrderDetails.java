@@ -1,64 +1,61 @@
 package Controller;
 import Cache.*;
 import Classes.*;
+import Controller.Popup.WriteReview;
 
 import java.io.IOException;
 import java.net.URL;
-import java.time.LocalDate;
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
+import java.nio.file.Paths;
+import java.sql.SQLException;
 import java.util.ResourceBundle;
 
-import javafx.scene.Node;
-import javafx.fxml.FXMLLoader;
 import javafx.beans.property.ReadOnlyObjectWrapper;
-import javafx.beans.property.SimpleDoubleProperty;
 import javafx.beans.property.SimpleIntegerProperty;
 import javafx.beans.property.SimpleStringProperty;
-import javafx.beans.value.ObservableValue;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
-import javafx.event.ActionEvent;
+import javafx.concurrent.Task;
 import javafx.fxml.FXML;
+import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
+import javafx.scene.Cursor;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
-import javafx.scene.control.TableCell;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
-import javafx.scene.control.TableColumn.CellDataFeatures;
-import javafx.scene.control.cell.MapValueFactory;
-import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.image.ImageView;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.AnchorPane;
+import javafx.scene.shape.Path;
+import javafx.stage.Modality;
+import javafx.stage.Stage;
 
 public class BuyerOrderDetails implements Initializable {    
-    JDBC db = new JDBC();
-    GUI gui = GUI.getInstance();    
-    DataHolder data = DataHolder.getInstance();    
+    private JDBC db = new JDBC();
+    private GUI gui = GUI.getInstance();    
+    private DataHolder data = DataHolder.getInstance();    
     
     @FXML private AnchorPane paneBuyerOrder;    
-    @FXML private Label linkLogout,lblOrderDetails,lblBuyerName,lblBuyerMobileNo,lblBuyerAddress,lblTotalAmount,lblDateCreated,lblTimeCreated;
+    @FXML private Label linkLogout,lblOrderDetails,lblBuyerName,lblBuyerMobileNo,lblBuyerAddress,lblTotalAmount,lblDateCreated,lblTimeCreated,lblRiderName,lblRiderMobileNo,lblRiderVehicle;
     @FXML private ImageView iconProfile,iconHome,iconCart;            
-    @FXML private Button btnRate,btnCancel;    
-    // @FXML private TableView<RowData> tableView;    
+    @FXML private Button btnWriteReview,btnCancel;        
     @FXML private TableView<OrderItem> tableView;
     @FXML private TableColumn<OrderItem,Number> colNo;
     @FXML private TableColumn<OrderItem,Integer> colQty;
-    @FXML private TableColumn<OrderItem,String> colItems;    
+    @FXML private TableColumn<OrderItem,String> colItems;
+    private String currentFXMLPath = "/View/BuyerOrderDetails.fxml";
 
     @Override
     public void initialize(URL location, ResourceBundle resources) {
-        // TODO Auto-generated method stub        
-        // if(data.getOrderItems().isEmpty() || data.getStringHolder("orderID")!=data.getOrder().getOrderID()){
-        if(data.getOrder().getOrderItems().isEmpty()){
-            data.getOrder().loadOrderItems();
-            data.addObjectHolder("orderID", data.getOrder().getOrderID());
+        // TODO Auto-generated method stub                
+        if(data.getOrder().getOrderItems()==null){
+            data.getOrder().loadAllDetails();
+            if(data.getOrder().getRider()!=null){
+                data.setRider(data.getOrder().getRider());
+            }            
+            // data.addObjectHolder("orderID", data.getOrder().getOrderID());
         }
         
         lblOrderDetails.setText("Order #"+data.getOrder().getOrderID());
@@ -66,7 +63,12 @@ public class BuyerOrderDetails implements Initializable {
         lblTimeCreated.setText(data.getOrder().getTimeCreated().toString());
         lblBuyerName.setText(data.getBuyer().getName());
         lblBuyerAddress.setText(data.getBuyer().getAddress());        
-        lblBuyerMobileNo.setText(data.getBuyer().getMobileNo());        
+        lblBuyerMobileNo.setText(data.getBuyer().getMobileNo());
+        if(data.getRider()!=null && !data.getRider().getName().isEmpty()){
+            lblRiderName.setText(data.getRider().getName());
+            lblRiderMobileNo.setText(data.getRider().getMobileNo());                
+            lblRiderVehicle.setText(String.format("%s, %s, %s, %s, %s",data.getVehicle().getType(),data.getVehicle().getBrand(),data.getVehicle().getModel(),data.getVehicle().getPlateNo(),data.getVehicle().getColor()));
+        }
 
         // https://stackoverflow.com/questions/36629522/convert-arraylist-to-observable-list-for-javafx-program
         ObservableList<OrderItem> observableList = FXCollections.observableArrayList(data.getOrder().getOrderItems());        
@@ -81,6 +83,86 @@ public class BuyerOrderDetails implements Initializable {
         colQty.setCellValueFactory(dt -> new SimpleIntegerProperty(dt.getValue().getQuantity()).asObject());
         
         lblTotalAmount.setText(String.format("RM %.2f",data.getOrder().getTotalAmount()));
+        btnWriteReview.setDisable(data.getOrder().getStatus().equals("Completed")?false:true);
+        btnCancel.setDisable(data.getOrder().getStatus().equals("Pending")?false:true);
+
+        btnWriteReview.setOnAction(event -> {
+            Stage myDialog = new Stage();
+            gui.alertInProgress(myDialog);
+            myDialog.initModality(Modality.APPLICATION_MODAL);  //make user unable to press the original stage/window unless close the current stage/window
+            myDialog.initOwner(gui.getStage());
+            
+            WriteReview controller = new WriteReview();
+            FXMLLoader loader = new FXMLLoader(getClass().getResource("/View/Popup/WriteReview.fxml"));
+            loader.setController(controller);                        
+            Scene dialogScene = null;
+            try {
+                dialogScene = new Scene((Parent)loader.load());                        
+            } catch (IOException e2) {
+                // TODO Auto-generated catch block
+                e2.printStackTrace();
+            }
+            
+            controller.getBtnYes().setOnAction(ev->{                                                      
+                myDialog.getScene().getRoot().setDisable(true);
+                myDialog.getScene().setCursor(Cursor.WAIT);
+                Task<Void> task = new Task<Void>() {
+                    @Override
+                    public Void call() throws IOException, SQLException {
+                        Review newReview = new Review(controller.getSpinnerRating().getValue(), controller.getInputComment().getText(), data.getOrder().getOrderID(), data.getOrder().getShopID());
+                        newReview.create();
+                        return null ;
+                    }
+                };
+                task.setOnSucceeded(e -> {
+                    myDialog.close();
+                    try {
+                        gui.refreshScene(currentFXMLPath);
+                        gui.notAlertInProgress(myDialog);
+                    } catch (IOException e1) {
+                        // TODO Auto-generated catch block
+                        e1.printStackTrace();                        
+                    }                    
+                });
+                new Thread(task).start();                        
+            });
+            
+            controller.getBtnNo().setOnAction(e->{
+                myDialog.close();
+                gui.notAlertInProgress(myDialog);
+            });  
+                    
+            myDialog.setScene(dialogScene);
+            myDialog.setMaximized(false);
+            myDialog.show();
+        });
+
+        btnCancel.setOnAction(event->{
+            try {
+                gui.confirmationPopup("Cancel Order", "Are you sure you want to cancel the order? Once you cancel, it will be gone", passback->{
+                    if(passback){
+                        gui.miniPopup(String.format("RM%.2f has been returned to your Bank Account",data.getOrder().getTotalAmount()));
+                        Task<Void> task = new Task<Void>() {
+                            @Override
+                            public Void call() throws IOException {                                                        
+                                data.getOrder().delete();                                
+                                return null;
+                            }
+                        };                        
+                        new Thread(task).start();    
+                        try {
+                            gui.toNextScene("View/BuyerOrderHistory.fxml");
+                        } catch (IOException e) {
+                            // TODO Auto-generated catch block
+                            e.printStackTrace();
+                        }
+                    }
+                });
+            } catch (IOException e) {
+                // TODO Auto-generated catch block
+                e.printStackTrace();
+            }            
+        });        
 
         //#region direct select data from database (old method)
         // HashMap<String,Object> buyer = db.readOne(String.format("SELECT * FROM `Buyer` WHERE buyerID='%s'", data.getOrder().getBuyerId()));
@@ -131,14 +213,3 @@ public class BuyerOrderDetails implements Initializable {
         gui.toPrevScene();
     }  
 }
-
-// class RowData {
-//     private OrderItem orderItem;
-//     private Food food;
-//     public RowData(OrderItem orderItem, Food food) {
-//         this.orderItem = orderItem;
-//         this.food = food;
-//     }
-//     public OrderItem getOrderItem(){ return orderItem; }
-//     public Food getFood(){ return food; }
-// }

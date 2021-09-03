@@ -4,11 +4,8 @@ import java.io.IOException;
 import java.sql.*;
 import java.util.ArrayList;
 import java.util.HashMap;
-import java.util.Iterator;
-import java.util.List;
 //Syntax to crate javadoc
 //    javadoc -d <directory of HTML files> <directory to .java files> -author
-import java.util.Optional;
 
 import Cache.GUI;
 
@@ -27,7 +24,7 @@ import Cache.GUI;
 public class JDBC {
     private ResultSet queryRslt;
     private static Connection dbLink;
-    private static String url = "jdbc:mysql://37.59.55.185:3306/fCe5HJjPF6";
+    private static String url = "jdbc:mysql://37.59.55.185:3306/fCe5HJjPF6?allowMultiQueries=true&rewriteBatchedStatements=true";
     private static String user = "fCe5HJjPF6";
     private static String pwrd = "iKXuA6Ozsj";
     private String userSQLstatement;    
@@ -114,7 +111,7 @@ public class JDBC {
     public String getNextId(String table) throws SQLException{                
         openConnection();        
         String column = table.toLowerCase()+"ID";
-        this.queryRslt = this.SQLstatement.executeQuery(String.format("SELECT MAX(`%s`) as %s FROM %s",column,column,table));
+        this.queryRslt = this.SQLstatement.executeQuery(String.format("SELECT MAX(`%s`) as %s FROM `%s`",column,column,table));
         this.queryRslt.first();
         String currId = (String)this.queryRslt.getObject(column);
         int id = Integer.parseInt(currId.replaceAll("\\D+",""));

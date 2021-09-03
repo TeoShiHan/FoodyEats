@@ -38,8 +38,10 @@ public class BuyerOrderHistory implements Initializable {
     @Override
     public void initialize(URL location, ResourceBundle resources) {
         // TODO Auto-generated method stub        
-        if(data.getOrders().isEmpty()){ 
+        if(data.getBuyer().getOrders()==null||Order.isOrdersHaveChange()){ 
             data.getBuyer().loadOrders();
+            Order.setOrdersHaveChange(false);
+            // data.setOrders(data.getBuyer().getOrders());
         }   
 
         ObservableList<Order> observableList = FXCollections.observableArrayList(data.getOrders());                

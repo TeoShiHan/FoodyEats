@@ -4,11 +4,6 @@ import Classes.*;
 
 import java.io.IOException;
 import java.net.URL;
-import java.time.LocalDate;
-import java.time.LocalTime;
-import java.util.ArrayList;
-import java.util.Collections;
-import java.util.HashMap;
 import java.util.ResourceBundle;
 
 import javafx.beans.property.ReadOnlyObjectWrapper;
@@ -16,6 +11,7 @@ import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
+import javafx.geometry.Pos;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.TableCell;
@@ -25,42 +21,40 @@ import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.image.ImageView;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.AnchorPane;
+import javafx.scene.layout.HBox;
 
 public class SellerOrderHistory implements Initializable {    
-    GUI gui = GUI.getInstance();
-    DataHolder data = DataHolder.getInstance();
-    JDBC db = new JDBC();
-    @FXML private AnchorPane paneSellerOrderHistory;
+    private JDBC db = new JDBC();
+    private GUI gui = GUI.getInstance();
+    private DataHolder data = DataHolder.getInstance();
+    private String currentFXMLPath = "View/SellerOrderHistory.fxml";
+
+    @FXML private AnchorPane paneRiderOrderHistory;
     @FXML private Label lblWelcome;
     @FXML private ImageView iconCart,iconHome;
     @FXML private TableView<Order> tableView;
-    @FXML private TableColumn<Order,Object> colOrderId,colAmount,colDate;    
+    @FXML private TableColumn<Order,Object> colOrderId,colDate,colTime,colStatus;
     @FXML private TableColumn<Order,Order> colAction;
 
     @Override
-    public void initialize(URL location, ResourceBundle resources) {
-        // TODO Auto-generated method stub        
-        Order order1 = new Order("O7234","Completed",LocalDate.now(),LocalTime.now(),"B7746","R1254","S1255","P8907","R3000");
-        Order order2 = new Order("O7234","Completed",LocalDate.now(),LocalTime.now(),"B7746","R1254","S1255","P8907","R3000");
-        Order order3 = new Order("O7234","Completed",LocalDate.now(),LocalTime.now(),"B7746","R1254","S1255","P8907","R3000");
-        ObservableList<Order> observableList = FXCollections.observableArrayList(order1,order2,order3);
-        ArrayList<HashMap<String,Object>> orders = db.readAll("Order");
-        for(HashMap<String,Object> order : orders){
-            Order o = new Order(order.get("orderID"),order.get("orderStatus"),order.get("dateCreated"),order.get("timeCreated"),order.get("buyerID"),order.get("riderID"),order.get("shopID"),order.get("paymentID"),order.get("reviewID"));
-            observableList.add(o);
-        }
-        // Collections c = Collections.swap(orders, 0, orders.size()-1);
+    public void initialize(URL location, ResourceBundle resources) {                
+        data.getShop().loadAcceptedOrders();
+        data.setOrders(data.getShop().getOrders());
+
+        ObservableList<Order> observableList = FXCollections.observableArrayList(data.getOrders());
         
         tableView.setItems(observableList);
 
         //to assign which property/attribute of the class to the table column
-        colOrderId.setCellValueFactory(new PropertyValueFactory<Order,Object>("id"));
-        colDate.setCellValueFactory(new PropertyValueFactory<Order,Object>("dateCreated"));
-        colAmount.setCellValueFactory(new PropertyValueFactory<Order,Object>("amount")); // havent solved
+        colOrderId.setCellValueFactory(new PropertyValueFactory<Order,Object>("orderID"));
+        colDate.setCellValueFactory(new PropertyValueFactory<Order,Object>("dateCreated"));        
+        colTime.setCellValueFactory(new PropertyValueFactory<Order,Object>("timeCreated")); 
+        colStatus.setCellValueFactory(new PropertyValueFactory<Order,Object>("status")); 
         colAction.setCellValueFactory(param -> new ReadOnlyObjectWrapper<>(param.getValue()));        
         // to set what to display in each table cell, instead string only, because by default it display string (https://stackoverflow.com/questions/32282230/fxml-javafx-8-tableview-make-a-delete-button-in-each-row-and-delete-the-row-a)        
-        colAction.setCellFactory(param -> new TableCell<Order,Order>(){
-            Button btnViewDetails = new Button("View Details");            
+        colAction.setCellFactory(param -> new TableCell<Order,Order>(){            
+            Button btnReady = new Button("Ready");
+            Button btnViewDetails = new Button("View Details");
             @Override
             public void updateItem(Order order, boolean empty){
                 super.updateItem(order, empty);
@@ -68,21 +62,31 @@ public class SellerOrderHistory implements Initializable {
                     setGraphic(null);
                     return;
                 } 
-                setGraphic(btnViewDetails);
+                HBox pane = new HBox();
+                pane.setSpacing(20);                
+                pane.setAlignment(Pos.CENTER);                                    
+                if(order.getStatus().equals("Rider Accepted")){                    
+                    pane.getChildren().add(btnReady);
+                }
+                pane.getChildren().add(btnViewDetails);
+                setGraphic(pane);                
+                btnReady.setOnAction(e->{  
+                    order.setStatus("Seller Ready");                  
+                    data.getShop().readyOrder(order.getOrderID());
+                    tableView.refresh();
+                });                
                 btnViewDetails.setOnAction(e->{          
                     try {
-                        gui.toNextScene("View/SellerOrderDetails.fxml");
+                        data.setOrder(order);
+                        gui.toNextScene("View/RiderOrderDetails.fxml");
                     } catch (IOException e1) {
                         // TODO Auto-generated catch block
                         e1.printStackTrace();
-                    }
-                    System.out.println("id"+order.getStatus());                    
+                    }                                
                 });                                       
             }                     
-        });     
-        // colAction.setCellValueFactory(new PropertyValueFactory<Order,Button>("button"));        
-
-        tableView.setItems(observableList);        
+        });
+          
         // tableView.getColumns().addAll(colOrderId,colDate,colStatus,colAction); //not needed
     }    
 

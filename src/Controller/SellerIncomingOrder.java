@@ -5,6 +5,8 @@ import Classes.*;
 import java.io.IOException;
 import java.net.URL;
 import java.time.LocalDate;
+import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.ResourceBundle;
 
 import javafx.beans.property.ReadOnlyObjectWrapper;
@@ -12,6 +14,7 @@ import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
+import javafx.geometry.Pos;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.TableCell;
@@ -21,34 +24,39 @@ import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.image.ImageView;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.AnchorPane;
+import javafx.scene.layout.HBox;
 
-public class SellerOrders implements Initializable {
-    GUI gui = GUI.getInstance();
-    DataHolder data = DataHolder.getInstance();
+public class SellerIncomingOrder implements Initializable {
+    private JDBC db = new JDBC();
+    private GUI gui = GUI.getInstance();
+    private DataHolder data = DataHolder.getInstance();
+    
     @FXML private AnchorPane paneSellerOrders;
     @FXML private Label lblWelcome;
     @FXML private ImageView iconCart,iconHome;
     @FXML private TableView<Order> tableView;
-    @FXML private TableColumn<Order,Object> colOrderId,colDate;    
+    @FXML private TableColumn<Order,Object> colOrderId,colDate,colTime;    
     @FXML private TableColumn<Order,Order> colAction;
 
     @Override
-    public void initialize(URL location, ResourceBundle resources) {
-        // TODO Auto-generated method stub        
-        // Order order1 = new Order("O1234","Pending","B1233","","S1231","P1245","R1233",LocalDate.now());
-        // Order order2 = new Order("O2234","Accepted","B7486","","S1111","P8975","R2585",LocalDate.now());
-        // Order order3 = new Order("O7234","Completed","B7746","R1254","S1255","P8907","R3000",LocalDate.now());
-        ObservableList<Order> observableList = FXCollections.observableArrayList();
+    public void initialize(URL location, ResourceBundle resources) {                
+        data.getShop().loadPendingOrders();        
+        data.setOrders(data.getShop().getOrders());
+
+        ObservableList<Order> observableList = FXCollections.observableArrayList(data.getOrders());
         
         tableView.setItems(observableList);
 
         //to assign which property/attribute of the class to the table column
-        colOrderId.setCellValueFactory(new PropertyValueFactory<Order,Object>("id"));
-        colDate.setCellValueFactory(new PropertyValueFactory<Order,Object>("dateCreated"));        
+        colOrderId.setCellValueFactory(new PropertyValueFactory<Order,Object>("orderID"));
+        colDate.setCellValueFactory(new PropertyValueFactory<Order,Object>("dateCreated")); 
+        colTime.setCellValueFactory(new PropertyValueFactory<Order,Object>("timeCreated"));        
         colAction.setCellValueFactory(param -> new ReadOnlyObjectWrapper<>(param.getValue()));        
         // to set what to display in each table cell, instead string only, because by default it display string (https://stackoverflow.com/questions/32282230/fxml-javafx-8-tableview-make-a-delete-button-in-each-row-and-delete-the-row-a)        
         colAction.setCellFactory(param -> new TableCell<Order,Order>(){
-            Button btnViewDetails = new Button("View Details");            
+            Button btnAccept = new Button("Accept");
+            Button btnDecline = new Button("Decline");
+            Button btnViewDetails = new Button("View Details");
             @Override
             public void updateItem(Order order, boolean empty){
                 super.updateItem(order, empty);
@@ -56,23 +64,32 @@ public class SellerOrders implements Initializable {
                     setGraphic(null);
                     return;
                 } 
-                setGraphic(btnViewDetails);
+                HBox pane = new HBox(btnAccept, btnDecline, btnViewDetails);
+                pane.setSpacing(20);                
+                pane.setAlignment(Pos.CENTER);
+                setGraphic(pane);
+                btnAccept.setOnAction(e->{
+                    tableView.getItems().remove(order);   
+                    gui.miniPopup("Order Accepted, please go to Home -> Order History to see the order");                 
+                    data.getShop().acceptOrder(order.getOrderID());
+                });
+                btnDecline.setOnAction(e->{
+                    tableView.getItems().remove(order);                    
+                    data.getShop().declineOrder(order.getOrderID());
+                });
                 btnViewDetails.setOnAction(e->{          
                     try {
-                        data.setOrder(order);
+                        data.setOrder(order);                        
                         gui.toNextScene("View/SellerOrderDetails.fxml");
                     } catch (IOException e1) {
                         // TODO Auto-generated catch block
                         e1.printStackTrace();
-                    }
-                    System.out.println("id"+order.getStatus());                    
+                    }                                    
                 });                                       
             }                     
-        });     
-        // colAction.setCellValueFactory(new PropertyValueFactory<Order,Button>("button"));        
+        });           
 
-        tableView.setItems(observableList);        
-        // tableView.getColumns().addAll(colOrderId,colDate,colStatus,colAction); //not needed
+        tableView.setItems(observableList);                
     }    
 
     @FXML

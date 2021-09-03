@@ -1,5 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.control.Button?>
 <?import javafx.scene.control.Label?>
 <?import javafx.scene.control.TableColumn?>
 <?import javafx.scene.control.TableView?>
@@ -27,11 +29,22 @@
             <Image url="@../Images/homeIcon.png" />
          </image>
       </ImageView>
-      <TableView layoutX="30.0" layoutY="140.0" prefHeight="526.0" prefWidth="1138.0">
+      <Button fx:id="btnCheckout" layoutX="824.0" layoutY="568.0" onAction="#actionCheckout" prefHeight="94.0" prefWidth="346.0" style="-fx-background-color: #8FC875; -fx-font-size: 36px; -fx-font-weight: 800;" text="Checkout">
+         <font>
+            <Font size="36.0" />
+         </font>
+         <opaqueInsets>
+            <Insets />
+         </opaqueInsets>
+      </Button>
+      <TableView fx:id="tableView" layoutX="30.0" layoutY="140.0" prefHeight="398.0" prefWidth="1140.0">
         <columns>
-          <TableColumn prefWidth="716.8000354766846" text="Items" />
-          <TableColumn prefWidth="251.199951171875" text="Qty" />
-            <TableColumn prefWidth="170.39996337890625" text="Price" />
+            <TableColumn fx:id="colNo" prefWidth="50.0" style="-fx-alignment: center;" text="No." />
+            <TableColumn fx:id="colImage" prefWidth="200.0" style="-fx-alignment: center;" text="Image" />
+            <TableColumn fx:id="colName" prefWidth="300.0" style="-fx-alignment: center;" text="Name" />
+            <TableColumn fx:id="colQuantity" prefWidth="220.0" style="-fx-alignment: center;" text="Quantity" />
+            <TableColumn fx:id="colPrice" prefWidth="220.0" style="-fx-alignment: center;" text="Price per Item (RM)" />
+            <TableColumn fx:id="colAction" prefWidth="148.0" style="-fx-alignment: center;" text="Action" />            
         </columns>
       </TableView>      
    </children>

@@ -1,6 +1,12 @@
 package Classes;
 
+import java.sql.SQLException;
+
+import Cache.GUI;
+
 public class Food {
+    private JDBC db = new JDBC();
+    private GUI gui = GUI.getInstance();
     private String foodID,name,desc,imgPath,category,shopID;
     private double price;        
 
@@ -26,8 +32,17 @@ public class Food {
         this.shopID = (String)shopID;                    
     }    
 
+    // for creating food
+    public Food(String name, String desc, double price, String category, String shopID){
+        this.name = name;
+        this.desc = desc;        
+        this.price = price;
+        this.category = category;
+        this.shopID = shopID;        
+    }
+
     //  GETTER AND SETTER
-    public String getFoodId() {
+    public String getFoodID() {
         return foodID;
     }
 
@@ -80,5 +95,22 @@ public class Food {
 
     public void setPrice(Double price) {
         this.price = price;
+    }
+
+    public void create() throws SQLException{                
+        db.executeCUD(String.format("INSERT INTO `Food` VALUES (%s,%s,%s,%s,%.2f,%s,%s)",foodID,name,desc,imgPath,price,category,shopID),gui);
+    }    
+
+    public void edit(String name, String desc, double price, String category, String imgPath){        
+        this.name = name;
+        this.desc = desc;        
+        this.price = price;
+        this.category = category;
+        this.imgPath = imgPath;
+        db.executeCUD(String.format("UPDATE `Food` SET foodName='%s', foodDesc='%s', price=%.2f, category='%s',imgPath='%s' WHERE foodID='%s'",name,desc,price,category,imgPath,foodID),gui);
+    }    
+
+    public void delete(){
+        db.executeCUD(String.format("DELETE FROM `Food` WHERE foodID='%s'",foodID),gui);
     }
 }

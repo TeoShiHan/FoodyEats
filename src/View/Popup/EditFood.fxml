@@ -14,7 +14,7 @@
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Font?>
 
-<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefWidth="600.0" xmlns="http://javafx.com/javafx/16" xmlns:fx="http://javafx.com/fxml/1" fx:controller="Controller.Popup.EditFood">
+<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefWidth="600.0" xmlns="http://javafx.com/javafx/16" xmlns:fx="http://javafx.com/fxml/1"> 
    <children>
       <HBox alignment="CENTER" prefWidth="600.0">
          <children>
@@ -69,7 +69,7 @@
                         <Insets bottom="10.0" />
                      </VBox.margin>
                   </TextField>
-                  <TextArea fx:id="inputDescription" prefHeight="165.0" prefWidth="455.0" promptText="Description">
+                  <TextArea fx:id="inputDescription" prefHeight="165.0" prefWidth="455.0" promptText="Description" wrapText="true">
                      <font>
                         <Font size="20.0" />
                      </font>
