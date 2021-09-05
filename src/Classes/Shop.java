@@ -7,6 +7,10 @@ import java.time.LocalTime;
 import java.util.ArrayList;
 import java.util.HashMap;
 
+import Cache.DataHolder;
+import PageOpener.rider_openOrderHistory;
+import SQL.CreateTableQuery.SQL;
+
 public class Shop {
     private JDBC db = new JDBC();
     private DataHolder data = DataHolder.getInstance();
@@ -67,16 +71,16 @@ public class Shop {
         double deliveryFee,
         String imgPath
     ){
-        this.shopID = (String)shopID;
-        this.name = (String)name;
-        this.address = (String)address;
-        this.tel = (String)tel;
-        this.startHour = (LocalTime)startHour;
-        this.endHour = (LocalTime)endHour;
-        this.status = (int)status;
-        this.dateCreated = (LocalDate)dateCreated;
-        this.deliveryFee = (double) deliveryFee;
-        this.imgPath = (String) imgPath;
+        this.shopID = shopID;
+        this.name = name;
+        this.address = address;
+        this.tel = tel;
+        this.startHour = startHour;
+        this.endHour =endHour;
+        this.status = status;
+        this.dateCreated = dateCreated;
+        this.deliveryFee = deliveryFee;
+        this.imgPath = imgPath;
     }
 
     public Shop(HashMap<String,Object>shop){
@@ -84,10 +88,10 @@ public class Shop {
         this.name = (String) shop.get("shopName");
         this.address = (String) shop.get("address");
         this.tel = (String) shop.get("tel");
-        this.startHour = (LocalTime) shop.get("startHour");
-        this.endHour = (LocalTime) shop.get("endHour");
+        this.startHour = LocalTime.parse(shop.get("startHour").toString());
+        this.endHour = LocalTime.parse(shop.get("endHour").toString());
         this.status = (int) shop.get("status");
-        this.dateCreated = (LocalDate) shop.get("dateCreated");
+        this.dateCreated = LocalDate.parse(shop.get("dateCreated").toString());
         this.deliveryFee = (double) shop.get("deliveryFee");
         this.imgPath = (String) shop.get("imgPath");
     }
@@ -321,6 +325,32 @@ public class Shop {
         return categoryArr;
     }
 
+    private static ArrayList<String> getAllShopKey(ArrayList<HashMap<String,Object>>shopTable){
+        ArrayList<String> shopKeysArr = new ArrayList<String>();
+        for(int i = 0 ; i < shopTable.size() ; i++){
+            String tempShopID = (String)shopTable.get(i).get("shopID");
+            shopKeysArr.add(tempShopID);
+        }
+        return shopKeysArr;
+    }
+
+    public static HashMap<String,ArrayList<String>> getShopIDMapAvailableCategory(String shopID){
+        JDBC db = new JDBC();
+        DataHolder data = DataHolder.getInstance();
+        ArrayList<HashMap<String,Object>> shopTable = data.getShopTable();
+
+        ArrayList<String> categoryArr = new ArrayList<String>();
+        ArrayList<HashMap<String,Object>> categoryList = db.readAll(String.format(
+            "SELECT DISTINCT category " +
+            "FROM Food F, Shop S "      +
+            "WHERE S.shopID = F.shopID AND S.shopID = '%s'", shopID)
+        );
+        for(int i = 0 ; i < categoryList.size() ; i++){
+            categoryArr.add((String)categoryList.get(i).get("category"));
+        }
+        return categoryArr;
+    }
+
     public static HashMap<String,ArrayList<Food>> getFoodObjArrThatMapWithCategory(String shopID){
         JDBC db = new JDBC();
         ArrayList<String> categoryArr = new ArrayList<String>();
@@ -366,11 +396,38 @@ public class Shop {
     }
     //#endregion
 
-}
-
-
-class tester{
+    
     public static void main(String[] args) {
-        System.out.println(Shop.getFoodObjArrThatMapWithCategory("S00001"));
+        SQL sql = SQL.getInstance();
+        DataHolder data = DataHolder.getInstance();
+        data.setShopTable(sql.fetchShopTable());
+        
+        ArrayList<String> shopKey = getAllShopKey(data.getShopTable());
+                /*DEBUG*/System.out.println(shopKey);
+        int statementQty = shopKey.size();
+                /*DEBUG*/System.out.println(statementQty);
+        String union = "\nUNION\n";
+
+        String completeSQLStmt = "";
+        
+        for (int i = 0; i < statementQty ; i++) {
+            
+            int currentStatement = i + 1;
+            
+            String sqlStmt = String.format("SELECT DISTINCT S.shopID, category " + "FROM Food F, Shop S "
+                    + "WHERE S.shopID = F.shopID AND S.shopID = '%s'", shopKey.get(i));
+            
+            completeSQLStmt = completeSQLStmt.concat(sqlStmt);
+                /*DEBUG*///System.out.println(completeSQLStmt);
+
+            if(isNotLastStatement(statementQty, currentStatement)){
+                completeSQLStmt = completeSQLStmt.concat(union);
+            }
+        }
+        System.out.println(completeSQLStmt);
+    }
+
+    public static boolean isNotLastStatement(int statementQty, int currentStatement){
+        return currentStatement < statementQty;
     }
 }

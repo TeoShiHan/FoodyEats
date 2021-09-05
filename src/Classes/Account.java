@@ -5,7 +5,6 @@ import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.HashMap;
 import Cache.*;
-import PageOpener.seller_openHome;
 import SQL.CreateTableQuery.SQL;
  
 public class Account {    
@@ -144,6 +143,7 @@ public class Account {
 
         if(wrongLoginInfoProvided(accountTable, username, password)){
             gui.informationPopup("Invalid Account", "Please try again");
+        
         } else{            
             
             accMap = getAccMap(username, accountTable);
@@ -295,4 +295,5 @@ public class Account {
         }
     }
     //#endregion
+
 }
