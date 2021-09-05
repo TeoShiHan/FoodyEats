@@ -74,7 +74,10 @@ public class RiderOrderHistory implements Initializable {
                 HBox pane = new HBox();
                 pane.setSpacing(20);                
                 pane.setAlignment(Pos.CENTER);
-                if(order.getStatus().equals("Rider Accepted")){
+                if(order.getStatus().equals("Rider Accepted") || order.getStatus().equals("Seller Ready")){
+                    if(order.getStatus().equals("Rider Accepted")){
+                        btnCollect.setDisable(true);
+                    }
                     pane.getChildren().add(btnCollect);
                 }else if(order.getStatus().equals("Rider Collected")){
                     pane.getChildren().add(btnComplete);

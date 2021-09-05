@@ -26,10 +26,6 @@ public class App extends Application{
         // <--------------FXMK Loader------------------->
         Parent root = FXMLLoader.load(getClass().getResource("View/Login.fxml"));  
         String css = this.getClass().getResource("View/App.css").toExternalForm();
-        
-        System.out.println(getClass().getResource("/View/App.css"));
-
-
         Scene scene = new Scene(root);
         scene.getStylesheets().add(css);        
         // stage.initStyle(StageStyle.UTILITY);

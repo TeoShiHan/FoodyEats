@@ -80,6 +80,7 @@ public class RiderOrders implements Initializable {
                 btnViewDetails.setOnAction(e->{          
                     try {
                         data.setOrder(order);
+                        System.out.println(data.getOrder().getOrderID());
                         gui.toNextScene("View/RiderOrderDetails.fxml");
                     } catch (IOException e1) {
                         // TODO Auto-generated catch block
@@ -87,11 +88,7 @@ public class RiderOrders implements Initializable {
                     }                                    
                 });                                       
             }                     
-        });     
-        // colAction.setCellValueFactory(new PropertyValueFactory<Order,Button>("button"));        
-
-        tableView.setItems(observableList);        
-        // tableView.getColumns().addAll(colOrderId,colDate,colStatus,colAction); //not needed
+        });             
     }    
 
     @FXML

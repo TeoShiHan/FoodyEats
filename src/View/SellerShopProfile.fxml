@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.ListView?>
+<?import javafx.scene.image.Image?>
+<?import javafx.scene.image.ImageView?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.shape.Rectangle?>
+<?import javafx.scene.text.Font?>
+
+<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="700.0" prefWidth="1200.0" style="-fx-background-color: #FAF0E4;" xmlns="http://javafx.com/javafx/16" xmlns:fx="http://javafx.com/fxml/1" fx:controller="Controller.SellerShopProfile">
+   <children>
+      <Rectangle arcHeight="5.0" arcWidth="5.0" fill="#ff9819" height="245.0" layoutY="455.0" stroke="BLACK" strokeType="INSIDE" strokeWidth="0.0" width="1200.0" />
+      <Label fx:id="lblWelcome" layoutX="155.0" layoutY="33.0" style="-fx-font-weight: 800;" text="Shop Profile">
+         <font>
+            <Font size="36.0" />
+         </font>
+      </Label>      
+      <ImageView fx:id="iconCart" fitHeight="60.0" fitWidth="60.0" layoutX="383.8" layoutY="30.0" onMouseClicked="#actionEditProfile" pickOnBounds="true" preserveRatio="true">
+         <image>
+            <Image url="@../Images/editIcon.png" />
+         </image>
+      </ImageView>      
+      <ImageView fx:id="iconHome" fitHeight="80.0" fitWidth="80.0" layoutX="1090.0" layoutY="20.0" onMouseClicked="#toHome" pickOnBounds="true" preserveRatio="true">
+         <image>
+            <Image url="@../Images/homeIcon.png" />
+         </image>
+      </ImageView>
+      <ListView fx:id="listView" layoutX="30.0" layoutY="140.0" prefHeight="526.0" prefWidth="1138.0" />
+      <ImageView fx:id="imgShop" fitHeight="100.0" fitWidth="100.0" layoutX="30.0" layoutY="10.0" pickOnBounds="true" preserveRatio="true">
+         <image>
+            <Image url="@../Images/S00005.jpg" />
+         </image>
+      </ImageView>      
+   </children>
+</AnchorPane>

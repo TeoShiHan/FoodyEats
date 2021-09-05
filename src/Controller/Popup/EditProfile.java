@@ -15,9 +15,51 @@ public class EditProfile implements Initializable{
     private GUI gui = GUI.getInstance();
     private DataHolder data = DataHolder.getInstance();
 
-    @FXML private TextField inputUsername,inputPassword,inputName,inputEmail,inputMobileNo,inputAddress,inputBankAccNo,inputNRIC,inputLicenseNo;    
+    @FXML private TextField inputUsername,inputPassword,inputName,inputEmail,inputMobileNo,inputAddress,inputBankAccNo,inputNRIC,inputLicenseNo,inputCompanyBranch;
     @FXML private Button btnYes,btnNo;
-    @FXML private VBox vboxBankAcc,vboxAddress,vboxNRIC,vboxLicenseNo;
+    @FXML private VBox vboxBankAcc,vboxAddress,vboxNRIC,vboxLicenseNo,vboxCompanyBranch;
+
+    @Override
+    public void initialize(URL location, ResourceBundle resources) {
+        // TODO Auto-generated method stub        
+        inputUsername.setText(data.getAccount().getUsername());
+        inputPassword.setText(data.getAccount().getPassword());
+        inputName.setText(data.getAccount().getName());
+        inputEmail.setText(data.getAccount().getEmail());
+        inputMobileNo.setText(data.getAccount().getMobileNo());
+        if(!(data.getAccount() instanceof Seller)){ 
+            vboxAddress.setManaged(false);           
+            vboxAddress.setVisible(false);
+            vboxBankAcc.setManaged(false);
+            vboxBankAcc.setVisible(false);
+            vboxNRIC.setManaged(false);
+            vboxNRIC.setVisible(false);
+            vboxLicenseNo.setManaged(false);
+            vboxLicenseNo.setVisible(false);            
+        }
+        if(data.getAccount() instanceof Buyer){
+            vboxAddress.setManaged(true);
+            vboxAddress.setVisible(true);
+            inputAddress.setText(((Buyer)data.getAccount()).getAddress());
+        }
+        if(data.getAccount() instanceof Seller){
+            vboxAddress.setManaged(true);
+            vboxAddress.setVisible(true);
+            inputAddress.setText(((Seller)data.getAccount()).getAddress());
+            inputBankAccNo.setText(((Seller)data.getAccount()).getBankAcc());
+            inputNRIC.setText(((Seller)data.getAccount()).getNRIC());
+            inputLicenseNo.setText(((Seller)data.getAccount()).getLicenseNumber());            
+        }
+        if(data.getAccount() instanceof Admin){
+            vboxNRIC.setManaged(true);
+            vboxNRIC.setVisible(true);            
+            inputNRIC.setText(((Admin)data.getAccount()).getNRIC());
+            inputCompanyBranch.setText(((Admin)data.getAccount()).getCompanyBranch());            
+        }else{
+            vboxCompanyBranch.setManaged(false);
+            vboxCompanyBranch.setVisible(false);
+        }                
+    }
 
     public Button getBtnYes() {
         return btnYes;
@@ -33,33 +75,6 @@ public class EditProfile implements Initializable{
 
     public void setBtnNo(Button btnNo) {
         this.btnNo = btnNo;
-    }
-
-    @Override
-    public void initialize(URL location, ResourceBundle resources) {
-        // TODO Auto-generated method stub        
-        inputUsername.setText(data.getAccount().getUsername());
-        inputPassword.setText(data.getAccount().getPassword());
-        inputName.setText(data.getAccount().getName());
-        inputEmail.setText(data.getAccount().getEmail());
-        inputMobileNo.setText(data.getAccount().getMobileNo());
-        if(!(data.getAccount() instanceof Seller)){ 
-            vboxAddress.setManaged(false);           
-            vboxBankAcc.setManaged(false);
-            vboxNRIC.setManaged(false);
-            vboxLicenseNo.setManaged(false);
-        }
-        if(data.getAccount() instanceof Buyer){
-            vboxAddress.setManaged(true);
-            inputAddress.setText(((Buyer)data.getAccount()).getAddress());
-        }
-        if(data.getAccount() instanceof Seller){
-            vboxAddress.setManaged(true);
-            inputAddress.setText(((Seller)data.getAccount()).getAddress());
-            inputBankAccNo.setText(((Seller)data.getAccount()).getBankAcc());
-            inputNRIC.setText(((Seller)data.getAccount()).getNRIC());
-            inputLicenseNo.setText(((Seller)data.getAccount()).getLicenseNumber());            
-        }                
     }
 
     public TextField getInputUsername() {
@@ -133,4 +148,13 @@ public class EditProfile implements Initializable{
     public void setInputLicenseNo(TextField inputLicenseNo) {
         this.inputLicenseNo = inputLicenseNo;
     }
+
+    public TextField getInputCompanyBranch() {
+        return inputCompanyBranch;
+    }
+
+    public void setInputCompanyBranch(TextField inputCompanyBranch) {
+        this.inputCompanyBranch = inputCompanyBranch;
+    }
+    
 }

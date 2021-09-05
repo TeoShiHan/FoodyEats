@@ -196,6 +196,14 @@ public class Account {
         }
     }
 
+    public void edit(String username, String password, String name, String email, String mobileNo){
+        this.username = username;
+        this.password = password;
+        this.name = name;
+        this.email = email;
+        this.mobileNo = mobileNo;
+    }
+
     public void loadUser(){
 
     }

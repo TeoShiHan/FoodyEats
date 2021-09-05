@@ -7,12 +7,16 @@ import java.util.List;
 public final class DataHolder {  
     
     JDBC db = new JDBC();
-    private Account account = new Account();  // used for stored logged in user account, whether it is buyer/rider/seller
-    private Buyer buyer = new Buyer();        // used for get the info of specified buyer
-    private Rider rider = new Rider();        // used for get the info of specified rider
-    private Seller seller = new Seller();     // used for get the info of specified seller
+
+    private Account account = new Account();  // used for stored logged in user account, whether it is buyer/rider/seller    
+    private Buyer buyer = new Buyer();  // used for get the info of specified buyer
+    private Rider rider = new Rider();  // used for get the info of specified rider
+    private List<Rider> riders = new ArrayList<>();  // used for display the list of rider used for admin
+    private Seller seller = new Seller();  // used for get the info of specified seller
+    private List<Seller> sellers = new ArrayList<>();  // used for display the list of rider used for admin
     private Admin admin = new Admin();
     private Vehicle vehicle = new Vehicle();
+    private Payment payment = new Payment();
     private List<Cart> carts = new ArrayList<>(); 
     private Cart cart = new Cart();
     private List<CartItem> cartItems = new ArrayList<>(); 
@@ -25,6 +29,7 @@ public final class DataHolder {
     private OrderItem orderItem = new OrderItem();
     private List<Food> foods = new ArrayList<>();
     private Food food = new Food();
+    private List<Review> reviews = new ArrayList<>();
     private ArrayList<HashMap<String,Object>> loginInfo;
     
     
@@ -53,7 +58,7 @@ public final class DataHolder {
     }    
     public Account getAccount() {
       return this.account;
-    }
+    }    
 
     public void setBuyer(Buyer buyer) {
       this.buyer = buyer;
@@ -62,6 +67,13 @@ public final class DataHolder {
       return this.buyer;
     }    
 
+    public List<Rider> getRiders() {
+      return riders;
+    }
+    public void setRiders(List<Rider> riders) {
+      this.riders = riders;
+    }
+    
     public void setRider(Rider rider) {
       this.rider = rider;
     }    
@@ -69,6 +81,13 @@ public final class DataHolder {
       return this.rider;
     }  
 
+    public List<Seller> getSellers() {
+      return sellers;
+    }
+    public void setSellers(List<Seller> sellers) {
+      this.sellers = sellers;
+    }
+    
     public void setSeller(Seller seller) {
       this.seller = seller;
     }    
@@ -88,6 +107,14 @@ public final class DataHolder {
     }
     public void setVehicle(Vehicle vehicle) {
       this.vehicle = vehicle;
+    }    
+
+    public Payment getPayment() {
+      return payment;
+    }
+
+    public void setPayment(Payment payment) {
+      this.payment = payment;
     }
 
     public List<Cart> getCarts() {
@@ -223,6 +250,13 @@ public final class DataHolder {
     }
     public void setFood(Food Food){
       this.food = Food;
+    }    
+
+    public List<Review> getReviews() {
+      return reviews;
+    }
+    public void setReviews(List<Review> reviews) {
+      this.reviews = reviews;
     }
 
     public void addObjectHolder(String key,Object value){

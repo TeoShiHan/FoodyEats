@@ -1,20 +1,39 @@
 package Classes;
 
+import Cache.GUI;
+
 public class CartItem {
-    private String foodID, orderID;
-    private int qty;
+    private JDBC db = new JDBC();
+    private GUI gui = GUI.getInstance();
+
+    private String cartID,foodID;
+    private int quantity;
     private Food food; //indigo area
+    private boolean isChanged = false;    
 
     public CartItem() {  //No-arg Constructor
     	this("","",0, new Food());
     }
 
-    public CartItem(String string, String string2, int qty, Food food2) {
-
+    public CartItem(String cartID, String foodID, int quantity, Food food) {
+        this.cartID = cartID;
+        this.foodID = foodID;
+        this.quantity = quantity;
+        this.food = food;
     }
 
-    public CartItem(Object string, Object string2, Object qty, Object food2) {
-        
+    public CartItem(Object cartID, Object foodID, Object quantity) {
+        this.cartID = (String)cartID;
+        this.foodID = (String)foodID;
+        this.quantity = (int)quantity;
+    }    
+
+    public String getCartID() {
+        return cartID;
+    }
+
+    public void setCartID(String cartID) {
+        this.cartID = cartID;
     }
 
     public String getFoodID() {
@@ -25,20 +44,12 @@ public class CartItem {
         this.foodID = foodID;
     }
 
-    public String getOrderID() {
-        return orderID;
+    public int getQuantity() {
+        return quantity;
     }
 
-    public void setOrderID(String orderID) {
-        this.orderID = orderID;
-    }
-
-    public int getQty() {
-        return qty;
-    }
-
-    public void setQty(int qty) {
-        this.qty = qty;
+    public void setQuantity(int quantity) {
+        this.quantity = quantity;
     }
 
     public Food getFood() {
@@ -55,5 +66,25 @@ public class CartItem {
 
     public static double getAmount(double amount) {
         return amount;
+    }        
+
+    public boolean isChanged() {
+        return isChanged;
+    }
+
+    public void setChanged(boolean isChanged) {
+        this.isChanged = isChanged;
+    }
+
+    public double getAmount(){
+        return quantity*food.getPrice();
+    }
+
+    public void delete(){
+        db.executeCUD(String.format("DELETE FROM `CartItem` WHERE cartID='%s' AND foodID='%s'",cartID,foodID),gui);
+    }
+
+    public void update(){        
+        db.executeCUD(String.format("UPDATE `CartItem` SET quantity=%d WHERE cartID='%s' AND foodID='%s'",quantity,cartID,foodID),gui);
     }
 }

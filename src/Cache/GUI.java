@@ -222,8 +222,21 @@ public final class GUI {
     myDialog.show();    
   }
 
-  public void alertInProgress(){
-    stage.setOnCloseRequest(event->{
+  public void alertInProgress(Stage... s){    
+    if(s.length!=0){
+      s[0].setOnCloseRequest(event->{
+        event.consume();
+        Alert alert = new Alert(AlertType.CONFIRMATION);
+        alert.setTitle("Close window");
+        alert.setHeaderText("Close Window?");
+        alert.setContentText("Are you sure you want to close the window?");
+
+        if(alert.showAndWait().get() == ButtonType.OK){
+          s[0].close();
+        }
+      });  
+    }else{
+      stage.setOnCloseRequest(event->{
         event.consume();
         Alert alert = new Alert(AlertType.CONFIRMATION);
         alert.setTitle("Close window");
@@ -234,10 +247,16 @@ public final class GUI {
           stage.close();
         }
     });  
+    }
+    
   }
 
-  public void notAlertInProgress(){
-    stage.setOnCloseRequest(e->{});
+  public void notAlertInProgress(Stage... s){
+    if(s.length!=0){
+      s[0].setOnCloseRequest(e->{});
+    }else{
+      stage.setOnCloseRequest(e->{});
+    }   
   }
   
 }

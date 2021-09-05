@@ -34,11 +34,11 @@
 }
 
 /* rider & seller HomeScreen Pane("big" button) */
-#btnIncomingOrder,#btnManageProduct,#btnOrderHistory,#btnIncomingOrder,#btnManageProduct,#btnOrderHistory{    
+#btnIncomingOrder,#btnManageProduct,#btnOrderHistory,#btnMyShop,#btnApproveSeller,#btnApproveRider{
     -fx-background-color: white;
-    -fx-font-size: 36px;
+    -fx-font-size: 30px;
 }
-#btnIncomingOrder:hover,#btnManageProduct:hover,#btnOrderHistory:hover,#btnIncomingOrder:hover,#btnManageProduct:hover,#btnOrderHistory:hover{
+#btnIncomingOrder:hover,#btnManageProduct:hover,#btnOrderHistory:hover,#btnMyShop:hover,#btnApproveSeller:hover,#btnApproveRider:hover{
     -fx-cursor: "hand";
     -fx-background-color: #de7a00;
 }
