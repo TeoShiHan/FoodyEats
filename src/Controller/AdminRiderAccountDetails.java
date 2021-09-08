@@ -26,7 +26,7 @@ public class AdminRiderAccountDetails implements Initializable {
     @Override
     public void initialize(URL location, ResourceBundle resources) {                
         
-        lblRiderAccountDetails.setText("Rider #"+data.getRider().getRiderID());
+        lblRiderAccountDetails.setText("Rider Account #"+data.getRider().getAccountID());
         lblName.setText(data.getRider().getName());
         lblEmail.setText(data.getRider().getEmail());
         lblMobileNo.setText(data.getRider().getMobileNo());

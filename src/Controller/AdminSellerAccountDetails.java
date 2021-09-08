@@ -31,7 +31,7 @@ public class AdminSellerAccountDetails implements Initializable {
     @Override
     public void initialize(URL location, ResourceBundle resources) {                
         
-        lblSellerAccountDetails.setText("Seller #"+data.getSeller().getSellerID());
+        lblSellerAccountDetails.setText("Seller Account #"+data.getSeller().getAccountID());
         lblDateReg.setText(data.getSeller().getRegDate().toString());        
         lblName.setText(data.getSeller().getName());
         lblEmail.setText(data.getSeller().getEmail());

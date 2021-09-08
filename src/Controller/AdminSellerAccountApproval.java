@@ -40,6 +40,7 @@ public class AdminSellerAccountApproval implements Initializable {
 
     @Override
     public void initialize(URL location, ResourceBundle resources) {                
+        data.setSellers(new ArrayList<>());
         ArrayList<HashMap<String,Object>> as = db.readAll(String.format("SELECT s.address AS sellerAddress,sh.address AS shopAddress,s.status AS sellerStatus,sh.status AS shopStatus,a.*,s.*,sh.* FROM `Account` a, `Seller` s, `Shop` sh WHERE a.type='Seller' AND a.accountID=s.accountID AND s.shopID=sh.shopID AND s.status=0"));
         for(HashMap<String,Object> a : as){
             Shop shop = new Shop(a.get("shopID"), a.get("shopName"), a.get("address"), a.get("tel"), a.get("startHour"), a.get("endHour"), a.get("status"), a.get("dateCreated"), a.get("deliveryFee"), a.get("imgPath"));
@@ -53,7 +54,7 @@ public class AdminSellerAccountApproval implements Initializable {
         tableView.setItems(observableList);
 
         //to assign which property/attribute of the class to the table column
-        colAccountId.setCellValueFactory(new PropertyValueFactory<Seller,Object>("SellerID"));
+        colAccountId.setCellValueFactory(new PropertyValueFactory<Seller,Object>("accountID"));
         colName.setCellValueFactory(new PropertyValueFactory<Seller,Object>("name"));        
         colEmail.setCellValueFactory(new PropertyValueFactory<Seller,Object>("email")); 
         colMobileNo.setCellValueFactory(new PropertyValueFactory<Seller,Object>("mobileNo")); 

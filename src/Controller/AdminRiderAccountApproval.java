@@ -40,6 +40,7 @@ public class AdminRiderAccountApproval implements Initializable {
 
     @Override
     public void initialize(URL location, ResourceBundle resources) {                
+        data.setRiders(new ArrayList<>());
         ArrayList<HashMap<String,Object>> as = db.readAll(String.format("SELECT r.*,v.*,a.*,v.type AS vehicleType,a.type AS accType FROM `Account` a, `Rider` r, `Vehicle` v WHERE a.type='Rider' AND a.accountID=r.accountID AND r.vehicleID=v.vehicleID AND r.status=0"));            
         for(HashMap<String,Object> a : as){
             Vehicle vehicle = new Vehicle(a.get("vehicleID"), a.get("vehicleType"), a.get("plateNo"), a.get("brand"), a.get("model"), a.get("color"));
