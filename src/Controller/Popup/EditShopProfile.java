@@ -30,10 +30,7 @@ public class EditShopProfile implements Initializable{
     @FXML private Button btnChangeImage,btnYes,btnNo;
     @FXML private ImageView image;
     private File shopImageFile;
-    private String newImgFileExtension;    
-    private File imgFile;
-    private InputStream isImage;
-    private Image img;
+    private String newImgFileExtension;        
 
     @Override
     public void initialize(URL location, ResourceBundle resources) {                    
@@ -63,24 +60,17 @@ public class EditShopProfile implements Initializable{
             }
         });
                         
-        inputName.setText(data.getShop().getName());
-        inputAddress.setText(data.getShop().getAddress());
-        inputTelNo.setText(data.getShop().getTel());
-        spinnerDeliveryFee.getValueFactory().setValue(data.getShop().getDeliveryFee());
-        spinnerStartHour.getValueFactory().setValue(data.getShop().getStartHour().getHour());
-        spinnerEndHour.getValueFactory().setValue(data.getShop().getEndHour().getHour());
-        
-        File imgFile = new File(System.getProperty("user.dir")+"/src"+data.getShop().getImgPath());                    
-        try {
-            InputStream isImage = (InputStream) new FileInputStream(imgFile);
-            Image img = new Image(isImage);
-            image.setImage(img);
-        } catch (FileNotFoundException e) {
-            // TODO Auto-generated catch block
-            e.printStackTrace();
-        }                    
-        // // https://stackoverflow.com/questions/22710053/how-can-i-show-an-image-using-the-imageview-component-in-javafx-and-fxml        
-        // image.setImage(new Image(getClass().getResourceAsStream(data.getShop().getImgPath())));
+        inputName.setText(data.getSeller().getShop().getName());
+        inputAddress.setText(data.getSeller().getShop().getAddress());
+        inputTelNo.setText(data.getSeller().getShop().getTel());
+        spinnerDeliveryFee.getValueFactory().setValue(data.getSeller().getShop().getDeliveryFee());
+        spinnerStartHour.getValueFactory().setValue(data.getSeller().getShop().getStartHour().getHour());
+        spinnerEndHour.getValueFactory().setValue(data.getSeller().getShop().getEndHour().getHour());
+                        
+        System.out.println(data.getSeller().getShop().getImgPath());
+        System.out.println((getClass().getResourceAsStream(data.getSeller().getShop().getImgPath())));
+        // https://stackoverflow.com/questions/22710053/how-can-i-show-an-image-using-the-imageview-component-in-javafx-and-fxml        
+        image.setImage(new Image(getClass().getResourceAsStream(data.getSeller().getShop().getImgPath())));
     }    
 
     @FXML
@@ -187,31 +177,7 @@ public class EditShopProfile implements Initializable{
 
     public void setNewImgFileExtension(String newImgFileExtension) {
         this.newImgFileExtension = newImgFileExtension;
-    }
-
-    public File getImgFile() {
-        return imgFile;
-    }
-
-    public void setImgFile(File imgFile) {
-        this.imgFile = imgFile;
-    }
-
-    public InputStream getIsImage() {
-        return isImage;
-    }
-
-    public void setIsImage(InputStream isImage) {
-        this.isImage = isImage;
-    }
-
-    public Image getImg() {
-        return img;
-    }
-
-    public void setImg(Image img) {
-        this.img = img;
-    }
+    }    
 
     public ImageView getImage() {
         return image;

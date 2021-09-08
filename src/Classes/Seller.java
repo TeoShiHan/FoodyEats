@@ -60,6 +60,34 @@ public class Seller extends Account{
         this.shopID = (String) shopID;
         this.status = (int)status;
     }
+    
+    public Seller(
+        Object accountID, 
+        Object username, 
+        Object password, 
+        Object name, 
+        Object email, 
+        Object mobileNo, 
+        Object accType,
+        Object regDate,
+        Object sellerID,        
+        Object address,        
+        Object NRIC, 
+        Object licenseNumber,
+        Object bankAcc,        
+        Object shopID,
+        Object status
+    ){
+        super(accountID, username, password, name, email, mobileNo, accType, regDate);
+        this.sellerID = (String) sellerID;
+        this.address = (String) address;        
+        this.NRIC = (String) NRIC;
+        this.licenseNumber = (String) licenseNumber;
+        this.bankAcc = (String) bankAcc;
+        this.accountID = (String) accountID;
+        this.shopID = (String) shopID;
+        this.status = (int)status;  
+    }
 
     public Seller(
         String accountID, 

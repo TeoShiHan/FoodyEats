@@ -21,12 +21,7 @@
          <image>
             <Image url="@../Images/homeIcon.png" />
          </image>
-      </ImageView>
-      <ImageView fx:id="iconBack" fitHeight="80.0" fitWidth="80.0" layoutX="990.0" layoutY="20.0" onMouseClicked="#toBack" pickOnBounds="true" preserveRatio="true">
-         <image>
-            <Image url="@../Images/backIcon.png" />
-         </image>
-      </ImageView>
+      </ImageView>      
       <ImageView fitHeight="60.0" fitWidth="60.0" layoutX="160.0" layoutY="30.0" onMouseClicked="#actionAddFood" pickOnBounds="true" preserveRatio="true">
          <image>
             <Image url="@../Images/addIcon.png" />

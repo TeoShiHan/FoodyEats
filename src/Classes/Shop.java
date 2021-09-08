@@ -16,7 +16,7 @@ public class Shop {
     //region  : VARIABLES
     private String 
     shopID, name, address, tel, 
-    imgPath, reviewID;
+    imgPath;
     private LocalTime startHour, endHour;
     private double deliveryFee;
     private int status;
@@ -84,10 +84,10 @@ public class Shop {
         this.name = (String) shop.get("shopName");
         this.address = (String) shop.get("address");
         this.tel = (String) shop.get("tel");
-        this.startHour = (LocalTime) shop.get("startHour");
-        this.endHour = (LocalTime) shop.get("endHour");
+        this.startHour = LocalTime.parse((String)shop.get("startHour"));
+        this.endHour = LocalTime.parse((String)shop.get("endHour"));
         this.status = (int) shop.get("status");
-        this.dateCreated = (LocalDate) shop.get("dateCreated");
+        this.dateCreated = LocalDate.parse((String)shop.get("dateCreated"));
         this.deliveryFee = (double) shop.get("deliveryFee");
         this.imgPath = (String) shop.get("imgPath");
     }
@@ -148,15 +148,7 @@ public class Shop {
 
     public void setEndHour(LocalTime endHour) {
         this.endHour = endHour;
-    }
-
-    public String getReviewID() {
-        return reviewID;
-    }
-
-    public void setReviewID(String reviewID) {
-        this.reviewID = reviewID;
-    }
+    }    
     
     public double getDeliveryFee() {
         return deliveryFee;

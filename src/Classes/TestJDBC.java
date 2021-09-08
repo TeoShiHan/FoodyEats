@@ -68,6 +68,7 @@ public class TestJDBC {
         System.out.println(LocalTime.now());
         System.out.println(LocalTime.now().format(DateTimeFormatter.ofPattern("HH:mm:ss")));
         System.out.println(LocalTime.parse(LocalTime.now().format(DateTimeFormatter.ofPattern("HH:mm:ss"))));
+        System.out.println(LocalDate.now());
 
         // String uniqueID = UUID.randomUUID().toString();
         // System.out.println(uniqueID);

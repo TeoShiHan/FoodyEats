@@ -38,8 +38,8 @@ public class SellerOrderHistory implements Initializable {
 
     @Override
     public void initialize(URL location, ResourceBundle resources) {                
-        data.getShop().loadAcceptedOrders();
-        data.setOrders(data.getShop().getOrders());
+        data.getSeller().getShop().loadAcceptedOrders();
+        data.setOrders(data.getSeller().getShop().getOrders());
 
         ObservableList<Order> observableList = FXCollections.observableArrayList(data.getOrders());
         
@@ -72,13 +72,13 @@ public class SellerOrderHistory implements Initializable {
                 setGraphic(pane);                
                 btnReady.setOnAction(e->{  
                     order.setStatus("Seller Ready");                  
-                    data.getShop().readyOrder(order.getOrderID());
+                    data.getSeller().getShop().readyOrder(order.getOrderID());
                     tableView.refresh();
                 });                
                 btnViewDetails.setOnAction(e->{          
                     try {
                         data.setOrder(order);
-                        gui.toNextScene("View/RiderOrderDetails.fxml");
+                        gui.toNextScene("View/SellerOrderDetails.fxml");
                     } catch (IOException e1) {
                         // TODO Auto-generated catch block
                         e1.printStackTrace();
@@ -89,11 +89,6 @@ public class SellerOrderHistory implements Initializable {
           
         // tableView.getColumns().addAll(colOrderId,colDate,colStatus,colAction); //not needed
     }    
-
-    @FXML
-    void toCart(MouseEvent event) throws IOException {
-        gui.toNextScene("View/SellerCart.fxml");
-    }
 
     @FXML
     void toHome(MouseEvent event) throws IOException {

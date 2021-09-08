@@ -7,6 +7,7 @@ import java.util.ResourceBundle;
 
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
+import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.Button;
@@ -34,6 +35,29 @@ public class EditVehicleDetails implements Initializable{
         inputModel.setText(data.getVehicle().getModel());
         inputPlateNo.setText(data.getVehicle().getPlateNo());
         inputColor.setText(data.getVehicle().getColor());
+    }
+
+    @FXML
+    void selectVehicleType(ActionEvent event) {
+        if(dropdownVehicleType.getValue().equals("Van")||dropdownVehicleType.getValue().equals("Car")||dropdownVehicleType.getValue().equals("Motorcycle")){
+            setVehicleInputAble();
+        }else{
+            setVehicleInputDisable();
+        }        
+    }
+
+    void setVehicleInputAble(){
+        inputBrand.setDisable(false);
+        inputModel.setDisable(false);
+        inputColor.setDisable(false);
+        inputPlateNo.setDisable(false);        
+    }
+
+    void setVehicleInputDisable(){
+        inputBrand.setDisable(true);
+        inputModel.setDisable(true);
+        inputColor.setDisable(true);
+        inputPlateNo.setDisable(true);        
     }
 
     public Button getBtnYes() {

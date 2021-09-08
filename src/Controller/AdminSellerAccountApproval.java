@@ -43,7 +43,7 @@ public class AdminSellerAccountApproval implements Initializable {
         ArrayList<HashMap<String,Object>> as = db.readAll(String.format("SELECT s.address AS sellerAddress,sh.address AS shopAddress,s.status AS sellerStatus,sh.status AS shopStatus,a.*,s.*,sh.* FROM `Account` a, `Seller` s, `Shop` sh WHERE a.type='Seller' AND a.accountID=s.accountID AND s.shopID=sh.shopID AND s.status=0"));
         for(HashMap<String,Object> a : as){
             Shop shop = new Shop(a.get("shopID"), a.get("shopName"), a.get("address"), a.get("tel"), a.get("startHour"), a.get("endHour"), a.get("status"), a.get("dateCreated"), a.get("deliveryFee"), a.get("imgPath"));
-            Seller seller = new Seller(a.get("accountID"), a.get("username"), a.get("password"), a.get("name"), a.get("email"), a.get("mobileNo"), a.get("accType"), a.get("sellerID"), a.get("address"), a.get("NRIC"), a.get("licenseNumber"), a.get("bankAcc"), a.get("shopID"), a.get("status"));        
+            Seller seller = new Seller(a.get("accountID"), a.get("username"), a.get("password"), a.get("name"), a.get("email"), a.get("mobileNo"), a.get("type") , a.get("regDate"), a.get("sellerID"), a.get("address"), a.get("NRIC"), a.get("licenseNumber"), a.get("bankAcc"), a.get("shopID"), a.get("status"));        
             seller.setShop(shop);
             data.getSellers().add(seller);            
         }
@@ -96,12 +96,7 @@ public class AdminSellerAccountApproval implements Initializable {
     }    
 
     @FXML
-    void toCart(MouseEvent event) throws IOException {
-        gui.toNextScene("View/SellerCart.fxml");
-    }
-
-    @FXML
     void toHome(MouseEvent event) throws IOException {
-        gui.toNextScene("View/SellerHome.fxml");
+        gui.toNextScene("View/AdminHome.fxml");
     }
 }

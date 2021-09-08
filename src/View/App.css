@@ -28,6 +28,10 @@
     -fx-background-color: steelblue; 
     -fx-text-fill: white;
 }
+.table-row-cell:hover, .list-cell:hover {
+    -fx-background-color: #4ca8f5; 
+    -fx-text-fill: white;
+}
 
 .button,.radio-button,#iconOrderHistory,#iconHome,#iconBack,#iconCart,#iconEdit,#iconProfile,#linkLogout,#linkToRegister,#linkToLogin{
     -fx-cursor: "hand";

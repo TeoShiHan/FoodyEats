@@ -79,7 +79,7 @@
                   </TextArea>
                   <HBox alignment="CENTER" prefWidth="600.0">
                      <children>
-                        <ImageView fx:id="Image" fitHeight="150.0" fitWidth="277.0" pickOnBounds="true" preserveRatio="true">
+                        <ImageView fx:id="image" fitHeight="150.0" fitWidth="277.0" pickOnBounds="true" preserveRatio="true">
                            <HBox.margin>
                               <Insets right="40.0" />
                            </HBox.margin>

@@ -58,7 +58,7 @@
             </Label>
          </children>
       </VBox>
-      <VBox layoutX="824.0" layoutY="336.0" prefHeight="177.0" prefWidth="346.0" style="-fx-background-color: #FEBD5C;">
+      <VBox layoutX="426.0" layoutY="120.0" prefHeight="177.0" prefWidth="346.0" style="-fx-background-color: #FEBD5C;">
          <children>
             <Label alignment="CENTER" prefHeight="58.0" prefWidth="346.0" style="-fx-background-color: #FF8719; -fx-font-weight: 800;" text="Buyer Info">
                <font>
@@ -215,7 +215,7 @@
             </HBox>
          </children>
       </VBox>
-      <VBox layoutX="426.0" layoutY="120.0" prefHeight="177.0" prefWidth="346.0" style="-fx-background-color: #FEBD5C;">
+      <VBox layoutX="824.0" layoutY="336.0" prefHeight="177.0" prefWidth="346.0" style="-fx-background-color: #FEBD5C;">
          <children>
             <Label alignment="CENTER" prefHeight="58.0" prefWidth="346.0" style="-fx-background-color: #FF8719; -fx-font-weight: 800;" text="Delivery Fee">
                <font>
