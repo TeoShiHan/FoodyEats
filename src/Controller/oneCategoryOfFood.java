@@ -54,8 +54,12 @@ public class oneCategoryOfFood implements Initializable{
 
     @Override
     public void initialize(URL location, ResourceBundle resources) {
-        
-        foodsOf1Category = Shop.getFoodObjArrThatMapWithCategory(this.getShopID()).get(this.getKeyStr());
+            /*DEBUG OUTPUT>>>>>>>*/System.out.println("ONE CATEGORY OF FOOD");
+
+        Shop testShop = new Shop();
+        testShop.setShopID("S00001");
+
+        foodsOf1Category = testShop.getFoodObjArrThatMapWithCategory().get("Burger");
         
         int gridCol = 0;
         int gridRow = 1;

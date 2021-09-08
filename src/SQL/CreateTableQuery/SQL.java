@@ -3,6 +3,7 @@ import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.HashMap;
 
+import Cache.DataHolder;
 import Classes.Account;
 import Classes.JDBC;
 import Classes.Seller;
@@ -12,6 +13,7 @@ public final class SQL {
     
     private JDBC db = new JDBC();
     private final static SQL INSTANCE = new SQL();
+    private final static String UNION =  "\nUNION\n";
     
     SQL(){}
     
@@ -85,5 +87,56 @@ public final class SQL {
 
     public ArrayList<HashMap<String,Object>> fetchShopTable(){
         return db.readAll("SELECT * FROM Shop");
+    }
+
+    public ArrayList<HashMap<String,Object>> fetchFoodCategoriesFromAllShops(ArrayList<String>shopKeyArr){
+        String completeSQLStmt = "";
+        
+        int statementQty = shopKeyArr.size();
+        
+        for (int i = 0; i < statementQty ; i++) {
+            int currentStatement = i + 1;
+            
+            String sqlStmt = String.format(
+                "SELECT DISTINCT S.shopID, category " + 
+                "FROM Food F, Shop S " + 
+                "WHERE S.shopID = F.shopID AND S.shopID = '%s'", shopKeyArr.get(i)
+            );
+        
+            completeSQLStmt = completeSQLStmt.concat(sqlStmt);
+
+            if(isNotLastStatement(statementQty, currentStatement)){
+                completeSQLStmt = completeSQLStmt.concat(UNION);
+            }
+            else{
+                completeSQLStmt = completeSQLStmt.concat("\nORDER BY shopID;");
+                /*DEBUG MSG*/System.out.println("COMPLETE STATEMENT : " +  completeSQLStmt);
+            }
+        }
+        System.out.println(completeSQLStmt);
+        return db.readAll(completeSQLStmt);
+    }
+    
+    private static boolean isNotLastStatement(int statementQty, int currentStatement){
+        return currentStatement < statementQty;
+    }
+
+    public static void main(String[] args) {
+        SQL sql = SQL.getInstance();
+        DataHolder data = DataHolder.getInstance();
+        data.setAccountTable(sql.fetchAccountTable());
+        data.setBuyerTable(sql.fetchBuyerTable());
+        data.setSellerTable(sql.fetchSellerTable());
+        data.setAdminTable(sql.fetchAdminTable());
+        data.setRiderTable(sql.fetchRiderTable());
+        data.setShopTable(sql.fetchShopTable());
+        
+        Shop tempShop = new Shop();
+
+        ArrayList<HashMap<String,Object>> categoryTable = new ArrayList<HashMap<String,Object>>();
+        
+        categoryTable = sql.fetchFoodCategoriesFromAllShops(tempShop.getAllKeysInTable(data.getShopTable()));
+
+            /*DEBUG*///System.out.println(categoryTable);
     }
 }

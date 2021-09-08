@@ -24,9 +24,9 @@ import Cache.GUI;
 public class JDBC {
     private ResultSet queryRslt;
     private static Connection dbLink;
-    private static String url = "jdbc:mysql://37.59.55.185:3306/fCe5HJjPF6?allowMultiQueries=true&rewriteBatchedStatements=true";
-    private static String user = "fCe5HJjPF6";
-    private static String pwrd = "iKXuA6Ozsj";
+    private static String url = "jdbc:mysql://127.0.0.1:3306/foodyeats?allowMultiQueries=true&rewriteBatchedStatements=true";
+    private static String user = "foodyeats";
+    private static String pwrd = "foodyeats";
     private String userSQLstatement;    
     private Statement SQLstatement;
 

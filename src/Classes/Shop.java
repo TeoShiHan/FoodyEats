@@ -8,16 +8,16 @@ import java.util.ArrayList;
 import java.util.HashMap;
 
 import Cache.DataHolder;
-import PageOpener.rider_openOrderHistory;
+import Interfaces.TableDataProcessing;
 import SQL.CreateTableQuery.SQL;
 
-public class Shop {
+public class Shop implements TableDataProcessing{
+    private SQL sql = SQL.getInstance();
     private JDBC db = new JDBC();
     private DataHolder data = DataHolder.getInstance();
     private GUI gui = GUI.getInstance();
-
     
-    //region  : VARIABLES
+    //region  : CLASS FIELD
     private String 
     shopID, name, address, tel, 
     imgPath, reviewID;
@@ -267,16 +267,16 @@ public class Shop {
         }
     }
 
-    public void acceptOrder(String oRDerID){        
-        db.executeCUD(String.format("UPDATE `Order` SET status='Seller Accepted' WHERE orderID='%s'",oRDerID),gui);        
+    public void acceptOrder(String orderID){        
+        db.executeCUD(String.format("UPDATE `Order` SET status='Seller Accepted' WHERE orderID='%s'",orderID),gui);        
     }
 
-    public void declineOrder(String oRDerID){
-        db.executeCUD(String.format("UPDATE `Order` SET status='Seller Declined' WHERE orderID='%s'",oRDerID),gui);
+    public void declineOrder(String orderID){
+        db.executeCUD(String.format("UPDATE `Order` SET status='Seller Declined' WHERE orderID='%s'",orderID),gui);
     }
 
-    public void readyOrder(String oRDerID){        
-        db.executeCUD(String.format("UPDATE `Order` SET status='Seller Ready' WHERE orderID='%s'",oRDerID),gui);
+    public void readyOrder(String orderID){        
+        db.executeCUD(String.format("UPDATE `Order` SET status='Seller Ready' WHERE orderID='%s'",orderID),gui);
     }
     
     public void loadReviews(){
@@ -288,6 +288,7 @@ public class Shop {
             this.reviews.add(review);
         }
     }
+    
     public double getAverageRating(){
         if(!this.reviews.isEmpty()){
             double total = 0;            
@@ -311,47 +312,18 @@ public class Shop {
         db.executeCUD(String.format("UPDATE `Shop` SET shopName='%s', address='%s', tel='%s', startHour='%s', endHour='%s', deliveryFee=%.2f, imgPath='%s' WHERE shopID='%s'",name,address,tel,startHour,endHour,deliveryFee,imgPath,shopID),gui);
     }     
 
-    public static ArrayList<String> getAvailableFoodCategoryInShop(String shopID){
-        JDBC db = new JDBC();
-        ArrayList<String> categoryArr = new ArrayList<String>();
-        ArrayList<HashMap<String,Object>> categoryList = db.readAll(String.format(
-            "SELECT DISTINCT category " +
-            "FROM Food F, Shop S "      +
-            "WHERE S.shopID = F.shopID AND S.shopID = '%s'", shopID)
-        );
-        for(int i = 0 ; i < categoryList.size() ; i++){
-            categoryArr.add((String)categoryList.get(i).get("category"));
+    public ArrayList<String> getAvailableFoodCategoryInShop(){
+        HashMap<String,ArrayList<String>> keyMapCategoryArr = getArrMapToKey(data.getFoodCategoriesTable(), "shopID", "category");
+            /*DEBUG MSG*/System.out.println("Key map : " + keyMapCategoryArr);
+        if(keyMapCategoryArr.isEmpty()){
+            sql.fetchFoodCategoriesFromAllShops(getAllKeysInTable(data.getShopTable()));
+            keyMapCategoryArr = getArrMapToKey(data.getFoodCategoriesTable(), "shopID", "category");
         }
-        return categoryArr;
+
+        return keyMapCategoryArr.get(this.shopID);
     }
 
-    private static ArrayList<String> getAllShopKey(ArrayList<HashMap<String,Object>>shopTable){
-        ArrayList<String> shopKeysArr = new ArrayList<String>();
-        for(int i = 0 ; i < shopTable.size() ; i++){
-            String tempShopID = (String)shopTable.get(i).get("shopID");
-            shopKeysArr.add(tempShopID);
-        }
-        return shopKeysArr;
-    }
-
-    public static HashMap<String,ArrayList<String>> getShopIDMapAvailableCategory(String shopID){
-        JDBC db = new JDBC();
-        DataHolder data = DataHolder.getInstance();
-        ArrayList<HashMap<String,Object>> shopTable = data.getShopTable();
-
-        ArrayList<String> categoryArr = new ArrayList<String>();
-        ArrayList<HashMap<String,Object>> categoryList = db.readAll(String.format(
-            "SELECT DISTINCT category " +
-            "FROM Food F, Shop S "      +
-            "WHERE S.shopID = F.shopID AND S.shopID = '%s'", shopID)
-        );
-        for(int i = 0 ; i < categoryList.size() ; i++){
-            categoryArr.add((String)categoryList.get(i).get("category"));
-        }
-        return categoryArr;
-    }
-
-    public static HashMap<String,ArrayList<Food>> getFoodObjArrThatMapWithCategory(String shopID){
+    public HashMap<String,ArrayList<Food>> getFoodObjArrThatMapWithCategory(){
         JDBC db = new JDBC();
         ArrayList<String> categoryArr = new ArrayList<String>();
         HashMap<String,ArrayList<Food>> categorizedFood = new HashMap<String,ArrayList<Food>>();
@@ -359,12 +331,14 @@ public class Shop {
         ArrayList<HashMap<String,Object>> foodTable = db.readAll(String.format(
             "SELECT foodID, foodName, foodDesc, price,  F.imgPath, category " +
             "FROM Food F, Shop S "      +
-            "WHERE S.shopID = F.shopID AND S.shopID = '%s'", shopID)
+            "WHERE S.shopID = F.shopID AND S.shopID = '%s'", this.shopID)
         );
 
         System.out.println(foodTable);
         System.out.println("test fetch category : " + foodTable.get(0).get("category"));
-        categoryArr = getAvailableFoodCategoryInShop(shopID);
+        
+        categoryArr = getAvailableFoodCategoryInShop();
+        
         System.out.println("test fetch categoryV2 : " + categoryArr.get(0));
 
         for(int i = 0 ; i < categoryArr.size() ; i++){
@@ -394,40 +368,72 @@ public class Shop {
         }
         return categorizedFood;
     }
+    
+
+    //#region : TABLE PROCESSING METHODS
+    public ArrayList<String> getAllKeysInTable(ArrayList<HashMap<String,Object>>shopTable){
+        ArrayList<String> shopKeysArr = new ArrayList<String>();
+        for(int i = 0 ; i < shopTable.size() ; i++){
+            String tempShopID = (String)shopTable.get(i).get("shopID");
+            shopKeysArr.add(tempShopID);
+        }
+        return shopKeysArr;
+    }
+    
+    public boolean isMatch(String str1, String str2){
+        return str1.equals(str2);
+    }
+    
+    public HashMap<String,ArrayList<String>> getArrMapToKey(ArrayList<HashMap<String,Object>>table, String keyName, String ...fieldNames){
+        
+        //#region : VARIABLES
+        /*DEBUG MSG*/System.out.println("RUNNED getArrMapToKey()");
+        int tableSize = table.size();
+        int colNum = fieldNames.length;
+        ArrayList<String> tempDataArr = new ArrayList<String>();
+        HashMap<String,ArrayList<String>> arrMapToKey = new HashMap<String,ArrayList<String>>();
+        String tempFieldData = "";
+        String tempKeyNew = "";
+        String tempKeyOld = "";
+        //#endregion
+
+        for(int i = 0 ; i < tableSize ; i++){
+            
+            tempKeyNew = (String)table.get(i).get(keyName);
+
+            if (i == 0) {
+                
+                tempKeyOld = tempKeyNew;
+                    /*DEBUG MSG*/System.out.println("RUNNED INTO LOGIC I == 0");
+                    /*DEBUG MSG*/System.out.println("TEMPT KEY : " + tempKeyNew);
+                    /*DEBUG MSG*/System.out.println("TEMPT KEY : " + tempKeyOld);
+                            
+            }else{
+                tempKeyOld = (String)table.get(i - 1).get(keyName);
+            }
+
+            if(!isMatch(tempKeyNew,tempKeyOld)){
+                arrMapToKey.put(tempKeyOld, tempDataArr);
+                tempDataArr = new ArrayList<String>();
+            }
+
+            for(int r = 0 ; r < colNum ; r++){
+                tempFieldData = (String) table.get(i).get(fieldNames[r]);
+                    /*DEBUG MSG*/System.out.println("KEY = " + tempKeyOld);
+                    /*DEBUG MSG*/System.out.println("tempFieldData = " + tempFieldData);
+
+                tempDataArr.add(tempFieldData);
+                    /*DEBUG MSG*/System.out.println("ADDED");
+            }
+            /*DEBUG MSG*/System.out.println("ARRAY ELEMENT : " + tempDataArr);
+        }
+        return arrMapToKey;
+    }
+    //#endregion
+    
     //#endregion
 
-    
     public static void main(String[] args) {
-        SQL sql = SQL.getInstance();
-        DataHolder data = DataHolder.getInstance();
-        data.setShopTable(sql.fetchShopTable());
         
-        ArrayList<String> shopKey = getAllShopKey(data.getShopTable());
-                /*DEBUG*/System.out.println(shopKey);
-        int statementQty = shopKey.size();
-                /*DEBUG*/System.out.println(statementQty);
-        String union = "\nUNION\n";
-
-        String completeSQLStmt = "";
-        
-        for (int i = 0; i < statementQty ; i++) {
-            
-            int currentStatement = i + 1;
-            
-            String sqlStmt = String.format("SELECT DISTINCT S.shopID, category " + "FROM Food F, Shop S "
-                    + "WHERE S.shopID = F.shopID AND S.shopID = '%s'", shopKey.get(i));
-            
-            completeSQLStmt = completeSQLStmt.concat(sqlStmt);
-                /*DEBUG*///System.out.println(completeSQLStmt);
-
-            if(isNotLastStatement(statementQty, currentStatement)){
-                completeSQLStmt = completeSQLStmt.concat(union);
-            }
-        }
-        System.out.println(completeSQLStmt);
-    }
-
-    public static boolean isNotLastStatement(int statementQty, int currentStatement){
-        return currentStatement < statementQty;
     }
 }
