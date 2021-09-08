@@ -4,8 +4,11 @@ import java.net.URL;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.ResourceBundle;
+
+import Cache.DataHolder;
 import Classes.Food;
 import Classes.Shop;
+import SQL.CreateTableQuery.SQL;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
@@ -36,7 +39,7 @@ public class foodList implements Initializable {
     // #endregion
 
     // #region : PROGRAM VARIABLES
-    private ArrayList<String> categoryList;
+    private ArrayList<String>categoryList = new ArrayList<String>();
     private HashMap<String, ArrayList<Food>> foodArrMappedWithCategory;
     private ArrayList<Food> foodsOf1Category;
     // #endregion
@@ -46,8 +49,27 @@ public class foodList implements Initializable {
     public void initialize(URL location, ResourceBundle resources) {
 
         // #region : OBTAIN DATA
-        categoryList = Shop.getAvailableFoodCategoryInShop("S00001");
-        foodArrMappedWithCategory = Shop.getFoodObjArrThatMapWithCategory("S00001");
+        SQL sql = SQL.getInstance();
+        DataHolder data = DataHolder.getInstance();
+        data.setAccountTable(sql.fetchAccountTable());
+        /**DEBUG*/System.out.print(data.getAccountTable());
+        data.setBuyerTable(sql.fetchBuyerTable());
+        data.setSellerTable(sql.fetchSellerTable());
+        data.setAdminTable(sql.fetchAdminTable());
+        data.setRiderTable(sql.fetchRiderTable());
+        data.setShopTable(sql.fetchShopTable());
+        
+        Shop shop = new Shop();
+        shop.setShopID("S00001");
+        
+        data.setFoodCategoriesTable(sql.fetchFoodCategoriesFromAllShops(shop.getAllKeysInTable(data.getShopTable())));
+        
+        categoryList = shop.getAvailableFoodCategoryInShop();
+            /*DEBUG MSG*/System.out.println("CATEEGORY LIST : " + categoryList);
+        
+        foodArrMappedWithCategory = shop.getFoodObjArrThatMapWithCategory();
+            /*DEBUG MSG*/System.out.println("FOOD ARRAY : " + foodArrMappedWithCategory);
+        
         // #endregion
 
         // #region : LOAD CATEGORY TAG
@@ -59,6 +81,8 @@ public class foodList implements Initializable {
             System.out.println("go in try clause");
 
             for (int i = 0; i < categoryList.size(); i++) {
+
+                    /*DEBUG MSG*/System.out.println("FOR LOOP " + i);
 
                 FXMLLoader fxmlLoader = new FXMLLoader();
 
@@ -97,6 +121,8 @@ public class foodList implements Initializable {
         } catch (IOException e) {
             e.printStackTrace();
         }
+
+            /*DEBUG MSG*/System.out.println("OUTA THE LOOP");
         // #endregion
 
         // #region : FOOD LIST

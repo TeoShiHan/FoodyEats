@@ -37,9 +37,11 @@ public class Login {
     //#region : FXML METHODS
     @FXML
     void actionLogin(ActionEvent event) throws IOException, NoSuchMethodException, SecurityException, IllegalAccessException, IllegalArgumentException, InvocationTargetException{        
-        
+        Account tempAcc = new Account();        
         if(allFieldsFilled()){
-            Account.login(inputUsername.getText().strip(), inputPassword.getText().strip());                            
+            /*DEBUG*/System.out.println(inputUsername.getText().strip());
+             /*DEBUG*/System.out.println(inputPassword.getText().strip());
+            tempAcc.login(inputUsername.getText().strip(), inputPassword.getText().strip());                            
         }else{            
             gui.informationPopup("Attention", "Please fill all the blank");
         }       
@@ -164,4 +166,5 @@ public class Login {
     }
     
     //#endregion
+
 }
