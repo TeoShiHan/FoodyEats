@@ -51,9 +51,9 @@ public class BuyerOrderDetails implements Initializable {
 
     @Override
     public void initialize(URL location, ResourceBundle resources) {
-        if(data.getOrder().getOrderItems()==null){            
-            order = new BuyerOrder(data.getOrder());            
-            data.setOrder(order);            
+        order = new BuyerOrder(data.getOrder());            
+        data.setOrder(order);
+        if(order.getOrderItems()==null){            
             order.loadAllDetails();            
         }
         
@@ -68,7 +68,7 @@ public class BuyerOrderDetails implements Initializable {
             lblRiderMobileNo.setText(order.getRider().getMobileNo());                
             lblRiderVehicleDetails.setText(order.getRider().getVehicle().toString());
         }
-        lblTotalAmount.setText(String.format("RM %.2f",order.getTotalAmount()));
+        lblTotalAmount.setText(String.format("RM %.2f",order.calcTotalAmount()));
 
         // https://stackoverflow.com/questions/36629522/convert-arraylist-to-observable-list-for-javafx-program
         ObservableList<OrderItem> observableList = FXCollections.observableArrayList(order.getOrderItems());        
@@ -140,7 +140,7 @@ public class BuyerOrderDetails implements Initializable {
             try {
                 gui.confirmationPopup("Cancel Order", "Are you sure you want to cancel the order? Once you cancel, it will be gone", passback->{
                     if(passback){
-                        gui.miniPopup(String.format("RM%.2f has been returned to your Bank Account",data.getOrder().getTotalAmount()));
+                        gui.miniPopup(String.format("RM%.2f has been returned to your Bank Account",data.getOrder().calcTotalAmount()));
                         Task<Void> task = new Task<Void>() {
                             @Override
                             public Void call() throws IOException {  

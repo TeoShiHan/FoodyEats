@@ -54,7 +54,7 @@ public class CheckoutPayment implements Initializable{
     @Override
     public void initialize(URL location, ResourceBundle resources) {
         // TODO Auto-generated method stub
-        lblTotal.setText(String.format("%.2f",1000.00));
+        lblTotal.setText(String.format("%.2f",data.getCart().calcTotalAmount()));
         ObservableList<String> options = FXCollections.observableArrayList(banks.keySet());
         dropdownBank.getItems().addAll(options);        
     }       

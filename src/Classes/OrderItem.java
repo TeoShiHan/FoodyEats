@@ -73,7 +73,7 @@ public class OrderItem {
         this.food = new Food(f.get("foodID"),f.get("foodName"),f.get("foodDesc"),f.get("imgPath"),f.get("price"),f.get("category"),f.get("shopID"));        
         data.setFood(this.food);        
     }    
-    public double getAmount(){        
+    public double calcAmount(){        
         return quantity*food.getPrice();
     }    
 }
