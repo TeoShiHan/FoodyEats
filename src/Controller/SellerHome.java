@@ -95,7 +95,7 @@ class SwitchButton extends StackPane {
     private final Label label = new Label();
     private String buttonStyleOff = "-fx-effect: dropshadow(three-pass-box, rgba(0,0,0,0.2), 0.2, 0.0, 0.0, 2); -fx-background-color: WHITE;";
     private String buttonStyleOn = "-fx-effect: dropshadow(three-pass-box, rgba(0,0,0,0.2), 0.2, 0.0, 0.0, 2); -fx-background-color: #00893d;";
-    private BooleanProperty state = new SimpleBooleanProperty(false);
+    private BooleanProperty state = new SimpleBooleanProperty(data.getSeller().getShop().getStatus()==1?true:false);
     private int limitCount = 4;
 
     public BooleanProperty getState() {
@@ -153,37 +153,41 @@ class SwitchButton extends StackPane {
             public void handle(Event event) {                
                 if(limitCount-->0){
                     if(state.get()){
-                        gui.getStage().getScene().getRoot().setDisable(true);
-                        gui.getStage().getScene().setCursor(Cursor.WAIT);
+                        // gui.getStage().getScene().getRoot().setDisable(true);
+                        // gui.getStage().getScene().setCursor(Cursor.WAIT);
+                        setState(false);
                         Task<Void> task = new Task<Void>() {
                             @Override
-                            public Void call() {                                
+                            public Void call() {       
+                                System.out.println("Close shop");                         
                                 data.getSeller().getShop().closeShop();                                                    
                                 return null ;
                             }
                         };
-                        task.setOnSucceeded(e -> {
-                            setState(false);
-                            gui.getStage().getScene().setCursor(Cursor.DEFAULT);
-                            gui.getStage().getScene().getRoot().setDisable(false);
-                        });
                         new Thread(task).start();
+                        // task.setOnSucceeded(e -> {
+                        //     setState(false);
+                        //     // gui.getStage().getScene().setCursor(Cursor.DEFAULT);
+                        //     // gui.getStage().getScene().getRoot().setDisable(false);
+                        // });
                     }else{
-                        gui.getStage().getScene().getRoot().setDisable(true);
-                        gui.getStage().getScene().setCursor(Cursor.WAIT);
+                        // gui.getStage().getScene().getRoot().setDisable(true);
+                        // gui.getStage().getScene().setCursor(Cursor.WAIT);
+                        setState(true);
                         Task<Void> task = new Task<Void>() {
                             @Override
-                            public Void call() {                                
+                            public Void call() {    
+                                System.out.println("Open shop");
                                 data.getSeller().getShop().openShop();                                                 
                                 return null ;
                             }
                         };
-                        task.setOnSucceeded(e -> {
-                            setState(true);
-                            gui.getStage().getScene().setCursor(Cursor.DEFAULT);
-                            gui.getStage().getScene().getRoot().setDisable(false);
-                        });
                         new Thread(task).start();                                                
+                        // task.setOnSucceeded(e -> {
+                        //     setState(true);
+                        //     // gui.getStage().getScene().setCursor(Cursor.DEFAULT);
+                        //     // gui.getStage().getScene().getRoot().setDisable(false);
+                        // });
                     }
                 }else{
                     try {

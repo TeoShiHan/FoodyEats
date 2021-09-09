@@ -43,10 +43,10 @@ INSERT INTO foodyeats.Buyer(buyerID,address,accountID,cartID) VALUES ('B00008','
 INSERT INTO foodyeats.Buyer(buyerID,address,accountID,cartID) VALUES ('B00009','3517 Garrison Way,Terengganu','A00021','C00009');
 INSERT INTO foodyeats.Buyer(buyerID,address,accountID,cartID) VALUES ('B00010','741 Chinook Circle,Johor','A00022','C00010');
 
-INSERT INTO foodyeats.Seller(sellerID,address,NRIC,licenseNumber,bankAcc,accountID,shopID,status) VALUES ('V00001','657 Golf View Way,Sabah','588596-59-8672','497-jw-131',3373892514,'A00009','S00001',1);
-INSERT INTO foodyeats.Seller(sellerID,address,NRIC,licenseNumber,bankAcc,accountID,shopID,status) VALUES ('V00002','6 Lien Park,Putrajaya','910501-15-1828','061-ca-195',8979989761,'A00010','S00002',1);
-INSERT INTO foodyeats.Seller(sellerID,address,NRIC,licenseNumber,bankAcc,accountID,shopID,status) VALUES ('V00003','86777 Farwell Place,Melaka','470326-24-5291','556-tj-991',7943194770,'A00011','S00003',0);
-INSERT INTO foodyeats.Seller(sellerID,address,NRIC,licenseNumber,bankAcc,accountID,shopID,status) VALUES ('V00004','803 Blue Bill Park Park,Sarawak','312827-30-7341','333-ba-924',5885948386,'A00012','S00004',0);
+INSERT INTO foodyeats.Seller(sellerID,address,NRIC,licenseNumber,bankAcc,accountID,shopID,status) VALUES ('S00001','657 Golf View Way,Sabah','588596-59-8672','497-jw-131',3373892514,'A00009','S00001',1);
+INSERT INTO foodyeats.Seller(sellerID,address,NRIC,licenseNumber,bankAcc,accountID,shopID,status) VALUES ('S00002','6 Lien Park,Putrajaya','910501-15-1828','061-ca-195',8979989761,'A00010','S00002',1);
+INSERT INTO foodyeats.Seller(sellerID,address,NRIC,licenseNumber,bankAcc,accountID,shopID,status) VALUES ('S00003','86777 Farwell Place,Melaka','470326-24-5291','556-tj-991',7943194770,'A00011','S00003',0);
+INSERT INTO foodyeats.Seller(sellerID,address,NRIC,licenseNumber,bankAcc,accountID,shopID,status) VALUES ('S00004','803 Blue Bill Park Park,Sarawak','312827-30-7341','333-ba-924',5885948386,'A00012','S00004',0);
 
 INSERT INTO foodyeats.Cart(cartID,buyerID,shopID) VALUES ('C00001','B00001','S00001');
 INSERT INTO foodyeats.Cart(cartID,buyerID,shopID) VALUES ('C00002','B00002','S00002');

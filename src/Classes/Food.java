@@ -97,8 +97,8 @@ public class Food {
         this.price = price;
     }
 
-    public void create() throws SQLException{                
-        db.executeCUD(String.format("INSERT INTO `Food` VALUES (%s,%s,%s,%s,%.2f,%s,%s)",foodID,name,desc,imgPath,price,category,shopID),gui);
+    public void create() throws SQLException{                        
+        db.executeCUD(String.format("INSERT INTO `Food` VALUES ('%s','%s','%s','%s',%.2f,'%s','%s')",foodID,name,desc,imgPath,price,category,shopID),gui);
     }    
 
     public void edit(String name, String desc, double price, String category, String imgPath){        

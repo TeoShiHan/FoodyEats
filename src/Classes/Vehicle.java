@@ -77,7 +77,7 @@ public class Vehicle {
     }
 
     public String toString(){        
-        if(type=="Bicycle" || type=="Pedestrian"){
+        if(type.equals("Bicycle") || type.equals("Pedestrian")){
             return String.format("%s",type);
         }else{
             return String.format("%s, %s, %s, %s, %s",type,brand,model,plateNo,color);

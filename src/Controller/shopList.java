@@ -108,11 +108,7 @@ public class shopList implements Initializable {
 
                 /*DEBUG OUTPUT*/System.out.println("Runned");
 
-            //  GET DATA FROM TABE
             String shopID      = (String)  shopTable.get(i).get("shopID");
-
-                /*DEBUG OUTPUT*/System.out.println(shopID);
-
             String shopName    = (String)  shopTable.get(i).get("shopName");
             double deliveryFee = (double)  shopTable.get(i).get("deliveryFee");
             String imgPath     = (String)  shopTable.get(i).get("imgPath");
@@ -120,18 +116,15 @@ public class shopList implements Initializable {
 
             System.out.println("pass through getting value assignatoin");
 
-            //  CREATE SHOP INSTANCE
             Shop shopInstance = new Shop();
 
                 /*DEBUG OUTPUT*/System.out.println("successfully create shop instance");
 
-            //  ASSIGN NEEDED VALUE INTO SHOP INSTANCE
             shopInstance.setShopID(shopID);
             shopInstance.setName(shopName);
             shopInstance.setDeliveryFee(deliveryFee);
             shopInstance.setImgPath(imgPath);
 
-            //  ADD THE SHOP INSTANCE INTO THE LIST
             shopObjectCollection.add(shopInstance);
             System.out.println(shopObjectCollection);
         }

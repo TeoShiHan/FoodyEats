@@ -1,11 +1,17 @@
 package Classes;
 import Cache.*;
 
+import java.io.IOException;
 import java.sql.SQLException;
 import java.time.LocalDate;
 import java.time.LocalTime;
 import java.util.ArrayList;
 import java.util.HashMap;
+
+import Cache.DataHolder;
+import PageOpener.rider_openOrderHistory;
+import SQL.CreateTableQuery.SQL;
+import javafx.concurrent.Task;
 
 public class Shop {
     private JDBC db = new JDBC();
@@ -67,16 +73,16 @@ public class Shop {
         double deliveryFee,
         String imgPath
     ){
-        this.shopID = (String)shopID;
-        this.name = (String)name;
-        this.address = (String)address;
-        this.tel = (String)tel;
-        this.startHour = (LocalTime)startHour;
-        this.endHour = (LocalTime)endHour;
-        this.status = (int)status;
-        this.dateCreated = (LocalDate)dateCreated;
-        this.deliveryFee = (double) deliveryFee;
-        this.imgPath = (String) imgPath;
+        this.shopID = shopID;
+        this.name = name;
+        this.address = address;
+        this.tel = tel;
+        this.startHour = startHour;
+        this.endHour =endHour;
+        this.status = status;
+        this.dateCreated = dateCreated;
+        this.deliveryFee = deliveryFee;
+        this.imgPath = imgPath;
     }
 
     public Shop(HashMap<String,Object>shop){
@@ -296,11 +302,44 @@ public class Shop {
         this.endHour = endHour;        
         this.deliveryFee =  deliveryFee;
         this.imgPath =  imgPath;
-        db.executeCUD(String.format("UPDATE `Shop` SET shopName='%s', address='%s', tel='%s', startHour='%s', endHour='%s', deliveryFee=%.2f, imgPath='%s' WHERE shopID='%s'",name,address,tel,startHour,endHour,deliveryFee,imgPath,shopID),gui);
+        Task<Void> task = new Task<Void>() {
+            @Override
+            public Void call() throws IOException, SQLException {                                
+                db.executeCUD(String.format("UPDATE `Shop` SET shopName='%s', address='%s', tel='%s', startHour='%s', endHour='%s', deliveryFee=%.2f, imgPath='%s' WHERE shopID='%s'",name,address,tel,startHour,endHour,deliveryFee,imgPath,shopID),gui);
+                return null;
+            }
+        };        
+        new Thread(task).start();
     }     
 
     public static ArrayList<String> getAvailableFoodCategoryInShop(String shopID){
         JDBC db = new JDBC();
+        ArrayList<String> categoryArr = new ArrayList<String>();
+        ArrayList<HashMap<String,Object>> categoryList = db.readAll(String.format(
+            "SELECT DISTINCT category " +
+            "FROM Food F, Shop S "      +
+            "WHERE S.shopID = F.shopID AND S.shopID = '%s'", shopID)
+        );
+        for(int i = 0 ; i < categoryList.size() ; i++){
+            categoryArr.add((String)categoryList.get(i).get("category"));
+        }
+        return categoryArr;
+    }
+
+    private static ArrayList<String> getAllShopKey(ArrayList<HashMap<String,Object>>shopTable){
+        ArrayList<String> shopKeysArr = new ArrayList<String>();
+        for(int i = 0 ; i < shopTable.size() ; i++){
+            String tempShopID = (String)shopTable.get(i).get("shopID");
+            shopKeysArr.add(tempShopID);
+        }
+        return shopKeysArr;
+    }
+
+    public static HashMap<String,ArrayList<String>> getShopIDMapAvailableCategory(String shopID){
+        JDBC db = new JDBC();
+        DataHolder data = DataHolder.getInstance();
+        ArrayList<HashMap<String,Object>> shopTable = data.getShopTable();
+
         ArrayList<String> categoryArr = new ArrayList<String>();
         ArrayList<HashMap<String,Object>> categoryList = db.readAll(String.format(
             "SELECT DISTINCT category " +
@@ -358,11 +397,38 @@ public class Shop {
     }
     //#endregion
 
-}
-
-
-class tester{
+    
     public static void main(String[] args) {
-        System.out.println(Shop.getFoodObjArrThatMapWithCategory("S00001"));
+        SQL sql = SQL.getInstance();
+        DataHolder data = DataHolder.getInstance();
+        data.setShopTable(sql.fetchShopTable());
+        
+        ArrayList<String> shopKey = getAllShopKey(data.getShopTable());
+                /*DEBUG*/System.out.println(shopKey);
+        int statementQty = shopKey.size();
+                /*DEBUG*/System.out.println(statementQty);
+        String union = "\nUNION\n";
+
+        String completeSQLStmt = "";
+        
+        for (int i = 0; i < statementQty ; i++) {
+            
+            int currentStatement = i + 1;
+            
+            String sqlStmt = String.format("SELECT DISTINCT S.shopID, category " + "FROM Food F, Shop S "
+                    + "WHERE S.shopID = F.shopID AND S.shopID = '%s'", shopKey.get(i));
+            
+            completeSQLStmt = completeSQLStmt.concat(sqlStmt);
+                /*DEBUG*///System.out.println(completeSQLStmt);
+
+            if(isNotLastStatement(statementQty, currentStatement)){
+                completeSQLStmt = completeSQLStmt.concat(union);
+            }
+        }
+        System.out.println(completeSQLStmt);
+    }
+
+    public static boolean isNotLastStatement(int statementQty, int currentStatement){
+        return currentStatement < statementQty;
     }
 }

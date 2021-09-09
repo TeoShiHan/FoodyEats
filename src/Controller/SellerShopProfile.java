@@ -56,8 +56,7 @@ public class SellerShopProfile implements Initializable{
         listView.getItems().add("Address: "+data.getSeller().getShop().getAddress());
         listView.getItems().add("Business Hour: "+(data.getSeller().getShop().getStartHour().getHour()==data.getSeller().getShop().getEndHour().getHour()?"24 Hours":data.getSeller().getShop().getStartHour()+" ~ "+data.getSeller().getShop().getEndHour()));
         listView.getItems().add("Delivery Fee: "+data.getSeller().getShop().getDeliveryFee());        
-        imgFile = new File(Paths.get("").toAbsolutePath().toString().replaceAll("\\\\", "/")+"/src"+data.getSeller().getShop().getImgPath());        
-        System.out.println(Paths.get("").toAbsolutePath().toString().replaceAll("\\\\", "/"));
+        imgFile = new File(Paths.get("").toAbsolutePath().toString().replaceAll("\\\\", "/")+"/src"+data.getSeller().getShop().getImgPath());                
         try {
             isImage = (InputStream) new FileInputStream(imgFile);            
             img = new Image(isImage);
@@ -87,46 +86,58 @@ public class SellerShopProfile implements Initializable{
         controller.getBtnYes().setOnAction(e->{
             myDialog.getScene().getRoot().setDisable(true);
             myDialog.getScene().setCursor(Cursor.WAIT);
-            Task<Void> task = new Task<Void>() {
-                @Override
-                public Void call() throws IOException, SQLException {                                
-                    String currentPath = Paths.get("").toAbsolutePath().toString().replaceAll("\\\\", "/");                              
-                    Path oldImgPath = Paths.get(currentPath+"/src"+data.getSeller().getShop().getImgPath());
-                    String newImgName = data.getSeller().getShop().getShopID()+controller.getNewImgFileExtension();
-                    Path newImgPath = Paths.get(currentPath+"/src/Images/"+newImgName);
-                    data.getSeller().getShop().edit(controller.getInputName().getText(), controller.getInputAddress().getText(), controller.getInputTelNo().getText(), LocalTime.of(controller.getSpinnerStartHour().getValue(), 0, 0), LocalTime.of(controller.getSpinnerEndHour().getValue(), 0, 0), controller.getSpinnerDeliveryFee().getValue(), controller.getNewImgFileExtension()==null?data.getShop().getImgPath():"/Images/"+newImgName);                    
-                    imgFile = null;
-                    isImage = null;
-                    img = null;
-                    imgShop.setImage(null);
-                    System.gc();
-                    try {                        
-                        // File fileName = new File(oldImgPath.toString());            
-                        // fileName.delete();                        
-                        Files.delete(oldImgPath);                                    
-                    } catch (Exception e) {
-                        //TODO: handle exception
-                        System.out.println("Unable to delete the old img, error: "+e);
-                    }finally{
-                        Files.copy(controller.getShopImageFile().toPath(), newImgPath);
-                        // https://stackoverflow.com/questions/1158777/rename-a-file-using-java/20260300#20260300
-                        // Files.move(tempSource, tempSource.resolveSibling(food.getFoodID()+controller.getNewImgFileExtension()));
+            if(controller.getShopImageFile()!=null){
+                imgFile = null;
+                isImage = null;
+                img = null;
+                imgShop.setImage(null);
+                System.gc();
+                Task<Void> task = new Task<Void>() {
+                    @Override
+                    public Void call() throws IOException, SQLException {                                
+                        String currentPath = Paths.get("").toAbsolutePath().toString().replaceAll("\\\\", "/");                              
+                        Path oldImgPath = Paths.get(currentPath+"/src"+data.getSeller().getShop().getImgPath());
+                        String newImgName = data.getSeller().getShop().getShopID()+controller.getNewImgFileExtension();
+                        Path newImgPath = Paths.get(currentPath+"/src/Images/"+newImgName);
+                        data.getSeller().getShop().edit(controller.getInputName().getText(), controller.getInputAddress().getText(), controller.getInputTelNo().getText(), LocalTime.of(controller.getSpinnerStartHour().getValue(), 0, 0), LocalTime.of(controller.getSpinnerEndHour().getValue(), 0, 0), controller.getSpinnerDeliveryFee().getValue(), "/Images/"+newImgName);                                            
+                        try {                        
+                            // File fileName = new File(oldImgPath.toString());            
+                            // fileName.delete();                        
+                            Files.delete(oldImgPath);                                    
+                        } catch (Exception e) {
+                            //TODO: handle exception
+                            System.out.println("Unable to delete the old img, error: "+e);
+                        }finally{
+                            Files.copy(controller.getShopImageFile().toPath(), newImgPath);
+                            // https://stackoverflow.com/questions/1158777/rename-a-file-using-java/20260300#20260300
+                            // Files.move(tempSource, tempSource.resolveSibling(food.getFoodID()+controller.getNewImgFileExtension()));
+                        }
+                        return null ;
                     }
-                    return null ;
-                }
-            };
-            task.setOnSucceeded(ev -> {
+                };
+                task.setOnSucceeded(ev -> {
+                    myDialog.close();
+                    try {
+                        gui.refreshScene(currentFXMLPath);
+                        gui.notAlertInProgress(myDialog);
+                    } catch (IOException e1) {
+                        // TODO Auto-generated catch block
+                        e1.printStackTrace();                    
+                    }
+                    // tableView.refresh();
+                });
+                new Thread(task).start();                                                   
+            }else{
+                data.getSeller().getShop().edit(controller.getInputName().getText(), controller.getInputAddress().getText(), controller.getInputTelNo().getText(), LocalTime.of(controller.getSpinnerStartHour().getValue(), 0, 0), LocalTime.of(controller.getSpinnerEndHour().getValue(), 0, 0), controller.getSpinnerDeliveryFee().getValue(), data.getSeller().getShop().getImgPath());                    
                 myDialog.close();
+                gui.notAlertInProgress(myDialog);
                 try {
                     gui.refreshScene(currentFXMLPath);
-                    gui.notAlertInProgress(myDialog);
                 } catch (IOException e1) {
                     // TODO Auto-generated catch block
-                    e1.printStackTrace();                    
+                    e1.printStackTrace();
                 }
-                // tableView.refresh();
-            });
-            new Thread(task).start();                                                   
+            }
         });
         
         controller.getBtnNo().setOnAction(e->{      

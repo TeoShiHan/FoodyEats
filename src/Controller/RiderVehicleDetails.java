@@ -54,10 +54,13 @@ public class RiderVehicleDetails implements Initializable{
             data.getRider().setVehicle(vehicle);
             data.setVehicle(vehicle);
         }     
-        listView.getItems().add("Type: "+data.getVehicle().getType());
-        listView.getItems().add("Brand: "+data.getVehicle().getBrand());
-        listView.getItems().add("Model : "+data.getVehicle().getModel());
-        listView.getItems().add("Color : "+data.getVehicle().getColor());        
+        listView.getItems().add("Type: "+data.getVehicle().getType());        
+        if(!(data.getVehicle().getType().equals("Bicycle") || data.getVehicle().getType().equals("Pedestrian"))){
+            listView.getItems().add("Brand: "+data.getVehicle().getBrand());
+            listView.getItems().add("Model: "+data.getVehicle().getModel());
+            listView.getItems().add("Plate No. : "+data.getVehicle().getPlateNo());     
+            listView.getItems().add("Color: "+data.getVehicle().getColor());        
+        }
     }
 
     @FXML
@@ -73,29 +76,38 @@ public class RiderVehicleDetails implements Initializable{
         Scene dialogScene = new Scene((Parent)loader.load());
         
         controller.getBtnYes().setOnAction(e->{
-            myDialog.getScene().getRoot().setDisable(true);
-            myDialog.getScene().setCursor(Cursor.WAIT);            
-            data.getVehicle().setType(controller.getDropdownVehicleType().getSelectionModel().getSelectedItem());
-            data.getVehicle().setBrand(controller.getInputBrand().getText());
-            data.getVehicle().setModel(controller.getInputModel().getText());
-            data.getVehicle().setPlateNo(controller.getInputPlateNo().getText());
-            data.getVehicle().setColor(controller.getInputColor().getText());
-            Task<Void> task = new Task<Void>() {
-                @Override
-                public Void call() throws IOException, SQLException {                                                   
-                    data.getVehicle().edit(controller.getDropdownVehicleType().getSelectionModel().getSelectedItem(), controller.getInputBrand().getText(), controller.getInputModel().getText(), controller.getInputPlateNo().getText(), controller.getInputColor().getText());                                            
-                    return null;
+            if(controller.isFilled()){
+                myDialog.getScene().getRoot().setDisable(true);
+                myDialog.getScene().setCursor(Cursor.WAIT);            
+                data.getVehicle().setType(controller.getDropdownVehicleType().getSelectionModel().getSelectedItem());
+                data.getVehicle().setBrand(controller.getInputBrand().getText());
+                data.getVehicle().setModel(controller.getInputModel().getText());
+                data.getVehicle().setPlateNo(controller.getInputPlateNo().getText());
+                data.getVehicle().setColor(controller.getInputColor().getText());
+                Task<Void> task = new Task<Void>() {
+                    @Override
+                    public Void call() throws IOException, SQLException {                                                   
+                        data.getVehicle().edit(controller.getDropdownVehicleType().getSelectionModel().getSelectedItem(), controller.getInputBrand().getText(), controller.getInputModel().getText(), controller.getInputPlateNo().getText(), controller.getInputColor().getText());                                            
+                        return null;
+                    }
+                };            
+                new Thread(task).start();
+    
+                myDialog.close();
+                try {
+                    gui.notAlertInProgress(myDialog);
+                    gui.refreshScene(currentFXMLPath);
+                } catch (IOException e1) {
+                    // TODO Auto-generated catch block
+                    e1.printStackTrace();
                 }
-            };            
-            new Thread(task).start();
-
-            myDialog.close();
-            try {
-                gui.notAlertInProgress(myDialog);
-                gui.refreshScene(currentFXMLPath);
-            } catch (IOException e1) {
-                // TODO Auto-generated catch block
-                e1.printStackTrace();
+            }else{
+                try {
+                    gui.informationPopup("Attention", "Please fill in all the blank.");
+                } catch (IOException e1) {
+                    // TODO Auto-generated catch block
+                    e1.printStackTrace();
+                }
             }
         });
         

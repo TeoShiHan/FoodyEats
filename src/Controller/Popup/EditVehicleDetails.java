@@ -35,15 +35,26 @@ public class EditVehicleDetails implements Initializable{
         inputModel.setText(data.getVehicle().getModel());
         inputPlateNo.setText(data.getVehicle().getPlateNo());
         inputColor.setText(data.getVehicle().getColor());
+        
+        checkSelectedTypeIsVehicle();
+        dropdownVehicleType.setOnAction(e->{
+            checkSelectedTypeIsVehicle();
+        });
     }
 
     @FXML
     void selectVehicleType(ActionEvent event) {
+                
+    }
+
+    boolean checkSelectedTypeIsVehicle(){
         if(dropdownVehicleType.getValue().equals("Van")||dropdownVehicleType.getValue().equals("Car")||dropdownVehicleType.getValue().equals("Motorcycle")){
             setVehicleInputAble();
+            return true;
         }else{
             setVehicleInputDisable();
-        }        
+            return false;
+        }
     }
 
     void setVehicleInputAble(){
@@ -58,6 +69,10 @@ public class EditVehicleDetails implements Initializable{
         inputModel.setDisable(true);
         inputColor.setDisable(true);
         inputPlateNo.setDisable(true);        
+        inputBrand.setText("");
+        inputModel.setText("");
+        inputColor.setText("");
+        inputPlateNo.setText("");   
     }
 
     public Button getBtnYes() {
@@ -115,6 +130,14 @@ public class EditVehicleDetails implements Initializable{
     public void setDropdownVehicleType(ComboBox<String> dropdownVehicleType) {
         this.dropdownVehicleType = dropdownVehicleType;
     }
-
-       
+    
+    public boolean isFilled(){
+        if(checkSelectedTypeIsVehicle()){
+            return !(inputBrand.getText().strip().isEmpty() || inputModel.getText().strip().isEmpty() || 
+                    inputPlateNo.getText().strip().isEmpty() || inputColor.getText().strip().isEmpty() ||
+                    dropdownVehicleType.getSelectionModel().getSelectedItem()==null);
+        }else{
+            return true;
+        }
+    } 
 }
