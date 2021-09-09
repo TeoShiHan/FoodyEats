@@ -1,5 +1,9 @@
 package Controller;
+import java.util.List;
+
 import Classes.Shop;
+import Interfaces.BuyerHomeListeners;
+import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
@@ -7,6 +11,7 @@ import javafx.scene.effect.BlurType;
 import javafx.scene.effect.DropShadow;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
+import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.StackPane;
 import javafx.scene.layout.VBox;
@@ -27,7 +32,18 @@ public class shopItemController {
     @FXML private StackPane shadowPane;
     @FXML private Button viewShopBtn;
 
-    public void setData(Shop shop){
+    @FXML
+    private void clickShopBtn(MouseEvent mouseEvent){
+        listener.showFoodMenuOfChoosenShop(shop);
+    };
+
+    private BuyerHomeListeners listener;
+    private Shop shop;
+
+
+    public void setData(Shop shop, BuyerHomeListeners listener){
+        this.listener = listener;
+        this.shop = shop;
         Image shopImage = new Image(getClass().getResourceAsStream(shop.getImgPath()));
         Image deliveryTruckIcon = new Image(getClass().getResourceAsStream("../Images/deliveryIcon.png"));
         deliveryIcon.setImage(deliveryTruckIcon);

@@ -258,24 +258,14 @@ public class BuyerCart implements Initializable{
             PauseTransition delay = new PauseTransition(Duration.seconds(8));
             delay.setOnFinished(e -> {
                 myDialog.close();
-                myDialog2.close();            
-                try {                    
-                    gui.miniPopup("Payment made successfully, you can view your order in Home 👉 Order History");
-                    gui.toNextScene("View/BuyerOrderHistory.fxml");
-                } catch (IOException e1) {
-                    // TODO Auto-generated catch block
-                    e1.printStackTrace();
-                }
+                myDialog2.close();                            
+                gui.miniPopup("Payment made successfully, you can view your order in Home 👉 Order History");
+                gui.toNextScene("View/BuyerOrderHistory.fxml");
             });
             delay.play();            
             myDialog2.setOnCloseRequest(e->{                
-                myDialog.close();                
-                try {
-                    gui.toNextScene("View/BuyerOrderHistory.fxml");
-                } catch (IOException e1) {
-                    // TODO Auto-generated catch block
-                    e1.printStackTrace();
-                }
+            myDialog.close();                
+            gui.toNextScene("View/BuyerOrderHistory.fxml");
             });
         });
         

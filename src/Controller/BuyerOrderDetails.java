@@ -153,12 +153,7 @@ public class BuyerOrderDetails implements Initializable {
                             }
                         };                        
                         new Thread(task).start();    
-                        try {
-                            gui.toNextScene("View/BuyerOrderHistory.fxml");
-                        } catch (IOException e) {
-                            // TODO Auto-generated catch block
-                            e.printStackTrace();
-                        }
+                        gui.toNextScene("View/BuyerOrderHistory.fxml");
                     }
                 });
             } catch (IOException e) {

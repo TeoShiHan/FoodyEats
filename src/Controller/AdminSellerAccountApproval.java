@@ -82,13 +82,8 @@ public class AdminSellerAccountApproval implements Initializable {
                     tableView.refresh();
                 });                
                 btnViewDetails.setOnAction(e->{          
-                    try {
-                        data.setSeller(seller);
-                        gui.toNextScene("View/AdminSellerAccountDetails.fxml");
-                    } catch (IOException e1) {
-                        // TODO Auto-generated catch block
-                        e1.printStackTrace();
-                    }                                
+                    data.setSeller(seller);
+                    gui.toNextScene("View/AdminSellerAccountDetails.fxml");                          
                 });                                       
             }                     
         });

@@ -1,7 +1,6 @@
 package Controller;
 import java.io.File;
 import java.io.FileInputStream;
-import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.io.InputStream;
 import java.net.URL;
@@ -13,11 +12,7 @@ import java.time.LocalTime;
 import java.util.ResourceBundle;
 
 import Cache.*;
-import Classes.*;
-import Controller.Popup.EditFood;
-import Controller.Popup.EditProfile;
 import Controller.Popup.EditShopProfile;
-import javafx.animation.PauseTransition;
 import javafx.concurrent.Task;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
@@ -31,10 +26,8 @@ import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.AnchorPane;
-import javafx.scene.text.Text;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
-import javafx.util.Duration;
 
 public class SellerShopProfile implements Initializable{
     private GUI gui = GUI.getInstance();
@@ -100,17 +93,12 @@ public class SellerShopProfile implements Initializable{
                         String newImgName = data.getSeller().getShop().getShopID()+controller.getNewImgFileExtension();
                         Path newImgPath = Paths.get(currentPath+"/src/Images/"+newImgName);
                         data.getSeller().getShop().edit(controller.getInputName().getText(), controller.getInputAddress().getText(), controller.getInputTelNo().getText(), LocalTime.of(controller.getSpinnerStartHour().getValue(), 0, 0), LocalTime.of(controller.getSpinnerEndHour().getValue(), 0, 0), controller.getSpinnerDeliveryFee().getValue(), "/Images/"+newImgName);                                            
-                        try {                        
-                            // File fileName = new File(oldImgPath.toString());            
-                            // fileName.delete();                        
+                        try {                                            
                             Files.delete(oldImgPath);                                    
                         } catch (Exception e) {
-                            //TODO: handle exception
                             System.out.println("Unable to delete the old img, error: "+e);
                         }finally{
                             Files.copy(controller.getShopImageFile().toPath(), newImgPath);
-                            // https://stackoverflow.com/questions/1158777/rename-a-file-using-java/20260300#20260300
-                            // Files.move(tempSource, tempSource.resolveSibling(food.getFoodID()+controller.getNewImgFileExtension()));
                         }
                         return null ;
                     }

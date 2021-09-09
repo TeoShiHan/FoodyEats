@@ -47,7 +47,7 @@
                         <Insets top="30.0" />
                      </VBox.margin>
                   </Label>
-                  <Label text="Logout">
+                  <Label fx:id="logoutText" text="Logout">
                      <font>
                         <Font size="13.0" />
                      </font>

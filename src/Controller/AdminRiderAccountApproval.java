@@ -82,13 +82,8 @@ public class AdminRiderAccountApproval implements Initializable {
                     tableView.refresh();
                 });                
                 btnViewDetails.setOnAction(e->{          
-                    try {
                         data.setRider(rider);
-                        gui.toNextScene("View/AdminRiderAccountDetails.fxml");
-                    } catch (IOException e1) {
-                        // TODO Auto-generated catch block
-                        e1.printStackTrace();
-                    }                                
+                        gui.toNextScene("View/AdminRiderAccountDetails.fxml");                          
                 });                                       
             }                     
         });
