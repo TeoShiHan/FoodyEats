@@ -43,6 +43,16 @@ public class Account implements TableDataProcessing{
         this.mobileNo = (String)mobileNo;    
         this.accType = (String)accType;
     }
+    public Account(Object accountID, Object username, Object password, Object name, Object email, Object mobileNo, Object accType, Object regDate) {
+        this.accountID = (String)accountID;
+        this.username = (String)username;
+        this.password = (String)password;
+        this.name = (String)name;
+        this.email = (String)email;
+        this.mobileNo = (String)mobileNo;    
+        this.accType = (String)accType;
+        this.regDate = LocalDate.parse((String)regDate);
+    }
     //#endregion
 
     //#region : GETTER AND SETTERS
@@ -167,7 +177,7 @@ public class Account implements TableDataProcessing{
 
             } else if (accMap.get("type").equals("Rider")) {
                 
-                // #region : CONSTRUCT BUYER OBJECT AND SAVE INTO DATA HOLDER
+                // #region : CONSTRUCT RIDER OBJECT AND SAVE INTO DATA HOLDER
                 childAccTable = data.getRiderTable();
                 childAccMap = getChildAccMap(accID, childAccTable);
                 Rider rider = new Rider(accMap,childAccMap);
@@ -177,7 +187,18 @@ public class Account implements TableDataProcessing{
                 
                 goToAccHome(rider.isApprovedRider(), gui, "Rider");
 
-            } else{
+            } else if (accMap.get("type").equals("Admin")) {
+
+                // #region : CONSTRUCT RIDER OBJECT AND SAVE INTO DATA HOLDER
+                childAccTable = data.getAdminTable();
+                childAccMap = getChildAccMap(accID, childAccTable);
+                Admin admin = new Admin(accMap,childAccMap);
+                data.setAccount(admin);
+                data.setAdmin(admin);
+                //#endregion
+                
+                gui.toNextScene("View/AdminHome.fxml");
+            } else {
 
                 //#region : CREATE SELLER INSTATNCE AND STORE INTO DATA HOLDER
                 childAccTable = data.getSellerTable();

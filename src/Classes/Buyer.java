@@ -1,6 +1,7 @@
 package Classes;
 
 import Cache.*;
+import javafx.concurrent.Task;
 
 import java.io.IOException;
 import java.sql.SQLException;
@@ -151,7 +152,14 @@ public class Buyer extends Account{
     public void edit(String username, String password, String name, String email, String mobileNo, String address) {        
         super.edit(username, password, name, email, mobileNo);
         this.address = address;
-        db.executeCUD(String.format("UPDATE `Account` a, `Buyer` b SET a.username='%s', a.password='%s', a.name='%s', a.email='%s', a.mobileNo='%s', b.address='%s' WHERE a.accountID='%s' AND a.accountID=b.accountID",username,password,name,email,mobileNo,address,accountID),gui);
+        Task<Void> task = new Task<Void>() {
+            @Override
+            public Void call() throws IOException, SQLException {                                
+                db.executeCUD(String.format("UPDATE `Account` a, `Buyer` b SET a.username='%s', a.password='%s', a.name='%s', a.email='%s', a.mobileNo='%s', b.address='%s' WHERE a.accountID='%s' AND a.accountID=b.accountID",username,password,name,email,mobileNo,address,accountID),gui);
+                return null ;
+            }
+        };        
+        new Thread(task).start();        
     }
 
     @Override

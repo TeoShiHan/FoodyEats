@@ -27,7 +27,7 @@
           <TableColumn fx:id="colOrderId" prefWidth="220.0" style="-fx-alignment: center;" text="OrderId" />
           <TableColumn fx:id="colDate" prefWidth="150.0" style="-fx-alignment: center;" text="Date" />
           <TableColumn fx:id="colTime" prefWidth="150.0" style="-fx-alignment: center;" text="Time" />          
-          <TableColumn fx:id="colAction" prefWidth="418.0" style="-fx-alignment: center;" text="Action" />                    
+          <TableColumn fx:id="colAction" prefWidth="618.0" style="-fx-alignment: center;" text="Action" />                    
         </columns>
       </TableView>
    </children>

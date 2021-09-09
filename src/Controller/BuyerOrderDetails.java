@@ -38,7 +38,7 @@ public class BuyerOrderDetails implements Initializable {
     private DataHolder data = DataHolder.getInstance();    
     
     @FXML private AnchorPane paneBuyerOrder;    
-    @FXML private Label linkLogout,lblOrderDetails,lblBuyerName,lblBuyerMobileNo,lblBuyerAddress,lblTotalAmount,lblDateCreated,lblTimeCreated,lblRiderName,lblRiderMobileNo,lblRiderVehicle;
+    @FXML private Label linkLogout,lblOrderDetails,lblShopName,lblShopTel,lblShopAddress,lblTotalAmount,lblDateCreated,lblTimeCreated,lblRiderName,lblRiderMobileNo,lblRiderVehicleDetails;
     @FXML private ImageView iconProfile,iconHome,iconCart;            
     @FXML private Button btnWriteReview,btnCancel;        
     @FXML private TableView<OrderItem> tableView;
@@ -47,31 +47,31 @@ public class BuyerOrderDetails implements Initializable {
     @FXML private TableColumn<OrderItem,String> colItems;
     private String currentFXMLPath = "/View/BuyerOrderDetails.fxml";
 
+    private BuyerOrder order;
+
     @Override
     public void initialize(URL location, ResourceBundle resources) {
-        // TODO Auto-generated method stub                
-        if(data.getOrder().getOrderItems()==null){
-            data.getOrder().loadAllDetails();
-            if(data.getOrder().getRider()!=null){
-                data.setRider(data.getOrder().getRider());
-            }            
-            // data.addObjectHolder("orderID", data.getOrder().getOrderID());
+        if(data.getOrder().getOrderItems()==null){            
+            order = new BuyerOrder(data.getOrder());            
+            data.setOrder(order);            
+            order.loadAllDetails();            
         }
         
-        lblOrderDetails.setText("Order #"+data.getOrder().getOrderID());
-        lblDateCreated.setText(data.getOrder().getDateCreated().toString());
-        lblTimeCreated.setText(data.getOrder().getTimeCreated().toString());
-        lblBuyerName.setText(data.getBuyer().getName());
-        lblBuyerAddress.setText(data.getBuyer().getAddress());        
-        lblBuyerMobileNo.setText(data.getBuyer().getMobileNo());
+        lblOrderDetails.setText("Order #"+order.getOrderID());
+        lblDateCreated.setText(order.getDateCreated().toString());
+        lblTimeCreated.setText(order.getTimeCreated().toString());
+        lblShopName.setText(order.getShop().getName());
+        lblShopAddress.setText(order.getShop().getAddress());
+        lblShopTel.setText(order.getShop().getTel());
         if(data.getRider()!=null && !data.getRider().getName().isEmpty()){
-            lblRiderName.setText(data.getRider().getName());
-            lblRiderMobileNo.setText(data.getRider().getMobileNo());                
-            lblRiderVehicle.setText(String.format("%s, %s, %s, %s, %s",data.getVehicle().getType(),data.getVehicle().getBrand(),data.getVehicle().getModel(),data.getVehicle().getPlateNo(),data.getVehicle().getColor()));
+            lblRiderName.setText(order.getRider().getName());
+            lblRiderMobileNo.setText(order.getRider().getMobileNo());                
+            lblRiderVehicleDetails.setText(order.getRider().getVehicle().toString());
         }
+        lblTotalAmount.setText(String.format("RM %.2f",order.getTotalAmount()));
 
         // https://stackoverflow.com/questions/36629522/convert-arraylist-to-observable-list-for-javafx-program
-        ObservableList<OrderItem> observableList = FXCollections.observableArrayList(data.getOrder().getOrderItems());        
+        ObservableList<OrderItem> observableList = FXCollections.observableArrayList(order.getOrderItems());        
         
         tableView.setItems(observableList);
 
@@ -81,8 +81,7 @@ public class BuyerOrderDetails implements Initializable {
         colItems.setCellValueFactory(dt -> new SimpleStringProperty(dt.getValue().getFood().getName()));        
         // https://stackoverflow.com/questions/14413040/converting-integer-to-observablevalueinteger-in-javafx/14413339, for the next line (line 80)
         colQty.setCellValueFactory(dt -> new SimpleIntegerProperty(dt.getValue().getQuantity()).asObject());
-        
-        lblTotalAmount.setText(String.format("RM %.2f",data.getOrder().getTotalAmount()));
+                
         btnWriteReview.setDisable(data.getOrder().getStatus().equals("Completed")?false:true);
         btnCancel.setDisable(data.getOrder().getStatus().equals("Pending")?false:true);
 
@@ -144,7 +143,11 @@ public class BuyerOrderDetails implements Initializable {
                         gui.miniPopup(String.format("RM%.2f has been returned to your Bank Account",data.getOrder().getTotalAmount()));
                         Task<Void> task = new Task<Void>() {
                             @Override
-                            public Void call() throws IOException {                                                        
+                            public Void call() throws IOException {  
+                                System.out.println(data.getOrders());
+                                data.getOrders().remove(data.getOrder());
+                                System.out.println(data.getOrders());
+                                Order.setOrdersHaveChange(true);
                                 data.getOrder().delete();                                
                                 return null;
                             }
@@ -161,9 +164,9 @@ public class BuyerOrderDetails implements Initializable {
 
         //#region direct select data from database (old method)
         // HashMap<String,Object> buyer = db.readOne(String.format("SELECT * FROM `Buyer` WHERE buyerID='%s'", data.getOrder().getBuyerId()));
-        // lblBuyerAddress.setText((String)buyer.get("address"));  
+        // lblShopAddress.setText((String)buyer.get("address"));  
         // HashMap<String,Object> account = db.readOne(String.format("SELECT * FROM `Account` WHERE accountID='%s'", (String)buyer.get("accountID")));
-        // lblBuyerPhoneNo.setText((String)account.get("mobileNo"));
+        // lblShopPhoneNo.setText((String)account.get("mobileNo"));
         // ObservableList<Map<String,Object>> observableList = FXCollections.observableArrayList();        
         // ArrayList<HashMap<String,Object>> ois = 
 

@@ -127,7 +127,7 @@ public class RegShop implements Initializable{
         shop.setEndHour(LocalTime.of(spinnerEndHour.getValue(), 0, 0));
         shop.setDateCreated(datePicker.getValue());
         shop.setDeliveryFee(spinnerDeliveryFee.getValue());        
-        shop.setImgPath(shopImageFile.getName().substring(shopImageFile.getName().lastIndexOf(".")));
+        shop.setImgPath(shopImageFile.toPath().toString());
         shop.setStatus(0);
         Seller seller = (Seller)data.getAccount();
         seller.setShop(shop);

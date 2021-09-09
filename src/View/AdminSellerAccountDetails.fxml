@@ -16,7 +16,7 @@
 <AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="700.0" prefWidth="1200.0" style="-fx-background-color: #FAF0E4;" xmlns="http://javafx.com/javafx/16" xmlns:fx="http://javafx.com/fxml/1" fx:controller="Controller.AdminSellerAccountDetails">
    <children>
       <Rectangle arcHeight="5.0" arcWidth="5.0" fill="#ff9819" height="245.0" layoutY="455.0" stroke="BLACK" strokeType="INSIDE" strokeWidth="0.0" width="1200.0" />
-      <Label fx:id="lblRiderAccountDetails" layoutX="30.0" layoutY="30.0" prefHeight="46.0" prefWidth="466.0" style="-fx-font-weight: 800;" text="Seller #">
+      <Label fx:id="lblSellerAccountDetails" layoutX="30.0" layoutY="30.0" prefHeight="46.0" prefWidth="466.0" style="-fx-font-weight: 800;" text="Seller #">
          <font>
             <Font size="36.0" />
          </font>
@@ -55,14 +55,14 @@
       </VBox>
       <VBox layoutX="30.0" layoutY="120.0" prefHeight="178.0" prefWidth="230.0">
          <children>
-            <Label alignment="CENTER" prefHeight="54.0" prefWidth="346.0" style="-fx-background-color: #FF8719; -fx-font-weight: 800;" text="Name">
+            <Label alignment="CENTER" prefHeight="54.0" prefWidth="346.0" style="-fx-background-color: #FF8719; -fx-font-weight: 800;" text="Date Registered">
                <font>
                   <Font size="24.0" />
                </font>
             </Label>
             <HBox prefHeight="100.0" prefWidth="200.0" VBox.vgrow="ALWAYS">
                <children>
-                  <Label fx:id="lblName" alignment="CENTER" prefHeight="185.0" prefWidth="346.0" style="-fx-background-color: #FEBD5C; -fx-font-weight: 800;" text="Khoo" wrapText="true" HBox.hgrow="ALWAYS">
+                  <Label fx:id="lblDateReg" alignment="CENTER" prefHeight="185.0" prefWidth="346.0" style="-fx-background-color: #FEBD5C; -fx-font-weight: 800;" text="20-12-2020" wrapText="true" HBox.hgrow="ALWAYS">
                      <font>
                         <Font size="20.0" />
                      </font>
@@ -73,14 +73,14 @@
       </VBox>
       <VBox layoutX="287.0" layoutY="120.0" prefHeight="178.0" prefWidth="230.0">
          <children>
-            <Label alignment="CENTER" prefHeight="54.0" prefWidth="346.0" style="-fx-background-color: #FF8719; -fx-font-weight: 800;" text="Email">
+            <Label alignment="CENTER" prefHeight="54.0" prefWidth="346.0" style="-fx-background-color: #FF8719; -fx-font-weight: 800;" text="Name">
                <font>
                   <Font size="24.0" />
                </font>
             </Label>
             <HBox prefHeight="100.0" prefWidth="200.0" VBox.vgrow="ALWAYS">
                <children>
-                  <Label fx:id="lblEmail" alignment="CENTER" prefHeight="185.0" prefWidth="346.0" style="-fx-background-color: #FEBD5C; -fx-font-weight: 800;" text="Khoo@gmail.com" wrapText="true" HBox.hgrow="ALWAYS">
+                  <Label fx:id="lblName" alignment="CENTER" prefHeight="185.0" prefWidth="346.0" style="-fx-background-color: #FEBD5C; -fx-font-weight: 800;" text="Khoo@gmail.com" wrapText="true" HBox.hgrow="ALWAYS">
                      <font>
                         <Font size="20.0" />
                      </font>
@@ -122,6 +122,7 @@
                            </children>
                         </HBox>
                         <Separator prefWidth="200.0" />
+                        <Separator prefWidth="200.0" />
                         <HBox prefHeight="55.0" prefWidth="744.0">
                            <children>
                               <Label alignment="CENTER" prefHeight="145.0" prefWidth="130.0" style="-fx-font-size: 20px; -fx-background-color: #FF8719; -fx-font-weight: 800;" text="Tel" HBox.hgrow="ALWAYS">
@@ -144,6 +145,7 @@
                            </children>
                         </HBox>
                         <Separator prefWidth="200.0" />
+                        <Separator prefWidth="200.0" />
                         <HBox prefHeight="55.0" prefWidth="744.0">
                            <children>
                               <Label alignment="CENTER" prefHeight="145.0" prefWidth="130.0" style="-fx-font-size: 20px; -fx-background-color: #FF8719; -fx-font-weight: 800;" text="Address" HBox.hgrow="ALWAYS">
@@ -165,6 +167,7 @@
                               </Label>
                            </children>
                         </HBox>
+                        <Separator prefWidth="200.0" />
                         <Separator prefWidth="200.0" />
                         <HBox prefHeight="55.0" prefWidth="744.0">
                            <children>
@@ -196,25 +199,71 @@
                            </children>
                         </HBox>
                         <Separator prefWidth="200.0" />
-                        <HBox prefHeight="55.0" prefWidth="744.0">
+                        <Separator prefWidth="200.0" />
+                        <HBox alignment="CENTER" prefWidth="744.0">
                            <children>
-                              <Label alignment="CENTER" prefHeight="145.0" prefWidth="130.0" style="-fx-font-size: 20px; -fx-background-color: #FF8719; -fx-font-weight: 800;" text="Delivery Fee" HBox.hgrow="ALWAYS">
-                                 <font>
-                                    <Font size="20.0" />
-                                 </font>
-                              </Label>
-                              <Separator disable="true" orientation="VERTICAL" prefHeight="200.0" />
-                              <Label fx:id="lblDeliveryFee" prefHeight="66.0" prefWidth="613.0" style="-fx-font-size: 20px; -fx-background-color: #FEBD5C; -fx-font-weight: 800;" text="RM 5.00" wrapText="true" HBox.hgrow="ALWAYS">
-                                 <font>
-                                    <Font size="20.0" />
-                                 </font>
-                                 <HBox.margin>
-                                    <Insets />
-                                 </HBox.margin>
+                              <VBox alignment="CENTER" fillWidth="false" prefWidth="118.0" style="-fx-background-color: #FF8719;">
+                                 <children>
+                                    <Label alignment="CENTER" prefWidth="122.0" style="-fx-font-size: 20px; -fx-background-color: #FF8719; -fx-font-weight: 800;" text="Delivery Fee" textAlignment="CENTER" wrapText="true">
+                                       <font>
+                                          <Font size="20.0" />
+                                       </font>
+                                       <padding>
+                                          <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
+                                       </padding>
+                                    </Label>
+                                 </children>
                                  <padding>
-                                    <Insets left="20.0" right="20.0" />
+                                    <Insets left="10.0" right="10.0" />
                                  </padding>
-                              </Label>
+                              </VBox>
+                              <Separator disable="true" orientation="VERTICAL" />
+                              <VBox alignment="CENTER_LEFT" fillWidth="false" prefWidth="0.0" style="-fx-background-color: #FEBD5C;" HBox.hgrow="ALWAYS">
+                                 <children>
+                                    <Label fx:id="lblShopDeliveryFee" prefWidth="613.0" style="-fx-font-size: 20px; -fx-background-color: #FEBD5C; -fx-font-weight: 800;" text="RM 5.00" wrapText="true">
+                                       <font>
+                                          <Font size="20.0" />
+                                       </font>
+                                       <padding>
+                                          <Insets left="20.0" right="20.0" />
+                                       </padding>
+                                    </Label>
+                                 </children>
+                              </VBox>
+                           </children>
+                        </HBox>
+                        <Separator prefWidth="200.0" />
+                        <Separator prefWidth="200.0" />
+                        <HBox alignment="CENTER" prefWidth="744.0">
+                           <children>
+                              <VBox alignment="CENTER" fillWidth="false" prefWidth="118.0" style="-fx-background-color: #FF8719;">
+                                 <children>
+                                    <Label alignment="CENTER" prefWidth="122.0" style="-fx-font-size: 20px; -fx-background-color: #FF8719; -fx-font-weight: 800;" text="Date Created" textAlignment="CENTER" wrapText="true">
+                                       <font>
+                                          <Font size="20.0" />
+                                       </font>
+                                       <padding>
+                                          <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
+                                       </padding>
+                                    </Label>
+                                 </children>
+                                 <padding>
+                                    <Insets left="10.0" right="10.0" />
+                                 </padding>
+                              </VBox>
+                              <Separator disable="true" orientation="VERTICAL" />
+                              <VBox alignment="CENTER_LEFT" fillWidth="false" prefWidth="0.0" style="-fx-background-color: #FEBD5C;" HBox.hgrow="ALWAYS">
+                                 <children>
+                                    <Label fx:id="lblShopDateCraeted" prefWidth="613.0" style="-fx-font-size: 20px; -fx-background-color: #FEBD5C; -fx-font-weight: 800;" text="RM 5.00" wrapText="true">
+                                       <font>
+                                          <Font size="20.0" />
+                                       </font>
+                                       <padding>
+                                          <Insets left="20.0" right="20.0" />
+                                       </padding>
+                                    </Label>
+                                 </children>
+                              </VBox>
                            </children>
                         </HBox>
                      </children>
@@ -225,14 +274,37 @@
       </VBox>
       <VBox layoutX="813.0" layoutY="121.0" prefHeight="410.0" prefWidth="358.0">
          <children>
-            <Label alignment="CENTER" prefHeight="54.0" prefWidth="780.0" style="-fx-background-color: #f27500; -fx-font-weight: 800;" text="Other Info" VBox.vgrow="ALWAYS">
+            <Label alignment="CENTER" prefHeight="54.0" prefWidth="780.0" style="-fx-background-color: #f27500; -fx-font-weight: 800;" text="Seller Info" VBox.vgrow="ALWAYS">
                <font>
                   <Font size="24.0" />
                </font>
             </Label>
             <VBox prefWidth="725.0">
                <children>
-                  <HBox prefHeight="55.0" prefWidth="744.0" VBox.vgrow="ALWAYS">
+                  <HBox prefHeight="45.0" prefWidth="744.0" VBox.vgrow="ALWAYS">
+                     <children>
+                        <Label alignment="CENTER" prefHeight="145.0" prefWidth="100.0" style="-fx-font-size: 20px; -fx-background-color: #FF8719; -fx-font-weight: 800;" text="Email" HBox.hgrow="ALWAYS">
+                           <font>
+                              <Font size="20.0" />
+                           </font>
+                        </Label>
+                        <Separator orientation="VERTICAL" prefHeight="200.0" style="-fx-background-color: white;" />
+                        <Label fx:id="lblEmail" prefHeight="55.0" prefWidth="260.0" style="-fx-font-size: 20px; -fx-background-color: #FEBD5C; -fx-font-weight: 800;" text="Khoo@gmail.com" wrapText="true" HBox.hgrow="ALWAYS">
+                           <font>
+                              <Font size="20.0" />
+                           </font>
+                           <HBox.margin>
+                              <Insets />
+                           </HBox.margin>
+                           <padding>
+                              <Insets left="20.0" right="20.0" />
+                           </padding>
+                        </Label>
+                     </children>
+                  </HBox>
+                  <Separator prefWidth="200.0" style="-fx-background-color: white;" />
+                  <Separator prefWidth="200.0" style="-fx-background-color: white;" />
+                  <HBox prefHeight="45.0" prefWidth="744.0">
                      <children>
                         <Label alignment="CENTER" prefHeight="145.0" prefWidth="100.0" style="-fx-font-size: 20px; -fx-background-color: #FF8719; -fx-font-weight: 800;" text="NRIC" HBox.hgrow="ALWAYS">
                            <font>
@@ -254,7 +326,8 @@
                      </children>
                   </HBox>
                   <Separator prefWidth="200.0" style="-fx-background-color: white;" />
-                  <HBox prefHeight="55.0" prefWidth="744.0">
+                  <Separator prefWidth="200.0" style="-fx-background-color: white;" />
+                  <HBox prefHeight="45.0" prefWidth="744.0">
                      <children>
                         <Label alignment="CENTER" prefHeight="55.0" prefWidth="146.0" style="-fx-font-size: 20px; -fx-background-color: #FF8719; -fx-font-weight: 800;" text="License No." HBox.hgrow="ALWAYS">
                            <font>
@@ -276,7 +349,8 @@
                      </children>
                   </HBox>
                   <Separator prefWidth="200.0" style="-fx-background-color: white;" />
-                  <HBox prefHeight="55.0" prefWidth="345.0">
+                  <Separator prefWidth="200.0" style="-fx-background-color: white;" />
+                  <HBox prefHeight="45.0" prefWidth="345.0">
                      <children>
                         <Label alignment="CENTER" prefHeight="83.0" prefWidth="193.0" style="-fx-font-size: 20px; -fx-background-color: #FF8719; -fx-font-weight: 800;" text="Bank Acc No." HBox.hgrow="ALWAYS">
                            <font>
@@ -299,7 +373,7 @@
                   </HBox>
                   <Separator prefHeight="0.0" prefWidth="346.0" />
                   <Separator prefWidth="200.0" style="-fx-background-color: white;" />
-                  <HBox prefHeight="169.0" prefWidth="345.0">
+                  <HBox prefHeight="150.0" prefWidth="345.0">
                      <children>
                         <Label alignment="CENTER" prefHeight="182.0" prefWidth="99.0" style="-fx-font-size: 20px; -fx-background-color: #FF8719; -fx-font-weight: 800;" text="Address" HBox.hgrow="ALWAYS">
                            <font>

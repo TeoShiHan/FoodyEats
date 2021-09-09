@@ -1,4 +1,6 @@
 package Classes;
+import java.util.HashMap;
+
 import Cache.*;
 
 public class Admin extends Account {
@@ -38,6 +40,21 @@ public class Admin extends Account {
         this.adminID = (String)adminID;
         this.NRIC = (String)NRIC;
         this.companyBranch = (String)companyBranch;     
+    }
+
+    public Admin(HashMap<String,Object>account, HashMap<String,Object>admin){
+        super(
+            (String)account.get("accountID"),
+            (String)account.get("username"),
+            (String)account.get("password"),
+            (String)account.get("name"), 
+            (String)account.get("email"), 
+            (String)account.get("mobileNo"), 
+            (String)account.get("type")
+        );
+        this.adminID = (String)admin.get("adminID");        
+        this.NRIC = (String)admin.get("NRIC");        
+        this.companyBranch = (String)admin.get("companyBranch");
     }
 
     public String getadminID() {

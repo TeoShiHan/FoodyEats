@@ -44,13 +44,12 @@ public class SellerShopProfile implements Initializable{
 
     @Override
     public void initialize(URL location, ResourceBundle resources) {                
-        listView.getItems().add("Name: "+data.getShop().getName());
-        listView.getItems().add("Tel No. : "+data.getShop().getTel());
-        listView.getItems().add("Address: "+data.getShop().getAddress());
-        listView.getItems().add("Business Hour: "+(data.getShop().getStartHour().getHour()==data.getShop().getEndHour().getHour()?"24 Hours":data.getShop().getStartHour()+" ~ "+data.getShop().getEndHour()));
-        listView.getItems().add("Delivery Fee: "+data.getShop().getDeliveryFee());        
-        imgFile = new File(System.getProperty("user.dir")+"/src"+data.getShop().getImgPath());        
-        System.out.println(System.getProperty("user.dir"));
+        listView.getItems().add("Name: "+data.getSeller().getShop().getName());
+        listView.getItems().add("Tel No. : "+data.getSeller().getShop().getTel());
+        listView.getItems().add("Address: "+data.getSeller().getShop().getAddress());
+        listView.getItems().add("Business Hour: "+(data.getSeller().getShop().getStartHour().getHour()==data.getSeller().getShop().getEndHour().getHour()?"24 Hours":data.getSeller().getShop().getStartHour()+" ~ "+data.getSeller().getShop().getEndHour()));
+        listView.getItems().add("Delivery Fee: "+data.getSeller().getShop().getDeliveryFee());        
+        imgFile = new File(Paths.get("").toAbsolutePath().toString().replaceAll("\\\\", "/")+"/src"+data.getSeller().getShop().getImgPath());                
         try {
             isImage = (InputStream) new FileInputStream(imgFile);            
             img = new Image(isImage);
@@ -80,68 +79,53 @@ public class SellerShopProfile implements Initializable{
         controller.getBtnYes().setOnAction(e->{
             myDialog.getScene().getRoot().setDisable(true);
             myDialog.getScene().setCursor(Cursor.WAIT);
-            Task<Void> task = new Task<Void>() {
-                @Override
-                public Void call() throws IOException, SQLException {                               
-                    String currentPath = System.getProperty("user.dir");
-                    Path oldImgPath = Paths.get(currentPath+"/src"+data.getShop().getImgPath());
-                    String newImgName = data.getShop().getShopID()+controller.getNewImgFileExtension();
-                    data.getShop().edit(controller.getInputName().getText(), controller.getInputAddress().getText(), controller.getInputTelNo().getText(), LocalTime.of(controller.getSpinnerStartHour().getValue(), 0, 0), LocalTime.of(controller.getSpinnerEndHour().getValue(), 0, 0), controller.getSpinnerDeliveryFee().getValue(), controller.getNewImgFileExtension()==null?data.getShop().getImgPath():"/Images/"+newImgName);
-                    if(controller.getShopImageFile()!=null){                        
-                        Path newImgPath = Paths.get(currentPath+"/src/Images/"+newImgName);                        
-                        System.out.println("old - "+oldImgPath);
-                        System.out.println("new - "+newImgPath);                        
-                        imgFile = null;                        
-                        isImage = null;                        
-                        img = null;                        
-                        imgShop.setImage(null);
-                        File imgFile2 = controller.getImgFile();
-                        imgFile2 = null;
-                        InputStream isImage2 = controller.getIsImage();
-                        isImage2 = null;
-                        Image img2 = controller.getImg();
-                        img2 = null;                        
-                        controller.getImage().setImage(null);
-                        try {                                                                        
-                            try {
-                                Thread.sleep(10000);
-                            } catch (InterruptedException e1) {
-                                e1.printStackTrace();
-                            }
-                            Files.delete(oldImgPath);                             
+            if(controller.getShopImageFile()!=null){
+                imgFile = null;
+                isImage = null;
+                img = null;
+                imgShop.setImage(null);
+                System.gc();
+                Task<Void> task = new Task<Void>() {
+                    @Override
+                    public Void call() throws IOException, SQLException {                                
+                        String currentPath = Paths.get("").toAbsolutePath().toString().replaceAll("\\\\", "/");                              
+                        Path oldImgPath = Paths.get(currentPath+"/src"+data.getSeller().getShop().getImgPath());
+                        String newImgName = data.getSeller().getShop().getShopID()+controller.getNewImgFileExtension();
+                        Path newImgPath = Paths.get(currentPath+"/src/Images/"+newImgName);
+                        data.getSeller().getShop().edit(controller.getInputName().getText(), controller.getInputAddress().getText(), controller.getInputTelNo().getText(), LocalTime.of(controller.getSpinnerStartHour().getValue(), 0, 0), LocalTime.of(controller.getSpinnerEndHour().getValue(), 0, 0), controller.getSpinnerDeliveryFee().getValue(), "/Images/"+newImgName);                                            
+                        try {                                            
+                            Files.delete(oldImgPath);                                    
                         } catch (Exception e) {
-                            System.out.println("Unable to delete the old img: \n error: "+e);
+                            System.out.println("Unable to delete the old img, error: "+e);
                         }finally{
-                            System.out.println("cannot copy?");
                             Files.copy(controller.getShopImageFile().toPath(), newImgPath);
                         }
+                        return null ;
                     }
-                    return null;
-                }
-            };
-            task.setOnSucceeded(ev -> {                                
-                //Because copy the file might take some time
-                // PauseTransition delay = new PauseTransition(Duration.seconds(3));
-                // delay.setOnFinished(edelay -> {
-                //     myDialog.close();
-                //     try {
-                //         gui.refreshScene(currentFXMLPath);
-                //     } catch (IOException e1) {
-                //         // TODO Auto-generated catch block
-                //         e1.printStackTrace();
-                //     }
-                //     gui.notAlertInProgress(myDialog);
-                // });
-                // delay.play();
+                };
+                task.setOnSucceeded(ev -> {
+                    myDialog.close();
+                    try {
+                        gui.refreshScene(currentFXMLPath);
+                        gui.notAlertInProgress(myDialog);
+                    } catch (IOException e1) {
+                        // TODO Auto-generated catch block
+                        e1.printStackTrace();                    
+                    }
+                    // tableView.refresh();
+                });
+                new Thread(task).start();                                                   
+            }else{
+                data.getSeller().getShop().edit(controller.getInputName().getText(), controller.getInputAddress().getText(), controller.getInputTelNo().getText(), LocalTime.of(controller.getSpinnerStartHour().getValue(), 0, 0), LocalTime.of(controller.getSpinnerEndHour().getValue(), 0, 0), controller.getSpinnerDeliveryFee().getValue(), data.getSeller().getShop().getImgPath());                    
                 myDialog.close();
+                gui.notAlertInProgress(myDialog);
                 try {
                     gui.refreshScene(currentFXMLPath);
                 } catch (IOException e1) {
                     // TODO Auto-generated catch block
                     e1.printStackTrace();
                 }
-            });
-            new Thread(task).start();                             
+            }
         });
         
         controller.getBtnNo().setOnAction(e->{      
