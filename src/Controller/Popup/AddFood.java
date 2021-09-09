@@ -5,14 +5,11 @@ import Classes.*;
 import java.io.File;
 import java.io.IOException;
 import java.net.URL;
-<<<<<<< HEAD
-=======
 import java.nio.file.DirectoryNotEmptyException;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.sql.SQLException;
->>>>>>> 6a36fe2c8f38648c4488c2b8b4771fdeb62a2aad
 import java.util.ResourceBundle;
 
 import javafx.event.ActionEvent;
@@ -141,8 +138,6 @@ public class AddFood implements Initializable{
     public void setNewImgFileExtension(String newImgFileExtension) {
         this.newImgFileExtension = newImgFileExtension;
     }
-<<<<<<< HEAD
-=======
     
     public boolean isFilled(){                                                 
         return !(inputName.getText().strip().isEmpty() || inputCategory.getText().strip().isEmpty() || 
@@ -156,5 +151,4 @@ public class AddFood implements Initializable{
     //     newFood.create();
     //     data.getFoods().add(newFood);                      
     // }    
->>>>>>> 6a36fe2c8f38648c4488c2b8b4771fdeb62a2aad
 }

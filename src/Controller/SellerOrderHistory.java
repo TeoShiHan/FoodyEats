@@ -76,18 +76,8 @@ public class SellerOrderHistory implements Initializable {
                     tableView.refresh();
                 });                
                 btnViewDetails.setOnAction(e->{          
-<<<<<<< HEAD
                     data.setOrder(order);
                     gui.toNextScene("View/RiderOrderDetails.fxml");                            
-=======
-                    try {
-                        data.setOrder(order);
-                        gui.toNextScene("View/SellerOrderDetails.fxml");
-                    } catch (IOException e1) {
-                        // TODO Auto-generated catch block
-                        e1.printStackTrace();
-                    }                                
->>>>>>> 6a36fe2c8f38648c4488c2b8b4771fdeb62a2aad
                 });                                       
             }                     
         });

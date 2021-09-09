@@ -14,11 +14,8 @@ import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.sql.SQLException;
 import java.util.ArrayList;
-<<<<<<< HEAD
-=======
 import java.util.HashMap;
 import java.util.List;
->>>>>>> 6a36fe2c8f38648c4488c2b8b4771fdeb62a2aad
 import java.util.ResourceBundle;
 
 import javafx.application.Platform;
