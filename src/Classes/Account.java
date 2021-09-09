@@ -302,11 +302,7 @@ public class Account implements TableDataProcessing{
 
     private static void goToAccHome(boolean isApproved, GUI gui, String accType) {
         if (isApproved) {
-            try {
-                gui.toNextScene(String.format("View/%sHome.fxml", accType));
-            } catch (IOException e) {
-                e.printStackTrace();
-            }
+            gui.toNextScene(String.format("View/%sHome.fxml", accType));
         }
         else {
             try {

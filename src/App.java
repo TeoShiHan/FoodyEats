@@ -2,8 +2,6 @@ import java.util.ArrayList;
 import java.util.HashMap;
 
 import Cache.*;
-import Classes.JDBC;
-import Classes.Shop;
 import javafx.application.Application;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;

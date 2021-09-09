@@ -78,15 +78,10 @@ public class RiderOrders implements Initializable {
                     data.getRider().acceptOrder(order.getOrderID());
                 });
                 btnViewDetails.setOnAction(e->{          
-                    try {
-                        data.setOrder(order);
-                        System.out.println(data.getOrder().getOrderID());
-                        gui.toNextScene("View/RiderOrderDetails.fxml");
-                    } catch (IOException e1) {
-                        // TODO Auto-generated catch block
-                        e1.printStackTrace();
-                    }                                    
-                });                                       
+                    data.setOrder(order);
+                    System.out.println(data.getOrder().getOrderID());
+                    gui.toNextScene("View/RiderOrderDetails.fxml");                          
+                });                                      
             }                     
         });             
     }    

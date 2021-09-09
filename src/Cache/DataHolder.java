@@ -49,6 +49,8 @@ public final class DataHolder {
     private final static DataHolder INSTANCE = new DataHolder();
     private DataHolder() {}
     
+    private String selectedShopID = new String();
+
     //#region : GETTER AND SETTER
     public static DataHolder getInstance() {
       return INSTANCE;
@@ -274,14 +276,24 @@ public final class DataHolder {
     public void addWholeObjectHolder(HashMap<String,Object> items){
       this.objectHolder.putAll(items);
     }
+    
     public Object getObjectHolder(String key){      
       return objectHolder.get(key);
     }
+    
     public HashMap<String,Object> getWholeObjectHolder(){
       return this.objectHolder;
     }
     //#endregion
     
+    public String getSelectedShopID() {
+      return selectedShopID;
+    }
+
+    public void setSelectedShopID(String selectedShopID) {
+      this.selectedShopID = selectedShopID;
+    }
+
     //#region StringHolder,DoubleHolder,BooleanHolder, not sure is it needed, maybe ObjectHolder enough?
     // public void addStringHolder(String key,String value){
     //   this.stringHolder.put(key, value);

@@ -45,7 +45,7 @@ public class AddFood implements Initializable{
             if(spinnerPrice.getEditor().getText().isEmpty()){
                 spinnerPrice.getEditor().setText("0");
             }
-        });  
+        });
                 
     }    
 

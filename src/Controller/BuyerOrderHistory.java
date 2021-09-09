@@ -65,13 +65,8 @@ public class BuyerOrderHistory implements Initializable {
                 } 
                 setGraphic(btnViewDetails);
                 btnViewDetails.setOnAction(e->{          
-                    try {
-                        data.setOrder(order);
-                        gui.toNextScene("View/BuyerOrderDetails.fxml");
-                    } catch (IOException e1) {
-                        // TODO Auto-generated catch block
-                        e1.printStackTrace();
-                    }                                      
+                    data.setOrder(order);
+                    gui.toNextScene("View/BuyerOrderDetails.fxml");                                  
                 });                                       
             }                     
         });                          
