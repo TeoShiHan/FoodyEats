@@ -1,6 +1,8 @@
 package Classes;
 
 import java.sql.SQLException;
+import java.util.ArrayList;
+import java.util.HashMap;
 
 import Cache.GUI;
 
@@ -112,5 +114,32 @@ public class Food {
 
     public void delete(){
         db.executeCUD(String.format("DELETE FROM `Food` WHERE foodID='%s'",foodID),gui);
+    }
+
+    public void addThisFoodToCart(Buyer buyer, int quantity){
+        db.executeCUD(String.format("INSERT INTO `CartItem` VALUES ('%s','%s','%s')",buyer.getCartID(), this.foodID, quantity),gui);
+    }
+
+    public int getFoodQtyAddedByUserIntoCart(Buyer buyer){
+        HashMap<String, Object> purchasedQuantity;
+        
+        String sqlStatement = String.format(
+            "SELECT quantity "     +
+            "FROM CartItem " +
+            "WHERE cartID = '%s' AND foodID = '%s';",
+            buyer.getCartID(),this.foodID
+        );
+        /*DEBUG MSG*/System.out.println("SQL STATEMENT IS: " + sqlStatement);
+
+        purchasedQuantity = db.readOne(sqlStatement);
+
+        System.out.println(purchasedQuantity);
+
+        if(purchasedQuantity == null){
+            return 0;
+        }
+        else{
+            return (int)purchasedQuantity.get("quantity");
+        }
     }
 }

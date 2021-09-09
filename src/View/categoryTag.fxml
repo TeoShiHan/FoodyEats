@@ -3,4 +3,4 @@
 <?import javafx.scene.control.Button?>
 
 
-<Button fx:id="catTag" mnemonicParsing="false" prefHeight="26.0" prefWidth="61.0" text="Button" xmlns="http://javafx.com/javafx/16" xmlns:fx="http://javafx.com/fxml/1" fx:controller="Controller.foodCategoryItem" />
+<Button fx:id="catTag" mnemonicParsing="false" prefHeight="26.0" prefWidth="61.0" text="Button" xmlns="http://javafx.com/javafx/16" xmlns:fx="http://javafx.com/fxml/1" fx:controller="Controller.FoodCategoryItem" />

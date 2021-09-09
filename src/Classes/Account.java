@@ -169,6 +169,21 @@ public class Account implements TableDataProcessing{
                 childAccTable = data.getBuyerTable();
                 childAccMap = getChildAccMap(accID, childAccTable);
                 Buyer buyer = new Buyer(accMap, childAccMap);
+
+                String sqlStatement = String.format(
+                    "SELECT shopID " +
+                    "FROM Food F, CartItem C " +
+                    "WHERE F.foodID = C.foodID AND " +
+                    "cartID = '%s';", buyer.getCartID() 
+                );
+
+                    /*DEBUG MSG*/System.out.println("SQL STATEMENT IS : " + sqlStatement);
+
+                String shopIdInCart = (String)db.readOne(sqlStatement).get("shopID");
+                
+                Cart tempCart = new Cart(buyer.getCartID(), buyer.getBuyerID(), shopIdInCart);
+                buyer.setCart(tempCart);
+
                 data.setAccount(buyer);
                 data.setBuyer(buyer);
                 // #endregion

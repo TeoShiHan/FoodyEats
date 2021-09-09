@@ -7,6 +7,7 @@ import java.time.LocalDate;
 import java.time.LocalTime;
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
 
 import Cache.DataHolder;
 import Interfaces.TableDataProcessing;
@@ -20,9 +21,7 @@ public class Shop implements TableDataProcessing{
     private GUI gui = GUI.getInstance();
     
     //region  : CLASS FIELD
-    private String 
-    shopID, name, address, tel, 
-    imgPath;
+    private String shopID, name, address, tel, imgPath;
     private LocalTime startHour, endHour;
     private double deliveryFee;
     private int status;
@@ -30,6 +29,7 @@ public class Shop implements TableDataProcessing{
     private ArrayList<Food> foods;
     private ArrayList<Review> reviews;
     private ArrayList<Order> orders;
+    private ArrayList<String> availableFoodCategories;
     //#endregion
     
     //region  : CONSTRUCTORS
@@ -213,6 +213,10 @@ public class Shop implements TableDataProcessing{
         }
         return nextShopID;
     }
+
+    public ArrayList<String> getAvailableFoodCategoryInShop(){
+        return this.availableFoodCategories;
+    };
     //#endregion
 
     //#region : METHODS
@@ -313,15 +317,18 @@ public class Shop implements TableDataProcessing{
         new Thread(task).start();
     }     
 
-    public ArrayList<String> getAvailableFoodCategoryInShop(){
-        HashMap<String,ArrayList<String>> keyMapCategoryArr = getArrMapToKey(data.getFoodCategoriesTable(), "shopID", "category");
-            /*DEBUG MSG*/System.out.println("Key map : " + keyMapCategoryArr);
-        if(keyMapCategoryArr.isEmpty()){
-            sql.fetchFoodCategoriesFromAllShops(getAllKeysInTable(data.getShopTable()));
-            keyMapCategoryArr = getArrMapToKey(data.getFoodCategoriesTable(), "shopID", "category");
-        }
+    public void initializeAvailableFoodCategoryInShop(){
+        /*DEBUG MSG*/System.out.println("RUNNED INITIALIZE AVAILABLE FOOD CATEGORY");
+        /*DEBUG MSG*/System.out.println("RUNNED CATEGORY TABLE");
 
-        return keyMapCategoryArr.get(this.shopID);
+        /*DEBUG MSG*/System.out.println("FOOD CATEGORY DATA IS : " + data.getFoodCategoriesTable());
+        
+        HashMap<String,ArrayList<String>> keyMapCategoryArr = getArrMapToKey(data.getFoodCategoriesTable(), "shopID", "category");
+        /*DEBUG MSG*/System.out.println("keyMapCategoryArr IS " + keyMapCategoryArr);        
+
+        /*DEBUG MSG*/System.out.println("SHOP ID IS " + this.shopID);        
+        this.availableFoodCategories = keyMapCategoryArr.get(this.shopID);
+            /*DEBUG MSG*/System.out.println("FOOD CATEGORY : " + this.getAvailableFoodCategoryInShop());
     }
 
     public HashMap<String,ArrayList<Food>> getFoodObjArrThatMapWithCategory(){
@@ -330,7 +337,7 @@ public class Shop implements TableDataProcessing{
         HashMap<String,ArrayList<Food>> categorizedFood = new HashMap<String,ArrayList<Food>>();
         
         ArrayList<HashMap<String,Object>> foodTable = db.readAll(String.format(
-            "SELECT foodID, foodName, foodDesc, price,  F.imgPath, category " +
+            "SELECT foodID, foodName, foodDesc, price,  F.imgPath, category, S.shopID "  +
             "FROM Food F, Shop S "      +
             "WHERE S.shopID = F.shopID AND S.shopID = '%s'", this.shopID)
         );
@@ -362,6 +369,7 @@ public class Shop implements TableDataProcessing{
                     tempFoodObj.setImgPath((String)foodTable.get(t).get("imgPath"));
                     tempFoodObj.setPrice((Double)foodTable.get(t).get("price"));
                     tempFoodObj.setCategory((String)foodTable.get(t).get("category"));
+                    tempFoodObj.setShopID((String)foodTable.get(t).get("shopID"));
                     tempFoodArr.add(tempFoodObj);
                 }
                 categorizedFood.put(categoryArr.get(i),tempFoodArr);
@@ -388,9 +396,14 @@ public class Shop implements TableDataProcessing{
     public HashMap<String,ArrayList<String>> getArrMapToKey(ArrayList<HashMap<String,Object>>table, String keyName, String ...fieldNames){
         
         //#region : VARIABLES
+        
+        /*DEBUG MSG*/System.out.println("TABLE IS: " + table);
+
         /*DEBUG MSG*/System.out.println("RUNNED getArrMapToKey()");
         int tableSize = table.size();
+            /*DEBUG MSG*/System.out.println("TABLE SIZE IS : " + tableSize);
         int colNum = fieldNames.length;
+        
         ArrayList<String> tempDataArr = new ArrayList<String>();
         HashMap<String,ArrayList<String>> arrMapToKey = new HashMap<String,ArrayList<String>>();
         String tempFieldData = "";
@@ -398,23 +411,28 @@ public class Shop implements TableDataProcessing{
         String tempKeyOld = "";
         //#endregion
 
-        for(int i = 0 ; i < tableSize ; i++){
+        for(int i = 0 ; i < tableSize  ; i++){
             
             tempKeyNew = (String)table.get(i).get(keyName);
+                /*DEBUG MSG*/System.out.println("tempKeyNewE IS : " + tempKeyNew);
 
             if (i == 0) {
                 
                 tempKeyOld = tempKeyNew;
                     /*DEBUG MSG*/System.out.println("RUNNED INTO LOGIC I == 0");
-                    /*DEBUG MSG*/System.out.println("TEMPT KEY : " + tempKeyNew);
-                    /*DEBUG MSG*/System.out.println("TEMPT KEY : " + tempKeyOld);
+                    /*DEBUG MSG*/System.out.println("tempKeyNew : " + tempKeyNew);
+                    /*DEBUG MSG*/System.out.println("tempKeyOld : " + tempKeyOld);
                             
             }else{
                 tempKeyOld = (String)table.get(i - 1).get(keyName);
+                /*DEBUG MSG*/System.out.println("NOT RUN INTO LOGIC I == 0");
+                /*DEBUG MSG*/System.out.println("tempKeyOld : " + tempKeyOld);
             }
 
             if(!isMatch(tempKeyNew,tempKeyOld)){
                 arrMapToKey.put(tempKeyOld, tempDataArr);
+                /*DEBUG MSG*/System.out.println("arrMapToKey : " + arrMapToKey);
+
                 tempDataArr = new ArrayList<String>();
             }
 
@@ -428,11 +446,43 @@ public class Shop implements TableDataProcessing{
             }
             /*DEBUG MSG*/System.out.println("ARRAY ELEMENT : " + tempDataArr);
         }
+        arrMapToKey.put(tempKeyOld, tempDataArr);
+                /*DEBUG MSG*/System.out.println("ARR MAP TO KEY IS : " + arrMapToKey);
         return arrMapToKey;
     }
 
     public void saveSelectedShopIdToDataHolder(){
         data.setSelectedShopID(this.shopID);
+    }
+
+    public ArrayList<Shop> createShopObjectCollection(){
+        ArrayList<Shop> shopObjectCollection = new ArrayList<Shop>();
+        ArrayList<HashMap<String,Object>> shopTable = data.getShopTable();
+        for(int i = 0; i < shopTable.size(); i++){
+                /*DEBUG OUTPUT*/System.out.println("Runned");
+
+            String shopID      = (String)  shopTable.get(i).get("shopID");
+            String shopName    = (String)  shopTable.get(i).get("shopName");
+            double deliveryFee = (double)  shopTable.get(i).get("deliveryFee");
+            String imgPath     = (String)  shopTable.get(i).get("imgPath");
+            System.out.println(imgPath);
+
+            System.out.println("pass through getting value assignatoin");
+
+            Shop shopInstance = new Shop();
+                /*DEBUG OUTPUT*/System.out.println("successfully create shop instance");
+
+            shopInstance.setShopID(shopID);
+            shopInstance.setName(shopName);
+            shopInstance.setDeliveryFee(deliveryFee);
+            shopInstance.setImgPath(imgPath);
+            shopInstance.initializeAvailableFoodCategoryInShop();
+                /*DEBUG MSG*/System.out.println("SHOP INSTANCE : " + shopInstance.getAvailableFoodCategoryInShop());
+
+            shopObjectCollection.add(shopInstance);
+            System.out.println(shopObjectCollection);
+        }
+        return shopObjectCollection;
     }
     //#endregion
     
