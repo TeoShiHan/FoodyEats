@@ -1,4 +1,5 @@
 package Controller;
+import java.util.ArrayList;
 import java.util.List;
 
 import Classes.Shop;
@@ -17,7 +18,7 @@ import javafx.scene.layout.StackPane;
 import javafx.scene.layout.VBox;
 import javafx.scene.paint.Color;
 
-public class shopItemController {
+public class ShopItemController {
     @FXML private HBox shopItem;
     @FXML private VBox shopImgContainer;
     @FXML private ImageView shopImg;
@@ -39,19 +40,39 @@ public class shopItemController {
 
     private BuyerHomeListeners listener;
     private Shop shop;
-
+    private ArrayList<String> availableCategory;
+    private String categoryStr;
 
     public void setData(Shop shop, BuyerHomeListeners listener){
         this.listener = listener;
         this.shop = shop;
+            /*DEBUG MSG*/System.out.println("AVAILABLE CATEGORY IN SHOP ITEM : " + shop.getAvailableFoodCategoryInShop());
+
         Image shopImage = new Image(getClass().getResourceAsStream(shop.getImgPath()));
         Image deliveryTruckIcon = new Image(getClass().getResourceAsStream("../Images/deliveryIcon.png"));
         deliveryIcon.setImage(deliveryTruckIcon);
         shopImg.setImage(shopImage);
         shadowPane.setEffect(new DropShadow(BlurType.THREE_PASS_BOX, Color.rgb(0,0,0,0.8), 7, 0, 0, 3));
         shopName.setText(shop.getName());
-        categoryLabel.setText("Not yet include this feature");
-        deliveryFee.setText("10.0");
+
+        availableCategory = shop.getAvailableFoodCategoryInShop();
+            /*DEBUG MSG*/System.out.println("AVAILABLE CATEGORY : " + availableCategory);
+
+        for(int i = 0 ; i < availableCategory.size() ; i++){
+            if(i > 0){
+                categoryStr = categoryStr + ", " + availableCategory.get(i);
+            }
+            else{
+                categoryStr = availableCategory.get(0);
+            }
+            
+            if(i > 5){
+                break;
+            }
+        }
+        
+        categoryLabel.setText(categoryStr);
+        deliveryFee.setText("RM " + shop.getDeliveryFee());
     }
 
     public Button getViewShopBtn() {
@@ -61,5 +82,4 @@ public class shopItemController {
     public void setViewShopBtn(Button viewShopBtn) {
         this.viewShopBtn = viewShopBtn;
     }
-    
 }

@@ -5,7 +5,6 @@ import javafx.concurrent.Task;
 
 import java.io.IOException;
 import java.sql.SQLException;
-import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.HashMap;
 
@@ -52,7 +51,7 @@ public class Buyer extends Account{
     public Buyer(Object accountID, Object username, Object password, Object name, Object email, Object mobileNo, Object accType, Object buyerID, Object address, Object cartID) {
         super(accountID, username, password, name, email, mobileNo, accType);
         this.buyerID =(String)buyerID;
-        this.address =(String)address;        
+        this.address =(String)address;
         this.cartID = (String)cartID;        
     }
 

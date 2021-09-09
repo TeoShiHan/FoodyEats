@@ -2,6 +2,7 @@ import java.util.ArrayList;
 import java.util.HashMap;
 
 import Cache.*;
+import Classes.Shop;
 import javafx.application.Application;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
@@ -13,7 +14,10 @@ public class App extends Application{
     private static GUI gui = GUI.getInstance();
     
     public static void main(String[] args) throws Exception  {
+        
+
         loadFromDatabase();
+        /**DEBUG*/System.out.print("SUCCESSFULLE LOADING");
 
         ArrayList<HashMap<String, Object>> table = new ArrayList<HashMap<String, Object>>();
         
@@ -57,16 +61,25 @@ public class App extends Application{
     }
 
     private static void loadFromDatabase(){
-        SQL sql = SQL.getInstance();
+            /*DEBUG MSG*/System.out.println("RUNNED LOAD");
+
         DataHolder data = DataHolder.getInstance();
-        data.setAccountTable(sql.fetchAccountTable());
-
-        /**DEBUG*/System.out.print(data.getAccountTable());
-
+            /*DEBUG MSG*/System.out.println("CREATED DATA HOLDER INSTANCE");
+        
+        SQL sql = SQL.getInstance();
+            /*DEBUG MSG*/System.out.println("CREATED SQL INSTANCE");
+        
+        data.setAccountTable(sql.fetchAccountTable()); 
+            /**DEBUG*/System.out.print("SET ACCOUNT TABLE");
+        
         data.setBuyerTable(sql.fetchBuyerTable());
         data.setSellerTable(sql.fetchSellerTable());
         data.setAdminTable(sql.fetchAdminTable());
         data.setRiderTable(sql.fetchRiderTable());
         data.setShopTable(sql.fetchShopTable());
+        Shop tempShop = new Shop();
+            /**DEBUG*/System.out.print("CREATED SHOP OBJ");
+        data.setFoodCategoriesTable(sql.fetchFoodCategoriesFromAllShops(tempShop.getAllKeysInTable(data.getShopTable())));
+            /*DEBUG MSG*/System.out.println("RUNNED CATEGORY TABLE" + data.getFoodCategoriesTable());
     }
 }

@@ -6,10 +6,6 @@ import java.io.IOException;
 import java.net.URL;
 import java.util.ResourceBundle;
 
-import com.mysql.cj.protocol.x.SyncFlushDeflaterOutputStream;
-
-import javafx.scene.Node;
-import javafx.fxml.FXMLLoader;
 import javafx.beans.property.ReadOnlyObjectWrapper;
 import javafx.beans.property.SimpleIntegerProperty;
 import javafx.beans.property.SimpleStringProperty;

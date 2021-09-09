@@ -4,9 +4,6 @@ import Classes.*;
 
 import java.io.IOException;
 import java.net.URL;
-import java.time.LocalDate;
-import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.ResourceBundle;
 
 import javafx.beans.property.ReadOnlyObjectWrapper;

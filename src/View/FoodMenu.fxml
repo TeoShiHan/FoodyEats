@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
 <?import javafx.geometry.Insets?>
+<?import javafx.scene.Cursor?>
 <?import javafx.scene.control.Label?>
 <?import javafx.scene.control.ScrollPane?>
 <?import javafx.scene.image.Image?>
@@ -12,33 +13,42 @@
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Font?>
 
-<AnchorPane fx:id="foodListAnchor" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="700.0" prefWidth="1200.0" xmlns="http://javafx.com/javafx/16" xmlns:fx="http://javafx.com/fxml/1" fx:controller="Controller.foodList">
+<AnchorPane fx:id="foodListAnchor" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="700.0" prefWidth="1200.0" xmlns="http://javafx.com/javafx/16" xmlns:fx="http://javafx.com/fxml/1" fx:controller="Controller.FoodMenu">
    <children>
       <HBox fx:id="iconHBOX" alignment="BOTTOM_RIGHT" prefHeight="77.0" prefWidth="1200.0">
          <children>
-            <ImageView fx:id="orderHistory" fitHeight="53.0" fitWidth="71.0" pickOnBounds="true" preserveRatio="true">
+            <ImageView fx:id="orderHistory" fitHeight="53.0" fitWidth="71.0" onMouseClicked="#showOrderHistory" pickOnBounds="true" preserveRatio="true">
                <image>
                   <Image url="@../Images/historyIcon.png" />
                </image>
                <HBox.margin>
                   <Insets right="10.0" />
                </HBox.margin>
+               <cursor>
+                  <Cursor fx:constant="HAND" />
+               </cursor>
             </ImageView>
-            <ImageView fx:id="cartIcon" fitHeight="51.0" fitWidth="59.0" pickOnBounds="true" preserveRatio="true">
+            <ImageView fx:id="cartIcon" fitHeight="51.0" fitWidth="59.0" onMouseClicked="#goToCartPage" pickOnBounds="true" preserveRatio="true">
                <image>
                   <Image url="@../Images/cartIcon.png" />
                </image>
                <HBox.margin>
                   <Insets right="10.0" />
                </HBox.margin>
+               <cursor>
+                  <Cursor fx:constant="HAND" />
+               </cursor>
             </ImageView>
-            <ImageView fx:id="homeIcon" fitHeight="52.0" fitWidth="67.0" pickOnBounds="true" preserveRatio="true">
+            <ImageView fx:id="homeIcon" fitHeight="52.0" fitWidth="67.0" onMouseClicked="#goToHomePage" pickOnBounds="true" preserveRatio="true">
                <image>
                   <Image url="@../Images/homeIcon.png" />
                </image>
                <HBox.margin>
                   <Insets right="10.0" />
                </HBox.margin>
+               <cursor>
+                  <Cursor fx:constant="HAND" />
+               </cursor>
             </ImageView>
          </children>
          <opaqueInsets>
@@ -65,7 +75,7 @@
           <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
         </columnConstraints>
       </GridPane>
-      <ScrollPane fx:id="scrollFoodList" layoutX="-1.0" layoutY="154.0" prefHeight="547.0" prefWidth="1187.0">
+      <ScrollPane fx:id="scrollFoodList" layoutX="-1.0" layoutY="154.0" prefHeight="544.0" prefWidth="1200.0">
          <content>
             <GridPane fx:id="foodListGrid" alignment="CENTER" nodeOrientation="LEFT_TO_RIGHT" prefHeight="548.0" prefWidth="1068.0">
               <columnConstraints>
