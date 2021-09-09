@@ -16,8 +16,10 @@ import java.sql.SQLException;
 import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
 import java.util.ResourceBundle;
 
+import javafx.application.Platform;
 import javafx.beans.property.ReadOnlyObjectWrapper;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
@@ -55,20 +57,21 @@ public class SellerManageFood implements Initializable {
     @FXML private TableColumn<Food,String> colImage;
     @FXML private TableColumn<Food,Object> colName,colPrice,colDescription,colCategory;
     @FXML private TableColumn<Food,Food> colAction;
-    private String currentFXMLPath = "/View/SellerManageFood.fxml";
-    private ArrayList<File> imgFiles;
-    private ArrayList<InputStream> isImages;
-    private ArrayList<Image> imgs;
-    private ArrayList<ImageView> imageViews;
-    private ArrayList<Cell<String>> tableCells;
+    private String currentFXMLPath = "View/SellerManageFood.fxml";
+    private List<String> imgPaths = new ArrayList<>();
+    private List<File> imgFiles = new ArrayList<>();
+    private List<InputStream> isImages = new ArrayList<>();
+    private List<Image> imgs = new ArrayList<>();
+    private List<ImageView> imageViews = new ArrayList<>();
+    private List<Cell<String>> tableCells = new ArrayList<>();
 
     @Override
     public void initialize(URL location, ResourceBundle resources) {
         data.setFoods(new ArrayList<>());
-        if(data.getShop().getFoods()==null){ 
-            data.getShop().loadFoods();            
+        if(data.getSeller().getShop().getFoods()==null){ 
+            data.getSeller().getShop().loadFoods();            
         }
-        data.setFoods(data.getShop().getFoods());
+        data.setFoods(data.getSeller().getShop().getFoods());
 
         ObservableList<Food> observableList = FXCollections.observableArrayList(data.getFoods());
         
@@ -76,37 +79,53 @@ public class SellerManageFood implements Initializable {
         
         colImage.setCellFactory(param -> {                        
             //Set up the ImageView
-            final ImageView imageView = new ImageView();
-            imageViews.add(imageView);
+            ImageView imageView = new ImageView();            
             imageView.setFitHeight(150);
             imageView.setFitWidth(150);
-     
+
             //Set up the Table
             TableCell<Food, String> cell = new TableCell<Food, String>() {
                 public void updateItem(String imgPath, boolean empty) {                    
                     if (imgPath != null) {
-                        String currentPath = System.getProperty("user.dir");            
-                        File imgFile = new File(currentPath+imgPath);                        
-                        InputStream isImage = null;
-                        try {
-                            isImage = (InputStream) new FileInputStream(imgFile);
-                        } catch (FileNotFoundException e) {
-                            // TODO Auto-generated catch block
-                            e.printStackTrace();
+                        if(!imgPaths.contains(imgPath)){
+                            String currentPath = Paths.get("").toAbsolutePath().toString().replaceAll("\\\\", "/");                        
+                            File imgFile = new File(currentPath+"/src/"+imgPath);
+                            InputStream isImage = null;
+                            try {
+                                isImage = (InputStream) new FileInputStream(imgFile);
+                            } catch (FileNotFoundException e) {
+                                // TODO Auto-generated catch block
+                                e.printStackTrace();
+                            }
+                            Image img = new Image(isImage); 
+                            imageView.setImage(img);                           
+
+                            imgFiles.add(imgFile);
+                            isImages.add(isImage);
+                            imgs.add(img);
+                            imageViews.add(imageView);
+                            imgPaths.add(imgPath);                            
+                            tableCells.add(this);
+                            System.out.println(this);
+                        }else{
+                            int index = imgPaths.indexOf(imgPath);
+                            imageView.setImage(imgs.get(index));
+                            System.out.println(index);
                         }
-                        Image img = new Image(isImage);
-                        imageView.setImage(img);
-                        
-                        imgFiles.add(imgFile);
-                        isImages.add(isImage);
-                        imgs.add(img);
+
+                        // try {
+                        //     imageView.setImage(new Image(new FileInputStream(new File(Paths.get("").toAbsolutePath().toString().replaceAll("\\\\", "/")+"/src"+imgPath))));                            
+                        // } catch (FileNotFoundException e) {
+                        //     // TODO Auto-generated catch block
+                        //     e.printStackTrace();
+                        // }                        
                     }
                 }
             };
-            tableCells.add(cell);
-            imageViews.add(imageView);
+
             // Attach the imageview to the cell
-            cell.setGraphic(imageView);
+            cell.setGraphic(imageView);            
+            System.out.println("add cell");
             return cell;
         });        
         colImage.setCellValueFactory(new PropertyValueFactory<Food,String>("imgPath"));
@@ -202,31 +221,43 @@ public class SellerManageFood implements Initializable {
                     controller.getBtnYes().setOnAction(ev->{                                                      
                         myDialog.getScene().getRoot().setDisable(true);
                         myDialog.getScene().setCursor(Cursor.WAIT);
+                        int currentIndex = tableView.getItems().indexOf(food);                        
+                        System.out.println(currentIndex);
+                        
+                        ImageView imgView = imageViews.get(currentIndex);
+                        imgView.setImage(null);
+                        imgView = null;
+                        Cell<String> cell = tableCells.get(currentIndex);                        
+                        cell.setGraphic(new ImageView()); 
+                        cell = null;
+
+                        imgFiles.set(currentIndex,null);
+                        imgs.set(currentIndex,null);
+                        isImages.set(currentIndex,null);                       
+                        imageViews.set(currentIndex,null);
+                        tableCells.set(currentIndex,null);
+                        System.gc();                        
                         Task<Void> task = new Task<Void>() {
                             @Override
                             public Void call() throws IOException, SQLException {                                
-                                String currentPath = System.getProperty("user.dir");
+                                String currentPath = Paths.get("").toAbsolutePath().toString().replaceAll("\\\\", "/");
                                 Path oldImgPath = Paths.get(currentPath+"/src"+food.getImgPath());
                                 String newImgName = food.getFoodID()+controller.getNewImgFileExtension();
                                 Path newImgPath = Paths.get(currentPath+"/src/Images/"+newImgName);
-                                data.getFood().edit(controller.getInputName().getText(), controller.getInputDescription().getText(), controller.getSpinnerPrice().getValue(), controller.getInputCategory().getText(), "/Images/"+newImgName);
-                                int currentRow = tableView.getItems().indexOf(food);
-                                File imgFile = imgFiles.get(currentRow);
-                                imgFile = null;
-                                InputStream isImage = isImages.get(currentRow);
-                                isImage = null;
-                                Image img = imgs.get(currentRow);
-                                img = null;
-                                imageViews.get(currentRow).setImage(null);
-                                try {                        
-                                    // File fileName = new File(oldImgPath.toString());            
-                                    // fileName.delete();
+                                data.getFood().edit(controller.getInputName().getText(), controller.getInputDescription().getText(), controller.getSpinnerPrice().getValue(), controller.getInputCategory().getText(), "/Images/"+newImgName);                                                                                
+                                try {                                                                                  
                                     Files.delete(oldImgPath);                                    
                                 } catch (Exception e) {
                                     //TODO: handle exception
-                                    System.out.println("Unable to delete the old img");
+                                    System.out.println("Unable to delete the old img, error: "+e);
                                 }finally{
-                                    Files.copy(controller.getFoodImageFile().toPath(), newImgPath);
+                                    try {
+                                        Thread.sleep(1000);
+                                    } catch (InterruptedException e) {
+                                        // TODO Auto-generated catch block
+                                        e.printStackTrace();
+                                    }
+                                    Files.copy(controller.getFoodImageFile().toPath(), newImgPath);                                    
                                     // https://stackoverflow.com/questions/1158777/rename-a-file-using-java/20260300#20260300
                                     // Files.move(tempSource, tempSource.resolveSibling(food.getFoodID()+controller.getNewImgFileExtension()));
                                 }
@@ -235,16 +266,16 @@ public class SellerManageFood implements Initializable {
                         };
                         task.setOnSucceeded(e -> {
                             myDialog.close();
+                            tableView.refresh();
                             try {
                                 gui.refreshScene(currentFXMLPath);
                             } catch (IOException e1) {
                                 // TODO Auto-generated catch block
                                 e1.printStackTrace();
-                                gui.notAlertInProgress(myDialog);
                             }
-                            // tableView.refresh();
+                            gui.notAlertInProgress(myDialog);
                         });
-                        new Thread(task).start();                        
+                        new Thread(task).start();
                     });
                     
                     controller.getBtnNo().setOnAction(e->{
@@ -258,19 +289,47 @@ public class SellerManageFood implements Initializable {
                 });                
 
                 btnDelete.setOnAction(event->{
+                    gui.getStage().getScene().getRoot().setDisable(true);
+                    gui.getStage().getScene().setCursor(Cursor.WAIT);
+                    int currentIndex = tableView.getItems().indexOf(food);                                            
+                    ImageView imgView = imageViews.get(currentIndex);
+                    imgView.setImage(null);
+                    imgView = null;
+                    Cell<String> cell = tableCells.get(currentIndex);                        
+                    cell.setGraphic(new ImageView()); 
+                    cell = null;
+
+                    imgFiles.set(currentIndex,null);
+                    imgs.set(currentIndex,null);
+                    isImages.set(currentIndex,null);                       
+                    imageViews.set(currentIndex,null);
+                    tableCells.set(currentIndex,null);
+                    System.gc();   
                     Task<Void> task = new Task<Void>() {
                         @Override
-                        public Void call() throws IOException {                            
+                        public Void call() throws IOException {                                                                                                                
+                            String currentPath = Paths.get("").toAbsolutePath().toString().replaceAll("\\\\", "/");
+                            Path imgPath = Paths.get(currentPath+"/src"+food.getImgPath());
+                            Files.delete(imgPath);
+
                             food.delete();
                             data.getFoods().remove(food);
                             tableView.getItems().remove(food);
                             return null;
                         }
                     };
-                    task.setOnSucceeded(e -> {                                                    
-                        tableView.refresh();                         
+                    task.setOnSucceeded(e -> {     
+                        gui.getStage().getScene().setCursor(Cursor.DEFAULT);
+                        gui.getStage().getScene().getRoot().setDisable(false);                                               
+                        tableView.refresh();    
+                        try {
+                            gui.refreshScene(currentFXMLPath);
+                        } catch (IOException e1) {
+                            // TODO Auto-generated catch block
+                            e1.printStackTrace();
+                        }                     
                     });
-                    new Thread(task).start();                                                            
+                    new Thread(task).start();                                           
                 });                                       
             }                     
         });
@@ -297,36 +356,46 @@ public class SellerManageFood implements Initializable {
             e2.printStackTrace();
         }
         
-        controller.getBtnYes().setOnAction(ev->{                                                      
-            myDialog.getScene().getRoot().setDisable(true);
-            myDialog.getScene().setCursor(Cursor.WAIT);
-            Task<Void> task = new Task<Void>() {
-                @Override
-                public Void call() throws IOException, SQLException {
-                    Food newFood = new Food(controller.getInputName().getText(), controller.getInputDescription().getText(), controller.getSpinnerPrice().getValue(), controller.getInputCategory().getText(), data.getShop().getShopID());
-                    newFood.setFoodID(db.getNextId("Food"));
-                    newFood.setImgPath("/Images/"+newFood.getFoodID()+controller.getNewImgFileExtension());
-                    newFood.create();
-                    String currentPath = System.getProperty("user.dir");
-                    String newImgName = newFood.getFoodID()+controller.getNewImgFileExtension();
-                    Path newImgPath = Paths.get(currentPath+"/src/Images/"+newImgName);                                                                                                                                   
-                    Files.copy(controller.getFoodImageFile().toPath(), newImgPath);
-                    // https://stackoverflow.com/questions/1158777/rename-a-file-using-java/20260300#20260300
-                    // Files.move(tempSource, tempSource.resolveSibling(food.getFoodID()+controller.getNewImgFileExtension()));
-                    return null ;
-                }
-            };
-            task.setOnSucceeded(e -> {
-                myDialog.close();
+        controller.getBtnYes().setOnAction(ev->{       
+            if(controller.isFilled()){
+                myDialog.getScene().getRoot().setDisable(true);
+                myDialog.getScene().setCursor(Cursor.WAIT);
+                Task<Void> task = new Task<Void>() {
+                    @Override
+                    public Void call() throws IOException, SQLException {
+                        Food newFood = new Food(controller.getInputName().getText(), controller.getInputDescription().getText(), controller.getSpinnerPrice().getValue(), controller.getInputCategory().getText(), data.getSeller().getShop().getShopID());
+                        newFood.setFoodID(db.getNextId("Food"));
+                        newFood.setImgPath("/Images/"+newFood.getFoodID()+controller.getNewImgFileExtension());
+                        newFood.create();
+                        data.getFoods().add(newFood);
+                        String currentPath = Paths.get("").toAbsolutePath().toString().replaceAll("\\\\", "/");
+                        String newImgName = newFood.getFoodID()+controller.getNewImgFileExtension();
+                        Path newImgPath = Paths.get(currentPath+"/src/Images/"+newImgName);                                
+                        Files.copy(controller.getFoodImageFile().toPath(), newImgPath);
+                        // https://stackoverflow.com/questions/1158777/rename-a-file-using-java/20260300#20260300
+                        // Files.move(tempSource, tempSource.resolveSibling(food.getFoodID()+controller.getNewImgFileExtension()));
+                        return null ;
+                    }
+                };
+                task.setOnSucceeded(e -> {
+                    myDialog.close();
+                    try {
+                        gui.refreshScene(currentFXMLPath);
+                    } catch (IOException e1) {
+                        // TODO Auto-generated catch block
+                        e1.printStackTrace();
+                        gui.notAlertInProgress(myDialog);
+                    }                
+                });
+                new Thread(task).start();     
+            }else{
                 try {
-                    gui.refreshScene(currentFXMLPath);
+                    gui.informationPopup("Attention", "Please fill in all the blank.");
                 } catch (IOException e1) {
                     // TODO Auto-generated catch block
                     e1.printStackTrace();
-                    gui.notAlertInProgress(myDialog);
-                }                
-            });
-            new Thread(task).start();                        
+                }
+            }
         });
         
         controller.getBtnNo().setOnAction(e->{

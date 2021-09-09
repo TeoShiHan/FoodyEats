@@ -40,10 +40,11 @@ public class AdminRiderAccountApproval implements Initializable {
 
     @Override
     public void initialize(URL location, ResourceBundle resources) {                
-        ArrayList<HashMap<String,Object>> as = db.readAll(String.format("SELECT r.*,v.*,a.* FROM `Account` a, `Rider` r, `Vehicle` v WHERE a.type='Rider' AND a.accountID=r.accountID AND r.vehicleID=v.vehicleID AND r.status=0"));            
+        data.setRiders(new ArrayList<>());
+        ArrayList<HashMap<String,Object>> as = db.readAll(String.format("SELECT r.*,v.*,a.*,v.type AS vehicleType,a.type AS accType FROM `Account` a, `Rider` r, `Vehicle` v WHERE a.type='Rider' AND a.accountID=r.accountID AND r.vehicleID=v.vehicleID AND r.status=0"));            
         for(HashMap<String,Object> a : as){
-            Vehicle vehicle = new Vehicle(a.get("vehicleID"), a.get("type"), a.get("plateNo"), a.get("brand"), a.get("model"), a.get("color"));
-            Rider rider = new Rider(a.get("accountID"), a.get("username"), a.get("password"), a.get("name"), a.get("email"), a.get("mobileNo"), a.get("accType"), a.get("riderID"), a.get("vehicleID"),a.get("status"));
+            Vehicle vehicle = new Vehicle(a.get("vehicleID"), a.get("vehicleType"), a.get("plateNo"), a.get("brand"), a.get("model"), a.get("color"));
+            Rider rider = new Rider(a.get("accountID"), a.get("username"), a.get("password"), a.get("name"), a.get("email"), a.get("mobileNo"), a.get("accType"), a.get("regDate"), a.get("riderID"), a.get("vehicleID"),a.get("status"));
             rider.setVehicle(vehicle);
             data.getRiders().add(rider);
         }
@@ -96,12 +97,7 @@ public class AdminRiderAccountApproval implements Initializable {
     }    
 
     @FXML
-    void toCart(MouseEvent event) throws IOException {
-        gui.toNextScene("View/SellerCart.fxml");
-    }
-
-    @FXML
     void toHome(MouseEvent event) throws IOException {
-        gui.toNextScene("View/SellerHome.fxml");
+        gui.toNextScene("View/AdminHome.fxml");
     }
 }

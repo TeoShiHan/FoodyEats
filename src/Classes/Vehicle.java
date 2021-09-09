@@ -75,4 +75,12 @@ public class Vehicle {
     public void edit(String type, String brand, String model, String plateNo, String color){        
         db.executeCUD(String.format("UPDATE `Vehicle` SET type='%s',brand='%s',model='%s',plateNo='%s',color='%s' WHERE vehicleID='%s'",type,brand,model,plateNo,color,vehicleID),gui);
     }
+
+    public String toString(){        
+        if(type.equals("Bicycle") || type.equals("Pedestrian")){
+            return String.format("%s",type);
+        }else{
+            return String.format("%s, %s, %s, %s, %s",type,brand,model,plateNo,color);
+        }
+    }
 }

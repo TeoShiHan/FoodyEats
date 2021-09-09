@@ -60,6 +60,34 @@ public class Seller extends Account{
         this.shopID = (String) shopID;
         this.status = (int)status;
     }
+    
+    public Seller(
+        Object accountID, 
+        Object username, 
+        Object password, 
+        Object name, 
+        Object email, 
+        Object mobileNo, 
+        Object accType,
+        Object regDate,
+        Object sellerID,        
+        Object address,        
+        Object NRIC, 
+        Object licenseNumber,
+        Object bankAcc,        
+        Object shopID,
+        Object status
+    ){
+        super(accountID, username, password, name, email, mobileNo, accType, regDate);
+        this.sellerID = (String) sellerID;
+        this.address = (String) address;        
+        this.NRIC = (String) NRIC;
+        this.licenseNumber = (String) licenseNumber;
+        this.bankAcc = (String) bankAcc;
+        this.accountID = (String) accountID;
+        this.shopID = (String) shopID;
+        this.status = (int)status;  
+    }
 
     public Seller(
         String accountID, 
@@ -183,23 +211,31 @@ public class Seller extends Account{
         
         super.register();
 
-        // #region : SELLER OBJ
+        // #region : GET NEXT TABLE IDs
         this.sellerID = Seller.getNextID();
-        db.executeCUD(sql.insertNewSeller(this), gui);
+        this.shopID = Shop.getNextID();
+        this.shop.setShopID(this.shopID);
         // #endregion
 
-        // #region : SHOP OBJ
-        String nextShopID = Shop.getNextID();
-        this.shop.setShopID(nextShopID);
-        shop.setImgPath("Images/" + nextShopID + shop.getImgPath());
+        // #region : ADD IMAGES TO FOLDER
+        Path source = getShopImgPath(shop);
+        String currentPath = Paths.get("").toAbsolutePath().toString().replaceAll("\\\\", "/")+"/src/Images/";
+        System.out.println(currentPath + shopID + shop.getImgPath().substring(shop.getImgPath().lastIndexOf(".")));
+        Files.copy(source,
+                Paths.get(currentPath + shopID + shop.getImgPath().substring(shop.getImgPath().lastIndexOf("."))));
+        //#endregion
+
+        // #region
+        this.shop.setImgPath("/Images/" + shopID + shop.getImgPath().substring(shop.getImgPath().lastIndexOf(".")));
+        // #endregion
+
+        // #region : INSERT INTO TABLE        
+        db.executeCUD(sql.insertNewSeller(this), gui);
         db.executeCUD(sql.insertNewShop(this.shop), gui);
         // #endregion
 
-        // #region : SCENE CHANGING AND PUT
-        gui.toNextScene("View/Login.fxml");
-        Path source = getShopImgPath(shop);
-        Files.move(source,
-                source.resolveSibling(nextShopID + shop.getImgPath().substring(shop.getImgPath().indexOf("."))));
+        // #region : SCENE CHANGING
+        gui.toNextScene("View/Login.fxml");        
         // #endregion
 
         this.notifyAccCreated(gui);
@@ -218,9 +254,7 @@ public class Seller extends Account{
 
     public Path getShopImgPath(Shop shop) {
         // https://stackoverflow.com/questions/1158777/rename-a-file-using-java/20260300#20260300
-        return Paths.get(Paths.get("").toAbsolutePath().toString()+
-               "/src/Images/temp"+
-               shop.getImgPath().substring(shop.getImgPath().indexOf(".")).replaceAll("\\\\", "/"));           
+        return Paths.get(shop.getImgPath());           
     }
 
     @Override

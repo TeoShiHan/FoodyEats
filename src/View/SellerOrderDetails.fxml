@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
 <?import javafx.geometry.Insets?>
+<?import javafx.scene.Cursor?>
 <?import javafx.scene.control.Button?>
 <?import javafx.scene.control.Label?>
 <?import javafx.scene.control.TableColumn?>
@@ -21,7 +22,7 @@
             <Font size="36.0" />
          </font>
       </Label>
-      <ImageView fx:id="iconBack" fitHeight="80.0" fitWidth="80.0" layoutX="890.0" layoutY="20.0" onMouseClicked="#toBack" pickOnBounds="true" preserveRatio="true">
+      <ImageView fx:id="iconBack" fitHeight="80.0" fitWidth="80.0" layoutX="990.0" layoutY="20.0" onMouseClicked="#toBack" pickOnBounds="true" preserveRatio="true">
          <image>
             <Image url="@../Images/backIcon.png" />
          </image>
@@ -30,24 +31,8 @@
          <image>
             <Image url="@../Images/homeIcon.png" />
          </image>
-      </ImageView>      
-      <Button fx:id="btnRate" layoutX="824.0" layoutY="442.0" prefHeight="94.0" prefWidth="346.0" text="Rate">
-         <font>
-            <Font size="36.0" />
-         </font>
-         <opaqueInsets>
-            <Insets />
-         </opaqueInsets>
-      </Button>
-      <Button fx:id="btnCancel" layoutX="824.0" layoutY="568.0" prefHeight="94.0" prefWidth="346.0" style="-fx-background-color: #FE5C5C;" text="Cancel">
-         <font>
-            <Font size="36.0" />
-         </font>
-         <opaqueInsets>
-            <Insets />
-         </opaqueInsets>
-      </Button>
-      <VBox layoutX="824.0" layoutY="120.0">
+      </ImageView>
+      <VBox layoutX="824.0" layoutY="336.0" prefHeight="94.0" prefWidth="346.0">
          <children>
             <Label alignment="CENTER" prefHeight="54.0" prefWidth="346.0" style="-fx-background-color: #FF8719; -fx-font-weight: 800;" text="Total Amount">
                <font>
@@ -56,7 +41,7 @@
             </Label>
             <Label fx:id="lblTotalAmount" alignment="CENTER" prefHeight="122.0" prefWidth="346.0" style="-fx-background-color: #FEBD5C; -fx-font-weight: 800;" text="RM 0.00" wrapText="true">
                <font>
-                  <Font size="36.0" />
+                  <Font size="30.0" />
                </font>
             </Label>
          </children>
@@ -162,5 +147,128 @@
           <TableColumn fx:id="colQty" prefWidth="110" style="-fx-alignment: center;" text="Qty" />
         </columns>
       </TableView>
+      <VBox layoutX="824.0" layoutY="120.0" prefHeight="177.0" prefWidth="346.0" style="-fx-background-color: #FEBD5C;">
+         <children>
+            <Label alignment="CENTER" prefHeight="58.0" prefWidth="346.0" style="-fx-background-color: #FF8719; -fx-font-weight: 800;" text="Rider Info">
+               <font>
+                  <Font size="24.0" />
+               </font>
+            </Label>
+            <HBox prefWidth="346.0" VBox.vgrow="ALWAYS">
+               <children>
+                  <Label alignment="TOP_LEFT" prefWidth="107.0" style="-fx-font-weight: 800;" text="Name">
+                     <font>
+                        <Font size="14.0" />
+                     </font>
+                     <padding>
+                        <Insets left="10.0" top="5.0" />
+                     </padding>
+                     <HBox.margin>
+                        <Insets />
+                     </HBox.margin>
+                  </Label>
+                  <Label fx:id="lblRiderName" alignment="TOP_LEFT" prefWidth="239.0" style="-fx-font-weight: 800;" text="Pending..." wrapText="true">
+                     <font>
+                        <Font size="14.0" />
+                     </font>
+                     <padding>
+                        <Insets top="5.0" />
+                     </padding>
+                  </Label>
+               </children>
+            </HBox>
+            <HBox prefWidth="346.0" VBox.vgrow="ALWAYS">
+               <children>
+                  <Label alignment="TOP_LEFT" prefWidth="107.0" style="-fx-font-weight: 800;" text="Mobile no.">
+                     <font>
+                        <Font size="14.0" />
+                     </font>
+                     <padding>
+                        <Insets left="10.0" top="5.0" />
+                     </padding>
+                  </Label>
+                  <Label fx:id="lblRiderMobileNo" alignment="TOP_LEFT" prefWidth="239.0" style="-fx-font-weight: 800;" text="Pending..." wrapText="true">
+                     <font>
+                        <Font size="14.0" />
+                     </font>
+                     <padding>
+                        <Insets top="5.0" />
+                     </padding>
+                  </Label>
+               </children>
+            </HBox>
+            <HBox prefWidth="346.0" VBox.vgrow="ALWAYS">
+               <children>
+                  <Label alignment="TOP_LEFT" prefWidth="107.0" style="-fx-font-weight: 800;" text="Vehicle">
+                     <font>
+                        <Font size="14.0" />
+                     </font>
+                     <padding>
+                        <Insets left="10.0" top="5.0" />
+                     </padding>
+                     <HBox.margin>
+                        <Insets />
+                     </HBox.margin>
+                  </Label>
+                  <Label fx:id="lblRiderVehicleDetails" alignment="TOP_LEFT" prefWidth="239.0" style="-fx-font-weight: 800;" text="Pending..." wrapText="true">
+                     <font>
+                        <Font size="14.0" />
+                     </font>
+                     <padding>
+                        <Insets top="5.0" />
+                     </padding>
+                  </Label>
+               </children>
+            </HBox>
+         </children>
+      </VBox>
+      <VBox fx:id="vboxStatus" layoutX="824.0" layoutY="452.0" prefHeight="94.0" prefWidth="346.0">
+         <children>
+            <Label alignment="CENTER" prefHeight="54.0" prefWidth="346.0" style="-fx-background-color: #FF8719; -fx-font-weight: 800;" text="Status">
+               <font>
+                  <Font size="24.0" />
+               </font>
+            </Label>
+            <Label fx:id="lblStatus" alignment="CENTER" prefHeight="122.0" prefWidth="346.0" style="-fx-background-color: #FEBD5C; -fx-font-weight: 800;" text="RM 0.00" wrapText="true">
+               <font>
+                  <Font size="30.0" />
+               </font>
+            </Label>
+         </children>
+      </VBox>
+      <VBox alignment="BOTTOM_CENTER" layoutX="824.0" layoutY="452.0" prefHeight="212.0" prefWidth="346.0">
+         <children>
+            <HBox alignment="TOP_CENTER" prefHeight="100.0" prefWidth="200.0" VBox.vgrow="ALWAYS">
+               <children>
+                  <Button fx:id="btnDecline" cancelButton="true" prefHeight="94.0" prefWidth="346.0" style="-fx-background-color: #CF6262; -fx-font-weight: 800; -fx-font-size: 36px;" text="DECLINE">
+                     <font>
+                        <Font size="36.0" />
+                     </font>
+                     <opaqueInsets>
+                        <Insets />
+                     </opaqueInsets>
+                     <cursor>
+                        <Cursor fx:constant="HAND" />
+                     </cursor>
+                  </Button>
+               </children>
+            </HBox>
+            <HBox alignment="BOTTOM_CENTER" prefHeight="100.0" prefWidth="200.0" VBox.vgrow="ALWAYS">
+               <children>      
+                  <Button fx:id="btnAccept" prefHeight="94.0" prefWidth="346.0" style="-fx-background-color: #8FC875; -fx-font-weight: 800; -fx-font-size: 36px;" text="ACCEPT">
+                     <font>
+                        <Font size="36.0" />
+                     </font>
+                     <opaqueInsets>
+                        <Insets />
+                     </opaqueInsets>
+                     <cursor>
+                        <Cursor fx:constant="HAND" />
+                     </cursor>
+                  </Button>
+               </children>
+            </HBox>
+         </children>
+      </VBox>
    </children>
 </AnchorPane>

@@ -11,6 +11,7 @@ import javafx.scene.Node;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
+import javafx.scene.control.PasswordField;
 import javafx.scene.control.TextField;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.AnchorPane;
@@ -29,7 +30,8 @@ public class Login {
 
     //#region : FXML VARIABLES
     @FXML private AnchorPane paneLogin;    
-    @FXML private TextField inputUsername,inputPassword;
+    @FXML private TextField inputUsername;
+    @FXML private PasswordField inputPassword;
     @FXML private Button btnLogin;
     @FXML private Label linkToRegister;
     //#endregion

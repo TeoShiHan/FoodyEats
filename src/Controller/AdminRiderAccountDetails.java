@@ -19,14 +19,14 @@ public class AdminRiderAccountDetails implements Initializable {
     private GUI gui = GUI.getInstance();    
     private DataHolder data = DataHolder.getInstance();    
 
-    @FXML private Label linkLogout,lblRiderAccountDetails,lblName,lblEmail,lblMobileNo,lblVehicleType,lblVehicleBrand,lblVehicleModel,lblVehiclePlateNo,lblVehicleColor,lblDateCreated;        
+    @FXML private Label linkLogout,lblRiderAccountDetails,lblName,lblEmail,lblMobileNo,lblVehicleType,lblVehicleBrand,lblVehicleModel,lblVehiclePlateNo,lblVehicleColor,lblDateReg;        
     @FXML private ImageView iconProfile,iconHome,iconBack;            
     @FXML private Button btnVerified;          
 
     @Override
     public void initialize(URL location, ResourceBundle resources) {                
         
-        lblRiderAccountDetails.setText("Rider #"+data.getRider().getRiderID());
+        lblRiderAccountDetails.setText("Rider Account #"+data.getRider().getAccountID());
         lblName.setText(data.getRider().getName());
         lblEmail.setText(data.getRider().getEmail());
         lblMobileNo.setText(data.getRider().getMobileNo());
@@ -35,7 +35,7 @@ public class AdminRiderAccountDetails implements Initializable {
         lblVehicleColor.setText(data.getRider().getVehicle().getColor());
         lblVehicleModel.setText(data.getRider().getVehicle().getModel());
         lblVehiclePlateNo.setText(data.getRider().getVehicle().getPlateNo());        
-        lblDateCreated.setText(data.getRider().getRegDate().toString());
+        lblDateReg.setText(data.getRider().getRegDate().toString());
 
     }    
 
@@ -47,7 +47,7 @@ public class AdminRiderAccountDetails implements Initializable {
 
     @FXML
     void toHome(MouseEvent event) throws IOException {
-        gui.toNextScene("View/BuyerHome.fxml");
+        gui.toNextScene("View/AdminHome.fxml");
     }        
 
     @FXML

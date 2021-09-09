@@ -2,6 +2,7 @@ package Classes;
 import Cache.*;
 import java.io.IOException;
 import java.sql.SQLException;
+import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.HashMap;
 public class Rider extends Account{
@@ -48,6 +49,13 @@ public class Rider extends Account{
         this.vehicleID = (String)vehicleID;        
         this.vehicle = (Vehicle)vehicle;
         this.status = (int)status;
+    }    
+    public Rider(Object accountID, Object username, Object password, Object name, Object email, Object mobileNo, Object accType, Object regDate, Object riderID, Object vehicleID, Object status){
+        super(accountID, username, password, name, email, mobileNo, accType, regDate);
+        this.riderID = (String)riderID;        
+        this.vehicleID = (String)vehicleID;        
+        this.vehicle = (Vehicle)vehicle;
+        this.status = (int)status;
     }
 
     public Rider(HashMap<String,Object>account, HashMap<String,Object>rider){
@@ -59,7 +67,7 @@ public class Rider extends Account{
             (String)account.get("email"), 
             (String)account.get("mobileNo"), 
             (String)account.get("type")
-        );
+        );        
         this.riderID = (String)rider.get("riderID");
         this.vehicleID = (String)rider.get("vehicleID");
         this.status = (int)rider.get("status");

@@ -1,6 +1,7 @@
 package Classes;
 import Cache.*;
 
+import java.io.IOException;
 import java.sql.SQLException;
 import java.time.LocalDate;
 import java.time.LocalTime;
@@ -10,6 +11,7 @@ import java.util.HashMap;
 import Cache.DataHolder;
 import Interfaces.TableDataProcessing;
 import SQL.CreateTableQuery.SQL;
+import javafx.concurrent.Task;
 
 public class Shop implements TableDataProcessing{
     private SQL sql = SQL.getInstance();
@@ -20,7 +22,7 @@ public class Shop implements TableDataProcessing{
     //region  : CLASS FIELD
     private String 
     shopID, name, address, tel, 
-    imgPath, reviewID;
+    imgPath;
     private LocalTime startHour, endHour;
     private double deliveryFee;
     private int status;
@@ -88,10 +90,10 @@ public class Shop implements TableDataProcessing{
         this.name = (String) shop.get("shopName");
         this.address = (String) shop.get("address");
         this.tel = (String) shop.get("tel");
-        this.startHour = LocalTime.parse(shop.get("startHour").toString());
-        this.endHour = LocalTime.parse(shop.get("endHour").toString());
+        this.startHour = LocalTime.parse((String)shop.get("startHour"));
+        this.endHour = LocalTime.parse((String)shop.get("endHour"));
         this.status = (int) shop.get("status");
-        this.dateCreated = LocalDate.parse(shop.get("dateCreated").toString());
+        this.dateCreated = LocalDate.parse((String)shop.get("dateCreated"));
         this.deliveryFee = (double) shop.get("deliveryFee");
         this.imgPath = (String) shop.get("imgPath");
     }
@@ -152,15 +154,7 @@ public class Shop implements TableDataProcessing{
 
     public void setEndHour(LocalTime endHour) {
         this.endHour = endHour;
-    }
-
-    public String getReviewID() {
-        return reviewID;
-    }
-
-    public void setReviewID(String reviewID) {
-        this.reviewID = reviewID;
-    }
+    }    
     
     public double getDeliveryFee() {
         return deliveryFee;
@@ -309,7 +303,14 @@ public class Shop implements TableDataProcessing{
         this.endHour = endHour;        
         this.deliveryFee =  deliveryFee;
         this.imgPath =  imgPath;
-        db.executeCUD(String.format("UPDATE `Shop` SET shopName='%s', address='%s', tel='%s', startHour='%s', endHour='%s', deliveryFee=%.2f, imgPath='%s' WHERE shopID='%s'",name,address,tel,startHour,endHour,deliveryFee,imgPath,shopID),gui);
+        Task<Void> task = new Task<Void>() {
+            @Override
+            public Void call() throws IOException, SQLException {                                
+                db.executeCUD(String.format("UPDATE `Shop` SET shopName='%s', address='%s', tel='%s', startHour='%s', endHour='%s', deliveryFee=%.2f, imgPath='%s' WHERE shopID='%s'",name,address,tel,startHour,endHour,deliveryFee,imgPath,shopID),gui);
+                return null;
+            }
+        };        
+        new Thread(task).start();
     }     
 
     public ArrayList<String> getAvailableFoodCategoryInShop(){

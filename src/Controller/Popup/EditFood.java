@@ -2,7 +2,10 @@ package Controller.Popup;
 import Cache.*;
 
 import java.io.File;
+import java.io.FileInputStream;
+import java.io.FileNotFoundException;
 import java.io.IOException;
+import java.io.InputStream;
 import java.net.URL;
 import java.nio.file.DirectoryNotEmptyException;
 import java.nio.file.Files;
@@ -27,12 +30,15 @@ public class EditFood implements Initializable{
     private DataHolder data = DataHolder.getInstance();
 
     @FXML private Spinner<Double> spinnerPrice = new Spinner<>();    
-    @FXML private ImageView Image;
+    @FXML private ImageView image;
     @FXML private TextField inputName,inputCategory;
     @FXML private TextArea inputDescription;
     @FXML private Button btnChangeImage,btnYes,btnNo;    
     private File foodImageFile;
     private String newImgFileExtension;    
+    private File imgFile;
+    private InputStream isImage;
+    private Image img;
 
     @Override
     public void initialize(URL location, ResourceBundle resources) {            
@@ -52,24 +58,29 @@ public class EditFood implements Initializable{
         
         // https://stackoverflow.com/questions/22710053/how-can-i-show-an-image-using-the-imageview-component-in-javafx-and-fxml
         // Image.setImage(new Image(getClass().getResourceAsStream("/Images/temp.jpg"))); 
-        Image.setImage(new Image(getClass().getResourceAsStream(data.getFood().getImgPath())));
+        try {
+            image.setImage(new Image(new FileInputStream(new File(System.getProperty("user.dir")+"/src"+data.getFood().getImgPath()))));
+        } catch (FileNotFoundException e) {
+            // TODO Auto-generated catch block
+            e.printStackTrace();
+        }
     }    
 
     @FXML
     void chooseImage(ActionEvent event) throws IOException {
-     foodImageFile = null;
+        foodImageFile = null;
         FileChooser fileChooser = new FileChooser();
         fileChooser.setTitle("Choose your shop image");
         fileChooser.getExtensionFilters().addAll(
             new FileChooser.ExtensionFilter("Images", "*.png", "*.jpg", "*.gif", "*.jpeg")
         );
-     foodImageFile = fileChooser.showOpenDialog(gui.getStage());
+        foodImageFile = fileChooser.showOpenDialog(gui.getStage());
         if(foodImageFile!=null){                                    
             // https://stackoverflow.com/questions/36991165/how-to-set-the-save-path-for-a-file-chosen-in-filechooser-javafx/36991844#36991844
             // String currentPath = Paths.get("").toAbsolutePath().toString().replaceAll("\\\\", "/");            
             newImgFileExtension = foodImageFile.getName().substring(foodImageFile.getName().indexOf("."));            
             // Path path = Paths.get(currentPath+"/src/Images/temp"+newImgFileExtension);
-            Image.setImage(new Image(foodImageFile.toURI().toString()));
+            image.setImage(new Image(foodImageFile.toURI().toString()));
             // try{
             //     Files.delete(path);
             // }catch (DirectoryNotEmptyException e) {
@@ -145,6 +156,30 @@ public class EditFood implements Initializable{
         this.newImgFileExtension = newImgFileExtension;
     }
 
-       
+    public File getImgFile() {
+        return imgFile;
+    }
+
+    public void setImgFile(File imgFile) {
+        this.imgFile = imgFile;
+    }
+
+    public InputStream getIsImage() {
+        return isImage;
+    }
+
+    public void setIsImage(InputStream isImage) {
+        this.isImage = isImage;
+    }
+
+    public Image getImg() {
+        return img;
+    }
+
+    public void setImg(Image img) {
+        this.img = img;
+    }
+
+    
     
 }

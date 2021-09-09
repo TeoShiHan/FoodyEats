@@ -1,5 +1,6 @@
 package Controller.Popup;
 import Cache.*;
+import Classes.*;
 
 import java.io.File;
 import java.io.IOException;
@@ -8,6 +9,7 @@ import java.nio.file.DirectoryNotEmptyException;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
+import java.sql.SQLException;
 import java.util.ResourceBundle;
 
 import javafx.event.ActionEvent;
@@ -136,7 +138,17 @@ public class AddFood implements Initializable{
     public void setNewImgFileExtension(String newImgFileExtension) {
         this.newImgFileExtension = newImgFileExtension;
     }
-
-       
     
+    public boolean isFilled(){                                                 
+        return !(inputName.getText().strip().isEmpty() || inputCategory.getText().strip().isEmpty() || 
+                inputDescription.getText().strip().isEmpty() || foodImageFile==null);
+    }
+
+    // public void getInfo() throws SQLException{    
+    //     Food newFood = new Food(inputName.toString(), inputDescription.toString(), spinnerPrice.getValue(), inputCategory.toString(), data.getSeller().getShop().getShopID());
+    //     // newFood.setFoodID(db.getNextId("Food"));
+    //     newFood.setImgPath("/Images/"+newFood.getFoodID()+newImgFileExtension);
+    //     newFood.create();
+    //     data.getFoods().add(newFood);                      
+    // }    
 }

@@ -53,29 +53,28 @@ public class RiderOrderDetails implements Initializable {
     @FXML private TableColumn<OrderItem,Integer> colQty;
     @FXML private TableColumn<OrderItem,String> colItems;  
     
-
+    private RiderOrder order;
     @Override
     public void initialize(URL location, ResourceBundle resources) {        
-        // if(data.getOrder().getOrderItems().isEmpty()){
-        //     data.getOrder().loadOrderItems();
-        // }        
-        if(data.getOrder().getBuyer()==null || data.getOrder().getShop()==null){
-            data.getOrder().loadAllDetails();
-        }        
+        if(data.getOrder().getOrderItems()==null){            
+            order = new RiderOrder(data.getOrder());
+            data.setOrder(order);            
+            order.loadAllDetails();            
+        }
         
-        lblOrderDetails.setText("Order #"+data.getOrder().getOrderID());
-        lblDateCreated.setText(data.getOrder().getDateCreated().toString());
-        lblTimeCreated.setText(data.getOrder().getTimeCreated().toString());
-        lblBuyerName.setText(data.getOrder().getBuyer()!=null ? data.getOrder().getBuyer().getName() : "");
-        lblBuyerAddress.setText(data.getOrder().getBuyer()!=null  ? data.getOrder().getBuyer().getAddress() : "");        
-        lblBuyerMobileNo.setText(data.getOrder().getBuyer()!=null ? data.getOrder().getBuyer().getMobileNo() : "");
-        lblShopName.setText(data.getOrder().getShop()!=null ? data.getOrder().getShop().getName() : "");
-        lblShopAddress.setText(data.getOrder().getShop()!=null ? data.getOrder().getShop().getAddress() : "");        
-        lblShopTelNo.setText(data.getOrder().getShop()!=null ? data.getOrder().getShop().getTel() : "");
-        lblDeliveryFee.setText(String.format("RM %.2f",data.getOrder().getShop()!=null ? data.getOrder().getShop().getDeliveryFee() : 0.00));   
+        lblOrderDetails.setText("Order #"+order.getOrderID());
+        lblDateCreated.setText(order.getDateCreated().toString());
+        lblTimeCreated.setText(order.getTimeCreated().toString());
+        lblBuyerName.setText(order.getBuyer().getName());
+        lblBuyerAddress.setText(order.getBuyer().getAddress());        
+        lblBuyerMobileNo.setText(order.getBuyer().getMobileNo());
+        lblShopName.setText(order.getShop().getName());
+        lblShopAddress.setText(order.getShop().getAddress());        
+        lblShopTelNo.setText(order.getShop().getTel());
+        lblDeliveryFee.setText(String.format("RM %.2f",order.getShop().getDeliveryFee()));   
 
         // https://stackoverflow.com/questions/36629522/convert-arraylist-to-observable-list-for-javafx-program
-        ObservableList<OrderItem> observableList = FXCollections.observableArrayList(data.getOrder().getOrderItems());        
+        ObservableList<OrderItem> observableList = FXCollections.observableArrayList(order.getOrderItems());        
         
         tableView.setItems(observableList);
 
@@ -86,10 +85,10 @@ public class RiderOrderDetails implements Initializable {
         // https://stackoverflow.com/questions/14413040/converting-integer-to-observablevalueinteger-in-javafx/14413339, for the next line (line 80)
         colQty.setCellValueFactory(dt -> new SimpleIntegerProperty(dt.getValue().getQuantity()).asObject());
                         
-        if(data.getOrder().getStatus().equals("Seller Accepted")){
+        if(order.getStatus().equals("Seller Accepted")){
             btnAction.setOnAction(e->{                    
-                data.getOrder().setStatus("Rider Accepted");
-                data.getRider().acceptOrder(data.getOrder().getOrderID());     
+                order.setStatus("Rider Accepted");
+                data.getRider().acceptOrder(order.getOrderID());     
                 try {
                     gui.refreshScene(currentFXMLPath);
                 } catch (IOException e1) {
@@ -97,14 +96,14 @@ public class RiderOrderDetails implements Initializable {
                     e1.printStackTrace();
                 }                                
             });
-        }else if(data.getOrder().getStatus().equals("Seller Ready") || data.getOrder().getStatus().equals("Rider Accepted")){
+        }else if(order.getStatus().equals("Seller Ready") || order.getStatus().equals("Rider Accepted")){
             btnAction.setText("Collect");
-            if(data.getOrder().getStatus().equals("Rider Accepted")){
+            if(order.getStatus().equals("Rider Accepted")){
                 btnAction.setDisable(true);
             }
             btnAction.setOnAction(e->{
-                data.getOrder().setStatus("Rider Collected");
-                data.getRider().collectOrder(data.getOrder().getOrderID());         
+                order.setStatus("Rider Collected");
+                data.getRider().collectOrder(order.getOrderID());         
                 try {
                     gui.refreshScene(currentFXMLPath);
                 } catch (IOException e1) {
@@ -112,11 +111,11 @@ public class RiderOrderDetails implements Initializable {
                     e1.printStackTrace();
                 }                            
             });
-        }else if(data.getOrder().getStatus().equals("Rider Collected")){            
+        }else if(order.getStatus().equals("Rider Collected")){            
             btnAction.setText("Complete");
             btnAction.setOnAction(e->{
-                data.getOrder().setStatus("Completed");    
-                data.getRider().deliveredOrder(data.getOrder().getOrderID());      
+                order.setStatus("Completed");    
+                data.getRider().deliveredOrder(order.getOrderID());      
                 try {
                     gui.refreshScene(currentFXMLPath);
                 } catch (IOException e1) {

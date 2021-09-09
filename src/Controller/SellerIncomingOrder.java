@@ -40,8 +40,8 @@ public class SellerIncomingOrder implements Initializable {
 
     @Override
     public void initialize(URL location, ResourceBundle resources) {                
-        data.getShop().loadPendingOrders();        
-        data.setOrders(data.getShop().getOrders());
+        data.getSeller().getShop().loadPendingOrders();        
+        data.setOrders(data.getSeller().getShop().getOrders());
 
         ObservableList<Order> observableList = FXCollections.observableArrayList(data.getOrders());
         
@@ -71,11 +71,11 @@ public class SellerIncomingOrder implements Initializable {
                 btnAccept.setOnAction(e->{
                     tableView.getItems().remove(order);   
                     gui.miniPopup("Order Accepted, please go to Home -> Order History to see the order");                 
-                    data.getShop().acceptOrder(order.getOrderID());
+                    data.getSeller().getShop().acceptOrder(order.getOrderID());
                 });
                 btnDecline.setOnAction(e->{
                     tableView.getItems().remove(order);                    
-                    data.getShop().declineOrder(order.getOrderID());
+                    data.getSeller().getShop().declineOrder(order.getOrderID());
                 });
                 btnViewDetails.setOnAction(e->{          
                     try {
