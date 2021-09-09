@@ -1,4 +1,9 @@
+import java.util.ArrayList;
+import java.util.HashMap;
+
 import Cache.*;
+import Classes.JDBC;
+import Classes.Shop;
 import javafx.application.Application;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
@@ -6,12 +11,16 @@ import javafx.scene.Scene;
 import javafx.stage.Stage;
 import SQL.CreateTableQuery.SQL;
 
-
 public class App extends Application{
     private static GUI gui = GUI.getInstance();
     
     public static void main(String[] args) throws Exception  {
         loadFromDatabase();
+
+        ArrayList<HashMap<String, Object>> table = new ArrayList<HashMap<String, Object>>();
+        
+        System.out.println(table);
+
         System.out.println("Main method start");              
         launch(); 
         // launch(args);  // same with line above
@@ -53,11 +62,13 @@ public class App extends Application{
         SQL sql = SQL.getInstance();
         DataHolder data = DataHolder.getInstance();
         data.setAccountTable(sql.fetchAccountTable());
+
+        /**DEBUG*/System.out.print(data.getAccountTable());
+
         data.setBuyerTable(sql.fetchBuyerTable());
         data.setSellerTable(sql.fetchSellerTable());
         data.setAdminTable(sql.fetchAdminTable());
         data.setRiderTable(sql.fetchRiderTable());
         data.setShopTable(sql.fetchShopTable());
     }
-
 }

@@ -39,6 +39,7 @@ public final class DataHolder {
     private ArrayList<HashMap<String,Object>> riderTable = new ArrayList<HashMap<String,Object>>();
     private ArrayList<HashMap<String,Object>> adminTable = new ArrayList<HashMap<String,Object>>();
     private ArrayList<HashMap<String,Object>> shopTable = new ArrayList<HashMap<String,Object>>();
+    private ArrayList<HashMap<String,Object>> foodCategoriesTable = new ArrayList<HashMap<String,Object>>();
 
 
     private HashMap<String,Object> objectHolder = new HashMap<String,Object>();
@@ -221,7 +222,14 @@ public final class DataHolder {
     public void setShopTable(ArrayList<HashMap<String, Object>> shopTable) {
       this.shopTable = shopTable;
     }
-    
+
+    public void setFoodCategoriesTable(ArrayList<HashMap<String, Object>> foodCategoriesTable) {
+      this.foodCategoriesTable = foodCategoriesTable;
+    }
+
+    public ArrayList<HashMap<String, Object>> getFoodCategoriesTable() {
+      return this.foodCategoriesTable;
+    }
     //#endregion
 
     public List<OrderItem> getOrderItems(){

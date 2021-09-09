@@ -5,13 +5,13 @@ import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.HashMap;
 import Cache.*;
+import Interfaces.TableDataProcessing;
 import SQL.CreateTableQuery.SQL;
  
-public class Account {    
+public class Account implements TableDataProcessing{    
     
     //#region : AGGREGATED / COMPOSITION VARIABLES
     private static JDBC db = new JDBC();
-    private DataHolder data = DataHolder.getInstance();
     private static GUI gui = GUI.getInstance();
     //#endregion
     
@@ -138,7 +138,7 @@ public class Account {
         db.executeCUD(sql.insertNewAccount(this),gui);
     }
 
-    public static void login(String username, String password) throws IOException{  
+    public void login(String username, String password) throws IOException{  
         
         //#region ： PROGRAM VARIABLES
         DataHolder data = DataHolder.getInstance();
@@ -157,6 +157,10 @@ public class Account {
         } else{            
             
             accMap = getAccMap(username, accountTable);
+
+            /*DEBUG*/System.out.println(accMap);
+
+
             accID = (String)accMap.get("accountID");
             
             if (accMap.get("type").equals("Buyer")) {
@@ -233,13 +237,10 @@ public class Account {
 
     }
 
-    private static boolean isMatch(String str1, String str2){
-        return str1.equals(str2);
-    }
-
-    private static boolean wrongLoginInfoProvided(ArrayList<HashMap<String,Object>> accountTable,String username, String password){
+    public boolean wrongLoginInfoProvided(ArrayList<HashMap<String,Object>> accountTable,String username, String password){
         for(int i = 0 ; i < accountTable.size() ; i++) {
             String username1 = username;
+            
             String username2 = (String)accountTable.get(i).get("username");
             
             if(isMatch(username1,username2)){
@@ -257,7 +258,7 @@ public class Account {
         return true;
     }
 
-    private static HashMap<String,Object> getAccMap(String username, ArrayList<HashMap<String,Object>> accountTable){
+    public HashMap<String,Object> getAccMap(String username, ArrayList<HashMap<String,Object>> accountTable){
         HashMap<String,Object> accMap = new HashMap<String,Object>();
         for(int i = 0 ; i < accountTable.size() ; i++) {
             String username2 = (String)accountTable.get(i).get("username");
@@ -269,7 +270,7 @@ public class Account {
         return accMap;
     }
 
-    private static HashMap<String,Object> getChildAccMap(String accountID, ArrayList<HashMap<String,Object>> childAccTable){
+    public HashMap<String,Object> getChildAccMap(String accountID, ArrayList<HashMap<String,Object>> childAccTable){
         HashMap<String,Object> childAccMap = new HashMap<String,Object>();
         for(int i = 0 ; i < childAccTable.size() ; i++) {
            String accountID2 = (String)childAccTable.get(i).get("accountID");
@@ -281,7 +282,7 @@ public class Account {
         return childAccMap;
     }
 
-    private static HashMap<String,Object> getShopMap(String shopID, ArrayList<HashMap<String,Object>> shopTable){
+    public HashMap<String,Object> getShopMap(String shopID, ArrayList<HashMap<String,Object>> shopTable){
         HashMap<String,Object> shopMap = new HashMap<String,Object>();
         for(int i = 0 ; i < shopTable.size() ; i++) {
            String shopID2 = (String)shopTable.get(i).get("shopID");
@@ -316,5 +317,65 @@ public class Account {
         }
     }
     //#endregion
+    
+    //#region : TABLE PROCESSING IMPLEMENTATION
+    public ArrayList<String> getAllKeysInTable(ArrayList<HashMap<String,Object>>accountTable){
+        ArrayList<String> shopKeysArr = new ArrayList<String>();
+        for(int i = 0 ; i < accountTable.size() ; i++){
+            String tempShopID = (String) accountTable.get(i).get("shopID");
+            shopKeysArr.add(tempShopID);
+        }
+        return shopKeysArr;
+    }
+    
+    public boolean isMatch(String str1, String str2){
+        return str1.equals(str2);
+    }
+    
+    public HashMap<String,ArrayList<String>> getArrMapToKey(ArrayList<HashMap<String,Object>>table, String keyName, String ...fieldNames){
+        
+        //#region : VARIABLES
+            /*DEBUG MSG*/System.out.println("RUNNED getArrMapToKey()");
+        int tableSize = table.size();
+        int colNum = fieldNames.length;
+        ArrayList<String> tempDataArr = new ArrayList<String>();
+        HashMap<String,ArrayList<String>> arrMapToKey = new HashMap<String,ArrayList<String>>();
+        String tempFieldData = "";
+        String tempKeyNew = "";
+        String tempKeyOld = "";
+        //#endregion
 
+        for(int i = 0 ; i < tableSize ; i++){
+            
+            tempKeyNew = (String)table.get(i).get(keyName);
+
+            if (i == 0) {
+                
+                tempKeyOld = tempKeyNew;
+                    /*DEBUG MSG*/System.out.println("RUNNED INTO LOGIC I == 0");
+                    /*DEBUG MSG*/System.out.println("TEMPT KEY : " + tempKeyNew);
+                    /*DEBUG MSG*/System.out.println("TEMPT KEY : " + tempKeyOld);
+                            
+            }else{
+                tempKeyOld = (String)table.get(i - 1).get(keyName);
+            }
+
+            if(!isMatch(tempKeyNew,tempKeyOld)){
+                arrMapToKey.put(tempKeyOld, tempDataArr);
+                tempDataArr = new ArrayList<String>();
+            }
+
+            for(int r = 0 ; r < colNum ; r++){
+                tempFieldData = (String) table.get(i).get(fieldNames[r]);
+                    /*DEBUG MSG*/System.out.println("KEY = " + tempKeyOld);
+                    /*DEBUG MSG*/System.out.println("tempFieldData = " + tempFieldData);
+
+                tempDataArr.add(tempFieldData);
+                    /*DEBUG MSG*/System.out.println("ADDED");
+            }
+            /*DEBUG MSG*/System.out.println("ARRAY ELEMENT : " + tempDataArr);
+        }
+        return arrMapToKey;
+    }
+    //#endregion
 }
