@@ -48,7 +48,6 @@ public class shopList implements Initializable {
     }
 
     @FXML void showOrderHistory(){
-        navigationalListeners.
     }
 
     //  VARIABLES FOR PROGRAM
