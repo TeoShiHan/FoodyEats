@@ -25,6 +25,9 @@ public final class DataHolder {
     private Shop shop = new Shop();    
     private List<Order> orders = new ArrayList<>();
     private Order order = new Order();
+    private BuyerOrder buyerOrder = new BuyerOrder();
+    private RiderOrder riderOrder = new RiderOrder();
+    private SellerOrder sellerOrder = new SellerOrder();
     private List<OrderItem> orderItems = new ArrayList<>();
     private OrderItem orderItem = new OrderItem();
     private List<Food> foods = new ArrayList<>();
@@ -174,6 +177,27 @@ public final class DataHolder {
     }
     public void setOrder(Order order){
       this.order = order;
+    }    
+
+    public BuyerOrder getBuyerOrder() {
+      return buyerOrder;
+    }
+    public void setBuyerOrder(BuyerOrder buyerOrder) {
+      this.buyerOrder = buyerOrder;
+    }
+
+    public RiderOrder getRiderOrder() {
+      return riderOrder;
+    }
+    public void setRiderOrder(RiderOrder riderOrder) {
+      this.riderOrder = riderOrder;
+    }
+
+    public SellerOrder getSellerOrder() {
+      return sellerOrder;
+    }
+    public void setSellerOrder(SellerOrder sellerOrder) {
+      this.sellerOrder = sellerOrder;
     }
 
     //#region : TABLES

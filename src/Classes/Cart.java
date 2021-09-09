@@ -94,6 +94,14 @@ public class Cart {
         }
     }
 
+    public double calcTotalAmount(){        
+        double totalAmount = 0.0;
+        for(CartItem cartItem : cartItems){
+            totalAmount += cartItem.calcAmount();
+        }
+        return totalAmount;
+    }
+
     public static String addProductToCart(String ProductID) {
         return ProductID;
     }

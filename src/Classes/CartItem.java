@@ -76,7 +76,7 @@ public class CartItem {
         this.isChanged = isChanged;
     }
 
-    public double getAmount(){
+    public double calcAmount(){
         return quantity*food.getPrice();
     }
 
