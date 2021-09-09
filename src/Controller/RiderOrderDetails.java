@@ -56,9 +56,9 @@ public class RiderOrderDetails implements Initializable {
     private RiderOrder order;
     @Override
     public void initialize(URL location, ResourceBundle resources) {        
-        if(data.getOrder().getOrderItems()==null){            
-            order = new RiderOrder(data.getOrder());
-            data.setOrder(order);            
+        order = new RiderOrder(data.getOrder());
+        data.setOrder(order);            
+        if(order.getOrderItems()==null){            
             order.loadAllDetails();            
         }
         

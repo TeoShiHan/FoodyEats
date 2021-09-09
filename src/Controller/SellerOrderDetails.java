@@ -61,9 +61,9 @@ public class SellerOrderDetails implements Initializable {
 
     @Override
     public void initialize(URL location, ResourceBundle resources) {
-        if(data.getOrder().getOrderItems()==null){            
-            order = new SellerOrder(data.getOrder());            
-            data.setOrder(order);            
+        order = new SellerOrder(data.getOrder());            
+        data.setOrder(order);
+        if(order.getOrderItems()==null){            
             order.loadAllDetails();            
         }
         
@@ -78,7 +78,7 @@ public class SellerOrderDetails implements Initializable {
             lblRiderMobileNo.setText(order.getRider().getMobileNo());                
             lblRiderVehicleDetails.setText(order.getRider().getVehicle().toString());
         }
-        lblTotalAmount.setText(String.format("RM %.2f",order.getTotalAmount()));
+        lblTotalAmount.setText(String.format("RM %.2f",order.calcTotalAmount()));
         
         // https://stackoverflow.com/questions/36629522/convert-arraylist-to-observable-list-for-javafx-program
         ObservableList<OrderItem> observableList = FXCollections.observableArrayList(order.getOrderItems());        
@@ -96,6 +96,7 @@ public class SellerOrderDetails implements Initializable {
         vboxStatus.setVisible(false);
         if(order.getStatus().equals("Pending")){
             btnAccept.setOnAction(e->{
+                data.getOrder().setStatus("Seller Accepted");
                 data.getShop().acceptOrder(order.getOrderID());
                 try {
                     gui.refreshScene(currentFXMLPath);
@@ -106,6 +107,7 @@ public class SellerOrderDetails implements Initializable {
             });
     
             btnDecline.setOnAction(e->{
+                data.getOrder().setStatus("Seller Declined");
                 data.getShop().declineOrder(order.getOrderID());
                 try {
                     gui.refreshScene(currentFXMLPath);
@@ -119,6 +121,7 @@ public class SellerOrderDetails implements Initializable {
             btnDecline.setVisible(false);
             btnAccept.setText("Ready");
             btnAccept.setOnAction(e->{
+                data.getOrder().setStatus("Seller Ready");
                 data.getShop().readyOrder(order.getOrderID());
                 try {
                     gui.refreshScene(currentFXMLPath);

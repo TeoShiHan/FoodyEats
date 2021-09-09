@@ -212,10 +212,10 @@ public class Order {
         data.setOrder(this);
     }
 
-    public double getTotalAmount(){        
+    public double calcTotalAmount(){        
         double totalAmount = 0.0;
         for(OrderItem orderItem: orderItems){
-            totalAmount += orderItem.getAmount();
+            totalAmount += orderItem.calcAmount();
         }
         return totalAmount;
     }

@@ -70,13 +70,14 @@ public class BuyerCart implements Initializable{
     @FXML private TableColumn<CartItem,Double> colPrice;
     @FXML private TableColumn<CartItem,CartItem> colAction,colQuantity;
     private boolean anythingChanged = false;
+    private String currentFXMLPath = "View/BuyerCart.fxml";
 
     @Override
     public void initialize(URL arg0, ResourceBundle arg1) {
-        if(data.getBuyer().getCart()==null){
+        if(data.getBuyer().getCart()==null||Cart.isCartHaveChange()){
             data.getBuyer().loadCart();
             data.setCart(data.getBuyer().getCart());
-            if(data.getCart().getCartItems()==null||Cart.isCartHaveChange()){
+            if(data.getCart().getCartItems()==null){
                 data.getCart().loadCartItems();
                 data.setCartItems(data.getCart().getCartItems());                                
             }
@@ -196,8 +197,15 @@ public class BuyerCart implements Initializable{
                             return null;
                         }
                     };                    
-                    new Thread(task).start();                                                            
-                    tableView.refresh();  
+                    task.setOnSucceeded(e -> {                        
+                        try {
+                            gui.refreshScene(currentFXMLPath);                            
+                        } catch (IOException e1) {
+                            // TODO Auto-generated catch block
+                            e1.printStackTrace();                        
+                        }                    
+                    });
+                    new Thread(task).start();
                 });                                       
             }                     
         });
