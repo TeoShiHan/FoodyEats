@@ -1,7 +1,6 @@
 package Controller;
 import java.io.File;
 import java.io.FileInputStream;
-import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.io.InputStream;
 import java.net.URL;
@@ -13,11 +12,7 @@ import java.time.LocalTime;
 import java.util.ResourceBundle;
 
 import Cache.*;
-import Classes.*;
-import Controller.Popup.EditFood;
-import Controller.Popup.EditProfile;
 import Controller.Popup.EditShopProfile;
-import javafx.animation.PauseTransition;
 import javafx.concurrent.Task;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
@@ -31,10 +26,8 @@ import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.AnchorPane;
-import javafx.scene.text.Text;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
-import javafx.util.Duration;
 
 public class SellerShopProfile implements Initializable{
     private GUI gui = GUI.getInstance();
@@ -113,12 +106,10 @@ public class SellerShopProfile implements Initializable{
                             try {
                                 Thread.sleep(10000);
                             } catch (InterruptedException e1) {
-                                // TODO Auto-generated catch block
                                 e1.printStackTrace();
                             }
                             Files.delete(oldImgPath);                             
                         } catch (Exception e) {
-                            //TODO: handle exception
                             System.out.println("Unable to delete the old img: \n error: "+e);
                         }finally{
                             System.out.println("cannot copy?");

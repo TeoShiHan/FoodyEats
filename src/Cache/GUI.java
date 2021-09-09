@@ -62,21 +62,29 @@ public final class GUI {
     this.stage.centerOnScreen();
   }
 
-  public void toNextScene(String filePath) throws IOException{        
-    Scene currentScene = this.stage.getScene();     
-    addPrevScene(currentScene);    
+  public void toNextSceneUnckeck(String filePath) throws IOException{        
+      Scene currentScene = this.stage.getScene();     
+      addPrevScene(currentScene);    
+  
+      FXMLLoader loader = new FXMLLoader();
+      // loader.setLocation(getClass().getResource("/View/BuyerOrder.fxml"));  //this is similar to next line, this line should add '/' infront of the path
+      // loader.setLocation(getClass().getClassLoader().getResource("View/BuyerOrder.fxml"));
+      loader.setLocation(getClass().getClassLoader().getResource(filePath));        
+  
+      Scene nextScene = new Scene(loader.load());
+      String css = this.getClass().getResource("/View/App.css").toExternalForm();
+      nextScene.getStylesheets().add(css);
+      // stage.setUserData(this.p);
+      this.stage.setScene(nextScene);
+      this.stage.centerOnScreen();
+  }
 
-    FXMLLoader loader = new FXMLLoader();
-    // loader.setLocation(getClass().getResource("/View/BuyerOrder.fxml"));  //this is similar to next line, this line should add '/' infront of the path
-    // loader.setLocation(getClass().getClassLoader().getResource("View/BuyerOrder.fxml"));
-    loader.setLocation(getClass().getClassLoader().getResource(filePath));        
-
-    Scene nextScene = new Scene(loader.load());
-    String css = this.getClass().getResource("/View/App.css").toExternalForm();
-    nextScene.getStylesheets().add(css);
-    // stage.setUserData(this.p);
-    this.stage.setScene(nextScene);
-    this.stage.centerOnScreen();
+  public void toNextScene(String filePath){
+    try {
+      toNextSceneUnckeck(filePath);
+    } catch (IOException e) {
+      e.printStackTrace();
+    }
   }
 
   public void refreshScene(String fxmlPath) throws IOException{        

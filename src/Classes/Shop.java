@@ -429,6 +429,10 @@ public class Shop implements TableDataProcessing{
         }
         return arrMapToKey;
     }
+
+    public void saveSelectedShopIdToDataHolder(){
+        data.setSelectedShopID(this.shopID);
+    }
     //#endregion
     
     //#endregion

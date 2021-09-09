@@ -60,7 +60,7 @@ public class foodList implements Initializable {
         data.setShopTable(sql.fetchShopTable());
         
         Shop shop = new Shop();
-        shop.setShopID("S00001");
+        shop.setShopID(data.getSelectedShopID());
         
         data.setFoodCategoriesTable(sql.fetchFoodCategoriesFromAllShops(shop.getAllKeysInTable(data.getShopTable())));
         
@@ -77,34 +77,26 @@ public class foodList implements Initializable {
         int gridCol = 1;
         int gridRow = 0;
         try {
-
             System.out.println("go in try clause");
 
             for (int i = 0; i < categoryList.size(); i++) {
-
                     /*DEBUG MSG*/System.out.println("FOR LOOP " + i);
 
                 FXMLLoader fxmlLoader = new FXMLLoader();
-
-                System.out.println("successfully created the fxml loader");
+                    /*DEBUG MSG*/System.out.println("successfully created the fxml loader");
 
                 fxmlLoader.setLocation(getClass().getResource("../View/categoryTag.fxml"));
-
-                System.out.println("successfully set the location");
+                    /*DEBUG MSG*/ System.out.println("successfully set the location");
 
                 Button categoryBtn = fxmlLoader.load();
-
                 foodCategoryItem foodCategoryItemController = fxmlLoader.getController();
-
-                System.out.println("Got the shop ItemController");
+                    /*DEBUG MSG*/System.out.println("Got the shop ItemController");
 
                 foodCategoryItemController.setStringToLabel(categoryList.get(i));
-
-                System.out.println("successfully set the data");
+                    /*DEBUG MSG*/System.out.println("successfully set the data");
 
                 foodCategoryTagPane.add(categoryBtn, gridCol++, gridRow);
-
-                System.out.println("successfully added the grid");
+                    /*DEBUG MSG*/System.out.println("successfully added the grid");
 
                 // set grid width
                 foodCategoryTagPane.setMinWidth(Region.USE_COMPUTED_SIZE);
@@ -121,8 +113,8 @@ public class foodList implements Initializable {
         } catch (IOException e) {
             e.printStackTrace();
         }
-
             /*DEBUG MSG*/System.out.println("OUTA THE LOOP");
+
         // #endregion
 
         // #region : FOOD LIST
@@ -141,19 +133,19 @@ public class foodList implements Initializable {
 
                 //#region : LOAD THE CATEGORY LABEL
                 FXMLLoader fxmlLoaderOfLabel = new FXMLLoader();
-                    /* DEBUG OUTPUT>>>>>>> */System.out.println("successfully created the fxml loader");
+                        /* DEBUG OUTPUT>>>>>>> */System.out.println("successfully created the fxml loader");
 
                     fxmlLoaderOfLabel.setLocation(getClass().getResource("../View/categoryLabel.fxml"));
-                    /* DEBUG OUTPUT>>>>>>> */System.out.println("successfully set the location");
+                        /* DEBUG OUTPUT>>>>>>> */System.out.println("successfully set the location");
 
                     Label categoryLabel = fxmlLoaderOfLabel.load();
 
                     categoryLabel categoryLabelController = fxmlLoaderOfLabel.getController();
-                    /* DEBUG OUTPUT>>>>>>> */System.out.println("Got the FOOD ItemController");
-                    /* DEBUG OUTPUT>>>>>>> */System.out.println("finish output try");
+                        /* DEBUG OUTPUT>>>>>>> */System.out.println("Got the FOOD ItemController");
+                        /* DEBUG OUTPUT>>>>>>> */System.out.println("finish output try");
 
                     categoryLabelController.setLabelText(categoryList.get(r));
-                    /* DEBUG OUTPUT>>>>>>> */System.out.println("successfully set the data");
+                        /* DEBUG OUTPUT>>>>>>> */System.out.println("successfully set the data");
 
                     foodListGrid.add(categoryLabel, secGridCol, secGridRow++);
                 //#endregion
@@ -162,35 +154,31 @@ public class foodList implements Initializable {
                 for (int i = 0; i < foodsOf1Category.size(); i++) {
 
                     FXMLLoader fxmlLoader = new FXMLLoader();
-                    /* DEBUG OUTPUT>>>>>>> */System.out.println("successfully created the fxml loader");
+                        /* DEBUG OUTPUT>>>>>>> */System.out.println("successfully created the fxml loader");
 
                     fxmlLoader.setLocation(getClass().getResource("../View/foodItem.fxml"));
-                    /* DEBUG OUTPUT>>>>>>> */System.out.println("successfully set the location");
+                        /* DEBUG OUTPUT>>>>>>> */System.out.println("successfully set the location");
 
                     HBox foodItemHbox = fxmlLoader.load();
 
                     foodItem foodItemController = fxmlLoader.getController();
-                    /* DEBUG OUTPUT>>>>>>> */System.out.println("Got the FOOD ItemController");
-                    /* DEBUG OUTPUT>>>>>>> */System.out.println("finish output try");
+                        /* DEBUG OUTPUT>>>>>>> */System.out.println("Got the FOOD ItemController");
+                        /* DEBUG OUTPUT>>>>>>> */System.out.println("finish output try");
 
 
                     foodItemController.setDataToFoodItem(foodsOf1Category.get(i));
                     foodItemController.configureTheSpinner();
-                    /* DEBUG OUTPUT>>>>>>> */System.out.println("successfully set the data");
+                        /* DEBUG OUTPUT>>>>>>> */System.out.println("successfully set the data");
 
                     if (secGridCol == 2) {
                         secGridCol = 0;
                         secGridRow++;
                     }
-
                     foodListGrid.add(foodItemHbox, secGridCol++, secGridRow);
-
                     System.out.println("successfully added the grid");
-
                     GridPane.setMargin(foodItemHbox, new Insets(10));
                 }
                 //#endregion
-
             }
         } catch (IOException e) {
             e.printStackTrace();

@@ -4,10 +4,6 @@ import Cache.*;
 import java.io.File;
 import java.io.IOException;
 import java.net.URL;
-import java.nio.file.DirectoryNotEmptyException;
-import java.nio.file.Files;
-import java.nio.file.Path;
-import java.nio.file.Paths;
 import java.util.ResourceBundle;
 
 import javafx.event.ActionEvent;
@@ -43,7 +39,7 @@ public class AddFood implements Initializable{
             if(spinnerPrice.getEditor().getText().isEmpty()){
                 spinnerPrice.getEditor().setText("0");
             }
-        });  
+        });
                 
     }    
 
@@ -136,7 +132,4 @@ public class AddFood implements Initializable{
     public void setNewImgFileExtension(String newImgFileExtension) {
         this.newImgFileExtension = newImgFileExtension;
     }
-
-       
-    
 }

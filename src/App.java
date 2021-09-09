@@ -33,7 +33,7 @@ public class App extends Application{
         gui.setStage(stage);
 
         // <--------------FXMK Loader------------------->
-        Parent root = FXMLLoader.load(getClass().getResource("View/Login.fxml"));  
+        Parent root = FXMLLoader.load(getClass().getResource("View/shopList.fxml"));  
         String css = this.getClass().getResource("View/App.css").toExternalForm();
         Scene scene = new Scene(root);
         scene.getStylesheets().add(css);        
