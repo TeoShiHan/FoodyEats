@@ -33,7 +33,7 @@
     -fx-text-fill: white;
 }
 
-.button,.radio-button,#iconOrderHistory,#iconHome,#iconBack,#iconCart,#iconEdit,#iconProfile,#iconAdd,#linkLogout,#linkToRegister,#linkToLogin{
+.button,.radio-button,#iconOrderHistory,#iconHome,#iconBack,#iconCart,#iconEdit,#iconProfile,#iconAdd,#iconRefresh,#linkLogout,#linkToRegister,#linkToLogin{
     -fx-cursor: "hand";
 }
 
