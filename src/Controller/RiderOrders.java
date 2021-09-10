@@ -37,6 +37,7 @@ public class RiderOrders implements Initializable {
     @FXML private TableView<Order> tableView;
     @FXML private TableColumn<Order,Object> colOrderId,colDate,colTime;    
     @FXML private TableColumn<Order,Order> colAction;
+    private String currentFXMLPath = "View/RiderOrders.fxml";
 
     @Override
     public void initialize(URL location, ResourceBundle resources) {
@@ -94,5 +95,10 @@ public class RiderOrders implements Initializable {
     @FXML
     void toHome(MouseEvent event) throws IOException {
         gui.toNextScene("View/RiderHome.fxml");
+    }
+
+    @FXML
+    void toRefreshScene(MouseEvent event) throws IOException {        
+        gui.refreshScene(currentFXMLPath);
     }
 }

@@ -31,10 +31,13 @@
          <children>
             <VBox alignment="CENTER" prefHeight="136.0" prefWidth="151.0">
                <children>
-                  <ImageView fitHeight="88.0" fitWidth="78.0" pickOnBounds="true" preserveRatio="true">
+                  <ImageView fitHeight="88.0" fitWidth="78.0" onMouseClicked="#toProfile" pickOnBounds="true" preserveRatio="true">
                      <image>
                         <Image url="@../Images/profileIcon.png" />
                      </image>
+                     <cursor>
+                        <Cursor fx:constant="HAND" />
+                     </cursor>
                   </ImageView>
                </children>
             </VBox>
@@ -48,7 +51,7 @@
                         <Insets top="30.0" />
                      </VBox.margin>
                   </Label>
-                  <Label fx:id="logoutText" onMouseClicked="#logout" text="Logout">
+                  <Label fx:id="logoutText" onMouseClicked="#logout" style="-fx-text-fill: #059862;" text="Logout" underline="true">
                      <font>
                         <Font size="13.0" />
                      </font>

@@ -11,12 +11,15 @@ import Classes.Buyer;
 import Classes.Food;
 import Classes.JDBC;
 import Classes.Shop;
+import Controller.Popup.SeeReviews;
 import Interfaces.FoodItemListeners;
 import Interfaces.NavigationalListeners;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
 import javafx.geometry.Insets;
+import javafx.scene.Parent;
+import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.ScrollPane;
@@ -27,6 +30,8 @@ import javafx.scene.layout.GridPane;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.Region;
 import javafx.scene.layout.VBox;
+import javafx.stage.Modality;
+import javafx.stage.Stage;
 
 public class FoodMenu implements Initializable {
 
@@ -63,6 +68,28 @@ public class FoodMenu implements Initializable {
     void logout(MouseEvent mouseEvent) {
         navigationalListeners.logout();
     }
+
+    @FXML
+    void viewShopReview(MouseEvent event) {
+        Stage myDialog = new Stage();        
+        myDialog.initModality(Modality.APPLICATION_MODAL);  //make user unable to press the original stage/window unless close the current stage/window
+        myDialog.initOwner(gui.getStage());
+        
+        SeeReviews controller = new SeeReviews();
+        FXMLLoader loader = new FXMLLoader(getClass().getResource("/View/Popup/SeeReviews.fxml"));
+        loader.setController(controller);                        
+        Scene dialogScene = null;
+        try {
+            dialogScene = new Scene((Parent)loader.load());                        
+        } catch (IOException e2) {
+            // TODO Auto-generated catch block
+            e2.printStackTrace();
+        }
+                
+        myDialog.setScene(dialogScene);
+        myDialog.setMaximized(false);
+        myDialog.show();
+    }
     // #endregion
 
     // #region : PROGRAM VARIABLES
@@ -95,6 +122,12 @@ public class FoodMenu implements Initializable {
             @Override
             public void showOrderHistory() {
                 gui.toNextScene("View/BuyerOrderHistory.fxml");      
+            }
+
+            @Override
+            public void goToProfile() {
+                // TODO Auto-generated method stub
+                gui.toNextScene("View/Profile.fxml");
             }
         };
         return listeners;
@@ -145,7 +178,8 @@ public class FoodMenu implements Initializable {
             /*DEBUG MSG*/System.out.println("CRATED NEW SHOP INSTANCE");
         
         shop.setShopID(data.getSelectedShopID());
-        shop.initializeAvailableFoodCategoryInShop();
+        shop.initializeAvailableFoodCategoryInShop();        
+        data.setShop(shop);
 
             /*DEBUG MSG*/System.out.println(shop.getShopID());
                 

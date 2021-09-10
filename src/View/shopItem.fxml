@@ -39,17 +39,20 @@
                      <children>
                         <VBox alignment="CENTER_LEFT" prefHeight="43.0" prefWidth="265.0">
                            <children>
-                              <Button fx:id="viewShopBtn" mnemonicParsing="false" onAction="#clickShopBtn" onMousePressed="#clickShopBtn" prefHeight="71.0" prefWidth="113.0" style="-fx-background-color: #ffae78;" text="View Shop">
+                              <Button fx:id="viewShopBtn" mnemonicParsing="false" onAction="#clickShopBtn" onMousePressed="#clickShopBtn" prefWidth="113.0" style="-fx-background-color: #ffae78;" text="View Shop">
                                  <VBox.margin>
-                                    <Insets top="8.0" />
+                                    <Insets />
                                  </VBox.margin>
                                  <cursor>
                                     <Cursor fx:constant="HAND" />
                                  </cursor>
+                                 <padding>
+                                    <Insets bottom="10.0" top="10.0" />
+                                 </padding>
                               </Button>
                            </children>
                         </VBox>
-                        <VBox fx:id="deliveryVBox" alignment="CENTER_LEFT" prefHeight="50.0" prefWidth="53.0">
+                        <VBox fx:id="deliveryVBox" alignment="CENTER_LEFT" prefWidth="53.0" HBox.hgrow="ALWAYS">
                            <children>
                               <ImageView fx:id="deliveryIcon" fitHeight="36.0" fitWidth="48.0" pickOnBounds="true" preserveRatio="true">
                                  <image>
@@ -58,21 +61,24 @@
                               </ImageView>
                            </children>
                            <HBox.margin>
-                              <Insets top="15.0" />
+                              <Insets />
                            </HBox.margin>
                         </VBox>
-                        <VBox fx:id="priceVerticalAlign" prefHeight="28.0" prefWidth="193.0">
+                        <VBox fx:id="priceVerticalAlign" alignment="CENTER_LEFT" prefWidth="193.0">
                            <HBox.margin>
-                              <Insets left="15.0" top="15.0" />
+                              <Insets left="10.0" />
                            </HBox.margin>
                            <children>
-                              <Label fx:id="deliveryFee" text="RM 10.00" textFill="#d0900f" />
+                              <Label fx:id="deliveryFee" style="-fx-font-weight: 800;" text="RM 10.00" textFill="#d0900f" />
                            </children>
                         </VBox>
                      </children>
                      <VBox.margin>
                         <Insets />
                      </VBox.margin>
+                     <padding>
+                        <Insets top="10.0" />
+                     </padding>
                   </HBox>
                </children>
             </VBox>

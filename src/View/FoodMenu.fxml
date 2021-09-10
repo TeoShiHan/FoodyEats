@@ -10,7 +10,6 @@
 <?import javafx.scene.layout.ColumnConstraints?>
 <?import javafx.scene.layout.GridPane?>
 <?import javafx.scene.layout.HBox?>
-<?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Font?>
 
 <AnchorPane fx:id="foodListAnchor" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="700.0" prefWidth="1200.0" xmlns="http://javafx.com/javafx/16" xmlns:fx="http://javafx.com/fxml/1" fx:controller="Controller.FoodMenu">
@@ -58,19 +57,30 @@
             <Insets right="50.0" />
          </padding>
       </HBox>
-      <VBox fx:id="shopName_category_review_Vbox" layoutY="60.0" prefHeight="51.0" prefWidth="1200.0">
+      <HBox alignment="CENTER_LEFT" layoutY="60.0" prefWidth="1200.0">
          <children>
-            <Label fx:id="shopNameLabel" prefHeight="107.0" prefWidth="952.0" text="Mc Donalds">
+            <Label fx:id="shopNameLabel" text="Mc Donalds">
                <font>
                   <Font name="Arial Bold" size="25.0" />
                </font>
+               <HBox.margin>
+                  <Insets left="50.0" />
+               </HBox.margin>
             </Label>
+            <ImageView fx:id="btnShopReview" fitHeight="53.0" fitWidth="71.0" onMouseClicked="#viewShopReview" pickOnBounds="true" preserveRatio="true">
+               <image>
+                  <Image url="@../Images/reviewIcon.png" />
+               </image>
+               <cursor>
+                  <Cursor fx:constant="HAND" />
+               </cursor>
+               <HBox.margin>
+                  <Insets left="20.0" />
+               </HBox.margin>
+            </ImageView>
          </children>
-         <padding>
-            <Insets left="50.0" />
-         </padding>
-      </VBox>
-      <GridPane fx:id="foodCategoryTagPane" alignment="CENTER_LEFT" layoutX="-56.0" layoutY="105.0" nodeOrientation="LEFT_TO_RIGHT" prefHeight="33.0" prefWidth="1150.0">
+      </HBox>
+      <GridPane fx:id="foodCategoryTagPane" alignment="CENTER_LEFT" layoutX="-52.0" layoutY="114.0" nodeOrientation="LEFT_TO_RIGHT" prefHeight="33.0" prefWidth="1150.0">
         <columnConstraints>
           <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
         </columnConstraints>
@@ -81,6 +91,9 @@
               <columnConstraints>
                 <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
               </columnConstraints>
+               <padding>
+                  <Insets top="10.0" />
+               </padding>
             </GridPane>
          </content>
          <padding>
