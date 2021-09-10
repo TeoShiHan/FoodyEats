@@ -3,7 +3,6 @@ import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.HashMap;
 
-import Cache.DataHolder;
 import Classes.Account;
 import Classes.JDBC;
 import Classes.Seller;
@@ -119,24 +118,5 @@ public final class SQL {
     
     private static boolean isNotLastStatement(int statementQty, int currentStatement){
         return currentStatement < statementQty;
-    }
-
-    public static void main(String[] args) {
-        SQL sql = SQL.getInstance();
-        DataHolder data = DataHolder.getInstance();
-        data.setAccountTable(sql.fetchAccountTable());
-        data.setBuyerTable(sql.fetchBuyerTable());
-        data.setSellerTable(sql.fetchSellerTable());
-        data.setAdminTable(sql.fetchAdminTable());
-        data.setRiderTable(sql.fetchRiderTable());
-        data.setShopTable(sql.fetchShopTable());
-        
-        Shop tempShop = new Shop();
-
-        ArrayList<HashMap<String,Object>> categoryTable = new ArrayList<HashMap<String,Object>>();
-        
-        categoryTable = sql.fetchFoodCategoriesFromAllShops(tempShop.getAllKeysInTable(data.getShopTable()));
-
-            /*DEBUG*///System.out.println(categoryTable);
     }
 }

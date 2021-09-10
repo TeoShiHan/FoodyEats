@@ -4,7 +4,7 @@
 <?import javafx.scene.text.Font?>
 
 
-<Label fx:id="categoryLabel" prefHeight="39.0" prefWidth="173.0" text="Burger" xmlns="http://javafx.com/javafx/16" xmlns:fx="http://javafx.com/fxml/1" fx:controller="Controller.categoryLabel">
+<Label fx:id="categoryLabel" prefHeight="39.0" prefWidth="173.0" text="Burger" xmlns="http://javafx.com/javafx/16" xmlns:fx="http://javafx.com/fxml/1" fx:controller="Controller.CategoryLabel">
    <font>
       <Font name="System Bold" size="20.0" />
    </font>

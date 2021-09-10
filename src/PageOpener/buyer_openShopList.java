@@ -17,11 +17,10 @@ public class buyer_openShopList extends Application{
     @Override
     public void start(Stage primaryStage) throws Exception{
         Parent root = FXMLLoader.load(getClass().getResource("../View/shopList.fxml"));
+            /*DEBUG MSG*/System.out.println("ROOT CREATED");
         primaryStage.setTitle("Fruits Marker");
         Scene scene = new Scene(root);
         primaryStage.setScene(scene);
         primaryStage.show();
     }
-
-    
 }
