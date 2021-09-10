@@ -47,8 +47,14 @@ public class FoodItem {
     }
 
     public void configureTheSpinner(){
-        SpinnerValueFactory<Integer> qtyValueFactory  = new SpinnerValueFactory.IntegerSpinnerValueFactory(0, 50,0);
+        SpinnerValueFactory<Integer> qtyValueFactory  = new SpinnerValueFactory.IntegerSpinnerValueFactory(1, 50,1);
         this.inputQtySpin.setValueFactory(qtyValueFactory);
         inputQtySpin.setEditable(true);
+        inputQtySpin.getEditor().textProperty().addListener((obs, oldValue, newValue) -> {
+            inputQtySpin.getEditor().setText(newValue.replaceAll("[^0-9]+",""));
+            if(inputQtySpin.getEditor().getText().isEmpty()){
+                inputQtySpin.getEditor().setText("0");
+            }
+        });
     }
 }
