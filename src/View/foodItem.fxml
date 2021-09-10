@@ -50,7 +50,7 @@
                   </Label>
                </children>
             </HBox>
-            <HBox prefHeight="55.0" prefWidth="330.0">
+            <HBox alignment="CENTER_LEFT" prefWidth="330.0">
                <children>
                   <Label fx:id="qtyLabel" text="Qty">
                      <HBox.margin>
@@ -62,9 +62,9 @@
                         <Insets left="5.0" />
                      </HBox.margin>
                   </Spinner>
-                  <HBox fx:id="addToCartBtn" alignment="CENTER" prefHeight="38.0" prefWidth="80.0" style="-fx-background-color: #ffae78;">
+                  <HBox fx:id="addToCartBtn" alignment="CENTER" prefWidth="80.0" style="-fx-background-color: #ffae78;">
                      <HBox.margin>
-                        <Insets bottom="10.0" left="90.0" />
+                        <Insets left="100.0" />
                      </HBox.margin>
                      <children>
                         <ImageView fx:id="cartIcon" fitHeight="28.0" fitWidth="94.0" onMouseClicked="#clickAddToCartBtn" pickOnBounds="true" preserveRatio="true">
@@ -73,17 +73,20 @@
                            </image>
                         </ImageView>
                      </children>
-                     <padding>
-                        <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
-                     </padding>
                      <cursor>
                         <Cursor fx:constant="HAND" />
                      </cursor>
+                     <padding>
+                        <Insets bottom="5.0" top="5.0" />
+                     </padding>
                   </HBox>
                </children>
                <opaqueInsets>
                   <Insets />
                </opaqueInsets>
+               <padding>
+                  <Insets bottom="10.0" />
+               </padding>
             </HBox>
          </children>
          <opaqueInsets>

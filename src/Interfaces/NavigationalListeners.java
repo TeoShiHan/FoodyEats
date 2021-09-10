@@ -5,4 +5,5 @@ public interface NavigationalListeners {
     public void goToCartPage();
     public void showOrderHistory();
     public void logout();
+    public void goToProfile();
 }

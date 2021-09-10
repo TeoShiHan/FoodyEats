@@ -41,7 +41,7 @@
       </Button>
       <TableView layoutX="23.0" layoutY="64.0" prefHeight="311.0" prefWidth="303.0" style="-fx-background-color: #FEBD5C;">
         <columns>
-          <TableColumn prefWidth="302.40001220703124" text="C1" />
+          <TableColumn prefWidth="302" text="C1" />
         </columns>
       </TableView>
    </children>

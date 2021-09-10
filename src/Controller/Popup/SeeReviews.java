@@ -12,10 +12,12 @@ import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
 import javafx.scene.Parent;
 import javafx.scene.control.Button;
+import javafx.scene.control.Label;
 import javafx.scene.control.Spinner;
 import javafx.scene.control.SpinnerValueFactory;
 import javafx.scene.control.TextArea;
 import javafx.scene.layout.VBox;
+import javafx.scene.text.Font;
 
 public class SeeReviews implements Initializable {
     private GUI gui = GUI.getInstance();
@@ -30,24 +32,29 @@ public class SeeReviews implements Initializable {
             data.setReviews(data.getShop().getReviews());
         }
 
-        for(Review r : data.getReviews()){            
-            ReviewItem controller = new ReviewItem();
-            FXMLLoader loader = new FXMLLoader();            
-            loader.setLocation(getClass().getClassLoader().getResource("/View/Popup/ReviewItem.fxml"));        
-            loader.setController(controller);
-            VBox root = null;
-            try {
-                controller.getLblUsername().setText(r.getBuyerUserName());
-                controller.getLblDateCreated().setText(r.getDateCreated().toString());
-                controller.getLblRating().setText(String.format("%d/5",r.getRating()));
-                controller.getLblComment().setText(r.getComment());
-                root = loader.load();
-                System.out.println("get controller comment --> "+controller.getLblComment().getText());
-            } catch (IOException e) {
-                // TODO Auto-generated catch block
-                e.printStackTrace();
-            }                                    
-            reviewsContainer.getChildren().add(root);
-        }
+        if(data.getReviews().size()==0){
+            Label lblEmptyLabel = new Label("There is no reviews yet.");
+            lblEmptyLabel.setFont(Font.font("Arial", 20));
+            reviewsContainer.getChildren().setAll(lblEmptyLabel);            
+        }else{
+            for(Review r : data.getReviews()){                        
+                ReviewItem controller = new ReviewItem();
+                FXMLLoader loader = new FXMLLoader(getClass().getResource("/View/Popup/ReviewItem.fxml"));            
+                loader.setController(controller);
+                VBox root = null;
+                try {
+                    root = loader.load();                
+                    controller.getLblUsername().setText(r.getBuyerUserName());
+                    controller.getLblDateCreated().setText(r.getDateCreated().toString());
+                    controller.getLblRating().setText(String.format("%d/5",r.getRating()));
+                    controller.getLblComment().setText(r.getComment());                
+                } catch (IOException e) {
+                    // TODO Auto-generated catch block
+                    e.printStackTrace();
+                }          
+                System.out.println(root);                          
+                reviewsContainer.getChildren().add(root);
+            }
+        }        
     }       
 }

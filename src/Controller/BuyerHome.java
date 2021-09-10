@@ -56,6 +56,10 @@ public class BuyerHome implements Initializable {
         navigationalListeners.logout();
     }
 
+    @FXML void toProfile(MouseEvent event) throws IOException {
+        navigationalListeners.goToProfile();
+    }
+
     //  VARIABLES FOR PROGRAM
     private static GUI gui = GUI.getInstance();
     private DataHolder data = DataHolder.getInstance();
@@ -169,6 +173,12 @@ public class BuyerHome implements Initializable {
             @Override
             public void showOrderHistory() {
                 gui.toNextScene("View/BuyerOrderHistory.fxml");      
+            }
+
+            @Override
+            public void goToProfile() {
+                gui.toNextScene("View/Profile.fxml");
+                
             }
         };
         return listeners;

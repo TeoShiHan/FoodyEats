@@ -279,10 +279,10 @@ public class Shop implements TableDataProcessing{
     
     public void loadReviews(){
         this.reviews = new ArrayList<>();
-        ArrayList<HashMap<String,Object>> rs = db.readAll(String.format("SELECT r.*,a.username FROM `Reviews` r,`Order` o,`Buyer` b,`Account` a WHERE r.shopID='%s' AND r.orderID=o.orderID AND o.buyerID=b.buyerID AND b.accountID=a.accountID",shopID));
+        ArrayList<HashMap<String,Object>> rs = db.readAll(String.format("SELECT r.*,a.username FROM `Review` r,`Order` o,`Buyer` b,`Account` a WHERE r.shopID='%s' AND r.orderID=o.orderID AND o.buyerID=b.buyerID AND b.accountID=a.accountID",shopID));
         for(HashMap<String,Object> r : rs){
             Review review = new Review(r.get("reviewID"), r.get("rating"), r.get("comment"), r.get("dateCreated"), r.get("timeCreated"), r.get("orderID"), r.get("shopID"));
-            review.setBuyerUserName((String)r.get("Username"));
+            review.setBuyerUserName((String)r.get("username"));
             this.reviews.add(review);
         }
     }
