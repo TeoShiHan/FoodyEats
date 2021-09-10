@@ -40,7 +40,7 @@
             </VBox>
             <VBox prefHeight="136.0" prefWidth="255.0">
                <children>
-                  <Label text="Welcome Nathan">
+                  <Label fx:id="greeting" text="Welcome Nathan">
                      <font>
                         <Font name="System Bold" size="20.0" />
                      </font>
