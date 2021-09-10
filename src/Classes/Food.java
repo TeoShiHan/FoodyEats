@@ -118,6 +118,7 @@ public class Food {
 
     public void addThisFoodToCart(Buyer buyer, int quantity){
         db.executeCUD(String.format("INSERT INTO `CartItem` VALUES ('%s','%s','%s')",buyer.getCartID(), this.foodID, quantity),gui);
+        buyer.getCart().setShopID(this.shopID);
     }
 
     public int getFoodQtyAddedByUserIntoCart(Buyer buyer){
