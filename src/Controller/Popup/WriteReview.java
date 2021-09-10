@@ -41,7 +41,17 @@ public class WriteReview implements Initializable {
                     spinnerRating.getEditor().setText(String.valueOf(intRatingValue));
                 }
             }            
-        });                
+        });  
+        
+        if(data.getOrder().getReviewID()!=null||!data.getOrder().getReviewID().isBlank()||!data.getOrder().getReviewID().isEmpty()){                
+            spinnerRating.getValueFactory().setValue(data.getOrder().getReview().getRating());
+            spinnerRating.setEditable(false);
+            spinnerRating.setValueFactory(new SpinnerValueFactory.IntegerSpinnerValueFactory(data.getOrder().getReview().getRating(),data.getOrder().getReview().getRating(),data.getOrder().getReview().getRating()));
+            inputComment.setText(data.getOrder().getReview().getComment());
+            inputComment.setEditable(false);
+            btnYes.setDisable(true);
+            btnNo.setText("Back");
+        }
     }   
 
     public Button getBtnYes() {
