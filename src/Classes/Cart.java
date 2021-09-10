@@ -82,6 +82,8 @@ public class Cart {
     public void loadCartItems(){        
         this.cartItems = new ArrayList<>();
         ArrayList<HashMap<String,Object>> cs = db.readAll(String.format("SELECT c.*,ci.*,f.* FROM `Cart` c, `CartItem` ci, `Food` f WHERE c.cartID='%s' AND c.cartID=ci.cartID AND ci.foodID=f.foodID",cartID));        
+        System.out.println(cs);
+        System.out.println("cartID: "+cartID);
         if(!cs.isEmpty()){
             for(HashMap<String,Object> c : cs){
                 if(!c.isEmpty()){

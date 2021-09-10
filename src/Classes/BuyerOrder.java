@@ -65,6 +65,9 @@ public class BuyerOrder extends Order {
         if(!(riderID==null || riderID.isEmpty())){            
             loadRider();
         }
+        if(!(reviewID==null || reviewID.isEmpty())){
+            loadReview();
+        }
         data.setOrder(this);
     }
     
@@ -79,8 +82,6 @@ public class BuyerOrder extends Order {
         Vehicle vehicle = new Vehicle(r.get("vehicleID"), r.get("type"), r.get("plateNo"), r.get("brand"), r.get("model"), r.get("color"));
         Rider rider = new Rider(r.get("accountID"), r.get("username"), r.get("password"), r.get("name"), r.get("email"), r.get("mobileNo"), r.get("accType"), r.get("riderID"), r.get("vehicleID"), r.get("status"));
         rider.setVehicle(vehicle);
-        this.rider = rider;
-        // HashMap<String,Object> r = db.readOne(String.format("SELECT * FROM Rider r, Account a WHERE r.riderID='%s' AND a.accountID=r.accountID",this.riderID));        
-        // this.rider = new Rider(r.get("accountID"), r.get("username"), r.get("password"), r.get("name"), r.get("email"), r.get("mobileNo"), r.get("type"), r.get("riderID"), r.get("vehicleID"), r.get("status"));
+        this.rider = rider;        
     }
 }
