@@ -109,9 +109,9 @@ public class FoodMenu implements Initializable {
                     /*DEBUG MSG*/System.out.println("buyer.getCart().getShopID() IS >>>>>>" + buyer.getCart().getShopID());
                     /*DEBUG MSG*/System.out.println("food.getShopID() IS >>>>>>" + food.getShopID());
 
-                if(cartContainFoodFromOtherShop(buyer, food) && !(buyer.getCart().getCartID() == null)){
+                if(cartContainFoodFromOtherShop(buyer, food)){
                     System.out.println("foreign food Detected");
-                    comfirmForDeleteOldCartItems(buyer.getCartID(),buyer);
+                    comfirmForDeleteOldCartItems(buyer.getCartID(),buyer,food);
 
                 }else if (food.getFoodQtyAddedByUserIntoCart(buyer) != 0){
                     System.out.println("This food have been added into the database for this user");
@@ -166,6 +166,7 @@ public class FoodMenu implements Initializable {
 
             for (int i = 0; i < categoryList.size(); i++) {
                     /*DEBUG MSG*/System.out.println("FOR LOOP " + i);
+                    /*DEBUG MSG*/System.out.println("categoryList.size() " + categoryList.size());
 
                 FXMLLoader fxmlLoader = new FXMLLoader();
                     /*DEBUG MSG*/System.out.println("successfully created the fxml loader");
@@ -237,6 +238,7 @@ public class FoodMenu implements Initializable {
                 
                 //#region : LOAD THE FOODS
                 for (int i = 0; i < foodsOf1Category.size(); i++) {
+                    /* DEBUG OUTPUT>>>>>>> */System.out.println("foodsOf1Category.size() IS :" + foodsOf1Category.size());
 
                     FXMLLoader fxmlLoader = new FXMLLoader();
                         /* DEBUG OUTPUT>>>>>>> */System.out.println("successfully created the fxml loader");
@@ -251,8 +253,11 @@ public class FoodMenu implements Initializable {
                         /* DEBUG OUTPUT>>>>>>> */System.out.println("finish output try");
 
                     FoodItemListeners tempFoodItemListener = createFoodItemListeners();
+                        /* DEBUG OUTPUT>>>>>>> */System.out.println("created food item listener");
 
                     foodItemController.setDataToFoodItem(foodsOf1Category.get(i), tempFoodItemListener);
+                        /* DEBUG OUTPUT>>>>>>> */System.out.println("foodsOf1Category.get(i) IS : " + foodsOf1Category.get(i));
+
                     foodItemController.configureTheSpinner();
                         /* DEBUG OUTPUT>>>>>>> */System.out.println("successfully set the data");
 
@@ -274,6 +279,10 @@ public class FoodMenu implements Initializable {
     //#endregion
 
     public boolean cartContainFoodFromOtherShop(Buyer buyer, Food food) {
+       if (buyer.getCart().getCartID() == null){
+           return false;
+       }
+        
         String cartShopID = buyer.getCart().getShopID().toString();
         String foodShopID = food.getShopID().toString();
 
@@ -288,7 +297,7 @@ public class FoodMenu implements Initializable {
         return (!cartShopID.equals(foodShopID) || distinctShopQty > 1);
     }
 
-    public void comfirmForDeleteOldCartItems(String cartID, Buyer buyer) {
+    public void comfirmForDeleteOldCartItems(String cartID, Buyer buyer, Food food) {
         try {
             gui.confirmationPopup(
                 "Detected food from other shop!!!", 
@@ -296,7 +305,7 @@ public class FoodMenu implements Initializable {
                 "Would you like to clear those foods and add new food to cart?", "Yes", "No", 
                 passback->{
                     if(passback){
-                        clearCart(cartID, buyer);
+                        clearCart(cartID, buyer, food);
                     }
                 }
             );
@@ -314,14 +323,14 @@ public class FoodMenu implements Initializable {
         }
     }
 
-    public void clearCart(String cartID, Buyer buyer){
+    public void clearCart(String cartID, Buyer buyer, Food food){
         String sqlStmt = String.format(
             "DELETE FROM CartItem " +
             "WHERE cartID = '%s';",
             cartID
         );
         db.executeCUD(sqlStmt, gui);
-        buyer.getCart().setCartID(null);
+        buyer.getCart().setShopID(food.getShopID());
     }
 
     public void waringOfNoFoodQty(){
