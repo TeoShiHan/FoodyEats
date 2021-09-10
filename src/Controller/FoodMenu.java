@@ -13,7 +13,6 @@ import Classes.JDBC;
 import Classes.Shop;
 import Interfaces.FoodItemListeners;
 import Interfaces.NavigationalListeners;
-import PageOpener.buyer_openCartpage;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
@@ -110,9 +109,9 @@ public class FoodMenu implements Initializable {
                     /*DEBUG MSG*/System.out.println("buyer.getCart().getShopID() IS >>>>>>" + buyer.getCart().getShopID());
                     /*DEBUG MSG*/System.out.println("food.getShopID() IS >>>>>>" + food.getShopID());
 
-                if(cartContainFoodFromOtherShop(buyer, food)){
+                if(cartContainFoodFromOtherShop(buyer, food) && !(buyer.getCart().getCartID() == null)){
                     System.out.println("foreign food Detected");
-                    comfirmForDeleteOldCartItems(buyer.getCartID());
+                    comfirmForDeleteOldCartItems(buyer.getCartID(),buyer);
 
                 }else if (food.getFoodQtyAddedByUserIntoCart(buyer) != 0){
                     System.out.println("This food have been added into the database for this user");
@@ -289,7 +288,7 @@ public class FoodMenu implements Initializable {
         return (!cartShopID.equals(foodShopID) || distinctShopQty > 1);
     }
 
-    public void comfirmForDeleteOldCartItems(String cartID) {
+    public void comfirmForDeleteOldCartItems(String cartID, Buyer buyer) {
         try {
             gui.confirmationPopup(
                 "Detected food from other shop!!!", 
@@ -297,7 +296,7 @@ public class FoodMenu implements Initializable {
                 "Would you like to clear those foods and add new food to cart?", "Yes", "No", 
                 passback->{
                     if(passback){
-                        clearCart(cartID);
+                        clearCart(cartID, buyer);
                     }
                 }
             );
@@ -315,13 +314,14 @@ public class FoodMenu implements Initializable {
         }
     }
 
-    public void clearCart(String cartID){
+    public void clearCart(String cartID, Buyer buyer){
         String sqlStmt = String.format(
             "DELETE FROM CartItem " +
             "WHERE cartID = '%s';",
             cartID
         );
         db.executeCUD(sqlStmt, gui);
+        buyer.getCart().setCartID(null);
     }
 
     public void waringOfNoFoodQty(){

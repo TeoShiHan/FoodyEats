@@ -179,10 +179,15 @@ public class Account implements TableDataProcessing{
 
                     /*DEBUG MSG*/System.out.println("SQL STATEMENT IS : " + sqlStatement);
 
-                String shopIdInCart = (String)db.readOne(sqlStatement).get("shopID");
-                
-                Cart tempCart = new Cart(buyer.getCartID(), buyer.getBuyerID(), shopIdInCart);
-                buyer.setCart(tempCart);
+                if (cartIsEmpty(sqlStatement)){
+                    Cart tempCart = new Cart();
+                    tempCart.setBuyerID(buyer.getCartID());
+                    buyer.setCart(tempCart);
+                }else{
+                    String shopIdInCart = (String)db.readOne(sqlStatement).get("shopID");
+                    Cart tempCart = new Cart(buyer.getCartID(), buyer.getBuyerID(), shopIdInCart);
+                    buyer.setCart(tempCart);
+                }
 
                 data.setAccount(buyer);
                 data.setBuyer(buyer);
@@ -387,6 +392,10 @@ public class Account implements TableDataProcessing{
             /*DEBUG MSG*/System.out.println("ARRAY ELEMENT : " + tempDataArr);
         }
         return arrMapToKey;
+    }
+
+    public boolean cartIsEmpty(String sqlStatement){
+        return db.readOne(sqlStatement) == null;
     }
     //#endregion
 }

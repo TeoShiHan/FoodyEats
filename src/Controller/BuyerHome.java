@@ -35,6 +35,8 @@ public class BuyerHome implements Initializable {
     @FXML private ImageView orderHistoryIcon;
     @FXML private ImageView cartPageIcon;
     @FXML private ImageView homePageIcon;
+    @FXML private Label greeting;
+
 
     //  Listeners
     @FXML
@@ -70,8 +72,7 @@ public class BuyerHome implements Initializable {
         
         Shop tempShop = new Shop();
         shopObjectCollection = tempShop.createShopObjectCollection();
-
-        System.out.println("outa the create shop object function");
+            System.out.println("outa the create shop object function");
 
         int gridCol = 0;
         int gridRow = 1;
@@ -176,4 +177,5 @@ public class BuyerHome implements Initializable {
     public void switchToShopPage(){
         gui.toNextScene("View/FoodMenu.fxml");
     }
+
 }
