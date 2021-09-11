@@ -5,7 +5,7 @@ import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.HashMap;
 import Cache.*;
-import Interfaces.TableDataProcessing;
+import ListenerInterfaces.TableDataProcessing;
 import SQL.CreateTableQuery.SQL;
  
 public class Account implements TableDataProcessing{    
@@ -228,6 +228,14 @@ public class Account implements TableDataProcessing{
         this.name = name;
         this.email = email;
         this.mobileNo = mobileNo;
+    }
+
+    public void edit(Account account){
+        this.username = account.username;
+        this.password = account.password;
+        this.name = account.name;
+        this.email = account.email;
+        this.mobileNo = account.mobileNo;
     }
 
     public void loadUser(){

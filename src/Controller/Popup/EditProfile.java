@@ -1,6 +1,10 @@
 package Controller.Popup;
 import Cache.*;
 import Classes.*;
+import Validation.AdminFormValidator;
+import Validation.BuyerFormValidator;
+import Validation.RiderFormValidator;
+import Validation.SellerFormValidator;
 
 import java.net.URL;
 import java.util.ResourceBundle;
@@ -11,8 +15,7 @@ import javafx.scene.control.Button;
 import javafx.scene.control.TextField;
 import javafx.scene.layout.VBox;
 
-public class EditProfile implements Initializable{    
-    private GUI gui = GUI.getInstance();
+public class EditProfile implements Initializable{ 
     private DataHolder data = DataHolder.getInstance();
 
     @FXML private TextField inputUsername,inputPassword,inputName,inputEmail,inputMobileNo,inputAddress,inputBankAccNo,inputNRIC,inputLicenseNo,inputCompanyBranch;
@@ -21,12 +24,13 @@ public class EditProfile implements Initializable{
 
     @Override
     public void initialize(URL location, ResourceBundle resources) {
-        // TODO Auto-generated method stub        
+        
         inputUsername.setText(data.getAccount().getUsername());
         inputPassword.setText(data.getAccount().getPassword());
         inputName.setText(data.getAccount().getName());
         inputEmail.setText(data.getAccount().getEmail());
         inputMobileNo.setText(data.getAccount().getMobileNo());
+        
         if(!(data.getAccount() instanceof Seller)){ 
             vboxAddress.setManaged(false);           
             vboxAddress.setVisible(false);
@@ -35,21 +39,24 @@ public class EditProfile implements Initializable{
             vboxNRIC.setManaged(false);
             vboxNRIC.setVisible(false);
             vboxLicenseNo.setManaged(false);
-            vboxLicenseNo.setVisible(false);            
+            vboxLicenseNo.setVisible(false);        
         }
+
         if(data.getAccount() instanceof Buyer){
             vboxAddress.setManaged(true);
             vboxAddress.setVisible(true);
             inputAddress.setText(((Buyer)data.getAccount()).getAddress());
         }
+
         if(data.getAccount() instanceof Seller){
             vboxAddress.setManaged(true);
             vboxAddress.setVisible(true);
             inputAddress.setText(((Seller)data.getAccount()).getAddress());
             inputBankAccNo.setText(((Seller)data.getAccount()).getBankAcc());
             inputNRIC.setText(((Seller)data.getAccount()).getNRIC());
-            inputLicenseNo.setText(((Seller)data.getAccount()).getLicenseNumber());            
+            inputLicenseNo.setText(((Seller)data.getAccount()).getLicenseNumber());        
         }
+
         if(data.getAccount() instanceof Admin){
             vboxNRIC.setManaged(true);
             vboxNRIC.setVisible(true);            
@@ -58,7 +65,7 @@ public class EditProfile implements Initializable{
         }else{
             vboxCompanyBranch.setManaged(false);
             vboxCompanyBranch.setVisible(false);
-        }                
+        }
     }
 
     public Button getBtnYes() {
@@ -156,5 +163,24 @@ public class EditProfile implements Initializable{
     public void setInputCompanyBranch(TextField inputCompanyBranch) {
         this.inputCompanyBranch = inputCompanyBranch;
     }
-    
+
+    public boolean detectedInvalidSellerInfo(){
+        SellerFormValidator formValidator = new SellerFormValidator(this);
+        return formValidator.validateAlterForm();
+    }
+
+    public boolean detectedInvalidBuyerInfo(){
+        BuyerFormValidator formValidator = new BuyerFormValidator(this);
+        return formValidator.validateAlterForm();
+    }
+
+    public boolean detectedInvalidAdminInfo(){
+        AdminFormValidator formValidator = new AdminFormValidator(this);
+        return formValidator.validateForm();
+    }
+
+    public boolean detectedInvalidRiderInfo(){
+        RiderFormValidator formValidator = new RiderFormValidator(this);
+        return formValidator.validateRiderProfile();
+    }
 }

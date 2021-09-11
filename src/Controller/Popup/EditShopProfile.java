@@ -1,11 +1,9 @@
 package Controller.Popup;
 import Cache.*;
+import Validation.ShopFormValidator;
 
 import java.io.File;
-import java.io.FileInputStream;
-import java.io.FileNotFoundException;
 import java.io.IOException;
-import java.io.InputStream;
 import java.net.URL;
 import java.util.ResourceBundle;
 
@@ -34,31 +32,18 @@ public class EditShopProfile implements Initializable{
 
     @Override
     public void initialize(URL location, ResourceBundle resources) {                    
+        
         SpinnerValueFactory<Double> deliveryFeeValueFactory = new SpinnerValueFactory.DoubleSpinnerValueFactory(0.00, 100.00, 3.00);
         SpinnerValueFactory<Integer> startHourValueFactory = new SpinnerValueFactory.IntegerSpinnerValueFactory(0, 23, 8);
         SpinnerValueFactory<Integer> endHourValueFactory = new SpinnerValueFactory.IntegerSpinnerValueFactory(0, 23, 17);     
+        
         spinnerDeliveryFee.setValueFactory(deliveryFeeValueFactory);
         spinnerStartHour.setValueFactory(startHourValueFactory);
         spinnerEndHour.setValueFactory(endHourValueFactory);
 
-        spinnerDeliveryFee.getEditor().textProperty().addListener((obs, oldValue, newValue) -> {
-            spinnerDeliveryFee.getEditor().setText(newValue.replaceAll("[^0-9.]+",""));
-            if(spinnerDeliveryFee.getEditor().getText().isEmpty()){
-                spinnerDeliveryFee.getEditor().setText("0");
-            }
-        });  
-        spinnerStartHour.getEditor().textProperty().addListener((obs, oldValue, newValue) -> {
-            spinnerStartHour.getEditor().setText(newValue.replaceAll("[^0-9]+",""));
-            if(spinnerStartHour.getEditor().getText().isEmpty()){
-                spinnerStartHour.getEditor().setText("0");
-            }
-        });
-        spinnerEndHour.getEditor().textProperty().addListener((obs, oldValue, newValue) -> {
-            spinnerEndHour.getEditor().setText(newValue.replaceAll("[^0-9]+",""));
-            if(spinnerEndHour.getEditor().getText().isEmpty()){
-                spinnerEndHour.getEditor().setText("0");
-            }
-        });
+        configureSpinner(spinnerDeliveryFee);
+        configureSpinner(spinnerStartHour);
+        configureSpinner(spinnerEndHour);
                         
         inputName.setText(data.getSeller().getShop().getName());
         inputAddress.setText(data.getSeller().getShop().getAddress());
@@ -82,20 +67,11 @@ public class EditShopProfile implements Initializable{
             new FileChooser.ExtensionFilter("Images", "*.png", "*.jpg", "*.gif", "*.jpeg")
         );
         shopImageFile = fileChooser.showOpenDialog(gui.getStage());
+        
         if(shopImageFile!=null){                                    
             // https://stackoverflow.com/questions/36991165/how-to-set-the-save-path-for-a-file-chosen-in-filechooser-javafx/36991844#36991844
-            // String currentPath = Paths.get("").toAbsolutePath().toString().replaceAll("\\\\", "/");            
             newImgFileExtension = shopImageFile.getName().substring(shopImageFile.getName().indexOf("."));            
-            // Path path = Paths.get(currentPath+"/src/Images/temp"+newImgFileExtension);
             image.setImage(new Image(shopImageFile.toURI().toString()));
-            // try{
-            //     Files.delete(path);
-            // }catch (DirectoryNotEmptyException e) {
-            //     // happens sometimes if Windows is too slow to remove children of a directory                
-            //     System.out.println("Error on remove the file!!!!!");
-            // }finally{
-                // Files.copy(shopImageFile.toPath(), path);
-            // }           
         }                               
     }   
 
@@ -187,5 +163,29 @@ public class EditShopProfile implements Initializable{
         this.image = image;
     }
        
-       
+    public boolean detectedInvalidFields(){
+        ShopFormValidator formValidator = new ShopFormValidator(this);
+        return formValidator.validateAlterForm();
+    }
+
+    public boolean isFilled(){
+        
+        boolean nameIsNotNull =  !(this.inputName.getText().isEmpty());
+            System.out.println("NAME IS NOT NULL : " + nameIsNotNull);
+        boolean telIsNotNull  =  !(this.inputTelNo.getText().isEmpty());
+            System.out.println("TEL IS NOT NULL : " + telIsNotNull);
+        boolean addressIsNotNull = !(this.inputAddress.getText().isEmpty());
+            System.out.println("ADDRESS IS NOT NULL : " + addressIsNotNull);
+
+        return(nameIsNotNull && telIsNotNull && addressIsNotNull);
+    }
+    
+    public void configureSpinner(Spinner<?> spinner) {
+        spinner.getEditor().textProperty().addListener((obs, oldValue, newValue) -> {
+            spinner.getEditor().setText(newValue.replaceAll("[^0-9.]+",""));
+            if(spinner.getEditor().getText().isEmpty()){
+                spinner.getEditor().setText("0");
+            }
+        });  
+    }
 }

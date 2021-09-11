@@ -1,9 +1,7 @@
-package Interfaces;
+package ListenerInterfaces;
 
 import java.util.ArrayList;
 import java.util.HashMap;
-
-import javax.print.attribute.HashAttributeSet;
 
 public interface TableDataProcessing {
     public boolean isMatch(String str1, String str2);

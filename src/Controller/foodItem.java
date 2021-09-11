@@ -1,6 +1,6 @@
 package Controller;
 import Classes.Food;
-import Interfaces.FoodItemListeners;
+import ListenerInterfaces.FoodItemListeners;
 import javafx.fxml.FXML;
 import javafx.scene.control.Label;
 import javafx.scene.control.Spinner;

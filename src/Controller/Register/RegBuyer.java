@@ -1,6 +1,7 @@
 package Controller.Register;
 import Cache.*;
 import Classes.*;
+import Validation.BuyerFormValidator;
 import javafx.fxml.FXML;
 import javafx.scene.control.TextField;
 
@@ -51,5 +52,10 @@ public class RegBuyer {
         buyer.setMobileNo(inputMobileNo.getText());
         buyer.setAddress(inputAddress.getText());
         data.setAccount(buyer);
+    }
+
+    public boolean detectedInvalidFields(){
+        BuyerFormValidator formValidator = new BuyerFormValidator(this);
+        return formValidator.validateForm();
     }
 }

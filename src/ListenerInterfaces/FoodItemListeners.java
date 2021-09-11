@@ -1,4 +1,4 @@
-package Interfaces;
+package ListenerInterfaces;
 import Classes.Food;
 
 public interface FoodItemListeners {

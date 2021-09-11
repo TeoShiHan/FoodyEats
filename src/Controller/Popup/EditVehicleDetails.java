@@ -1,6 +1,6 @@
 package Controller.Popup;
 import Cache.*;
-import Classes.*;
+import Validation.RiderFormValidator;
 
 import java.net.URL;
 import java.util.ResourceBundle;
@@ -35,8 +35,7 @@ public class EditVehicleDetails implements Initializable{
         inputModel.setText(data.getVehicle().getModel());
         inputPlateNo.setText(data.getVehicle().getPlateNo());
         inputColor.setText(data.getVehicle().getColor());
-        
-        checkSelectedTypeIsVehicle();
+                
         dropdownVehicleType.setOnAction(e->{
             checkSelectedTypeIsVehicle();
         });
@@ -139,5 +138,12 @@ public class EditVehicleDetails implements Initializable{
         }else{
             return true;
         }
-    } 
+    }
+
+    public boolean detectedInvalidVehicleDetails(){
+        RiderFormValidator formValidator = new RiderFormValidator(this);
+        boolean isInvalid = formValidator.validateRiderCar();
+        System.out.println("IS INVALID : " + isInvalid);
+        return formValidator.validateRiderCar();
+    }
 }

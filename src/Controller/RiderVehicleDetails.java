@@ -66,37 +66,20 @@ public class RiderVehicleDetails implements Initializable{
         
         controller.getBtnYes().setOnAction(e->{
             if(controller.isFilled()){
-                myDialog.getScene().getRoot().setDisable(true);
-                myDialog.getScene().setCursor(Cursor.WAIT);            
-                data.getVehicle().setType(controller.getDropdownVehicleType().getSelectionModel().getSelectedItem());
-                data.getVehicle().setBrand(controller.getInputBrand().getText());
-                data.getVehicle().setModel(controller.getInputModel().getText());
-                data.getVehicle().setPlateNo(controller.getInputPlateNo().getText());
-                data.getVehicle().setColor(controller.getInputColor().getText());
-                Task<Void> task = new Task<Void>() {
-                    @Override
-                    public Void call() throws IOException, SQLException {                                                   
-                        data.getVehicle().edit(controller.getDropdownVehicleType().getSelectionModel().getSelectedItem(), controller.getInputBrand().getText(), controller.getInputModel().getText(), controller.getInputPlateNo().getText(), controller.getInputColor().getText());                                            
-                        return null;
-                    }
-                };            
-                new Thread(task).start();
-    
-                myDialog.close();
-                try {
-                    gui.notAlertInProgress(myDialog);
-                    gui.refreshScene(currentFXMLPath);
-                } catch (IOException e1) {
-                    // TODO Auto-generated catch block
-                    e1.printStackTrace();
+
+                if (!controller.detectedInvalidVehicleDetails()) {
+                    myDialog.getScene().getRoot().setDisable(true);
+                    myDialog.getScene().setCursor(Cursor.WAIT);
+                    updateVehicleInDataHolder(controller);
+                    updateVehicleDataToDatabase(controller);
+                    myDialog.close();
+                    refreshScene(myDialog);
+                }else{
+                    System.out.println("NOT DETECTED ERROR : " + !controller.detectedInvalidVehicleDetails());
+                    popUpInvalidFieldDetectedMsg();
                 }
             }else{
-                try {
-                    gui.informationPopup("Attention", "Please fill in all the blank.");
-                } catch (IOException e1) {
-                    // TODO Auto-generated catch block
-                    e1.printStackTrace();
-                }
+                popUpEmptyFieldDetectedMsg();
             }
         });
         
@@ -114,5 +97,56 @@ public class RiderVehicleDetails implements Initializable{
     @FXML
     void toHome(MouseEvent event) throws IOException {        
         gui.toNextScene(String.format("View/%sHome.fxml",data.getAccount().getAccType()));
-    } 
+    }
+    
+    public void popUpEmptyFieldDetectedMsg(){
+        try {
+            gui.informationPopup("Attention", "Please fill in all the blank.");
+        } catch (IOException e1) {
+            e1.printStackTrace();
+        }
+    }
+
+    public void popUpInvalidFieldDetectedMsg(){
+        try {
+            gui.informationPopup("Attention", "Invalid fields detected, please try again!");
+        } catch (IOException e1) {
+            e1.printStackTrace();
+        }
+    }
+
+    public void updateVehicleDataToDatabase(EditVehicleDetails controller){
+        Task<Void> task = new Task<Void>() {
+            @Override
+            public Void call() throws IOException, SQLException {                 
+                String selectedItem = controller.getDropdownVehicleType().getSelectionModel().getSelectedItem();
+                String newBrand = controller.getInputBrand().getText();
+                String newModel = controller.getInputModel().getText();
+                String newPlateNo = controller.getInputPlateNo().getText();
+                String newColor = controller.getInputColor().getText();
+
+                data.getVehicle().edit(selectedItem, newBrand, newModel, newPlateNo, newColor);                                            
+                return null;
+            }
+        };
+        new Thread(task).start();
+    }
+
+    public void updateVehicleInDataHolder(EditVehicleDetails controller) {
+        data.getVehicle().setType(controller.getDropdownVehicleType().getSelectionModel().getSelectedItem());
+        data.getVehicle().setBrand(controller.getInputBrand().getText());
+        data.getVehicle().setModel(controller.getInputModel().getText());
+        data.getVehicle().setPlateNo(controller.getInputPlateNo().getText());
+        data.getVehicle().setColor(controller.getInputColor().getText());
+    }
+    
+    public void refreshScene(Stage myDialog){
+        try {
+            gui.notAlertInProgress(myDialog);
+            gui.refreshScene(currentFXMLPath);
+        } catch (IOException e1) {
+            e1.printStackTrace();
+        }
+    }
 }
+

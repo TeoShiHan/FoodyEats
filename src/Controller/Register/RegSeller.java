@@ -1,13 +1,17 @@
 package Controller.Register;
 import Classes.*;
+
+import Validation.*;
+
+import java.util.regex.Pattern;
+
 import Cache.*;
 import javafx.fxml.FXML;
 import javafx.scene.control.TextField;
 
 public class RegSeller {
-    private GUI gui = GUI.getInstance();
     private DataHolder data = DataHolder.getInstance();
-
+    
     @FXML private TextField inputName,inputEmail,inputMobileNo,inputAddress,inputNRIC,inputLicenseNo,inputBankAccNo;
 
     public TextField getInputName() {
@@ -72,5 +76,10 @@ public class RegSeller {
         seller.setLicenseNumber(inputLicenseNo.getText());
         seller.setBankAcc(inputBankAccNo.getText());
         data.setAccount(seller);
+    }
+
+    public boolean detectedInvalidFields(){
+        SellerFormValidator formValidator = new SellerFormValidator(this);
+        return formValidator.validateForm();
     }
 }
