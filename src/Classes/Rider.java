@@ -23,18 +23,16 @@ public class Rider extends Account{
 
     //#region : CONSTRUCTORS
     public Rider(){
-        this("","","",0);
+        this("","",0);
     }
-    public Rider(String riderID, String vehicleID, String accountID, int status){
+    public Rider(String riderID, String vehicleID, int status){
         this.riderID = riderID;        
-        this.vehicleID = vehicleID;
-        this.accountID = accountID;      
+        this.vehicleID = vehicleID;    
         this.status = status;  
     }
-    public Rider(Object riderID, Object vehicleID, Object accountID, Object status){
+    public Rider(Object riderID, Object vehicleID, Object status){
         this.riderID = (String)riderID;        
-        this.vehicleID = (String)vehicleID;
-        this.accountID = (String)accountID;       
+        this.vehicleID = (String)vehicleID;      
         this.status = (int)status;
     }
     public Rider(String accountID, String username, String password, String name, String email, String mobileNo, String accType, String riderID, String vehicleID,int status){
