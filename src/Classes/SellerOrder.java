@@ -22,25 +22,6 @@ public class SellerOrder extends Order {
     public SellerOrder(Order order) {
         super(order.orderID, order.status, order.dateCreated, order.timeCreated, order.buyerID, order.riderID, order.shopID, order.paymentID, order.reviewID);
     }
-    
-    public SellerOrder(Buyer buyer, Rider rider) {
-        this.buyer = buyer;
-        this.rider = rider;
-    }
-
-    public SellerOrder(String orderID, String status, LocalDate dateCreated, LocalTime timeCreated, String buyerID,
-            String riderID, String shopID, String paymentID, String reviewID, Buyer buyer, Rider rider) {
-        super(orderID, status, dateCreated, timeCreated, buyerID, riderID, shopID, paymentID, reviewID);
-        this.buyer = buyer;
-        this.rider = rider;
-    }
-
-    public SellerOrder(Object orderID, Object status, Object dateCreated, Object timeCreated, Object buyerID,
-            Object riderID, Object shopID, Object paymentID, Object reviewID, Buyer buyer, Rider rider) {
-        super(orderID, status, dateCreated, timeCreated, buyerID, riderID, shopID, paymentID, reviewID);
-        this.buyer = buyer;
-        this.rider = rider;
-    }    
 
     public Buyer getBuyer() {
         return buyer;
@@ -71,14 +52,14 @@ public class SellerOrder extends Order {
     
     public void loadBuyer() {
         HashMap<String,Object> b = db.readOne(String.format("SELECT * FROM Buyer b, Account a WHERE b.buyerID='%s' AND a.accountID=b.accountID",this.buyerID));
-        this.buyer=new Buyer(b.get("accountID"), b.get("username"), b.get("password"), b.get("name"), b.get("email"), b.get("mobileNo"), b.get("accType"), b.get("buyerID"), b.get("address"), b.get("cartID"));
+        this.buyer=new Buyer(b.get("accountID"), b.get("username"), b.get("password"), b.get("name"), b.get("email"), b.get("mobileNo"), b.get("accType"), b.get("regDate"), b.get("buyerID"), b.get("address"), b.get("cartID"));
     }
 
     public void loadRider() {
         HashMap<String,Object> r = db.readOne(String.format("SELECT a.type AS accType,a.*,r.*,v.* FROM `Rider` r, `Vehicle` v, `Account` a WHERE r.riderID='%s' AND r.vehicleID=v.vehicleID AND r.accountID=a.accountID",riderID));
         System.out.println(r);
         Vehicle vehicle = new Vehicle(r.get("vehicleID"), r.get("type"), r.get("plateNo"), r.get("brand"), r.get("model"), r.get("color"));
-        Rider rider = new Rider(r.get("accountID"), r.get("username"), r.get("password"), r.get("name"), r.get("email"), r.get("mobileNo"), r.get("accType"), r.get("riderID"), r.get("vehicleID"), r.get("status"));
+        Rider rider = new Rider(r.get("accountID"), r.get("username"), r.get("password"), r.get("name"), r.get("email"), r.get("mobileNo"), r.get("accType"), r.get("regDate"), r.get("riderID"), r.get("vehicleID"), r.get("status"));
         rider.setVehicle(vehicle);
         this.rider = rider;
         // HashMap<String,Object> r = db.readOne(String.format("SELECT * FROM Rider r, Account a WHERE r.riderID='%s' AND a.accountID=r.accountID",this.riderID));        

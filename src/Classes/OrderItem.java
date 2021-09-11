@@ -19,30 +19,13 @@ public class OrderItem {
     private Food food = new Food();
 
     public OrderItem(){
-        this("","",0);
-    }    
-    public OrderItem(String orderID, String foodID, int quantity) {
-        this.orderID = orderID;
-        this.foodID = foodID;
-        this.quantity = quantity;        
-    }
-    public OrderItem(String orderID, String foodID, int quantity, Food food) {
-        this.orderID = orderID;
-        this.foodID = foodID;
-        this.quantity = quantity;               
-        this.food = food;
-    }
+        
+    }            
     public OrderItem(Object orderID, Object foodID, Object quantity) {
         this.orderID = (String)orderID;
         this.foodID = (String)foodID;
         this.quantity = (int)quantity;                
-    }
-    public OrderItem(Object orderID, Object foodID, Object quantity, Food food) {
-        this.orderID = (String)orderID;
-        this.foodID = (String)foodID;
-        this.quantity = (int)quantity;        
-        this.food = food;
-    }
+    }    
 
     public String getOrderID() {
         return orderID;

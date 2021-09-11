@@ -17,12 +17,7 @@ public class Order {
     protected LocalDate dateCreated;
     protected LocalTime timeCreated;
     protected Review review;    
-    protected ArrayList<OrderItem> orderItems;    
-    // for order details uses
-    // private Buyer buyer;
-    // private Rider rider;
-    // private Shop shop;    
-    // private int loadOrderItemCount,loadAllDetailsCount;
+    protected ArrayList<OrderItem> orderItems;        
     private static boolean ordersHaveChange = false;
 
     public Order(){
@@ -37,26 +32,13 @@ public class Order {
         this.buyerID = buyerID;
         this.shopID = shopID;
     }
-    
-    public Order(String orderID, String status, LocalDate dateCreated, LocalTime timeCreated, String buyerID, String riderID,
-                 String shopID, String paymentID, String reviewID) {
-        this.orderID = orderID;
-        this.status = status;
-        this.dateCreated = dateCreated;  
-        this.timeCreated = LocalTime.parse(timeCreated.format(DateTimeFormatter.ofPattern("HH:mm:ss")));  
-        this.buyerID = buyerID;
-        this.riderID = riderID;
-        this.shopID = shopID;
-        this.paymentID = paymentID;
-        this.reviewID = reviewID;                      
-    }    
 
     public Order(Object orderID, Object status, Object dateCreated,  Object timeCreated, Object buyerID, Object riderID, 
                 Object shopID, Object paymentID, Object reviewID) {
         this.orderID = (String)orderID;
         this.status = (String)status;
-        this.dateCreated = LocalDate.parse((String)dateCreated);  
-        this.timeCreated = LocalTime.parse((String)timeCreated,DateTimeFormatter.ofPattern("HH:mm:ss")); //Default format is like HH:mm:ss.ns, example: 13:28:04.177786900
+        this.dateCreated = LocalDate.parse(dateCreated.toString());  
+        this.timeCreated = LocalTime.parse(timeCreated.toString(),DateTimeFormatter.ofPattern("HH:mm:ss")); //Default format is like HH:mm:ss.ns, example: 13:28:04.177786900
         this.buyerID = (String)buyerID;
         this.riderID = (String)riderID;
         this.shopID = (String)shopID;

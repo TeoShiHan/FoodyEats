@@ -24,32 +24,11 @@ public class Buyer extends Account{
     
     //#region : CONSTRUCTORS
     public Buyer() {  //No-arg Constructor        
-    	this("","","","");
-    }
-
-    public Buyer(String buyerID, String address, String accountID, String cartID) {        
-        this.buyerID = buyerID;
-        this.address = address;
-        this.accountID = accountID;
-        this.cartID = cartID;        
-    }      
-
-    public Buyer(Object buyerID, Object address, Object accountID, Object cartID) {        
-        this.buyerID =(String)buyerID;
-        this.address =(String)address;
-        this.accountID =(String)accountID;
-        this.cartID = (String)cartID;        
-    }
-
-    public Buyer(String accountID, String username, String password, String name, String email, String mobileNo, String accType, String buyerID, String address, String cartID) {        
-        super(accountID, username, password, name, email, mobileNo, accType);
-        this.buyerID = buyerID;
-        this.address = address;        
-        this.cartID = cartID;                
+    	
     }
     
-    public Buyer(Object accountID, Object username, Object password, Object name, Object email, Object mobileNo, Object accType, Object buyerID, Object address, Object cartID) {
-        super(accountID, username, password, name, email, mobileNo, accType);
+    public Buyer(Object accountID, Object username, Object password, Object name, Object email, Object mobileNo, Object accType, Object regDate, Object buyerID, Object address, Object cartID) {
+        super(accountID, username, password, name, email, mobileNo, accType, regDate);
         this.buyerID =(String)buyerID;
         this.address =(String)address;
         this.cartID = (String)cartID;        
@@ -63,7 +42,8 @@ public class Buyer extends Account{
             (String)account.get("name"),
             (String)account.get("email"),
             (String)account.get("mobileNo"),
-            (String)account.get("type")
+            (String)account.get("type"),
+            (String)account.get("regDate")
         );
         this.buyerID = (String)buyer.get("buyerID");
         this.address = (String)buyer.get("address");
@@ -133,7 +113,7 @@ public class Buyer extends Account{
             String nextBuyerID = db.getNextId("Buyer");            
             String nextCartID = db.getNextId("Cart");                        
             db.executeCUD(String.format("INSERT INTO Cart VALUES ('%s','%s','%s')",nextCartID,nextBuyerID,null),gui);            
-            this.cart = new Cart(nextCartID, nextBuyerID);            
+            this.cart = new Cart(nextCartID, nextBuyerID, null);            
             db.executeCUD(String.format("INSERT INTO Buyer VALUES ('%s','%s','%s','%s')",nextBuyerID,address,accountID,nextCartID),gui);            
             this.buyerID = nextBuyerID;
             this.cartID = nextCartID;

@@ -54,7 +54,9 @@ public class BuyerOrderDetails implements Initializable {
         order = new BuyerOrder(data.getOrder());            
         data.setOrder(order);
         if(order.getOrderItems()==null){            
+            System.out.println(order.getShop());
             order.loadAllDetails();            
+            System.out.println(order.getShop());
         }
         
         lblOrderDetails.setText("Order #"+order.getOrderID());
@@ -63,7 +65,7 @@ public class BuyerOrderDetails implements Initializable {
         lblShopName.setText(order.getShop().getName());
         lblShopAddress.setText(order.getShop().getAddress());
         lblShopTel.setText(order.getShop().getTel());
-        if(data.getRider()!=null && !data.getRider().getName().isEmpty()){
+        if(order.getRider()!=null && !order.getRider().getName().isEmpty()){
             lblRiderName.setText(order.getRider().getName());
             lblRiderMobileNo.setText(order.getRider().getMobileNo());                
             lblRiderVehicleDetails.setText(order.getRider().getVehicle().toString());

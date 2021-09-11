@@ -22,27 +22,8 @@ public class Account implements TableDataProcessing{
     //#endregion
 
     //#region : CONSTRUCTORS
-    public Account(){
-        this("","","","","","","");
-    }
-    public Account(String accountID, String username, String password, String name, String email, String mobileNo, String accType) {
-        this.accountID = accountID;
-        this.username = username;
-        this.password = password;
-        this.name = name;
-        this.email = email;
-        this.mobileNo = mobileNo;    
-        this.accType = accType;
-    } 
-    public Account(Object accountID, Object username, Object password, Object name, Object email, Object mobileNo, Object accType) {
-        this.accountID = (String)accountID;
-        this.username = (String)username;
-        this.password = (String)password;
-        this.name = (String)name;
-        this.email = (String)email;
-        this.mobileNo = (String)mobileNo;    
-        this.accType = (String)accType;
-    }
+    public Account(){}    
+        
     public Account(Object accountID, Object username, Object password, Object name, Object email, Object mobileNo, Object accType, Object regDate) {
         this.accountID = (String)accountID;
         this.username = (String)username;

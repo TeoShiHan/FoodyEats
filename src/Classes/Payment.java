@@ -5,21 +5,8 @@ public class Payment {
     
     public Payment(){
         
-    }
-
-    public Payment(String paymentID, String method, String orderID){
-        this.paymentID = paymentID;
-        this.method = method;
-        this.orderID = orderID;
-    }
-
-    public Payment(Object paymentID, Object method, Object orderID){
-        this.paymentID = (String)paymentID;
-        this.method = (String)method;
-        this.orderID = (String)orderID;
-    }
-
-    // for scenario when user pay
+    }    
+    // for scenario when user pay, to create new payment
     public Payment(String method){
         this.method = method;
     }

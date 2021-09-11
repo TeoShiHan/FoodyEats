@@ -77,7 +77,7 @@ public class SellerOrderHistory implements Initializable {
                 });                
                 btnViewDetails.setOnAction(e->{          
                     data.setOrder(order);
-                    gui.toNextScene("View/RiderOrderDetails.fxml");                            
+                    gui.toNextScene("View/SellerOrderDetails.fxml");                            
                 });                                       
             }                     
         });

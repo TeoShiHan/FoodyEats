@@ -49,9 +49,9 @@ public class SellerOrderDetails implements Initializable {
             order.loadAllDetails();            
         }
         
-        lblOrderDetails.setText("Order #"+data.getOrder().getOrderID());
-        lblDateCreated.setText(data.getOrder().getDateCreated().toString());
-        lblTimeCreated.setText(data.getOrder().getTimeCreated().toString());
+        lblOrderDetails.setText("Order #"+order.getOrderID());
+        lblDateCreated.setText(order.getDateCreated().toString());
+        lblTimeCreated.setText(order.getTimeCreated().toString());
         lblBuyerName.setText(order.getBuyer().getName());
         lblBuyerMobileNo.setText(order.getBuyer().getMobileNo());
         lblBuyerAddress.setText(order.getBuyer().getAddress());  
@@ -78,7 +78,7 @@ public class SellerOrderDetails implements Initializable {
         vboxStatus.setVisible(false);
         if(order.getStatus().equals("Pending")){
             btnAccept.setOnAction(e->{
-                data.getOrder().setStatus("Seller Accepted");
+                order.setStatus("Seller Accepted");
                 data.getShop().acceptOrder(order.getOrderID());
                 try {
                     gui.refreshScene(currentFXMLPath);
@@ -89,7 +89,7 @@ public class SellerOrderDetails implements Initializable {
             });
     
             btnDecline.setOnAction(e->{
-                data.getOrder().setStatus("Seller Declined");
+                order.setStatus("Seller Declined");
                 data.getShop().declineOrder(order.getOrderID());
                 try {
                     gui.refreshScene(currentFXMLPath);
@@ -103,7 +103,7 @@ public class SellerOrderDetails implements Initializable {
             btnDecline.setVisible(false);
             btnAccept.setText("Ready");
             btnAccept.setOnAction(e->{
-                data.getOrder().setStatus("Seller Ready");
+                order.setStatus("Seller Ready");
                 data.getShop().readyOrder(order.getOrderID());
                 try {
                     gui.refreshScene(currentFXMLPath);

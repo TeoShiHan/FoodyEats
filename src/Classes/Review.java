@@ -18,18 +18,8 @@ public class Review {
     private String buyerUserName; // for see reviews purpose
 
     public Review() {
-        this("","",0,LocalDate.now(),LocalTime.now(),"","");
-    }
-
-    public Review(String reviewID, int rating, String comment, LocalDate dateCreated, LocalTime timeCreated, String orderID, String shopID) {
-        this.reviewID = reviewID;
-        this.rating = rating;
-        this.comment = comment;
-        this.dateCreated = dateCreated;
-        this.timeCreated = timeCreated;
-        this.orderID = orderID;
-        this.shopID = shopID;
-    }
+        
+    }    
 
     public Review(Object reviewID, Object rating, Object comment, Object dateCreated, Object timeCreated, Object orderID, Object shopID) {
         this.reviewID = (String)reviewID;

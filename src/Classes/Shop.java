@@ -33,8 +33,7 @@ public class Shop implements TableDataProcessing{
     //#endregion
     
     //region  : CONSTRUCTORS
-     public Shop(){
-         this("","","","",null, null,0,null,0.0,"");
+     public Shop(){         
      }
 
     public Shop(
@@ -59,31 +58,7 @@ public class Shop implements TableDataProcessing{
         this.dateCreated = LocalDate.parse((String)dateCreated);
         this.deliveryFee = (double) deliveryFee;
         this.imgPath = (String) imgPath;
-    }
-
-    public Shop(
-        String shopID, 
-        String name,
-        String address, 
-        String tel, 
-        LocalTime startHour, 
-        LocalTime endHour, 
-        int status,
-        LocalDate dateCreated,
-        double deliveryFee,
-        String imgPath
-    ){
-        this.shopID = shopID;
-        this.name = name;
-        this.address = address;
-        this.tel = tel;
-        this.startHour = startHour;
-        this.endHour =endHour;
-        this.status = status;
-        this.dateCreated = dateCreated;
-        this.deliveryFee = deliveryFee;
-        this.imgPath = imgPath;
-    }
+    }    
 
     public Shop(HashMap<String,Object>shop){
         this.shopID = (String) shop.get("shopID");

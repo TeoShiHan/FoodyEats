@@ -174,12 +174,12 @@ public class FoodMenu implements Initializable {
         DataHolder data = DataHolder.getInstance();
             /*DEBUG MSG*/System.out.println("GET DATA HOLDER INSTANCE");
 
-        Shop shop = new Shop();
+        Shop shop = data.getShop();
             /*DEBUG MSG*/System.out.println("CRATED NEW SHOP INSTANCE");
-        
-        shop.setShopID(data.getSelectedShopID());
+                
         shop.initializeAvailableFoodCategoryInShop();        
         data.setShop(shop);
+        shopNameLabel.setText(shop.getName());
 
             /*DEBUG MSG*/System.out.println(shop.getShopID());
                 
