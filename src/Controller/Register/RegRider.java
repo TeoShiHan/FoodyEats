@@ -2,10 +2,12 @@ package Controller.Register;
 import Cache.*;
 import Classes.Rider;
 import Classes.Vehicle;
+import Validation.ValidateRiderRegForm;
 
 import java.net.URL;
 import java.util.HashMap;
 import java.util.ResourceBundle;
+import java.util.regex.Pattern;
 
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
@@ -129,14 +131,18 @@ public class RegRider implements Initializable{
         vehicle.setBrand(inputBrand.getText());
         vehicle.setModel(inputModel.getText());
         vehicle.setPlateNo(inputPlateNo.getText());
-        vehicle.setColor(inputColor.getText());  
+        vehicle.setColor(inputColor.getText());
         Rider rider = new Rider();
         rider.setAccType("Rider");
         rider.setName(inputName.getText());
         rider.setEmail(inputEmail.getText());
-        rider.setMobileNo(inputMobileNo.getText());      
+        rider.setMobileNo(inputMobileNo.getText());
         rider.setVehicle(vehicle);
-        data.setAccount(rider);                      
+        data.setAccount(rider);
     }
-    
+
+    public boolean detectedInvalidFields(){
+        ValidateRiderRegForm formValidator = new ValidateRiderRegForm(this);
+        return formValidator.validateForm();
+    }
 }

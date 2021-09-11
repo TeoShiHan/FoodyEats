@@ -1,6 +1,7 @@
 package Controller.Register;
 import Cache.*;
 import Classes.*;
+import Validation.ValidateBuyerRegForm;
 import javafx.fxml.FXML;
 import javafx.scene.control.TextField;
 
@@ -53,11 +54,8 @@ public class RegBuyer {
         data.setAccount(buyer);
     }
 
-    public void setTextFieldBorderToRed(TextField textField){
-        textField.setStyle("-fx-border-color : red");
-    }
-
-    public void setTextFieldBorderToGreen(TextField textField){
-        textField.setStyle("-fx-border-color : red");
+    public boolean detectedInvalidFields(){
+        ValidateBuyerRegForm formValidator = new ValidateBuyerRegForm(this);
+        return formValidator.validateForm();
     }
 }

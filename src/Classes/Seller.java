@@ -8,6 +8,7 @@ import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.regex.Pattern;
 
 public class Seller extends Account{
 
@@ -280,5 +281,4 @@ public class Seller extends Account{
         return (this.status == 1);
     }
     //#endregion
-
 }

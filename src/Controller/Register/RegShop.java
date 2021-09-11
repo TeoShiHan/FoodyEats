@@ -1,17 +1,14 @@
 package Controller.Register;
 import Classes.*;
+import Validation.ValidateShopRegForm;
 import Cache.*;
 
 import java.io.File;
 import java.io.IOException;
 import java.net.URL;
-import java.nio.file.Files;
-import java.nio.file.Path;
-import java.nio.file.Paths;
 import java.time.LocalDate;
 import java.time.LocalTime;
 import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.List;
 import java.util.ResourceBundle;
 
@@ -131,5 +128,34 @@ public class RegShop implements Initializable{
         shop.setStatus(0);
         Seller seller = (Seller)data.getAccount();
         seller.setShop(shop);
-    }       
+    }
+
+    public TextField getInputShopName() {
+        return inputShopName;
+    }
+
+    public void setInputShopName(TextField inputShopName) {
+        this.inputShopName = inputShopName;
+    }
+
+    public TextField getInputShopAddr() {
+        return inputShopAddr;
+    }
+
+    public void setInputShopAddr(TextField inputShopAddr) {
+        this.inputShopAddr = inputShopAddr;
+    }
+
+    public TextField getInputShopTelNo() {
+        return inputShopTelNo;
+    }
+
+    public void setInputShopTelNo(TextField inputShopTelNo) {
+        this.inputShopTelNo = inputShopTelNo;
+    }
+
+    public boolean detectedInvalidFields(){
+        ValidateShopRegForm formValidator = new ValidateShopRegForm(this);
+        return formValidator.validateForm();
+    }
 }

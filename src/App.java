@@ -15,12 +15,11 @@ public class App extends Application{
     
     public static void main(String[] args) throws Exception  {
         
-
         loadFromDatabase();
         /**DEBUG*/System.out.print("SUCCESSFULLE LOADING");
 
         ArrayList<HashMap<String, Object>> table = new ArrayList<HashMap<String, Object>>();
-        
+
         System.out.println(table);
 
         System.out.println("Main method start");              
