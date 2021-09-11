@@ -8,7 +8,6 @@ import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.util.ArrayList;
 import java.util.HashMap;
-import java.util.regex.Pattern;
 
 public class Seller extends Account{
 
@@ -277,6 +276,17 @@ public class Seller extends Account{
         this.licenseNumber = licenseNumber;
         db.executeCUD(String.format("UPDATE `Account` a, `Seller` s SET a.username='%s', a.password='%s', a.name='%s', a.email='%s', a.mobileNo='%s', s.address='%s', s.bankAcc='%s', s.NRIC='%s', s.licenseNumber='%s' WHERE a.accountID='%s' AND a.accountID=s.accountID",username,password,name,email,mobileNo,address,bankAcc,NRIC,licenseNumber,accountID),gui);
     }
+
+    public void edit(Account account, String address, String bankAcc, String NRIC, String licenseNumber) {
+        super.edit(account.username, account.password, account.name, account.email, account.mobileNo);
+        this.address = address;
+        this.bankAcc = bankAcc;
+        this.NRIC = NRIC;
+        this.licenseNumber = licenseNumber;
+        db.executeCUD(String.format("UPDATE `Account` a, `Seller` s SET a.username='%s', a.password='%s', a.name='%s', a.email='%s', a.mobileNo='%s', s.address='%s', s.bankAcc='%s', s.NRIC='%s', s.licenseNumber='%s' WHERE a.accountID='%s' AND a.accountID=s.accountID",username,password,name,email,mobileNo,address,bankAcc,NRIC,licenseNumber,accountID),gui);
+    }
+
+
     public boolean isApprovedSeller(){
         return (this.status == 1);
     }

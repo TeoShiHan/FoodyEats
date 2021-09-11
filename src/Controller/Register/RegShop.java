@@ -1,6 +1,6 @@
 package Controller.Register;
 import Classes.*;
-import Validation.ValidateShopRegForm;
+import Validation.ShopFormValidator;
 import Cache.*;
 
 import java.io.File;
@@ -155,7 +155,7 @@ public class RegShop implements Initializable{
     }
 
     public boolean detectedInvalidFields(){
-        ValidateShopRegForm formValidator = new ValidateShopRegForm(this);
+        ShopFormValidator formValidator = new ShopFormValidator(this);
         return formValidator.validateForm();
     }
 }

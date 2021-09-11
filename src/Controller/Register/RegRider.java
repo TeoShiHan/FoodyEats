@@ -2,7 +2,7 @@ package Controller.Register;
 import Cache.*;
 import Classes.Rider;
 import Classes.Vehicle;
-import Validation.ValidateRiderRegForm;
+import Validation.RiderFormValidator;
 
 import java.net.URL;
 import java.util.HashMap;
@@ -142,7 +142,7 @@ public class RegRider implements Initializable{
     }
 
     public boolean detectedInvalidFields(){
-        ValidateRiderRegForm formValidator = new ValidateRiderRegForm(this);
+        RiderFormValidator formValidator = new RiderFormValidator(this);
         return formValidator.validateForm();
     }
 }

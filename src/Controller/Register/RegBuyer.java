@@ -1,7 +1,7 @@
 package Controller.Register;
 import Cache.*;
 import Classes.*;
-import Validation.ValidateBuyerRegForm;
+import Validation.BuyerFormValidator;
 import javafx.fxml.FXML;
 import javafx.scene.control.TextField;
 
@@ -55,7 +55,7 @@ public class RegBuyer {
     }
 
     public boolean detectedInvalidFields(){
-        ValidateBuyerRegForm formValidator = new ValidateBuyerRegForm(this);
+        BuyerFormValidator formValidator = new BuyerFormValidator(this);
         return formValidator.validateForm();
     }
 }

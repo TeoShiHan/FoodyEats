@@ -249,6 +249,14 @@ public class Account implements TableDataProcessing{
         this.mobileNo = mobileNo;
     }
 
+    public void edit(Account account){
+        this.username = account.username;
+        this.password = account.password;
+        this.name = account.name;
+        this.email = account.email;
+        this.mobileNo = account.mobileNo;
+    }
+
     public void loadUser(){
 
     }

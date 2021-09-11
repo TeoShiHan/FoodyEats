@@ -161,6 +161,19 @@ public class Buyer extends Account{
         new Thread(task).start();        
     }
 
+    public void edit(Account account, String address) {        
+        super.edit(account.username, account.password, account.name, account.email, account.mobileNo);
+        this.address = address;
+        Task<Void> task = new Task<Void>() {
+            @Override
+            public Void call() throws IOException, SQLException {                                
+                db.executeCUD(String.format("UPDATE `Account` a, `Buyer` b SET a.username='%s', a.password='%s', a.name='%s', a.email='%s', a.mobileNo='%s', b.address='%s' WHERE a.accountID='%s' AND a.accountID=b.accountID",username,password,name,email,mobileNo,address,accountID),gui);
+                return null ;
+            }
+        };        
+        new Thread(task).start();        
+    }
+
     @Override
     public String toString() {
 

@@ -162,6 +162,11 @@ public class Rider extends Account{
         db.executeCUD(String.format("UPDATE `Account` SET username='%s', password='%s', name='%s', email='%s', mobileNo='%s' WHERE accountID='%s'",username,password,name,email,mobileNo,accountID),gui);
     }
 
+    public void edit(Account account) {        
+        super.edit(account.username, account.password, account.name, account.email, account.mobileNo);
+        db.executeCUD(String.format("UPDATE `Account` SET username='%s', password='%s', name='%s', email='%s', mobileNo='%s' WHERE accountID='%s'",username,password,name,email,mobileNo,accountID),gui);
+    }
+
     public boolean isApprovedRider(){
         return (this.status == 1);
     }

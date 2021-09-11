@@ -87,8 +87,14 @@ public class Admin extends Account {
     }
 
     public void edit(String username, String password, String name, String email, String mobileNo, String NRIC, String companyBranch) {
-        // TODO Auto-generated method stub
         super.edit(username, password, name, email, mobileNo);
+        this.NRIC = NRIC;
+        this.companyBranch = companyBranch;
+        db.executeCUD(String.format("UPDATE `Account` a, `Admin` ad SET a.username='%s', a.password='%s', a.name='%s', a.email='%s', a.mobileNo='%s', ad.NRIC='%s', ad.companyBranch='%s' WHERE a.accountID='%s' AND a.accountID=ad.accountID",username,password,name,email,mobileNo,NRIC,companyBranch,accountID),gui);
+    }
+
+    public void edit(Account account, String NRIC, String companyBranch) {
+        super.edit(account.username, account.password, account.name, account.email, account.mobileNo);
         this.NRIC = NRIC;
         this.companyBranch = companyBranch;
         db.executeCUD(String.format("UPDATE `Account` a, `Admin` ad SET a.username='%s', a.password='%s', a.name='%s', a.email='%s', a.mobileNo='%s', ad.NRIC='%s', ad.companyBranch='%s' WHERE a.accountID='%s' AND a.accountID=ad.accountID",username,password,name,email,mobileNo,NRIC,companyBranch,accountID),gui);

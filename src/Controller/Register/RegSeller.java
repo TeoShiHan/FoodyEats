@@ -79,7 +79,7 @@ public class RegSeller {
     }
 
     public boolean detectedInvalidFields(){
-        ValidateSellerRegForm formValidator = new ValidateSellerRegForm(this);
+        SellerFormValidator formValidator = new SellerFormValidator(this);
         return formValidator.validateForm();
     }
 }

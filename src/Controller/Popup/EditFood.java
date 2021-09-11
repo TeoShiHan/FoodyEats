@@ -7,10 +7,6 @@ import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.io.InputStream;
 import java.net.URL;
-import java.nio.file.DirectoryNotEmptyException;
-import java.nio.file.Files;
-import java.nio.file.Path;
-import java.nio.file.Paths;
 import java.util.ResourceBundle;
 
 import javafx.event.ActionEvent;
@@ -34,6 +30,7 @@ public class EditFood implements Initializable{
     @FXML private TextField inputName,inputCategory;
     @FXML private TextArea inputDescription;
     @FXML private Button btnChangeImage,btnYes,btnNo;    
+
     private File foodImageFile;
     private String newImgFileExtension;    
     private File imgFile;
@@ -61,7 +58,6 @@ public class EditFood implements Initializable{
         try {
             image.setImage(new Image(new FileInputStream(new File(System.getProperty("user.dir")+"/src"+data.getFood().getImgPath()))));
         } catch (FileNotFoundException e) {
-            // TODO Auto-generated catch block
             e.printStackTrace();
         }
     }    
@@ -80,15 +76,7 @@ public class EditFood implements Initializable{
             // String currentPath = Paths.get("").toAbsolutePath().toString().replaceAll("\\\\", "/");            
             newImgFileExtension = foodImageFile.getName().substring(foodImageFile.getName().indexOf("."));            
             // Path path = Paths.get(currentPath+"/src/Images/temp"+newImgFileExtension);
-            image.setImage(new Image(foodImageFile.toURI().toString()));
-            // try{
-            //     Files.delete(path);
-            // }catch (DirectoryNotEmptyException e) {
-            //     // happens sometimes if Windows is too slow to remove children of a directory                
-            //     System.out.println("Error on remove the file!!!!!");
-            // }finally{
-                // Files.copy(shopImageFile.toPath(), path);
-            // }           
+            image.setImage(new Image(foodImageFile.toURI().toString()));    
         }                               
     }   
 
