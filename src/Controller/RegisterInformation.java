@@ -1,34 +1,21 @@
 package Controller;
 import Cache.*;
-import Classes.*;
-import Classes.Shop;
 import Controller.Register.*;
 import java.io.IOException;
 import java.net.URL;
 import java.util.HashMap;
 import java.util.ResourceBundle;
 import javafx.event.ActionEvent;
-import javafx.event.Event;
-import javafx.event.EventHandler;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
-import javafx.scene.Parent;
-import javafx.scene.Scene;
 import javafx.scene.control.Button;
-import javafx.scene.control.Control;
 import javafx.scene.control.Label;
 import javafx.scene.control.RadioButton;
-import javafx.scene.control.TextField;
 import javafx.scene.control.ToggleGroup;
-import javafx.scene.input.InputEvent;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.AnchorPane;
-import javafx.scene.layout.Region;
 import javafx.scene.layout.VBox;
-import javafx.stage.Modality;
-import javafx.stage.Popup;
-import javafx.stage.Stage;
 
 public class RegisterInformation implements Initializable{
     private GUI gui = GUI.getInstance();
@@ -55,7 +42,6 @@ public class RegisterInformation implements Initializable{
         try {
             registerAsBuyer(new ActionEvent());
         } catch (IOException e) {
-            // TODO Auto-generated catch block
             e.printStackTrace();
         }
     }        
@@ -74,9 +60,7 @@ public class RegisterInformation implements Initializable{
                 }else{
                     gui.informationPopup("Attention", "Please fill in all the field!");                    
                 }  
-                
             } catch (IOException e) {
-                // TODO Auto-generated catch block
                 e.printStackTrace();
             }      
         });                

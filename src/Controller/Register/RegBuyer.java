@@ -52,4 +52,12 @@ public class RegBuyer {
         buyer.setAddress(inputAddress.getText());
         data.setAccount(buyer);
     }
+
+    public void setTextFieldBorderToRed(TextField textField){
+        textField.setStyle("-fx-border-color : red");
+    }
+
+    public void setTextFieldBorderToGreen(TextField textField){
+        textField.setStyle("-fx-border-color : red");
+    }
 }

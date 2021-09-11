@@ -1,4 +1,4 @@
-package Interfaces;
+package ListenerInterfaces;
 
 public interface NavigationalListeners {
     public void goToHomePage();

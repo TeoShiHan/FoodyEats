@@ -11,8 +11,8 @@ import Classes.Buyer;
 import Classes.Food;
 import Classes.JDBC;
 import Classes.Shop;
-import Interfaces.FoodItemListeners;
-import Interfaces.NavigationalListeners;
+import ListenerInterfaces.FoodItemListeners;
+import ListenerInterfaces.NavigationalListeners;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
@@ -154,7 +154,7 @@ public class FoodMenu implements Initializable {
         
         foodArrMappedWithCategory = shop.getFoodObjArrThatMapWithCategory();
             /*DEBUG MSG*/System.out.println("FOOD ARRAY : " + foodArrMappedWithCategory);
-        
+
         // #endregion
 
         // #region : LOAD CATEGORY TAG

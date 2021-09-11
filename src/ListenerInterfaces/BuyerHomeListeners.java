@@ -1,6 +1,4 @@
-package Interfaces;
-
-import java.io.IOException;
+package ListenerInterfaces;
 
 import Classes.Shop;
 

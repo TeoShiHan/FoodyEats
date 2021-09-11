@@ -10,7 +10,7 @@ import java.util.HashMap;
 import java.util.List;
 
 import Cache.DataHolder;
-import Interfaces.TableDataProcessing;
+import ListenerInterfaces.TableDataProcessing;
 import SQL.CreateTableQuery.SQL;
 import javafx.concurrent.Task;
 
