@@ -73,6 +73,7 @@ public class RiderVehicleDetails implements Initializable{
                     updateVehicleInDataHolder(controller);
                     updateVehicleDataToDatabase(controller);
                     myDialog.close();
+                    refreshScene(myDialog);
                 }else{
                     System.out.println("NOT DETECTED ERROR : " + !controller.detectedInvalidVehicleDetails());
                     popUpInvalidFieldDetectedMsg();
@@ -137,6 +138,15 @@ public class RiderVehicleDetails implements Initializable{
         data.getVehicle().setModel(controller.getInputModel().getText());
         data.getVehicle().setPlateNo(controller.getInputPlateNo().getText());
         data.getVehicle().setColor(controller.getInputColor().getText());
+    }
+    
+    public void refreshScene(Stage myDialog){
+        try {
+            gui.notAlertInProgress(myDialog);
+            gui.refreshScene(currentFXMLPath);
+        } catch (IOException e1) {
+            e1.printStackTrace();
+        }
     }
 }
 
