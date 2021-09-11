@@ -20,26 +20,7 @@ public class RiderOrder extends Order {
 
     public RiderOrder(Order order) {
         super(order.orderID, order.status, order.dateCreated, order.timeCreated, order.buyerID, order.riderID, order.shopID, order.paymentID, order.reviewID);
-    }
-
-    public RiderOrder(Shop shop, Buyer buyer) {
-        this.shop = shop;
-        this.buyer = buyer;
-    }
-
-    public RiderOrder(String orderID, String status, LocalDate dateCreated, LocalTime timeCreated, String buyerID,
-            String riderID, String shopID, String paymentID, String reviewID, Shop shop, Buyer buyer) {
-        super(orderID, status, dateCreated, timeCreated, buyerID, riderID, shopID, paymentID, reviewID);
-        this.shop = shop;
-        this.buyer = buyer;
-    }
-
-    public RiderOrder(Object orderID, Object status, Object dateCreated, Object timeCreated, Object buyerID,
-            Object riderID, Object shopID, Object paymentID, Object reviewID, Shop shop, Buyer buyer) {
-        super(orderID, status, dateCreated, timeCreated, buyerID, riderID, shopID, paymentID, reviewID);
-        this.shop = shop;
-        this.buyer = buyer;
-    }
+    }        
 
     public Shop getShop() {
         return shop;
@@ -72,6 +53,6 @@ public class RiderOrder extends Order {
 
     public void loadBuyer() {
         HashMap<String,Object> b = db.readOne(String.format("SELECT * FROM Buyer b, Account a WHERE b.buyerID='%s' AND a.accountID=b.accountID",this.buyerID));
-        this.buyer=new Buyer(b.get("accountID"), b.get("username"), b.get("password"), b.get("name"), b.get("email"), b.get("mobileNo"), b.get("accType"), b.get("buyerID"), b.get("address"), b.get("cartID"));
+        this.buyer=new Buyer(b.get("accountID"), b.get("username"), b.get("password"), b.get("name"), b.get("email"), b.get("mobileNo"), b.get("accType"), b.get("regDate"), b.get("buyerID"), b.get("address"), b.get("cartID"));
     }
 }

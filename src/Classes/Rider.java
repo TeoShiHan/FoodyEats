@@ -23,31 +23,8 @@ public class Rider extends Account{
 
     //#region : CONSTRUCTORS
     public Rider(){
-        this("","",0);
-    }
-    public Rider(String riderID, String vehicleID, int status){
-        this.riderID = riderID;        
-        this.vehicleID = vehicleID;    
-        this.status = status;  
-    }
-    public Rider(Object riderID, Object vehicleID, Object status){
-        this.riderID = (String)riderID;        
-        this.vehicleID = (String)vehicleID;      
-        this.status = (int)status;
-    }
-    public Rider(String accountID, String username, String password, String name, String email, String mobileNo, String accType, String riderID, String vehicleID,int status){
-        super(accountID, username, password, name, email, mobileNo, accType);
-        this.riderID = riderID;        
-        this.vehicleID = vehicleID;
-        this.status = status;              
-    }
-    public Rider(Object accountID, Object username, Object password, Object name, Object email, Object mobileNo, Object accType, Object riderID, Object vehicleID, Object status){
-        super(accountID, username, password, name, email, mobileNo, accType);
-        this.riderID = (String)riderID;        
-        this.vehicleID = (String)vehicleID;        
-        this.vehicle = (Vehicle)vehicle;
-        this.status = (int)status;
-    }    
+        
+    }        
     public Rider(Object accountID, Object username, Object password, Object name, Object email, Object mobileNo, Object accType, Object regDate, Object riderID, Object vehicleID, Object status){
         super(accountID, username, password, name, email, mobileNo, accType, regDate);
         this.riderID = (String)riderID;        
@@ -64,7 +41,8 @@ public class Rider extends Account{
             (String)account.get("name"), 
             (String)account.get("email"), 
             (String)account.get("mobileNo"), 
-            (String)account.get("type")
+            (String)account.get("type"),
+            (String)account.get("regDate")
         );        
         this.riderID = (String)rider.get("riderID");
         this.vehicleID = (String)rider.get("vehicleID");

@@ -14,16 +14,8 @@ public class Food {
 
     public Food(){
         this("","","","",0.0,"","");
-    }     
-    public Food(String foodID, String name, String desc, String imgPath, double price, String category, String shopID){
-        this.foodID = foodID;
-        this.name = name;
-        this.desc = desc;
-        this.imgPath = imgPath;
-        this.price = price;
-        this.category = category;
-        this.shopID = shopID;        
-    }
+    }    
+    // get from database table
     public Food(Object foodID, Object name, Object desc, Object imgPath, Object price, Object category, Object shopID){
         this.foodID = (String)foodID;
         this.name = (String)name;
@@ -33,7 +25,6 @@ public class Food {
         this.category = (String)category;
         this.shopID = (String)shopID;                    
     }    
-
     // for creating food
     public Food(String name, String desc, double price, String category, String shopID){
         this.name = name;

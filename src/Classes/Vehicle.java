@@ -13,16 +13,7 @@ public class Vehicle {
     private String color;
     private String type;
 
-    public Vehicle(){}
-
-    public Vehicle(String vehicleID, String type, String plateNo, String brand, String model, String color){
-        this.vehicleID = vehicleID;
-        this.type = type;
-        this.plateNo = plateNo;
-        this.brand = brand;
-        this.model = model;
-        this.color = color;
-    }
+    public Vehicle(){}    
 
     public Vehicle(Object vehicleID, Object type, Object plateNo, Object brand, Object model, Object color){
         this.vehicleID = (String)vehicleID;
@@ -32,7 +23,6 @@ public class Vehicle {
         this.model = (String)model;
         this.color = (String)color;
     }
-
     
     public String getVehicleID() {
         return vehicleID;

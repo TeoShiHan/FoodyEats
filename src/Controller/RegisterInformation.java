@@ -62,7 +62,7 @@ public class RegisterInformation implements Initializable{
 
     @FXML
     void registerAsBuyer(ActionEvent event) throws IOException {        
-        loadInformationFields("View/RegisterView/RegBuyer.fxml");        
+        loadInformationFields("View/Register/RegBuyer.fxml");        
         this.buyerRegisterController = this.fxmlLoader.getController();
         btnContinue.setOnAction(evnt -> {
             try {
@@ -84,7 +84,7 @@ public class RegisterInformation implements Initializable{
 
     @FXML
     void registerAsRider(ActionEvent event) throws IOException {                
-        loadInformationFields("View/RegisterView/RegRider.fxml");   
+        loadInformationFields("View/Register/RegRider.fxml");   
         this.riderRegisterController = this.fxmlLoader.getController();
         btnContinue.setOnAction(evnt -> {
             try {
@@ -105,7 +105,7 @@ public class RegisterInformation implements Initializable{
 
     @FXML
     void registerAsSeller(ActionEvent event) throws IOException {          
-        loadInformationFields("View/RegisterView/RegSeller.fxml");
+        loadInformationFields("View/Register/RegSeller.fxml");
         this.sellerRegisterController = this.fxmlLoader.getController();        
         btnContinue.setOnAction(evnt -> {
             try {          
@@ -113,7 +113,7 @@ public class RegisterInformation implements Initializable{
                     // data.addObjectHolder("accountType", "Seller");
                     sellerRegisterController.getInfo();
                     gui.alertInProgress();
-                    loadInformationFields("View/RegisterView/RegShop.fxml");
+                    loadInformationFields("View/Register/RegShop.fxml");
                     this.shopRegisterController = this.fxmlLoader.getController();                    
                     btnContinue.setOnAction(ev -> {                    
                         try {

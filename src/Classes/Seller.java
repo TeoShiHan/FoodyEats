@@ -31,36 +31,8 @@ public class Seller extends Account{
 
     //#region : CONSTRUCTORS
     public Seller(){
-        this("","","","","","","","","","","","","",0);
-    }
-    
-    public Seller(
-        Object accountID, 
-        Object username, 
-        Object password, 
-        Object name, 
-        Object email, 
-        Object mobileNo, 
-        Object accType,
-        Object sellerID,        
-        Object address,        
-        Object NRIC, 
-        Object licenseNumber,
-        Object bankAcc,        
-        Object shopID,
-        Object status
-    ){
-        super(accountID, username, password, name, email, mobileNo, accType);
-        this.sellerID = (String) sellerID;
-        this.address = (String) address;        
-        this.NRIC = (String) NRIC;
-        this.licenseNumber = (String) licenseNumber;
-        this.bankAcc = (String) bankAcc;
-        this.accountID = (String) accountID;
-        this.shopID = (String) shopID;
-        this.status = (int)status;
-    }
-    
+        
+    }            
     public Seller(
         Object accountID, 
         Object username, 
@@ -87,36 +59,7 @@ public class Seller extends Account{
         this.accountID = (String) accountID;
         this.shopID = (String) shopID;
         this.status = (int)status;  
-    }
-
-    public Seller(
-        String accountID, 
-        String username, 
-        String password, 
-        String name, 
-        String email, 
-        String mobileNo, 
-        String accType,
-        String sellerID,        
-        String address,        
-        String NRIC, 
-        String licenseNumber,
-        String bankAcc,
-        String shopID,
-        int status,
-        Shop shop
-    ){
-        super(accountID, username, password, name, email, mobileNo, accType);
-        this.sellerID = (String) sellerID;
-        this.address = (String) address;        
-        this.NRIC = (String) NRIC;
-        this.licenseNumber = (String) licenseNumber;
-        this.bankAcc = (String) bankAcc;
-        this.accountID = (String) accountID;
-        this.shopID = (String) shopID;
-        this.status = (int) status;
-        this.shop = shop;
-    }
+    }   
 
     public Seller(HashMap<String,Object>account, HashMap<String,Object>seller, Shop shop){
         super(
@@ -126,7 +69,8 @@ public class Seller extends Account{
             (String)account.get("name"), 
             (String)account.get("email"), 
             (String)account.get("mobileNo"), 
-            (String)account.get("type")
+            (String)account.get("type"),
+            (String)account.get("regDate")
         );
         this.sellerID      = (String)seller.get("sellerID");
         this.address       = (String)seller.get("address");

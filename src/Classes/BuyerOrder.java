@@ -21,26 +21,7 @@ public class BuyerOrder extends Order {
 
     public BuyerOrder(Order order) {
         super(order.orderID, order.status, order.dateCreated, order.timeCreated, order.buyerID, order.riderID, order.shopID, order.paymentID, order.reviewID);
-    }
-
-    public BuyerOrder(Shop shop, Rider rider) {
-        this.shop = shop;
-        this.rider = rider;
-    }
-
-    public BuyerOrder(String orderID, String status, LocalDate dateCreated, LocalTime timeCreated, String buyerID,
-            String riderID, String shopID, String paymentID, String reviewID, Shop shop, Rider rider) {
-        super(orderID, status, dateCreated, timeCreated, buyerID, riderID, shopID, paymentID, reviewID);
-        this.shop = shop;
-        this.rider = rider;
-    }
-
-    public BuyerOrder(Object orderID, Object status, Object dateCreated, Object timeCreated, Object buyerID,
-            Object riderID, Object shopID, Object paymentID, Object reviewID, Shop shop, Rider rider) {
-        super(orderID, status, dateCreated, timeCreated, buyerID, riderID, shopID, paymentID, reviewID);
-        this.shop = shop;
-        this.rider = rider;
-    }
+    }    
 
     public Shop getShop() {
         return shop;
@@ -80,7 +61,7 @@ public class BuyerOrder extends Order {
         HashMap<String,Object> r = db.readOne(String.format("SELECT r.*,v.*,a.* FROM `Rider` r, `Vehicle` v, `Account` a WHERE r.riderID='%s' AND r.vehicleID=v.vehicleID AND r.accountID=a.accountID",riderID));
         System.out.println(r);
         Vehicle vehicle = new Vehicle(r.get("vehicleID"), r.get("type"), r.get("plateNo"), r.get("brand"), r.get("model"), r.get("color"));
-        Rider rider = new Rider(r.get("accountID"), r.get("username"), r.get("password"), r.get("name"), r.get("email"), r.get("mobileNo"), r.get("accType"), r.get("riderID"), r.get("vehicleID"), r.get("status"));
+        Rider rider = new Rider(r.get("accountID"), r.get("username"), r.get("password"), r.get("name"), r.get("email"), r.get("mobileNo"), r.get("accType"), r.get("regDate"), r.get("riderID"), r.get("vehicleID"), r.get("status"));
         rider.setVehicle(vehicle);
         this.rider = rider;        
     }
