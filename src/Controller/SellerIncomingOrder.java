@@ -34,9 +34,11 @@ public class SellerIncomingOrder implements Initializable {
     @FXML private TableView<Order> tableView;
     @FXML private TableColumn<Order,Object> colOrderId,colDate,colTime;    
     @FXML private TableColumn<Order,Order> colAction;
+    private String currentFXMLPath = "View/SellerIncomingOrder.fxml";
 
     @Override
-    public void initialize(URL location, ResourceBundle resources) {                
+    public void initialize(URL location, ResourceBundle resources) { 
+        data.getShop().setShopID(data.getSeller().getShopID());
         data.getShop().loadPendingOrders();        
         data.setOrders(data.getShop().getOrders());
 
@@ -92,5 +94,10 @@ public class SellerIncomingOrder implements Initializable {
     @FXML
     void toHome(MouseEvent event) throws IOException {
         gui.toNextScene("View/SellerHome.fxml");
+    }
+
+    @FXML
+    void toRefreshScene(MouseEvent event) throws IOException {
+        gui.refreshScene(currentFXMLPath);
     }
 }

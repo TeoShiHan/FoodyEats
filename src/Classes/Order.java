@@ -172,6 +172,7 @@ public class Order {
     public void setOrderItems(ArrayList<OrderItem> orderItems) {
         this.orderItems = orderItems;
     }
+    
     public void loadOrderItems() {        
         orderItems = new ArrayList<OrderItem>();
         // if(loadOrderItemCount++==0 && orderItems.isEmpty()){
@@ -183,6 +184,13 @@ public class Order {
             }                    
         // }        
         data.setOrderItems(this.orderItems);
+    }
+
+    public void loadReview() {
+        HashMap<String,Object> r = db.readOne(String.format("SELECT r.* FROM `Review` r, `Order` o WHERE r.reviewID='%s' AND r.reviewID=o.reviewID",reviewID));
+        System.out.println(r);
+        Review review = new Review(r.get("reviewID"), r.get("rating"), r.get("comment"), r.get("dateCreated"), r.get("timeCreated"), r.get("orderID"), r.get("shopID"));
+        this.review = review;        
     }
 
     public void loadAllDetails(){        

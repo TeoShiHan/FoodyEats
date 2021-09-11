@@ -3,6 +3,7 @@ package Classes;
 import java.sql.SQLException;
 import java.time.LocalDate;
 import java.time.LocalTime;
+import java.time.format.DateTimeFormatter;
 
 import Cache.GUI;
 
@@ -103,9 +104,9 @@ public class Review {
 
     public void create() throws SQLException{
         this.dateCreated = LocalDate.now();
-        this.timeCreated = LocalTime.now();        
+        this.timeCreated = LocalTime.parse(LocalTime.now().format(DateTimeFormatter.ofPattern("HH:mm:ss")));        
         this.reviewID = db.getNextId("Review");
-        db.executeCUD(String.format("INSERT INTO `Review` VALUES(%s,%s,%s,%s,%s,%s,%s)",reviewID,rating,comment,dateCreated.toString(),timeCreated.toString(),orderID,shopID),gui);
+        db.executeCUD(String.format("INSERT INTO `Review`(reviewID,rating,comment,) VALUES('%s',%d,'%s','%s','%s','%s','%s')",reviewID,rating,comment,dateCreated.toString(),timeCreated.toString(),orderID,shopID),gui);
     }
     
 }

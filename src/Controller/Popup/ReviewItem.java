@@ -3,17 +3,22 @@ package Controller.Popup;
 import java.net.URL;
 import java.util.ResourceBundle;
 
+import Cache.DataHolder;
+import Cache.GUI;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.Label;
 
-public class ReviewItem implements Initializable {
+public class ReviewItem{
+    private GUI gui = GUI.getInstance();
+    private DataHolder data = DataHolder.getInstance();
+
     @FXML private Label lblUsername,lblDateCreated,lblRating,lblComment;
     
-    @Override
-    public void initialize(URL location, ResourceBundle resources) {
+    // @Override
+    // public void initialize(URL location, ResourceBundle resources) {
         
-    }
+    // }
 
     public Label getLblUsername() {
         return lblUsername;

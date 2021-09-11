@@ -89,4 +89,9 @@ public class SellerOrderHistory implements Initializable {
     void toHome(MouseEvent event) throws IOException {
         gui.toNextScene("View/SellerHome.fxml");
     }
+
+    @FXML
+    void toRefreshScene(MouseEvent event) throws IOException {
+        gui.refreshScene(currentFXMLPath);
+    }
 }

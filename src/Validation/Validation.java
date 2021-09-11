@@ -1,21 +1,11 @@
 package Validation;
-import java.lang.ModuleLayer.Controller;
 import java.util.regex.Pattern;
-
 import Controller.Register.RegBuyer;
-import javafx.scene.control.TextField;
 
-interface ValidateForm {
-
-    public void validateForm(TextField name, TextField email);
-    public void validateForm(TextField icNo, TextField licenseNo, TextField bankAccNo);
-}
 
 abstract class Validation {
     
-    public void validateForm(){
-        
-    }
+    public abstract void validateForm();
 
     public boolean nameIsInvalid(String name){
         String fullNameRegex = "^[a-zA-Z]{4,}(?: [a-zA-Z]+)?(?: [a-zA-Z]+)?$";
@@ -28,9 +18,7 @@ abstract class Validation {
     }
 }
 
-class ValidateBuyerRegFrom extends Validation{
-    
-}
+
 
 class ValidateSellerRegFrom extends Validation{
 
@@ -77,7 +65,7 @@ class ValidateSellerRegFrom extends Validation{
 }
 
 class ValidateRiderRegFrom extends Validation{
-    
+
     
     @Override
     public void validateForm(){

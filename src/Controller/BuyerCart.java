@@ -73,14 +73,10 @@ public class BuyerCart implements Initializable{
     private String currentFXMLPath = "View/BuyerCart.fxml";
 
     @Override
-    public void initialize(URL arg0, ResourceBundle arg1) {
-        if(data.getBuyer().getCart()==null||Cart.isCartHaveChange()){
-            data.getBuyer().loadCart();
-            data.setCart(data.getBuyer().getCart());
-            if(data.getCart().getCartItems()==null){
-                data.getCart().loadCartItems();
-                data.setCartItems(data.getCart().getCartItems());                                
-            }
+    public void initialize(URL arg0, ResourceBundle arg1) {        
+        if(data.getBuyer().getCart().getCartItems()==null){
+            data.getBuyer().getCart().loadCartItems();
+            data.setCartItems(data.getBuyer().getCart().getCartItems());                                
         }
 
         if(data.getCartItems().size()==0){
