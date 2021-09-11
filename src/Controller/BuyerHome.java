@@ -143,7 +143,7 @@ public class BuyerHome implements Initializable {
             @Override
             public void showFoodMenuOfChoosenShop(Shop shop) {
                     /*DEBUG OUTPUT*/System.out.println("THE SHOP ID IS : " + shop.getShopID());
-                shop.saveSelectedShopIdToDataHolder();
+                data.setShop(shop);
                     /*DEBUG OUTPUT*/System.out.println("THE SELECTED SHOP ID IS : " + data.getSelectedShopID());
                 switchToShopPage();
             }

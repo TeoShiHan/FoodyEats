@@ -10,37 +10,7 @@ public class Admin extends Account {
     private String NRIC;
     private String companyBranch;
 
-    public Admin(){
-        this("","","");
-    }
-
-    public Admin(String adminID,String NRIC,String companyBranch){
-        this.adminID = adminID;
-        this.NRIC = NRIC;
-        this.companyBranch = companyBranch;
-
-    }
-
-    public Admin(Object adminID,Object NRIC,Object companyBranch){
-        this.adminID = (String)adminID;
-        this.NRIC = (String)NRIC;
-        this.companyBranch = (String)companyBranch;
- 
-    }
-
-    public Admin(String accountID, String username, String password, String name, String email, String mobileNo, String accType, String adminID,String NRIC,String companyBranch) {        
-        super(accountID, username, password, name, email, mobileNo, accType);
-        this.adminID = adminID;
-        this.NRIC = NRIC;
-        this.companyBranch = companyBranch;           
-    }
-
-    public Admin(Object accountID, Object username, Object password, Object name, Object email, Object mobileNo, Object accType, Object adminID,Object NRIC,Object companyBranch) {
-        super(accountID, username, password, name, email, mobileNo, accType);
-        this.adminID = (String)adminID;
-        this.NRIC = (String)NRIC;
-        this.companyBranch = (String)companyBranch;     
-    }
+    public Admin(){}    
 
     public Admin(HashMap<String,Object>account, HashMap<String,Object>admin){
         super(
@@ -50,7 +20,8 @@ public class Admin extends Account {
             (String)account.get("name"), 
             (String)account.get("email"), 
             (String)account.get("mobileNo"), 
-            (String)account.get("type")
+            (String)account.get("type"),
+            (String)account.get("regDate")
         );
         this.adminID = (String)admin.get("adminID");        
         this.NRIC = (String)admin.get("NRIC");        

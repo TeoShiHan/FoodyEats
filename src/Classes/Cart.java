@@ -14,24 +14,8 @@ public class Cart {
     private static boolean cartHaveChange = false;
 
     public Cart() {  //No-arg Constructor
-    	this("","","");
-    }
-
-    public Cart(String cartID, String buyerID) {
-        this.cartID = cartID;        
-        this.buyerID = buyerID;
-    }
-
-    public Cart(Object cartID, Object buyerID) {
-        this.cartID = (String)cartID;        
-        this.buyerID = (String)buyerID;
-    }
-
-    public Cart(String cartID, String buyerID, String shopID) {
-        this.cartID = cartID;
-        this.buyerID = buyerID;
-        this.shopID = shopID;
-    }
+            	
+    }    
 
     public Cart(Object cartID, Object buyerID, Object shopID) {
         this.cartID = (String)cartID;
