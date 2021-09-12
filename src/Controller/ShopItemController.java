@@ -1,10 +1,8 @@
 package Controller;
 import java.util.ArrayList;
-import java.util.List;
 
 import Classes.Shop;
 import ListenerInterfaces.BuyerHomeListeners;
-import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
