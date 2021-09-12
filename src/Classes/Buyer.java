@@ -108,7 +108,6 @@ public class Buyer extends Account{
     @Override
     public void register() throws IOException{
         super.register();
-        // TODO Auto-generated method stub
         try {                                                
             String nextBuyerID = db.getNextId("Buyer");            
             String nextCartID = db.getNextId("Cart");                        
@@ -122,7 +121,6 @@ public class Buyer extends Account{
             gui.toNextScene("View/BuyerHome.fxml");
             gui.notAlertInProgress();
         } catch (SQLException e) {
-            // TODO Auto-generated catch block
             e.printStackTrace();
             gui.informationPopup("Something wrong", "There is an error when inserting to database");
         }
@@ -159,9 +157,6 @@ public class Buyer extends Account{
 
         return super.toString() + "Buyer [address=" + address + ", buyerID=" + buyerID + ", cart=" + cart + ", cartID=" + cartID + "]";
     }
-
-    
-
     // public static String getCart(String BuyerID) {
     //     return BuyerID;
     // }

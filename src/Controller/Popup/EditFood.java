@@ -167,7 +167,9 @@ public class EditFood implements Initializable{
     public void setImg(Image img) {
         this.img = img;
     }
-
     
-    
+    public boolean isFilled(){                                                 
+        return !(inputName.getText().strip().isEmpty() || inputCategory.getText().strip().isEmpty() || 
+                inputDescription.getText().strip().isEmpty());
+    }
 }

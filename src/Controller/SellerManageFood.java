@@ -91,7 +91,6 @@ public class SellerManageFood implements Initializable {
                             try {
                                 isImage = (InputStream) new FileInputStream(imgFile);
                             } catch (FileNotFoundException e) {
-                                // TODO Auto-generated catch block
                                 e.printStackTrace();
                             }
                             Image img = new Image(isImage); 
@@ -215,7 +214,8 @@ public class SellerManageFood implements Initializable {
                         e2.printStackTrace();
                     }
                     
-                    controller.getBtnYes().setOnAction(ev->{                                                      
+                    controller.getBtnYes().setOnAction(ev->{  
+                        if(controller.isFilled()){                                                
                         myDialog.getScene().getRoot().setDisable(true);
                         myDialog.getScene().setCursor(Cursor.WAIT);
                         int currentIndex = tableView.getItems().indexOf(food);                        
@@ -267,13 +267,16 @@ public class SellerManageFood implements Initializable {
                             try {
                                 gui.refreshScene(currentFXMLPath);
                             } catch (IOException e1) {
-                                // TODO Auto-generated catch block
                                 e1.printStackTrace();
                             }
                             gui.notAlertInProgress(myDialog);
                         });
                         new Thread(task).start();
+                        }else{
+                            popUpEmptyFieldDetected();
+                        }
                     });
+
                     
                     controller.getBtnNo().setOnAction(e->{
                         myDialog.close();
@@ -413,5 +416,13 @@ public class SellerManageFood implements Initializable {
     @FXML
     void toHome(MouseEvent event) throws IOException {
         gui.toNextScene("View/SellerHome.fxml");
+    }
+
+    public void popUpEmptyFieldDetected(){
+        try {
+            gui.informationPopup("Attention", "Empty field detected, please try again!");
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
     }
 }
