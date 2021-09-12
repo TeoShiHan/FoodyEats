@@ -50,7 +50,6 @@ public class RiderFormValidator extends FormValidator {
             isInvalid = true;
         } else {
             setTextFieldBorderToGreen(carModel);
-            isInvalid = true;
         }
 
         if (plateNumIsInvalid(carPlateNo)) {
@@ -158,7 +157,7 @@ public class RiderFormValidator extends FormValidator {
     }
 
     public boolean colorIsInvalid(TextField colorField) {
-        String colorRegex = "^\\S[A-Za-z\s]*$";
+        String colorRegex = "^([A-Z][a-z]*)((\s||-)[A-Z][a-z]*){0,2}$";
         String color = colorField.getText();
         System.out.println("color : " + color);
         System.out.println("RSLT      : " + !Pattern.matches(colorRegex, color));

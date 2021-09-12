@@ -21,7 +21,7 @@ public class AdminRiderAccountDetails implements Initializable {
 
     @FXML private Label linkLogout,lblRiderAccountDetails,lblName,lblEmail,lblMobileNo,lblVehicleType,lblVehicleBrand,lblVehicleModel,lblVehiclePlateNo,lblVehicleColor,lblDateReg;        
     @FXML private ImageView iconProfile,iconHome,iconBack;            
-    @FXML private Button btnVerified;          
+    @FXML private Button btnApprove;          
 
     @Override
     public void initialize(URL location, ResourceBundle resources) {                
@@ -40,9 +40,9 @@ public class AdminRiderAccountDetails implements Initializable {
     }    
 
     @FXML
-    void actionVerified(ActionEvent event) {
+    void actionApprove(ActionEvent event) {
         data.getAdmin().verifyRider(data.getRider().getRiderID());
-        btnVerified.setDisable(true);
+        btnApprove.setDisable(true);
     }
 
     @FXML

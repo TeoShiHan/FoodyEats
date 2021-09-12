@@ -18,7 +18,7 @@ import javafx.scene.layout.StackPane;
 import javafx.scene.layout.VBox;
 import javafx.scene.paint.Color;
 
-public class ShopItemController {
+public class ShopItemController{
     @FXML private HBox shopItem;
     @FXML private VBox shopImgContainer;
     @FXML private ImageView shopImg;

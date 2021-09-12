@@ -29,7 +29,7 @@
             <Image url="@../Images/homeIcon.png" />
          </image>
       </ImageView>
-      <Button fx:id="btnVerified" layoutX="824.0" layoutY="568.0" onAction="#actionVerified" prefHeight="94.0" prefWidth="346.0" style="-fx-font-weight: 800; -fx-font-size: 36px;" text="Verified">
+      <Button fx:id="btnApprove" layoutX="824.0" layoutY="568.0" onAction="#actionApprove" prefHeight="94.0" prefWidth="346.0" style="-fx-font-weight: 800; -fx-font-size: 36px;" text="Approve">
          <font>
             <Font size="36.0" />
          </font>

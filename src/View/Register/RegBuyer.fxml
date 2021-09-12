@@ -31,7 +31,7 @@
                 <Insets bottom="10.0" />
             </VBox.margin>
         </TextField>
-        <TextField fx:id="inputMobileNo" prefHeight="50.0" prefWidth="660.0" promptText="Mobille No.">
+        <TextField fx:id="inputMobileNo" prefHeight="50.0" prefWidth="660.0" promptText="Mobille No. (e.g. 012-3456789)">
             <font>
                 <Font size="20.0" />
             </font>
