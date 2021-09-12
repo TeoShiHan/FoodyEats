@@ -14,7 +14,12 @@ public class Food {
 
     public Food(){
         this("","","","",0.0,"","");
-    }    
+    }
+
+    public Food(HashMap<String,Object> foodMap){
+        
+    }
+
     // get from database table
     public Food(Object foodID, Object name, Object desc, Object imgPath, Object price, Object category, Object shopID){
         this.foodID = (String)foodID;

@@ -4,14 +4,16 @@ import java.util.ArrayList;
 import java.util.HashMap;
 
 import Cache.DataHolder;
+import SQL.CreateTableQuery.SQL;
 
 public class Cart {
+    
     private JDBC db = new JDBC();
-    private DataHolder data = DataHolder.getInstance();    
-
+    private DataHolder data = DataHolder.getInstance();
     private String cartID, buyerID, shopID;
     private ArrayList<CartItem> cartItems;
     private static boolean cartHaveChange = false;
+    private static SQL sql = SQL.getInstance();
 
     public Cart() {  //No-arg Constructor
             	
@@ -65,7 +67,7 @@ public class Cart {
 
     public void loadCartItems(){        
         this.cartItems = new ArrayList<>();
-        ArrayList<HashMap<String,Object>> cs = db.readAll(String.format("SELECT c.*,ci.*,f.* FROM `Cart` c, `CartItem` ci, `Food` f WHERE c.cartID='%s' AND c.cartID=ci.cartID AND ci.foodID=f.foodID",cartID));        
+        ArrayList<HashMap<String,Object>> cs = sql.fetchCartItems(cartID);        
         System.out.println(cs);
         System.out.println("cartID: "+cartID);
         if(!cs.isEmpty()){

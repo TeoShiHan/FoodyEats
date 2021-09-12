@@ -82,6 +82,10 @@ public final class SQL {
         return db.readOne(String.format("SELECT * FROM `Cart` WHERE buyerID='%s'", buyerID));
     }
 
+    public ArrayList<HashMap<String,Object>> fetchCartItems(String cartID){
+        return db.readAll(String.format("SELECT c.*,ci.*,f.* FROM `Cart` c, `CartItem` ci, `Food` f WHERE c.cartID='%s' AND c.cartID=ci.cartID AND ci.foodID=f.foodID",cartID));
+    }
+
     public ArrayList<HashMap<String, Object>> fetchFoodCategoriesFromAllShops(ArrayList<String> shopKeyArr) {
         String completeSQLStmt = "";
 
@@ -156,5 +160,6 @@ public final class SQL {
     private static boolean isNotLastStatement(int statementQty, int currentStatement) {
         return currentStatement < statementQty;
     }
-    
+
+
 }

@@ -137,6 +137,7 @@ public class FoodMenu implements Initializable {
             @Override
             public void addToCart(Food food, int quantity) {
                 Buyer buyer = data.getBuyer();
+                updateShopIdOfCart(food.getShopID(), buyer.getCartID());
 
                     /*DEBUG MSG*/System.out.println("buyer.getCart().getShopID() IS >>>>>>" + buyer.getCart().getShopID());
                     /*DEBUG MSG*/System.out.println("food.getShopID() IS >>>>>>" + food.getShopID());
@@ -157,6 +158,8 @@ public class FoodMenu implements Initializable {
                     food.addThisFoodToCart(buyer, quantity);
                     notifySuccessfullAddToCart(food.getName(), quantity);
                 }
+
+
             }
         };
         return foodItemListeners;
@@ -379,8 +382,18 @@ public class FoodMenu implements Initializable {
             "WHERE cartID = '%s' AND foodID = '%s';",
             quantity, cartID, foodId
         );
+
         /*DEBUG MSG*/System.out.println("SQL STATEMENT IS : " + sqlStmt);
         db.executeCUD(sqlStmt, gui);
         notifySuccessfullAddToCart(foodName, quantity);
+    }
+
+    public void updateShopIdOfCart(String shopID, String cartID){
+        String sqlStmt = String.format(
+            "UPDATE Cart " +
+            "SET shopID = '%s' " +
+            "WHERE cartID = '%s';",shopID, cartID
+        );
+        db.executeCUD(sqlStmt, gui);
     }
 }
