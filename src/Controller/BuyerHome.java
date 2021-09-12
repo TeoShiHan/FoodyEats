@@ -37,7 +37,6 @@ public class BuyerHome implements Initializable {
     @FXML private ImageView homePageIcon;
     @FXML private Label greeting;
 
-
     //  Listeners
     @FXML
     public void goToHomePage(MouseEvent mouseEvent){
@@ -76,6 +75,7 @@ public class BuyerHome implements Initializable {
         
         Shop tempShop = new Shop();
         shopObjectCollection = tempShop.createShopObjectCollection();
+
             System.out.println("outa the create shop object function");
 
         int gridCol = 0;

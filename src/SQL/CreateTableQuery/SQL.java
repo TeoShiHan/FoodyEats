@@ -17,8 +17,7 @@ public final class SQL {
     private final static String UNION = "\nUNION\n";
     private final static GUI gui = GUI.getInstance();
 
-    SQL() {
-    }
+    SQL() {}
 
     public static SQL getInstance() {
         return INSTANCE;
@@ -71,6 +70,10 @@ public final class SQL {
         return db.readOne(String.format("SELECT * FROM `Shop` WHERE shopID='%s'",shopID));
     }
 
+    public ArrayList<HashMap<String, Object>>fetchSpecificOrderDataset(String idName, String idValue){
+        return db.readAll(String.format("SELECT * FROM `Order` WHERE %s='%s'",idName, idValue));
+    }
+
     public ArrayList<HashMap<String, Object>> fetchFoodCategoriesFromAllShops(ArrayList<String> shopKeyArr) {
         String completeSQLStmt = "";
 
@@ -83,12 +86,11 @@ public final class SQL {
                     + "WHERE S.shopID = F.shopID AND S.shopID = '%s'", shopKeyArr.get(i));
 
             completeSQLStmt = completeSQLStmt.concat(sqlStmt);
-
+            
             if (isNotLastStatement(statementQty, currentStatement)) {
                 completeSQLStmt = completeSQLStmt.concat(UNION);
             } else {
                 completeSQLStmt = completeSQLStmt.concat("\nORDER BY shopID;");
-                /* DEBUG MSG */System.out.println("COMPLETE STATEMENT : " + completeSQLStmt);
             }
         }
         System.out.println(completeSQLStmt);

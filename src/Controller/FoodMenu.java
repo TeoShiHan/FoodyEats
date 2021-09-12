@@ -82,7 +82,6 @@ public class FoodMenu implements Initializable {
         try {
             dialogScene = new Scene((Parent)loader.load());                        
         } catch (IOException e2) {
-            // TODO Auto-generated catch block
             e2.printStackTrace();
         }
                 
@@ -316,10 +315,8 @@ public class FoodMenu implements Initializable {
        if (buyer.getCart().getShopID() == null || buyer.getCart().getShopID().isEmpty()){
            return false;
        }
-        
         String cartShopID = buyer.getCart().getShopID().toString();
         String foodShopID = food.getShopID().toString();
-
         String sqlStmt = String.format(
                 "SELECT DISTINCT shopID " + "FROM CartItem C, Food F " + "WHERE C.foodID = F.foodID AND cartID = '%s'",
                 buyer.getCartID());

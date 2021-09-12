@@ -7,7 +7,6 @@ import java.time.LocalDate;
 import java.time.LocalTime;
 import java.util.ArrayList;
 import java.util.HashMap;
-import java.util.List;
 
 import Cache.DataHolder;
 import ListenerInterfaces.TableDataProcessing;
@@ -452,9 +451,12 @@ public class Shop implements TableDataProcessing{
             shopInstance.setDeliveryFee(deliveryFee);
             shopInstance.setImgPath(imgPath);
             shopInstance.initializeAvailableFoodCategoryInShop();
+
                 /*DEBUG MSG*/System.out.println("SHOP INSTANCE : " + shopInstance.getAvailableFoodCategoryInShop());
 
-            shopObjectCollection.add(shopInstance);
+            if(!(shopInstance.getAvailableFoodCategoryInShop() == null)){
+                shopObjectCollection.add(shopInstance);
+            }
             System.out.println(shopObjectCollection);
         }
         return shopObjectCollection;
