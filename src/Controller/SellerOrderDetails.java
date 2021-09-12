@@ -32,7 +32,6 @@ public class SellerOrderDetails implements Initializable {
     @FXML private ImageView iconProfile,iconHome;            
     @FXML private Button btnDecline,btnAccept;    
     @FXML private VBox vboxStatus;
-    // @FXML private TableView<RowData> tableView;    
     @FXML private TableView<OrderItem> tableView;
     @FXML private TableColumn<OrderItem,Number> colNo;
     @FXML private TableColumn<OrderItem,Integer> colQty;
@@ -83,7 +82,6 @@ public class SellerOrderDetails implements Initializable {
                 try {
                     gui.refreshScene(currentFXMLPath);
                 } catch (IOException e1) {
-                    // TODO Auto-generated catch block
                     e1.printStackTrace();
                 }
             });
@@ -94,7 +92,6 @@ public class SellerOrderDetails implements Initializable {
                 try {
                     gui.refreshScene(currentFXMLPath);
                 } catch (IOException e1) {
-                    // TODO Auto-generated catch block
                     e1.printStackTrace();
                 }
             });
@@ -108,7 +105,6 @@ public class SellerOrderDetails implements Initializable {
                 try {
                     gui.refreshScene(currentFXMLPath);
                 } catch (IOException e1) {
-                    // TODO Auto-generated catch block
                     e1.printStackTrace();
                 }
             });

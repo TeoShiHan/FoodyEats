@@ -44,6 +44,17 @@ public class Buyer extends Account {
         this.buyerID = (String) buyer.get("buyerID");
         this.address = (String) buyer.get("address");
         this.cartID = (String) buyer.get("cartID");
+        
+    }
+
+    public Buyer(HashMap<String, Object> fullBuyerDetails) {
+        super((String) fullBuyerDetails.get("accountID"), (String) fullBuyerDetails.get("username"),
+                (String) fullBuyerDetails.get("password"), (String) fullBuyerDetails.get("name"),
+                (String) fullBuyerDetails.get("email"), (String) fullBuyerDetails.get("mobileNo"),
+                (String) fullBuyerDetails.get("type"), (String) fullBuyerDetails.get("regDate"));
+        this.buyerID = (String) fullBuyerDetails.get("buyerID");
+        this.address = (String) fullBuyerDetails.get("address");
+        this.cartID = (String) fullBuyerDetails.get("cartID");
     }
     // #endregion
 

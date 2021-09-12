@@ -29,7 +29,6 @@ public class AdminRiderAccountApproval implements Initializable {
     private JDBC db = new JDBC();
     private GUI gui = GUI.getInstance();
     private DataHolder data = DataHolder.getInstance();
-    private String currentFXMLPath = "View/AdminRiderAccountApproval.fxml";
 
     @FXML private AnchorPane paneRiderOrderHistory;
     @FXML private Label lblWelcome;

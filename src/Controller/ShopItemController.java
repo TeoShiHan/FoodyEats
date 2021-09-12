@@ -45,7 +45,6 @@ public class ShopItemController{
     public void setData(Shop shop, BuyerHomeListeners listener){
         this.listener = listener;
         this.shop = shop;
-            /*DEBUG MSG*/System.out.println("AVAILABLE CATEGORY IN SHOP ITEM : " + shop.getAvailableFoodCategoryInShop());
 
         Image shopImage = new Image(getClass().getResourceAsStream(shop.getImgPath()));
         Image deliveryTruckIcon = new Image(getClass().getResourceAsStream("../Images/deliveryIcon.png"));
@@ -55,7 +54,6 @@ public class ShopItemController{
         shopName.setText(shop.getName());
 
         availableCategory = shop.getAvailableFoodCategoryInShop();
-            /*DEBUG MSG*/System.out.println("AVAILABLE CATEGORY : " + availableCategory);
 
         for(int i = 0 ; i < availableCategory.size() ; i++){
             if(i > 0){

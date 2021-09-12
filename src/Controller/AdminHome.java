@@ -1,6 +1,5 @@
 package Controller;
 import Cache.*;
-import Classes.*;
 
 import java.io.IOException;
 import java.net.URL;
@@ -16,7 +15,6 @@ import javafx.scene.layout.HBox;
 import javafx.scene.layout.Pane;
 
 public class AdminHome implements Initializable{
-    private JDBC db = new JDBC();
     private GUI gui = GUI.getInstance();    
     private DataHolder data = DataHolder.getInstance();
     

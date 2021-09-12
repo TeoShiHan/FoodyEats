@@ -140,30 +140,6 @@ public class Order {
         this.review = review;
     }       
     
-    // public Buyer getBuyer() {
-    //     return buyer;
-    // }
-
-    // public void setBuyer(Buyer buyer) {
-    //     this.buyer = buyer;
-    // }
-
-    // public Rider getRider() {
-    //     return rider;
-    // }
-
-    // public void setRider(Rider rider) {
-    //     this.rider = rider;
-    // }
-
-    // public Shop getShop() {
-    //     return shop;
-    // }
-
-    // public void setShop(Shop shop) {
-    //     this.shop = shop;
-    // }
-    
     public static boolean isOrdersHaveChange() {
         return ordersHaveChange;
     }
@@ -199,29 +175,7 @@ public class Order {
         this.review = review;        
     }
 
-    public void loadAllDetails(){        
-        // if(loadAllDetailsCount++==0){
-        // orderItems = new ArrayList<OrderItem>();
-        // ArrayList<HashMap<String,Object>> ods = db.readAll(String.format("SELECT s.address AS shopAddress,s.imgPath AS shopImagePath,a.name AS buyerName,b.address AS buyerAddress,f.imgPath AS foodImagePath,s.*,a.*,b.*,oi.*,f.* FROM `Order` o, `Shop` s, `Buyer` b, `OrderItem` oi, `Food` f, `Account` a WHERE o.orderID='%s' AND o.orderID=oi.orderID AND o.shopID=s.shopID AND o.buyerID=b.buyerID AND oi.foodID=f.foodID AND b.accountID=a.accountID",data.getOrder().getOrderID()));
-        // System.out.println(ods);
-        // this.buyer=new Buyer(ods.get(0).get("accountID"), ods.get(0).get("username"), ods.get(0).get("password"), ods.get(0).get("buyerName"), ods.get(0).get("email"), ods.get(0).get("mobileNo"), ods.get(0).get("accType"), ods.get(0).get("buyerID"), ods.get(0).get("buyerAddress"), ods.get(0).get("cartID"));
-        // this.shop=new Shop(ods.get(0).get("shopID"), ods.get(0).get("shopName"), ods.get(0).get("shopAddress"), ods.get(0).get("tel"), ods.get(0).get("startHour"), ods.get(0).get("endHour"), ods.get(0).get("status"), ods.get(0).get("dateCreated"), ods.get(0).get("deliveryFee"),ods.get(0).get("shopImagePath"));
-        // if(!(riderID==null||riderID.isEmpty()||riderID.isBlank())){
-        //     HashMap<String,Object> r = db.readOne(String.format("SELECT r.*,v.*,a.* FROM `Rider` r, `Vehicle` v, `Account` a WHERE r.riderID='%s' AND r.vehicleID=v.vehicleID AND r.accountID=a.accountID",riderID));
-        //     System.out.println(r);
-        //     Vehicle vehicle = new Vehicle(r.get("vehicleID"), r.get("type"), r.get("plateNo"), r.get("brand"), r.get("model"), r.get("color"));
-        //     Rider rider = new Rider(r.get("accountID"), r.get("username"), r.get("password"), r.get("name"), r.get("email"), r.get("mobileNo"), r.get("accType"), r.get("riderID"), r.get("vehicleID"), r.get("status"));
-        //     rider.setVehicle(vehicle);
-        //     this.rider = rider;
-        // }
-        // for(HashMap<String,Object> od : ods){
-        //     this.buyer=new Buyer(od.get("accountID"), od.get("username"), od.get("password"), od.get("buyerName"), od.get("email"), od.get("mobileNo"), od.get("accType"), od.get("buyerID"), od.get("buyerAddress"), od.get("cartID"));
-        //     this.shop=new Shop(od.get("shopID"), od.get("shopName"), od.get("shopAddress"), od.get("tel"), od.get("startHour"), od.get("endHour"), od.get("status"), od.get("dateCreated"), od.get("deliveryFee"),od.get("shopImagePath"));
-        //     Food food=new Food(od.get("foodID"), od.get("foodName"), od.get("foodDesc"), od.get("foodImagePath"), od.get("price"), od.get("category"), od.get("shopID"));            
-        //     this.orderItems.add(new OrderItem(od.get("orderID"), od.get("foodID"), od.get("quantity"), food));                            
-        // }
-        // }
-
+    public void loadAllDetails(){
         loadOrderItems();
         data.setOrder(this);
     }

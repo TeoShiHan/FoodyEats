@@ -24,7 +24,7 @@ import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.HBox;
 
 public class SellerIncomingOrder implements Initializable {
-    private JDBC db = new JDBC();
+
     private GUI gui = GUI.getInstance();
     private DataHolder data = DataHolder.getInstance();
     

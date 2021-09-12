@@ -24,7 +24,7 @@ import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.HBox;
 
 public class SellerOrderHistory implements Initializable {    
-    private JDBC db = new JDBC();
+
     private GUI gui = GUI.getInstance();
     private DataHolder data = DataHolder.getInstance();
     private String currentFXMLPath = "View/SellerOrderHistory.fxml";
@@ -81,8 +81,6 @@ public class SellerOrderHistory implements Initializable {
                 });                                       
             }                     
         });
-          
-        // tableView.getColumns().addAll(colOrderId,colDate,colStatus,colAction); //not needed
     }    
 
     @FXML

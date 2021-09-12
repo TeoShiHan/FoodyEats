@@ -28,7 +28,6 @@ import javafx.scene.control.TableView;
 import javafx.scene.image.ImageView;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.AnchorPane;
-import javafx.scene.shape.Path;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
 
@@ -103,7 +102,6 @@ public class BuyerOrderDetails implements Initializable {
             try {
                 dialogScene = new Scene((Parent)loader.load());                        
             } catch (IOException e2) {
-                // TODO Auto-generated catch block
                 e2.printStackTrace();
             }
             
@@ -124,7 +122,6 @@ public class BuyerOrderDetails implements Initializable {
                         gui.refreshScene(currentFXMLPath);
                         gui.notAlertInProgress(myDialog);
                     } catch (IOException e1) {
-                        // TODO Auto-generated catch block
                         e1.printStackTrace();                        
                     }                    
                 });
@@ -162,43 +159,9 @@ public class BuyerOrderDetails implements Initializable {
                     }
                 });
             } catch (IOException e) {
-                // TODO Auto-generated catch block
                 e.printStackTrace();
             }            
-        });        
-
-        //#region direct select data from database (old method)
-        // HashMap<String,Object> buyer = db.readOne(String.format("SELECT * FROM `Buyer` WHERE buyerID='%s'", data.getOrder().getBuyerId()));
-        // lblShopAddress.setText((String)buyer.get("address"));  
-        // HashMap<String,Object> account = db.readOne(String.format("SELECT * FROM `Account` WHERE accountID='%s'", (String)buyer.get("accountID")));
-        // lblShopPhoneNo.setText((String)account.get("mobileNo"));
-        // ObservableList<Map<String,Object>> observableList = FXCollections.observableArrayList();        
-        // ArrayList<HashMap<String,Object>> ois = 
-
-
-        // db.readAll("SELECT * FROM `Order` AS o INNER JOIN `OrderItem`
-        // AS oi ON o.orderID = oi.orderID INNER JOIN `Buyer` as b ON o.buyerID = b.buyerID INNER JOIN `Shop`
-        // AS s ON o.shopID = s.shopID INNER JOIN `Payment` AS p ON o.paymentID = p.paymentID INNER JOIN `Food` 
-        // AS f ON oi.foodID = f.foodID WHERE o.orderID = 'O00002'");
-
-        // SELECT O.orderID, A.name, A.mobileNo , B.address, O.dateCreated, O.timeCreated, F.foodName, F.price, OI.quantity, (F.price * OI.quantity) AS Total FROM Order O, OrderItems OI, Food F, Buyer B, Account A WHERE O.orderID=OI.orderID AND OI.foodID=f.foodID AND O.buyerID=B.buyerID B.accountID=A.accountID
-
-        // int i = 1;
-        // ArrayList<OrderItem> a =  new ArrayList<>();
-        // for(HashMap<String,Object> oi : ois){            
-        //     HashMap<String,Object> f = db.readOne(String.format("SELECT * FROM `Food` WHERE foodID='%s'", (String)oi.get("foodID")));
-        //     Food food = new Food(f.get("foodID"),f.get("foodName"),f.get("foodDesc"),f.get("imgPath"),f.get("price"),f.get("category"),f.get("shopID"));
-        //     a.add(new OrderItem(oi.get("orderID"),oi.get("foodID"),oi.get("quantity"),food));
-        //     Map<String,Object> orderItems = oi;
-        //     orderItems.put("no", i);
-        //     observableList.add(orderItems);
-        //     i++;
-        // }
-        // data.getOrder().setOrderItems(a);
-        // colNo.setCellValueFactory(new MapValueFactory<>("no"));
-        // colItems.setCellValueFactory(new MapValueFactory<>("foodName"));
-        // colQty.setCellValueFactory(new MapValueFactory<>("quantity")); 
-        //#endregion
+        });
     }    
 
     @FXML
