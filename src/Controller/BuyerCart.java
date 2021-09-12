@@ -225,43 +225,52 @@ public class BuyerCart implements Initializable{
         }
         
         controller.getBtnYes().setOnAction(ev->{
-            Stage myDialog2 = new Stage();            
-            myDialog2.initModality(Modality.APPLICATION_MODAL);  //make user unable to press the original stage/window unless close the current stage/window
-            myDialog2.initOwner(gui.getStage());
-            
-            WebView wv = new WebView();
-            wv.getEngine().load(controller.getBanks().get(controller.getDropdownBank().getValue()));            
+            if(controller.isSelectedBank()){
+                Stage myDialog2 = new Stage();            
+                myDialog2.initModality(Modality.APPLICATION_MODAL);  //make user unable to press the original stage/window unless close the current stage/window
+                myDialog2.initOwner(gui.getStage());
+                
+                WebView wv = new WebView();
+                wv.getEngine().load(controller.getBanks().get(controller.getDropdownBank().getValue()));            
 
-            Pane pane = new Pane(wv);
-                                
-            myDialog2.setScene(new Scene(pane));
-            myDialog2.setMaximized(false);
-            myDialog2.show();
+                Pane pane = new Pane(wv);
+                                    
+                myDialog2.setScene(new Scene(pane));
+                myDialog2.setMaximized(false);
+                myDialog2.show();
 
-            data.setPayment(new Payment(((RadioButton)controller.getPaymentType().getSelectedToggle()).getText()));
-            Order order = new Order("Pending", LocalDate.now(), LocalTime.now(), data.getBuyer().getBuyerID(), data.getCart().getShopID());            
-            Task<Void> task = new Task<Void>() {
-                @Override
-                public Void call() throws IOException, SQLException {                        
-                    order.create();
-                    return null;
-                }
-            };
-            new Thread(task).start();
-            
-            // link:https://stackoverflow.com/questions/27334455/how-to-close-a-stage-after-a-certain-amount-of-time-javafx
-            PauseTransition delay = new PauseTransition(Duration.seconds(8));
-            delay.setOnFinished(e -> {
-                myDialog.close();
-                myDialog2.close();                            
-                gui.miniPopup("Payment made successfully, you can view your order in Home 👉 Order History");
+                data.setPayment(new Payment(((RadioButton)controller.getPaymentType().getSelectedToggle()).getText()));
+                Order order = new Order("Pending", LocalDate.now(), LocalTime.now(), data.getBuyer().getBuyerID(), data.getCart().getShopID());            
+                Task<Void> task = new Task<Void>() {
+                    @Override
+                    public Void call() throws IOException, SQLException {                        
+                        order.create();
+                        return null;
+                    }
+                };
+                new Thread(task).start();
+                
+                // link:https://stackoverflow.com/questions/27334455/how-to-close-a-stage-after-a-certain-amount-of-time-javafx
+                PauseTransition delay = new PauseTransition(Duration.seconds(8));
+                delay.setOnFinished(e -> {
+                    myDialog.close();
+                    myDialog2.close();                            
+                    gui.miniPopup("Payment made successfully, you can view your order in Home 👉 Order History");
+                    gui.toNextScene("View/BuyerOrderHistory.fxml");
+                });
+                delay.play();            
+                myDialog2.setOnCloseRequest(e->{                
+                myDialog.close();                
                 gui.toNextScene("View/BuyerOrderHistory.fxml");
-            });
-            delay.play();            
-            myDialog2.setOnCloseRequest(e->{                
-            myDialog.close();                
-            gui.toNextScene("View/BuyerOrderHistory.fxml");
-            });
+                });
+            }else{
+                try {
+                    gui.informationPopup("Attention", "Please select a bank in order to proceed");
+                } catch (IOException e1) {
+                    // TODO Auto-generated catch block
+                    e1.printStackTrace();
+                }
+            }            
         });
         
         controller.getBtnNo().setOnAction(e->{
