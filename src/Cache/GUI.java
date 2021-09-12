@@ -24,7 +24,8 @@ import javafx.util.Duration;
 public final class GUI {
   private final static GUI INSTANCE = new GUI();
   private Stage stage;  
-  private ArrayList<Scene> prevScenes = new ArrayList<Scene>();        
+  // private ArrayList<Scene> prevScenes = new ArrayList<Scene>();        
+  private ArrayList<String> prevScenePaths = new ArrayList<String>();  
   
   private GUI() {}
   
@@ -39,32 +40,30 @@ public final class GUI {
   public Stage getStage() {
     return this.stage;
   }
-
-  public void setPrevScenes(ArrayList<Scene> scenes){
-    this.prevScenes = scenes;
+ 
+  public void setPrevScenePaths(ArrayList<String> scenePaths){
+    this.prevScenePaths = scenePaths;
   }
 
-  public ArrayList<Scene> getPrevScenes(){
-    return this.prevScenes;
+  public ArrayList<String> getPrevScenesPaths(){
+    return this.prevScenePaths;
   }
 
-  public void addPrevScene(Scene scene){
-    prevScenes.add(scene);
+  public void addPrevScenePath(String scenePath){
+    prevScenePaths.add(scenePath);
   }
 
-  public Scene getPrevScene(){
-    return prevScenes.get(prevScenes.size()-1);
+  public String getPrevScenePath(){
+    prevScenePaths.remove(prevScenePaths.size()-1);
+    return prevScenePaths.get(prevScenePaths.size()-1);
   }
 
   public void toPrevScene() throws IOException{        
-    stage.setScene(getPrevScene());
-    prevScenes.remove(prevScenes.size()-1);
-    this.stage.centerOnScreen();
+    toNextScene(getPrevScenePath());
   }
 
-  public void toNextSceneUnckeck(String filePath) throws IOException{        
-      Scene currentScene = this.stage.getScene();     
-      addPrevScene(currentScene);    
+  public void toNextSceneUnckeck(String filePath) throws IOException{               
+      addPrevScenePath(filePath);    
   
       FXMLLoader loader = new FXMLLoader();
       // loader.setLocation(getClass().getResource("/View/BuyerOrder.fxml"));  //this is similar to next line, this line should add '/' infront of the path
