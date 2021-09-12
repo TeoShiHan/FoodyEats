@@ -1,27 +1,24 @@
 package Classes;
 
-import java.time.LocalDate;
-import java.time.LocalTime;
-import java.util.ArrayList;
 import java.util.HashMap;
 
 import Cache.*;
+import SQL.CreateTableQuery.SQL;
 
 public class BuyerOrder extends Order {
-    private JDBC db = new JDBC();
-    private GUI gui = GUI.getInstance();
     private DataHolder data = DataHolder.getInstance();
-    
+    private SQL sql = SQL.getInstance();
+
     private Shop shop;
-    private Rider rider;        
-    
+    private Rider rider;
+
     public BuyerOrder() {
-                
+
     }
 
     public BuyerOrder(Order order) {
-        super(order.orderID, order.status, order.dateCreated, order.timeCreated, order.buyerID, order.riderID, order.shopID, order.paymentID, order.reviewID);
-    }    
+        super(order);
+    }
 
     public Shop getShop() {
         return shop;
@@ -40,29 +37,29 @@ public class BuyerOrder extends Order {
     }
 
     @Override
-    public void loadAllDetails() {            
+    public void loadAllDetails() {
         super.loadAllDetails();
         loadShop();
-        if(!(riderID==null || riderID.isEmpty())){            
+        if (!(riderID == null || riderID.isEmpty())) {
             loadRider();
         }
-        if(!(reviewID==null || reviewID.isEmpty())){
+        if (!(reviewID == null || reviewID.isEmpty())) {
             loadReview();
         }
         data.setOrder(this);
     }
-    
-    public void loadShop() {                        
-        HashMap<String,Object> s = db.readOne(String.format("SELECT * FROM Shop WHERE shopID='%s'",this.shopID));        
-        this.shop=new Shop(s.get("shopID"), s.get("shopName"), s.get("address"), s.get("tel"), s.get("startHour"), s.get("endHour"), s.get("status"), s.get("dateCreated"), s.get("deliveryFee"),s.get("imgPath"));
+
+    public void loadShop() {
+        HashMap<String, Object> shopDetails = sql.fetchSpecificShopDetails(this.shopID);
+        this.shop = new Shop(shopDetails);
     }
 
     public void loadRider() {
-        HashMap<String,Object> r = db.readOne(String.format("SELECT r.*,v.*,a.* FROM `Rider` r, `Vehicle` v, `Account` a WHERE r.riderID='%s' AND r.vehicleID=v.vehicleID AND r.accountID=a.accountID",riderID));
-        System.out.println(r);
-        Vehicle vehicle = new Vehicle(r.get("vehicleID"), r.get("type"), r.get("plateNo"), r.get("brand"), r.get("model"), r.get("color"));
-        Rider rider = new Rider(r.get("accountID"), r.get("username"), r.get("password"), r.get("name"), r.get("email"), r.get("mobileNo"), r.get("accType"), r.get("regDate"), r.get("riderID"), r.get("vehicleID"), r.get("status"));
+        HashMap<String, Object> riderDetails = sql.fetchSpecificRiderDetails(riderID);
+        System.out.println(riderDetails);
+        Vehicle vehicle = new Vehicle(riderDetails);
+        Rider rider = new Rider(riderDetails);
         rider.setVehicle(vehicle);
-        this.rider = rider;        
+        this.rider = rider;
     }
 }

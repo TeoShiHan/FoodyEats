@@ -71,6 +71,7 @@ public class BuyerHome implements Initializable {
     public void initialize(URL location, ResourceBundle resources) {
         /*DEBUG MSG*/System.out.println("INITIALIZED");
         
+        greeting.setText("Welcome " + data.getAccount().getName() + "!");
         navigationalListeners = createNavigationalListeners();
         
         Shop tempShop = new Shop();

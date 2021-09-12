@@ -1,5 +1,7 @@
 package Classes;
 
+import java.util.HashMap;
+
 import Cache.GUI;
 
 public class Vehicle {
@@ -22,6 +24,15 @@ public class Vehicle {
         this.brand = (String)brand;
         this.model = (String)model;
         this.color = (String)color;
+    }
+
+    public Vehicle(HashMap<String,Object> vehicleMap){
+        this.vehicleID = (String) vehicleMap.get("vehicleID");
+        this.type = (String) vehicleMap.get("type");
+        this.plateNo = (String) vehicleMap.get("plateNo");
+        this.brand = (String) vehicleMap.get("brand");
+        this.model = (String) vehicleMap.get("model");
+        this.color = (String) vehicleMap.get("color");
     }
     
     public String getVehicleID() {
