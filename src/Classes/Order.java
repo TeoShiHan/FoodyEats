@@ -224,6 +224,7 @@ public class Order {
             query += String.format("INSERT INTO `OrderItem` (orderID,foodID,quantity) VALUES ('%s','%s',%d); ",orderID,c.getFood().getFoodID(),c.getQuantity());
             deleteOrderItemQuery += String.format("DELETE FROM `CartItem` WHERE cartID='%s' AND foodID='%s'; ",c.getCartID(),c.getFood().getFoodID());
         }
+        query += String.format("UPDATE `Cart` SET shopID='' WHERE cartID='%s'; ",data.getBuyer().getCart().getCartID());        
         query += "COMMIT;";
         System.out.println(query);
         System.out.println(deleteOrderItemQuery);

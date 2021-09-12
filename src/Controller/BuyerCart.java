@@ -183,7 +183,8 @@ public class BuyerCart implements Initializable{
                 btnDelete.setGraphic(deleteImage);                
                 setGraphic(btnDelete);                                       
 
-                btnDelete.setOnAction(event->{                    
+                btnDelete.setOnAction(event->{          
+                    data.getBuyer().getCart().setShopID("");          
                     data.getCartItems().remove(cartItem);
                     tableView.getItems().remove(cartItem);
                     Task<Void> task = new Task<Void>() {
@@ -240,6 +241,7 @@ public class BuyerCart implements Initializable{
                 myDialog2.show();
 
                 data.setPayment(new Payment(((RadioButton)controller.getPaymentType().getSelectedToggle()).getText()));
+                data.getBuyer().getCart().setShopID("");
                 Order order = new Order("Pending", LocalDate.now(), LocalTime.now(), data.getBuyer().getBuyerID(), data.getCart().getShopID());            
                 Task<Void> task = new Task<Void>() {
                     @Override
