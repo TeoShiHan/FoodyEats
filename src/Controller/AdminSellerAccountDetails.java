@@ -26,7 +26,7 @@ public class AdminSellerAccountDetails implements Initializable {
     @FXML private ImageView shopImg;
     @FXML private Label linkLogout,lblSellerAccountDetails,lblDateReg,lblName,lblEmail,lblMobileNo,lblNRIC,lblLicenseNo,lblBankAccNo,lblAddress,lblShopName,lblShopTel,lblShopAddress,lblShopDeliveryFee,lblShopDateCraeted;        
     @FXML private ImageView iconProfile,iconHome,iconBack;            
-    @FXML private Button btnVerified;          
+    @FXML private Button btnApprove;          
 
     @Override
     public void initialize(URL location, ResourceBundle resources) {                
@@ -55,9 +55,9 @@ public class AdminSellerAccountDetails implements Initializable {
     }    
 
     @FXML
-    void actionVerified(ActionEvent event) {
+    void actionApprove(ActionEvent event) {
         data.getAdmin().verifyRider(data.getSeller().getSellerID());
-        btnVerified.setDisable(true);
+        btnApprove.setDisable(true);
     }
 
     @FXML

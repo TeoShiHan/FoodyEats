@@ -28,7 +28,7 @@
             <Insets bottom="10.0" />
          </VBox.margin>
       </TextField>      
-      <TextField fx:id="inputShopTelNo" prefHeight="50.0" prefWidth="363.0" promptText="Shop Tel No.">
+      <TextField fx:id="inputShopTelNo" prefHeight="50.0" prefWidth="363.0" promptText="Shop Tel No. (e.g. 03-12345678)">
          <font>
             <Font size="20.0" />
          </font>
