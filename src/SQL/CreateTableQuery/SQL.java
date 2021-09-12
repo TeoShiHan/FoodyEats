@@ -74,6 +74,10 @@ public final class SQL {
         return db.readAll(String.format("SELECT * FROM `Order` WHERE %s='%s'",idName, idValue));
     }
 
+    public HashMap<String, Object> fetchSpecificCartDetails(String buyerID){
+        return db.readOne(String.format("SELECT * FROM `Cart` WHERE buyerID='%s'", buyerID));
+    }
+
     public ArrayList<HashMap<String, Object>> fetchFoodCategoriesFromAllShops(ArrayList<String> shopKeyArr) {
         String completeSQLStmt = "";
 
@@ -124,6 +128,16 @@ public final class SQL {
 
     public void updateStatusToArrpoved(String accountType, String idName, String id){
         db.executeCUD(String.format("UPDATE `%s` SET status=1 WHERE %s ='%s'",accountType,idName,id),gui);
+    }
+
+    public void createNewCartForBuyer(String newCartID, String newBuyerID){
+        db.executeCUD(String.format("INSERT INTO Cart VALUES ('%s','%s','%s')", newCartID, newBuyerID, null),
+        gui);
+    }
+
+    public void registerNewBuyer(String newBuyerID, String newAddress, String newAccountID, String newCartID){
+        db.executeCUD(String.format("INSERT INTO Buyer VALUES ('%s','%s','%s','%s')", newBuyerID, newAddress,
+        newAccountID, newCartID), gui);
     }
 
     private static boolean isNotLastStatement(int statementQty, int currentStatement) {

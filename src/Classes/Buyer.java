@@ -88,8 +88,8 @@ public class Buyer extends Account {
     }
 
     public void loadCart() {
-        HashMap<String, Object> c = db.readOne(String.format("SELECT * FROM `Cart` WHERE buyerID='%s'", buyerID));
-        this.cart = new Cart(c.get("cartID"), c.get("buyerID"), c.get("shopID"));
+        HashMap<String, Object> cartDetails = sql.fetchSpecificCartDetails(buyerID);
+        this.cart = new Cart(cartDetails.get("cartID"), cartDetails.get("buyerID"), cartDetails.get("shopID"));
     }
 
     public ArrayList<Order> getOrders() {
@@ -115,11 +115,9 @@ public class Buyer extends Account {
         try {
             String nextBuyerID = db.getNextId("Buyer");
             String nextCartID = db.getNextId("Cart");
-            db.executeCUD(String.format("INSERT INTO Cart VALUES ('%s','%s','%s')", nextCartID, nextBuyerID, null),
-                    gui);
+            sql.createNewCartForBuyer(nextCartID, nextBuyerID);
             this.cart = new Cart(nextCartID, nextBuyerID, null);
-            db.executeCUD(String.format("INSERT INTO Buyer VALUES ('%s','%s','%s','%s')", nextBuyerID, address,
-                    accountID, nextCartID), gui);
+            sql.registerNewBuyer(nextBuyerID, address, accountID, nextCartID);
             this.buyerID = nextBuyerID;
             this.cartID = nextCartID;
             data.setAccount(this);
