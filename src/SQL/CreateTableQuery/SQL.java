@@ -115,6 +115,26 @@ public final class SQL {
         System.out.println(completeSQLStmt);
         return db.readAll(completeSQLStmt);
     }
+
+    public HashMap<String,Object> fetchShopIdOfBuyerCart(String buyerCartID){
+        String sqlStatement = String.format(
+                    "SELECT shopID " +
+                    "FROM Food F, CartItem C " +
+                    "WHERE F.foodID = C.foodID AND " +
+                    "cartID = '%s';", buyerCartID 
+                );
+      return db.readOne(sqlStatement);
+    }
+
+    public String fetchShopIdOfBuyerCartStmt(String buyerCartID){
+        String sqlStatement = String.format(
+            "SELECT shopID " +
+            "FROM Food F, CartItem C " +
+            "WHERE F.foodID = C.foodID AND " +
+            "cartID = '%s';", buyerCartID 
+        );
+        return sqlStatement;
+    }
     
     private static boolean isNotLastStatement(int statementQty, int currentStatement){
         return currentStatement < statementQty;
