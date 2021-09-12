@@ -124,7 +124,7 @@ public class SellerManageFood implements Initializable {
             cell.setGraphic(imageView);            
             System.out.println("add cell");
             return cell;
-        });        
+        });
         colImage.setCellValueFactory(new PropertyValueFactory<Food,String>("imgPath"));
         colName.setCellFactory(param -> {
             return new TableCell<Food, Object>() {
