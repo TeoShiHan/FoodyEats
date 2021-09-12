@@ -12,7 +12,14 @@ public class CartItem {
     private boolean isChanged = false;    
 
     public CartItem() {  //No-arg Constructor
-    	
+    	this("","",0, new Food());
+    }
+
+    public CartItem(String cartID, String foodID, int quantity, Food food) {
+        this.cartID = cartID;
+        this.foodID = foodID;
+        this.quantity = quantity;
+        this.food = food;
     }
 
     public CartItem(Object cartID, Object foodID, Object quantity) {
