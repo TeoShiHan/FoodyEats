@@ -1,4 +1,5 @@
 package Classes;
+
 import Cache.GUI;
 import SQL.CreateTableQuery.SQL;
 import java.sql.SQLException;
@@ -9,81 +10,61 @@ import java.nio.file.Paths;
 import java.util.ArrayList;
 import java.util.HashMap;
 
-public class Seller extends Account{
+public class Seller extends Account {
 
-    //#region ：COMPOSITION / AGGREGATION VARIABLES
+    // #region ：COMPOSITION / AGGREGATION VARIABLES
     private JDBC db = new JDBC();
     private GUI gui = GUI.getInstance();
     private Shop shop;
     private SQL sql = SQL.getInstance();
-    //#endregion
-    
-    //#region : CLASS FIELD
+    // #endregion
+
+    // #region : CLASS FIELD
     private String sellerID;
-    private String address;    
+    private String address;
     private String NRIC;
     private String licenseNumber;
     private String bankAcc;
     private String shopID;
     private int status;
     private ArrayList<Order> order = new ArrayList<>();
-    //#endregion
+    // #endregion
 
-    //#region : CONSTRUCTORS
-    public Seller(){
-        
-    }            
-    public Seller(
-        Object accountID, 
-        Object username, 
-        Object password, 
-        Object name, 
-        Object email, 
-        Object mobileNo, 
-        Object accType,
-        Object regDate,
-        Object sellerID,        
-        Object address,        
-        Object NRIC, 
-        Object licenseNumber,
-        Object bankAcc,        
-        Object shopID,
-        Object status
-    ){
+    // #region : CONSTRUCTORS
+    public Seller() {
+
+    }
+
+    public Seller(Object accountID, Object username, Object password, Object name, Object email, Object mobileNo,
+            Object accType, Object regDate, Object sellerID, Object address, Object NRIC, Object licenseNumber,
+            Object bankAcc, Object shopID, Object status) {
         super(accountID, username, password, name, email, mobileNo, accType, regDate);
         this.sellerID = (String) sellerID;
-        this.address = (String) address;        
+        this.address = (String) address;
         this.NRIC = (String) NRIC;
         this.licenseNumber = (String) licenseNumber;
         this.bankAcc = (String) bankAcc;
         this.accountID = (String) accountID;
         this.shopID = (String) shopID;
-        this.status = (int)status;  
-    }   
+        this.status = (int) status;
+    }
 
-    public Seller(HashMap<String,Object>account, HashMap<String,Object>seller, Shop shop){
-        super(
-            (String)account.get("accountID"), 
-            (String)account.get("username"), 
-            (String)account.get("password"),
-            (String)account.get("name"), 
-            (String)account.get("email"), 
-            (String)account.get("mobileNo"), 
-            (String)account.get("type"),
-            (String)account.get("regDate")
-        );
-        this.sellerID      = (String)seller.get("sellerID");
-        this.address       = (String)seller.get("address");
-        this.NRIC          = (String)seller.get("NRIC");
-        this.licenseNumber = (String)seller.get("licenseNumber");
-        this.bankAcc       = (String)seller.get("bankAcc");
-        this.shopID        = (String)seller.get("shopID");
-        this.status        = (int)seller.get("status");
+    public Seller(HashMap<String, Object> account, HashMap<String, Object> seller, Shop shop) {
+        super((String) account.get("accountID"), (String) account.get("username"), (String) account.get("password"),
+                (String) account.get("name"), (String) account.get("email"), (String) account.get("mobileNo"),
+                (String) account.get("type"), (String) account.get("regDate"));
+        this.sellerID = (String) seller.get("sellerID");
+        this.address = (String) seller.get("address");
+        this.NRIC = (String) seller.get("NRIC");
+        this.licenseNumber = (String) seller.get("licenseNumber");
+        this.bankAcc = (String) seller.get("bankAcc");
+        this.shopID = (String) seller.get("shopID");
+        this.status = (int) seller.get("status");
         this.shop = shop;
     }
-    //#endregion
+    // #endregion
 
-    //#region : GETTER AND SETTER
+    // #region : GETTER AND SETTER
     public String getSellerID() {
         return sellerID;
     }
@@ -99,7 +80,7 @@ public class Seller extends Account{
     public void setAddress(String address) {
         this.address = address;
     }
-    
+
     public String getNRIC() {
         return NRIC;
     }
@@ -147,41 +128,17 @@ public class Seller extends Account{
     public void setShop(Shop shop) {
         this.shop = shop;
     }
-    //#endregion
+    // #endregion
 
-    //#region : METHODS
+    // #region : METHODS
     @Override
     public void register() throws IOException {
-        
         super.register();
-
-        // #region : GET NEXT TABLE IDs
-        this.sellerID = Seller.getNextID();
-        this.shopID = Shop.getNextID();
-        this.shop.setShopID(this.shopID);
-        // #endregion
-
-        // #region : ADD IMAGES TO FOLDER
-        Path source = getShopImgPath(shop);
-        String currentPath = Paths.get("").toAbsolutePath().toString().replaceAll("\\\\", "/")+"/src/Images/";
-        System.out.println(currentPath + shopID + shop.getImgPath().substring(shop.getImgPath().lastIndexOf(".")));
-        Files.copy(source,
-                Paths.get(currentPath + shopID + shop.getImgPath().substring(shop.getImgPath().lastIndexOf("."))));
-        //#endregion
-
-        // #region
+        generateNewShopIdAndSellerId();
+        addShopImageIntoFolder(shop);
         this.shop.setImgPath("/Images/" + shopID + shop.getImgPath().substring(shop.getImgPath().lastIndexOf(".")));
-        // #endregion
-
-        // #region : INSERT INTO TABLE        
-        db.executeCUD(sql.insertNewSeller(this), gui);
-        db.executeCUD(sql.insertNewShop(this.shop), gui);
-        // #endregion
-
-        // #region : SCENE CHANGING
-        gui.toNextScene("View/Login.fxml");        
-        // #endregion
-
+        registerThisSellerIntoDatabase();
+        gui.toNextScene("View/Login.fxml");
         this.notifyAccCreated(gui);
     }
 
@@ -198,27 +155,30 @@ public class Seller extends Account{
 
     public Path getShopImgPath(Shop shop) {
         // https://stackoverflow.com/questions/1158777/rename-a-file-using-java/20260300#20260300
-        return Paths.get(shop.getImgPath());           
+        return Paths.get(shop.getImgPath());
     }
 
     @Override
-    public void notifyAccCreated(GUI gui) throws IOException{
-        gui.informationPopup("Account created successfully", "You have to wait about 48hours to verify your account. Thank you!");
+    public void notifyAccCreated(GUI gui) throws IOException {
+        gui.informationPopup("Account created successfully",
+                "You have to wait about 48hours to verify your account. Thank you!");
         gui.notAlertInProgress();
     }
 
-    public void loadShop(){
-        HashMap<String,Object> s = db.readOne(String.format("SELECT * FROM `Shop` WHERE shopID='%s'",shopID));
-        this.shop = new Shop(s.get("shopID"), s.get("shopName"), s.get("address"), s.get("tel"), s.get("startHour"), s.get("endHour"), s.get("status"), s.get("dateCreated"), s.get("deliveryFee"), s.get("imgPath"));
+    public void loadShop() {
+        HashMap<String, Object> shopMap = sql.fetchSpecificShopDetails(shopID);
+        this.shop = new Shop(shopMap);
     }
-    
-    public void edit(String username, String password, String name, String email, String mobileNo, String address, String bankAcc, String NRIC, String licenseNumber) {
+
+    public void edit(String username, String password, String name, String email, String mobileNo, String address,
+            String bankAcc, String NRIC, String licenseNumber) {
         super.edit(username, password, name, email, mobileNo);
         this.address = address;
         this.bankAcc = bankAcc;
         this.NRIC = NRIC;
         this.licenseNumber = licenseNumber;
-        db.executeCUD(String.format("UPDATE `Account` a, `Seller` s SET a.username='%s', a.password='%s', a.name='%s', a.email='%s', a.mobileNo='%s', s.address='%s', s.bankAcc='%s', s.NRIC='%s', s.licenseNumber='%s' WHERE a.accountID='%s' AND a.accountID=s.accountID",username,password,name,email,mobileNo,address,bankAcc,NRIC,licenseNumber,accountID),gui);
+        sql.updateAccountDetailsForSeller(username, password, name, email, mobileNo, address, bankAcc, NRIC,
+                licenseNumber, accountID);
     }
 
     public void edit(Account account, String address, String bankAcc, String NRIC, String licenseNumber) {
@@ -227,12 +187,35 @@ public class Seller extends Account{
         this.bankAcc = bankAcc;
         this.NRIC = NRIC;
         this.licenseNumber = licenseNumber;
-        db.executeCUD(String.format("UPDATE `Account` a, `Seller` s SET a.username='%s', a.password='%s', a.name='%s', a.email='%s', a.mobileNo='%s', s.address='%s', s.bankAcc='%s', s.NRIC='%s', s.licenseNumber='%s' WHERE a.accountID='%s' AND a.accountID=s.accountID",username,password,name,email,mobileNo,address,bankAcc,NRIC,licenseNumber,accountID),gui);
+        sql.updateAccountDetailsForSeller(account.username, account.password, account.name, account.email,
+                account.mobileNo, address, bankAcc, NRIC, licenseNumber, accountID);
     }
 
-
-    public boolean isApprovedSeller(){
+    public boolean isApprovedSeller() {
         return (this.status == 1);
     }
-    //#endregion
+
+    public void addShopImageIntoFolder(Shop shop) {
+        Path source = getShopImgPath(shop);
+        String currentPath = Paths.get("").toAbsolutePath().toString().replaceAll("\\\\", "/") + "/src/Images/";
+        System.out.println(currentPath + shopID + shop.getImgPath().substring(shop.getImgPath().lastIndexOf(".")));
+        try {
+            Files.copy(source,
+                    Paths.get(currentPath + shopID + shop.getImgPath().substring(shop.getImgPath().lastIndexOf("."))));
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
+
+    public void generateNewShopIdAndSellerId(){
+        this.sellerID = Seller.getNextID();
+        this.shopID = Shop.getNextID();
+        this.shop.setShopID(this.shopID);
+    }
+
+    public void registerThisSellerIntoDatabase(){
+        db.executeCUD(sql.insertNewSeller(this), gui);
+        db.executeCUD(sql.insertNewShop(this.shop), gui);
+    }
+    // #endregion
 }

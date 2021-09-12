@@ -177,7 +177,7 @@ public class Account implements TableDataProcessing {
                 data.setAccount(buyer);
                 data.setBuyer(buyer);
                 // #endregion
-
+                
                 gui.toNextScene("View/BuyerHome.fxml");
 
             } else if (accMap.get("type").equals("Rider")) {

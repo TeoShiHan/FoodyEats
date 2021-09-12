@@ -46,6 +46,18 @@ public class Order {
         this.reviewID = (String)reviewID;        
     }
 
+    public Order(HashMap<String,Object>orderTable) {
+        this.orderID = (String)orderTable.get("orderID");
+        this.status = (String)orderTable.get("status");
+        this.dateCreated = LocalDate.parse(orderTable.get("dateCreated").toString());
+        this.timeCreated = LocalTime.parse(orderTable.get("timeCreated").toString());
+        this.buyerID = (String)orderTable.get("buyerID");
+        this.riderID = (String)orderTable.get("riderID");
+        this.shopID = (String)orderTable.get("shopID");
+        this.paymentID = (String)orderTable.get("paymentID");
+        this.reviewID = (String)orderTable.get("reviewID");
+    }
+
     public String getOrderID() {
         return orderID;
     }
