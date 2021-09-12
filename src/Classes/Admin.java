@@ -2,6 +2,7 @@ package Classes;
 import java.util.HashMap;
 
 import Cache.*;
+import SQL.CreateTableQuery.SQL;
 
 public class Admin extends Account {
     private JDBC db = new JDBC();
@@ -9,6 +10,8 @@ public class Admin extends Account {
     private String adminID;
     private String NRIC;
     private String companyBranch;
+    private SQL sql = SQL.getInstance();
+
 
     public Admin(){}    
 
@@ -48,26 +51,25 @@ public class Admin extends Account {
         this.companyBranch = companyBranch;
     }
  
-    public void verifySeller(String seLLerID){
-        db.executeCUD(String.format("UPDATE `Seller` SET status=1 WHERE sellerID='%s'",seLLerID),gui);
+    public void verifySeller(String sellerID){
+        sql.updateStatusToArrpoved("Seller", "sellerID", sellerID);
     }
 
-    public void verifyRider(String rIDerID){
-        db.executeCUD(String.format("UPDATE `Rider` SET status=1 WHERE riderID='%s'",rIDerID),gui);
-
+    public void verifyRider(String riderID){
+        sql.updateStatusToArrpoved("Rider","riderID", riderID);
     }
 
     public void edit(String username, String password, String name, String email, String mobileNo, String NRIC, String companyBranch) {
         super.edit(username, password, name, email, mobileNo);
         this.NRIC = NRIC;
         this.companyBranch = companyBranch;
-        db.executeCUD(String.format("UPDATE `Account` a, `Admin` ad SET a.username='%s', a.password='%s', a.name='%s', a.email='%s', a.mobileNo='%s', ad.NRIC='%s', ad.companyBranch='%s' WHERE a.accountID='%s' AND a.accountID=ad.accountID",username,password,name,email,mobileNo,NRIC,companyBranch,accountID),gui);
+        sql.updateAccountDetailsForAdmin(username, password, name, email, mobileNo, NRIC, companyBranch, accountID);
     }
 
     public void edit(Account account, String NRIC, String companyBranch) {
         super.edit(account.username, account.password, account.name, account.email, account.mobileNo);
         this.NRIC = NRIC;
         this.companyBranch = companyBranch;
-        db.executeCUD(String.format("UPDATE `Account` a, `Admin` ad SET a.username='%s', a.password='%s', a.name='%s', a.email='%s', a.mobileNo='%s', ad.NRIC='%s', ad.companyBranch='%s' WHERE a.accountID='%s' AND a.accountID=ad.accountID",username,password,name,email,mobileNo,NRIC,companyBranch,accountID),gui);
+        sql.updateAccountDetailsForAdmin(username, password, name, email, mobileNo, NRIC, companyBranch, accountID);
     }
 }
