@@ -24,6 +24,18 @@ public class Order {
         
     }
 
+    public Order(Order order){
+        this.orderID = order.orderID;
+        this.status = order.status;
+        this.dateCreated = order.dateCreated;
+        this.timeCreated = order.timeCreated;
+        this.buyerID = order.buyerID;
+        this.riderID =  order.riderID;
+        this.shopID = order.shopID;
+        this.paymentID = order.paymentID;
+        this.reviewID = order.reviewID;
+    }
+
     // for converting cart to order and insert into mysql database
     public Order(String status, LocalDate dateCreated, LocalTime timeCreated, String buyerID, String shopID){
         this.status = status;

@@ -18,7 +18,7 @@ public final class SQL {
     private final static GUI gui = GUI.getInstance();
 
     SQL() {}
-
+    
     public static SQL getInstance() {
         return INSTANCE;
     }
@@ -66,15 +66,19 @@ public final class SQL {
         return db.readAll("SELECT * FROM Shop");
     }
 
-    public HashMap<String, Object>fetchSpecificShopDetails(String shopID){
-        return db.readOne(String.format("SELECT * FROM `Shop` WHERE shopID='%s'",shopID));
+    public HashMap<String, Object> fetchSpecificShopDetails(String shopID) {
+        return db.readOne(String.format("SELECT * FROM `Shop` WHERE shopID='%s'", shopID));
     }
 
-    public ArrayList<HashMap<String, Object>>fetchSpecificOrderDataset(String idName, String idValue){
-        return db.readAll(String.format("SELECT * FROM `Order` WHERE %s='%s'",idName, idValue));
+    public HashMap<String, Object> fetchSpecificRiderDetails(String riderID){
+        return db.readOne(String.format("SELECT r.*,v.*,a.* FROM `Rider` r, `Vehicle` v, `Account` a WHERE r.riderID='%s' AND r.vehicleID=v.vehicleID AND r.accountID=a.accountID",riderID));
     }
 
-    public HashMap<String, Object> fetchSpecificCartDetails(String buyerID){
+    public ArrayList<HashMap<String, Object>> fetchSpecificOrderDataset(String idName, String idValue) {
+        return db.readAll(String.format("SELECT * FROM `Order` WHERE %s='%s'", idName, idValue));
+    }
+
+    public HashMap<String, Object> fetchSpecificCartDetails(String buyerID) {
         return db.readOne(String.format("SELECT * FROM `Cart` WHERE buyerID='%s'", buyerID));
     }
 
@@ -90,7 +94,7 @@ public final class SQL {
                     + "WHERE S.shopID = F.shopID AND S.shopID = '%s'", shopKeyArr.get(i));
 
             completeSQLStmt = completeSQLStmt.concat(sqlStmt);
-            
+
             if (isNotLastStatement(statementQty, currentStatement)) {
                 completeSQLStmt = completeSQLStmt.concat(UNION);
             } else {
@@ -122,25 +126,35 @@ public final class SQL {
                 username, password, name, email, mobileNo, NRIC, companyBranch, accountID), gui);
     }
 
-    public void updateAccountDetailsForSeller(String username,String password,String name,String email,String mobileNo,String address,String bankAcc,String NRIC,String licenseNumber,String accountID) {
-        db.executeCUD(String.format("UPDATE `Account` a, `Seller` s SET a.username='%s', a.password='%s', a.name='%s', a.email='%s', a.mobileNo='%s', s.address='%s', s.bankAcc='%s', s.NRIC='%s', s.licenseNumber='%s' WHERE a.accountID='%s' AND a.accountID=s.accountID",username,password,name,email,mobileNo,address,bankAcc,NRIC,licenseNumber,accountID),gui);
+    public void updateAccountDetailsForSeller(String username, String password, String name, String email,
+            String mobileNo, String address, String bankAcc, String NRIC, String licenseNumber, String accountID) {
+        db.executeCUD(String.format(
+                "UPDATE `Account` a, `Seller` s SET a.username='%s', a.password='%s', a.name='%s', a.email='%s', a.mobileNo='%s', s.address='%s', s.bankAcc='%s', s.NRIC='%s', s.licenseNumber='%s' WHERE a.accountID='%s' AND a.accountID=s.accountID",
+                username, password, name, email, mobileNo, address, bankAcc, NRIC, licenseNumber, accountID), gui);
     }
 
-    public void updateStatusToArrpoved(String accountType, String idName, String id){
-        db.executeCUD(String.format("UPDATE `%s` SET status=1 WHERE %s ='%s'",accountType,idName,id),gui);
+    public void updateStatusToArrpoved(String accountType, String idName, String id) {
+        db.executeCUD(String.format("UPDATE `%s` SET status=1 WHERE %s ='%s'", accountType, idName, id), gui);
     }
 
-    public void createNewCartForBuyer(String newCartID, String newBuyerID){
-        db.executeCUD(String.format("INSERT INTO Cart VALUES ('%s','%s','%s')", newCartID, newBuyerID, null),
-        gui);
+    public void createNewCartForBuyer(String newCartID, String newBuyerID) {
+        db.executeCUD(String.format("INSERT INTO Cart VALUES ('%s','%s','%s')", newCartID, newBuyerID, null), gui);
     }
 
-    public void registerNewBuyer(String newBuyerID, String newAddress, String newAccountID, String newCartID){
+    public void registerNewBuyer(String newBuyerID, String newAddress, String newAccountID, String newCartID) {
         db.executeCUD(String.format("INSERT INTO Buyer VALUES ('%s','%s','%s','%s')", newBuyerID, newAddress,
-        newAccountID, newCartID), gui);
+                newAccountID, newCartID), gui);
+    }
+
+    public void updateBuyerAccountDetails(String username, String password, String name, String email, String mobileNo,
+            String address, String accountID) {
+        db.executeCUD(String.format(
+                "UPDATE `Account` a, `Buyer` b SET a.username='%s', a.password='%s', a.name='%s', a.email='%s', a.mobileNo='%s', b.address='%s' WHERE a.accountID='%s' AND a.accountID=b.accountID",
+                username, password, name, email, mobileNo, address, accountID), gui);
     }
 
     private static boolean isNotLastStatement(int statementQty, int currentStatement) {
         return currentStatement < statementQty;
     }
+    
 }

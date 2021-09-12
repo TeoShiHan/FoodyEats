@@ -49,6 +49,22 @@ public class Rider extends Account{
         this.status = (int)rider.get("status");
     }
 
+    public Rider(HashMap<String,Object>fullRiderDetails){
+        super(
+            (String)fullRiderDetails.get("accountID"),
+            (String)fullRiderDetails.get("username"),
+            (String)fullRiderDetails.get("password"),
+            (String)fullRiderDetails.get("name"), 
+            (String)fullRiderDetails.get("email"), 
+            (String)fullRiderDetails.get("mobileNo"), 
+            (String)fullRiderDetails.get("type"),
+            (String)fullRiderDetails.get("regDate")
+        );        
+        this.riderID = (String)fullRiderDetails.get("riderID");
+        this.vehicleID = (String)fullRiderDetails.get("vehicleID");
+        this.status = (int)fullRiderDetails.get("status");
+    }
+
     public String getRiderID() {
         return riderID;
     }
