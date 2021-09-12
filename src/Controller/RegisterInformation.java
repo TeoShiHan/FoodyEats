@@ -111,11 +111,10 @@ public class RegisterInformation implements Initializable {
                         btnContinue.setOnAction(ev -> {
                             try {
                                 if (shopRegisterController.isFilled()) {
-                                    if(!shopRegisterController.detectedInvalidFields()){
+                                    if (!shopRegisterController.detectedInvalidFields()) {
                                         shopRegisterController.getInfo();
                                         toRegisterAccount();
-                                    }
-                                    else{
+                                    } else {
                                         gui.informationPopup("Attention", "Invalid input detected, please try again!");
                                     }
                                 } else {

@@ -91,7 +91,6 @@ public class SellerManageFood implements Initializable {
                             try {
                                 isImage = (InputStream) new FileInputStream(imgFile);
                             } catch (FileNotFoundException e) {
-                                // TODO Auto-generated catch block
                                 e.printStackTrace();
                             }
                             Image img = new Image(isImage); 
@@ -108,14 +107,7 @@ public class SellerManageFood implements Initializable {
                             int index = imgPaths.indexOf(imgPath);
                             imageView.setImage(imgs.get(index));
                             System.out.println(index);
-                        }
-
-                        // try {
-                        //     imageView.setImage(new Image(new FileInputStream(new File(Paths.get("").toAbsolutePath().toString().replaceAll("\\\\", "/")+"/src"+imgPath))));                            
-                        // } catch (FileNotFoundException e) {
-                        //     // TODO Auto-generated catch block
-                        //     e.printStackTrace();
-                        // }                        
+                        }                   
                     }
                 }
             };
@@ -211,7 +203,6 @@ public class SellerManageFood implements Initializable {
                     try {
                         dialogScene = new Scene((Parent)loader.load());                        
                     } catch (IOException e2) {
-                        // TODO Auto-generated catch block
                         e2.printStackTrace();
                     }
                     
@@ -246,18 +237,15 @@ public class SellerManageFood implements Initializable {
                                     try {                                                                                  
                                         Files.delete(oldImgPath);                                    
                                     } catch (Exception e) {
-                                        //TODO: handle exception
                                         System.out.println("Unable to delete the old img, error: "+e);
                                     }finally{
                                         try {
                                             Thread.sleep(1000);
                                         } catch (InterruptedException e) {
-                                            // TODO Auto-generated catch block
                                             e.printStackTrace();
                                         }
                                         Files.copy(controller.getFoodImageFile().toPath(), newImgPath);                                    
                                         // https://stackoverflow.com/questions/1158777/rename-a-file-using-java/20260300#20260300
-                                        // Files.move(tempSource, tempSource.resolveSibling(food.getFoodID()+controller.getNewImgFileExtension()));
                                     }
                                     return null ;
                                 }
@@ -268,7 +256,6 @@ public class SellerManageFood implements Initializable {
                                 try {
                                     gui.refreshScene(currentFXMLPath);
                                 } catch (IOException e1) {
-                                    // TODO Auto-generated catch block
                                     e1.printStackTrace();
                                 }
                                 gui.notAlertInProgress(myDialog);
@@ -281,7 +268,6 @@ public class SellerManageFood implements Initializable {
                             try {
                                 gui.refreshScene(currentFXMLPath);
                             } catch (IOException e1) {
-                                // TODO Auto-generated catch block
                                 e1.printStackTrace();
                             }
                             gui.notAlertInProgress(myDialog);
@@ -289,7 +275,6 @@ public class SellerManageFood implements Initializable {
                             try {
                                 gui.informationPopup("Attention", "Please fill in all the blank.");
                             } catch (IOException e1) {
-                                // TODO Auto-generated catch block
                                 e1.printStackTrace();
                             }
                         }
@@ -330,12 +315,10 @@ public class SellerManageFood implements Initializable {
                             try {                                                                                  
                                 Files.delete(imgPath);                                    
                             } catch (Exception e) {
-                                //TODO: handle exception
                                 System.out.println("Unable to delete the old img, error: "+e);
                             }finally{
                                 System.out.println("hello");
                                 // https://stackoverflow.com/questions/1158777/rename-a-file-using-java/20260300#20260300
-                                // Files.move(tempSource, tempSource.resolveSibling(food.getFoodID()+controller.getNewImgFileExtension()));
                             }
 
                             food.delete();
@@ -351,7 +334,6 @@ public class SellerManageFood implements Initializable {
                         try {
                             gui.refreshScene(currentFXMLPath);
                         } catch (IOException e1) {
-                            // TODO Auto-generated catch block
                             e1.printStackTrace();
                         }                     
                     });
@@ -361,7 +343,6 @@ public class SellerManageFood implements Initializable {
         });
 
         tableView.setItems(observableList);        
-        // tableView.getColumns().addAll(colOrderId,colDate,colStatus,colAction); //not needed
     }    
 
     @FXML
@@ -378,7 +359,6 @@ public class SellerManageFood implements Initializable {
         try {
             dialogScene = new Scene((Parent)loader.load());                        
         } catch (IOException e2) {
-            // TODO Auto-generated catch block
             e2.printStackTrace();
         }
         
@@ -398,8 +378,6 @@ public class SellerManageFood implements Initializable {
                         String newImgName = newFood.getFoodID()+controller.getNewImgFileExtension();
                         Path newImgPath = Paths.get(currentPath+"/src/Images/"+newImgName);                                
                         Files.copy(controller.getFoodImageFile().toPath(), newImgPath);
-                        // https://stackoverflow.com/questions/1158777/rename-a-file-using-java/20260300#20260300
-                        // Files.move(tempSource, tempSource.resolveSibling(food.getFoodID()+controller.getNewImgFileExtension()));
                         return null ;
                     }
                 };
@@ -408,7 +386,6 @@ public class SellerManageFood implements Initializable {
                     try {
                         gui.refreshScene(currentFXMLPath);
                     } catch (IOException e1) {
-                        // TODO Auto-generated catch block
                         e1.printStackTrace();
                         gui.notAlertInProgress(myDialog);
                     }                
@@ -418,7 +395,6 @@ public class SellerManageFood implements Initializable {
                 try {
                     gui.informationPopup("Attention", "Please fill in all the blank.");
                 } catch (IOException e1) {
-                    // TODO Auto-generated catch block
                     e1.printStackTrace();
                 }
             }

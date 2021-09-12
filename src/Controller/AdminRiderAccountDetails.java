@@ -15,7 +15,7 @@ import javafx.scene.image.ImageView;
 import javafx.scene.input.MouseEvent;
 
 public class AdminRiderAccountDetails implements Initializable {    
-    private JDBC db = new JDBC();
+    
     private GUI gui = GUI.getInstance();    
     private DataHolder data = DataHolder.getInstance();    
 

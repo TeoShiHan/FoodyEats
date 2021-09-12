@@ -102,7 +102,6 @@ public class RiderOrderHistory implements Initializable {
         });
 
         tableView.setItems(observableList);        
-        // tableView.getColumns().addAll(colOrderId,colDate,colStatus,colAction); //not needed
     }    
 
     @FXML

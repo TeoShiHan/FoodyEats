@@ -52,11 +52,11 @@ public class Admin extends Account {
     }
  
     public void verifySeller(String sellerID){
-        sql.updateStatusToArrpoved("Seller", "sellerID", sellerID);
+        sql.updateStatusToApproved("Seller", "sellerID", sellerID);
     }
 
     public void verifyRider(String riderID){
-        sql.updateStatusToArrpoved("Rider","riderID", riderID);
+        sql.updateStatusToApproved("Rider","riderID", riderID);
     }
 
     public void edit(String username, String password, String name, String email, String mobileNo, String NRIC, String companyBranch) {

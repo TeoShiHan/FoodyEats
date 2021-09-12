@@ -137,7 +137,7 @@ public final class SQL {
                 username, password, name, email, mobileNo, address, bankAcc, NRIC, licenseNumber, accountID), gui);
     }
 
-    public void updateStatusToArrpoved(String accountType, String idName, String id) {
+    public void updateStatusToApproved(String accountType, String idName, String id) {
         db.executeCUD(String.format("UPDATE `%s` SET status=1 WHERE %s ='%s'", accountType, idName, id), gui);
     }
 
@@ -157,9 +157,11 @@ public final class SQL {
                 username, password, name, email, mobileNo, address, accountID), gui);
     }
 
+    public void updateOrderStatus(String orderID, String status){
+        db.executeCUD(String.format("UPDATE `Order` SET status='%s' WHERE orderID='%s'",status, orderID),gui);
+    }
+
     private static boolean isNotLastStatement(int statementQty, int currentStatement) {
         return currentStatement < statementQty;
     }
-
-
 }

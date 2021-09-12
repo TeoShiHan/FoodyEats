@@ -26,8 +26,6 @@ public class FoodItem {
 
     @FXML public void clickAddToCartBtn(MouseEvent mouseEvent){
         int quantity = inputQtySpin.getValue();
-            /**DEBUG MSG*/System.out.println("QUANTITY IS : " + quantity);
-        
         foodItemListeners.addToCart(food, quantity);
     }
 
@@ -38,8 +36,6 @@ public class FoodItem {
         this.foodItemListeners = foodItemListeners;
         this.food = food;
         Image foodImage = new Image(getClass().getResourceAsStream(food.getImgPath()));
-            /**DEBUG MSG*/System.out.println("img path  IS >>>: " + food.getImgPath());
-            /**DEBUG MSG*/System.out.println("foodImage IS >>>: " + foodImage);
         Image cartImage = new Image(getClass().getResourceAsStream("../Images/cartIcon.png"));
         cartIcon.setImage(cartImage);
         foodPic.setImage(foodImage);

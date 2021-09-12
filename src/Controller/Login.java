@@ -41,8 +41,6 @@ public class Login {
     void actionLogin(ActionEvent event) throws IOException, NoSuchMethodException, SecurityException, IllegalAccessException, IllegalArgumentException, InvocationTargetException{        
         Account tempAcc = new Account();        
         if(allFieldsFilled()){
-            /*DEBUG*/System.out.println(inputUsername.getText().strip());
-             /*DEBUG*/System.out.println(inputPassword.getText().strip());
             tempAcc.login(inputUsername.getText().strip(), inputPassword.getText().strip());                            
         }else{            
             gui.informationPopup("Attention", "Please fill all the blank");
