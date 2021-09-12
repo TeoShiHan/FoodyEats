@@ -313,7 +313,7 @@ public class FoodMenu implements Initializable {
     //#endregion
 
     public boolean cartContainFoodFromOtherShop(Buyer buyer, Food food) {
-       if (buyer.getCart().getCartID() == null){
+       if (buyer.getCart().getShopID() == null || buyer.getCart().getShopID().isEmpty()){
            return false;
        }
         
