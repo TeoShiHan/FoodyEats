@@ -327,7 +327,16 @@ public class SellerManageFood implements Initializable {
                         public Void call() throws IOException {                                                                                                                
                             String currentPath = Paths.get("").toAbsolutePath().toString().replaceAll("\\\\", "/");
                             Path imgPath = Paths.get(currentPath+"/src"+food.getImgPath());
-                            Files.delete(imgPath);
+                            try {                                                                                  
+                                Files.delete(imgPath);                                    
+                            } catch (Exception e) {
+                                //TODO: handle exception
+                                System.out.println("Unable to delete the old img, error: "+e);
+                            }finally{
+                                System.out.println("hello");
+                                // https://stackoverflow.com/questions/1158777/rename-a-file-using-java/20260300#20260300
+                                // Files.move(tempSource, tempSource.resolveSibling(food.getFoodID()+controller.getNewImgFileExtension()));
+                            }
 
                             food.delete();
                             data.getFoods().remove(food);
