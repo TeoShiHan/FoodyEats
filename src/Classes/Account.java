@@ -131,6 +131,14 @@ public class Account implements TableDataProcessing {
         db.executeCUD(sql.insertNewAccount(this), gui);
     }
 
+    public void loadUser(){
+
+    }
+
+    public void notifyAccCreated(GUI gui)throws IOException{
+
+    }
+
     public void login(String username, String password) throws IOException {
 
         // #region ： PROGRAM VARIABLES

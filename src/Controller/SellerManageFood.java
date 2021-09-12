@@ -91,6 +91,7 @@ public class SellerManageFood implements Initializable {
                             try {
                                 isImage = (InputStream) new FileInputStream(imgFile);
                             } catch (FileNotFoundException e) {
+                                // TODO Auto-generated catch block
                                 e.printStackTrace();
                             }
                             Image img = new Image(isImage); 
@@ -123,7 +124,7 @@ public class SellerManageFood implements Initializable {
             cell.setGraphic(imageView);            
             System.out.println("add cell");
             return cell;
-        });        
+        });
         colImage.setCellValueFactory(new PropertyValueFactory<Food,String>("imgPath"));
         colName.setCellFactory(param -> {
             return new TableCell<Food, Object>() {
@@ -214,69 +215,85 @@ public class SellerManageFood implements Initializable {
                         e2.printStackTrace();
                     }
                     
-                    controller.getBtnYes().setOnAction(ev->{  
-                        if(controller.isFilled()){                                                
-                        myDialog.getScene().getRoot().setDisable(true);
-                        myDialog.getScene().setCursor(Cursor.WAIT);
-                        int currentIndex = tableView.getItems().indexOf(food);                        
-                        System.out.println(currentIndex);
-                        
-                        ImageView imgView = imageViews.get(currentIndex);
-                        imgView.setImage(null);
-                        imgView = null;
-                        Cell<String> cell = tableCells.get(currentIndex);                        
-                        cell.setGraphic(new ImageView()); 
-                        cell = null;
+                    controller.getBtnYes().setOnAction(ev->{   
+                        if(controller.getImgFile()!=null && controller.isFilled()){
+                            myDialog.getScene().getRoot().setDisable(true);
+                            myDialog.getScene().setCursor(Cursor.WAIT);
+                            int currentIndex = tableView.getItems().indexOf(food);                        
+                            System.out.println(currentIndex);
+                            
+                            ImageView imgView = imageViews.get(currentIndex);
+                            imgView.setImage(null);
+                            imgView = null;
+                            Cell<String> cell = tableCells.get(currentIndex);                        
+                            cell.setGraphic(new ImageView()); 
+                            cell = null;
 
-                        imgFiles.set(currentIndex,null);
-                        imgs.set(currentIndex,null);
-                        isImages.set(currentIndex,null);                       
-                        imageViews.set(currentIndex,null);
-                        tableCells.set(currentIndex,null);
-                        System.gc();                        
-                        Task<Void> task = new Task<Void>() {
-                            @Override
-                            public Void call() throws IOException, SQLException {                                
-                                String currentPath = Paths.get("").toAbsolutePath().toString().replaceAll("\\\\", "/");
-                                Path oldImgPath = Paths.get(currentPath+"/src"+food.getImgPath());
-                                String newImgName = food.getFoodID()+controller.getNewImgFileExtension();
-                                Path newImgPath = Paths.get(currentPath+"/src/Images/"+newImgName);
-                                data.getFood().edit(controller.getInputName().getText(), controller.getInputDescription().getText(), controller.getSpinnerPrice().getValue(), controller.getInputCategory().getText(), "/Images/"+newImgName);                                                                                
-                                try {                                                                                  
-                                    Files.delete(oldImgPath);                                    
-                                } catch (Exception e) {
-                                    //TODO: handle exception
-                                    System.out.println("Unable to delete the old img, error: "+e);
-                                }finally{
-                                    try {
-                                        Thread.sleep(1000);
-                                    } catch (InterruptedException e) {
-                                        // TODO Auto-generated catch block
-                                        e.printStackTrace();
+                            imgFiles.set(currentIndex,null);
+                            imgs.set(currentIndex,null);
+                            isImages.set(currentIndex,null);                       
+                            imageViews.set(currentIndex,null);
+                            tableCells.set(currentIndex,null);
+                            System.gc();                        
+                            Task<Void> task = new Task<Void>() {
+                                @Override
+                                public Void call() throws IOException, SQLException {                                
+                                    String currentPath = Paths.get("").toAbsolutePath().toString().replaceAll("\\\\", "/");
+                                    Path oldImgPath = Paths.get(currentPath+"/src"+food.getImgPath());
+                                    String newImgName = food.getFoodID()+controller.getNewImgFileExtension();
+                                    Path newImgPath = Paths.get(currentPath+"/src/Images/"+newImgName);
+                                    data.getFood().edit(controller.getInputName().getText(), controller.getInputDescription().getText(), Double.parseDouble(String.format("%.2f",controller.getSpinnerPrice().getValue())), controller.getInputCategory().getText(), "/Images/"+newImgName);                                                                                
+                                    try {                                                                                  
+                                        Files.delete(oldImgPath);                                    
+                                    } catch (Exception e) {
+                                        //TODO: handle exception
+                                        System.out.println("Unable to delete the old img, error: "+e);
+                                    }finally{
+                                        try {
+                                            Thread.sleep(1000);
+                                        } catch (InterruptedException e) {
+                                            // TODO Auto-generated catch block
+                                            e.printStackTrace();
+                                        }
+                                        Files.copy(controller.getFoodImageFile().toPath(), newImgPath);                                    
+                                        // https://stackoverflow.com/questions/1158777/rename-a-file-using-java/20260300#20260300
+                                        // Files.move(tempSource, tempSource.resolveSibling(food.getFoodID()+controller.getNewImgFileExtension()));
                                     }
-                                    Files.copy(controller.getFoodImageFile().toPath(), newImgPath);                                    
-                                    // https://stackoverflow.com/questions/1158777/rename-a-file-using-java/20260300#20260300
-                                    // Files.move(tempSource, tempSource.resolveSibling(food.getFoodID()+controller.getNewImgFileExtension()));
+                                    return null ;
                                 }
-                                return null ;
-                            }
-                        };
-                        task.setOnSucceeded(e -> {
+                            };
+                            task.setOnSucceeded(e -> {
+                                myDialog.close();
+                                tableView.refresh();
+                                try {
+                                    gui.refreshScene(currentFXMLPath);
+                                } catch (IOException e1) {
+                                    // TODO Auto-generated catch block
+                                    e1.printStackTrace();
+                                }
+                                gui.notAlertInProgress(myDialog);
+                            });
+                            new Thread(task).start();
+                        }else if(controller.isFilled()){
+                            data.getFood().edit(controller.getInputName().getText(), controller.getInputDescription().getText(), controller.getSpinnerPrice().getValue(), controller.getInputCategory().getText(), food.getImgPath());
                             myDialog.close();
                             tableView.refresh();
                             try {
                                 gui.refreshScene(currentFXMLPath);
                             } catch (IOException e1) {
+                                // TODO Auto-generated catch block
                                 e1.printStackTrace();
                             }
                             gui.notAlertInProgress(myDialog);
-                        });
-                        new Thread(task).start();
                         }else{
-                            popUpEmptyFieldDetected();
+                            try {
+                                gui.informationPopup("Attention", "Please fill in all the blank.");
+                            } catch (IOException e1) {
+                                // TODO Auto-generated catch block
+                                e1.printStackTrace();
+                            }
                         }
                     });
-
                     
                     controller.getBtnNo().setOnAction(e->{
                         myDialog.close();
@@ -416,13 +433,5 @@ public class SellerManageFood implements Initializable {
     @FXML
     void toHome(MouseEvent event) throws IOException {
         gui.toNextScene("View/SellerHome.fxml");
-    }
-
-    public void popUpEmptyFieldDetected(){
-        try {
-            gui.informationPopup("Attention", "Empty field detected, please try again!");
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
     }
 }
