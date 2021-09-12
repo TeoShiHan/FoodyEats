@@ -80,7 +80,7 @@ public abstract class FormValidator {
     }
     
     public boolean nameIsInvalid() {
-        String fullNameRegex = "^[a-zA-Z]{4,}(?: [a-zA-Z]+)?(?: [a-zA-Z]+)?$";
+        String fullNameRegex = "^[a-zA-Z]{1,}(?: [a-zA-Z]+)?(?: [a-zA-Z]+)?$";
         String name = nameField.getText();
         String validateName;
 

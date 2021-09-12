@@ -56,7 +56,7 @@ public class AdminSellerAccountDetails implements Initializable {
 
     @FXML
     void actionApprove(ActionEvent event) {
-        data.getAdmin().verifyRider(data.getSeller().getSellerID());
+        data.getAdmin().verifySeller(data.getSeller().getSellerID());
         btnApprove.setDisable(true);
     }
 
