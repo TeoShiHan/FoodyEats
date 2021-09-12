@@ -74,10 +74,10 @@ public class BuyerCart implements Initializable{
 
     @Override
     public void initialize(URL arg0, ResourceBundle arg1) {        
-        if(data.getBuyer().getCart().getCartItems()==null){
-            data.getBuyer().getCart().loadCartItems();
-            data.setCartItems(data.getBuyer().getCart().getCartItems());                                
-        }
+        
+        data.getBuyer().getCart().loadCartItems();
+        data.setCartItems(data.getBuyer().getCart().getCartItems());                                
+        
 
         if(data.getCartItems().size()==0){
             btnCheckout.setDisable(true);
