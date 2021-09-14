@@ -329,7 +329,7 @@ public class FoodMenu implements Initializable {
     public void clearCart(String cartID, Buyer buyer, Food food) {
         String sqlStmt = String.format("DELETE FROM CartItem " + "WHERE cartID = '%s';", cartID);
         db.executeCUD(sqlStmt, gui);
-        buyer.getCart().setShopID(food.getShopID());
+        buyer.getCart().setShopID("");
     }
 
     public void waringOfNoFoodQty() {

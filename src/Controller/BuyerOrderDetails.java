@@ -85,7 +85,7 @@ public class BuyerOrderDetails implements Initializable {
                 
         btnWriteReview.setDisable(data.getOrder().getStatus().equals("Completed")?false:true);
         btnCancel.setDisable(data.getOrder().getStatus().equals("Pending")?false:true);
-        if(!order.getReviewID().isEmpty()||!order.getReviewID().isEmpty()){
+        if(order.getReview()!=null){
             btnWriteReview.setText("Your Review");
         }
 

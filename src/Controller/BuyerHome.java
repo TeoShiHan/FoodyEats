@@ -166,6 +166,7 @@ public class BuyerHome implements Initializable {
             @Override
             public void logout() {
                 gui.toNextScene("View/Login.fxml");
+                data.clear();
             }
 
             @Override

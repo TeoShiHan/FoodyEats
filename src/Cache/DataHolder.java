@@ -318,85 +318,10 @@ public final class DataHolder {
       this.selectedShopID = selectedShopID;
     }
 
-    //#region StringHolder,DoubleHolder,BooleanHolder, not sure is it needed, maybe ObjectHolder enough?
-    // public void addStringHolder(String key,String value){
-    //   this.stringHolder.put(key, value);
-    // }
-    // public String getStringHolder(String key){
-    //   String stringValue= stringHolder.get(key);      
-    //   return stringValue;
-    // }
-
-    // public void addDoubleHolder(String key,double value){
-    //   this.doubleHolder.put(key, value);
-    // }
-    // public double getDoubleHolder(String key){
-    //   double doubleValue= doubleHolder.get(key);      
-    //   return doubleValue;
-    // }
-
-    // public void addBooleanHolder(String key,boolean value){
-    //   this.booleanHolder.put(key, value);
-    // }
-    // public boolean getBooleanHolder(String key){
-    //   boolean booleanValue = booleanHolder.get(key);      
-    //   return booleanValue;
-    // }
-    //#endregion
-    
-    //#region not sure is it needed in here,...
-    // since load from database can be done in the classes,
-    // can refer to Buyer Class loadOrders() method
-    
-    // public void loadOrders(){
-    //   ArrayList<HashMap<String,Object>> os = db.readAll("SELECT * FROM `Order`");
-    //   for(HashMap<String,Object> o : os){
-    //     orders.add(new Order(o.get("orderID"),o.get("status"),o.get("dateCreated"),o.get("timeCreated"),o.get("buyerID"),o.get("riderID"),o.get("shopID"),o.get("paymentID"),o.get("reviewID")));
-    //   }
-    // }
-
-    // public void loadOrder(String id){
-    //   HashMap<String,Object> o = db.readOne(String.format("SELECT * FROM `Order` WHERE orderID='%s'",id));
-    //   this.order = new Order(o.get("orderID"),o.get("status"),o.get("dateCreated"),o.get("timeCreated"),o.get("buyerID"),o.get("riderID"),o.get("shopID"),o.get("paymentID"),o.get("reviewID"));
-    // }
-
-    
-    // public void loadOrderItems(String id){
-    //   ArrayList<HashMap<String,Object>> os = db.readAll(String.format("SELECT * FROM `OrderItem` WHERE orderID='%s'",id));
-    //   for(HashMap<String,Object> o : os){                
-    //     orderItems.add(new OrderItem(o.get("orderID"),o.get("foodID"),o.get("quantity")));
-    //   }
-    // }
-         
-    // public void loadOrderItem(String id){
-    //   HashMap<String,Object> o = db.readOne("SELECT * FROM `OrderItem` WHERE ");
-    //   this.orderItem = new OrderItem(o.get("orderID"),o.get("foodID"),o.get("quantity"));
-    // }
-
-    // public void loadFoods(){
-    //   ArrayList<HashMap<String,Object>> fs = db.readAll("SELECT * FROM `Food`");
-    //   for(HashMap<String,Object> f : fs){
-    //     foods.add(new Food(f.get("foodID"),f.get("foodName"),f.get("foodDesc"),f.get("imgPath"),f.get("price"),f.get("category"),f.get("shopID")));
-    //   }
-    // }
-    // public void loadFoods(String whereClause){
-    //   ArrayList<HashMap<String,Object>> fs = db.readAll("SELECT * FROM `Food`");
-    //   for(HashMap<String,Object> f : fs){
-    //     foods.add(new Food(f.get("foodID"),f.get("foodName"),f.get("foodDesc"),f.get("imgPath"),f.get("price"),f.get("category"),f.get("shopID")));
-    //   }
-    // }
-        
-    // public void loadFood(String id){
-    //   HashMap<String,Object> f = db.readOne(String.format("SELECT * FROM `Food` WHERE foodID='%s'",id));
-    //   this.food = new Food(f.get("foodID"),f.get("foodName"),f.get("foodDesc"),f.get("imgPath"),f.get("price"),f.get("category"),f.get("shopID"));
-    // }
-    //#endregion
-    
-    
     public void clear(){
       DataHolder.getInstance();
       this.account = new Account();
-      this.account = new Admin();
+      this.admin = new Admin();
       this.buyer = new Buyer();
       this.rider = new Rider();
       this.seller = new Seller();      

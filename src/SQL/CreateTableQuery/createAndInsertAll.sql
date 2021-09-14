@@ -177,8 +177,8 @@ INSERT INTO foodyeats.Admin(adminID,NRIC,companyBranch,accountID) VALUES ('M0000
 INSERT INTO foodyeats.Admin(adminID,NRIC,companyBranch,accountID) VALUES ('M00003','569576-67-4816','779-guk-588','A00003');
 INSERT INTO foodyeats.Admin(adminID,NRIC,companyBranch,accountID) VALUES ('M00004','137067-11-7105','435-aon-821','A00004');
 
-INSERT INTO foodyeats.Rider(riderID,accountID,vehicleID,status) VALUES ('R00001','A00005','V00001',0);
-INSERT INTO foodyeats.Rider(riderID,accountID,vehicleID,status) VALUES ('R00002','A00006','V00002',0);
+INSERT INTO foodyeats.Rider(riderID,accountID,vehicleID,status) VALUES ('R00001','A00005','V00001',1);
+INSERT INTO foodyeats.Rider(riderID,accountID,vehicleID,status) VALUES ('R00002','A00006','V00002',1);
 INSERT INTO foodyeats.Rider(riderID,accountID,vehicleID,status) VALUES ('R00003','A00007','V00003',1);
 INSERT INTO foodyeats.Rider(riderID,accountID,vehicleID,status) VALUES ('R00004','A00008','V00004',1);
 
@@ -195,8 +195,9 @@ INSERT INTO foodyeats.Buyer(buyerID,address,accountID,cartID) VALUES ('B00010','
 
 INSERT INTO foodyeats.Seller(sellerID,address,NRIC,licenseNumber,bankAcc,accountID,shopID,status) VALUES ('S00001','657 Golf View Way,Sabah','588596-59-8672','497-jaw-131',3373892514,'A00009','S00001',1);
 INSERT INTO foodyeats.Seller(sellerID,address,NRIC,licenseNumber,bankAcc,accountID,shopID,status) VALUES ('S00002','6 Lien Park,Putrajaya','910501-15-1828','061-cac-195',8979989761,'A00010','S00002',1);
-INSERT INTO foodyeats.Seller(sellerID,address,NRIC,licenseNumber,bankAcc,accountID,shopID,status) VALUES ('S00003','86777 Farwell Place,Melaka','470326-24-5291','556-tqj-991',7943194770,'A00011','S00003',0);
-INSERT INTO foodyeats.Seller(sellerID,address,NRIC,licenseNumber,bankAcc,accountID,shopID,status) VALUES ('S00004','803 Blue Bill Park Park,Sarawak','312827-30-7341','333-bda-924',5885948386,'A00012','S00004',0);
+INSERT INTO foodyeats.Seller(sellerID,address,NRIC,licenseNumber,bankAcc,accountID,shopID,status) VALUES ('S00003','86777 Farwell Place,Melaka','470326-24-5291','556-tqj-991',7943194770,'A00011','S00003',1);
+INSERT INTO foodyeats.Seller(sellerID,address,NRIC,licenseNumber,bankAcc,accountID,shopID,status) VALUES ('S00004','803 Blue Bill Park Park,Sarawak','312827-30-7341','333-bda-924',5885948386,'A00012','S00004',1);
+INSERT INTO foodyeats.Seller(sellerID,address,NRIC,licenseNumber,bankAcc,accountID,shopID,status) VALUES ('S00005', '3, Jalan Ampang Utama 2/2, One Ampang Avenue, 68000 Ampang, Selangor', '505857-28-1388', '687-fsd-297', '1846054984', 'A00023', 'S00005', '1');
 
 INSERT INTO foodyeats.Cart(cartID,buyerID,shopID) VALUES ('C00001','B00001','S00001');
 INSERT INTO foodyeats.Cart(cartID,buyerID,shopID) VALUES ('C00002','B00002','S00002');
