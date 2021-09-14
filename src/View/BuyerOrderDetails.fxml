@@ -44,7 +44,7 @@
             <Insets />
          </opaqueInsets>
       </Button>
-      <Button fx:id="btnCancel" layoutX="824.0" layoutY="568.0" prefHeight="94.0" prefWidth="346.0" style="-fx-background-color: #FE5C5C;" text="Cancel">
+      <Button fx:id="btnCancel" layoutX="824.0" layoutY="568.0" prefHeight="94.0" prefWidth="346.0" style="-fx-background-color: #FE5C5C;" text="Cancel Order">
          <font>
             <Font size="36.0" />
          </font>

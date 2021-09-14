@@ -75,7 +75,7 @@ public final class SQL {
     }
 
     public ArrayList<HashMap<String, Object>> fetchSpecificOrderDataset(String idName, String idValue) {
-        return db.readAll(String.format("SELECT * FROM `Order` WHERE %s='%s'", idName, idValue));
+        return db.readAll(String.format("SELECT * FROM `Order` WHERE %s='%s' ORDER BY orderID DESC", idName, idValue));
     }
 
     public HashMap<String, Object> fetchSpecificCartDetails(String buyerID) {

@@ -167,7 +167,8 @@ public class Account implements TableDataProcessing {
 
                 if (cartIsEmpty(buyerCartID)) {
                     Cart tempCart = new Cart();
-                    tempCart.setBuyerID(buyer.getCartID());
+                    tempCart.setBuyerID(buyerID);
+                    tempCart.setCartID(buyerCartID);
                     buyer.setCart(tempCart);
                 } else {
                     String shopIdInCart = (String) sql.fetchShopIdOfBuyerCart(buyerCartID).get("shopID");
