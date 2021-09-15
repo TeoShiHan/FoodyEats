@@ -74,8 +74,7 @@ public class RiderOrders implements Initializable {
                 pane.setAlignment(Pos.CENTER);
                 setGraphic(pane);
                 btnAccept.setOnAction(e->{
-                    tableView.getItems().remove(order);
-                    gui.miniPopup("Order Accepted, please go to Home->Order Accepted to see the order");
+                    tableView.getItems().remove(order);                    
                     data.getRider().acceptOrder(order.getOrderID());
                 });
                 btnViewDetails.setOnAction(e->{          
