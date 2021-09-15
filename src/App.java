@@ -7,6 +7,7 @@ import javafx.application.Application;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
+import javafx.scene.image.Image;
 import javafx.stage.Stage;
 import SQL.CreateTableQuery.SQL;
 
@@ -46,6 +47,7 @@ public class App extends Application{
         stage.setScene(scene);                
         stage.show();         
         stage.centerOnScreen();        
+        stage.getIcons().add(new Image(getClass().getResourceAsStream("/Images/logo.png")));        
         // stage.setOnCloseRequest(event->{
         //     event.consume();
         //     Alert alert = new Alert(AlertType.CONFIRMATION);

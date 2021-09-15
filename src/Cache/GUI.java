@@ -113,7 +113,7 @@ public final class GUI {
     popup.setY(100);    
 
     // link:https://stackoverflow.com/questions/27334455/how-to-close-a-stage-after-a-certain-amount-of-time-javafx
-    PauseTransition delay = new PauseTransition(Duration.seconds(5));
+    PauseTransition delay = new PauseTransition(Duration.seconds(3));
     delay.setOnFinished(e -> popup.hide());
     delay.play();
 }

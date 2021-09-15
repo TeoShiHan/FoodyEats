@@ -95,8 +95,12 @@ public class Review {
     public void create() throws SQLException{
         this.dateCreated = LocalDate.now();
         this.timeCreated = LocalTime.parse(LocalTime.now().format(DateTimeFormatter.ofPattern("HH:mm:ss")));        
-        this.reviewID = db.getNextId("Review");
-        db.executeCUD(String.format("INSERT INTO `Review`(reviewID,rating,comment,) VALUES('%s',%d,'%s','%s','%s','%s','%s')",reviewID,rating,comment,dateCreated.toString(),timeCreated.toString(),orderID,shopID),gui);
+        this.reviewID = db.getNextId("Review");            
+        String query = "START TRANSACTION; ";
+        query += String.format("INSERT INTO `Review`(reviewID,rating,comment,dateCreated,timeCreated,orderID,shopID) VALUES('%s',%d,'%s','%s','%s','%s','%s'); ",reviewID,rating,comment,dateCreated.toString(),timeCreated.toString(),orderID,shopID);
+        query += String.format("UPDATE `Order` SET reviewID='%s' WHERE orderID='%s'; ",reviewID,orderID);
+        query += "COMMIT; ";
+        db.executeCUD(query,gui);
     }
     
 }

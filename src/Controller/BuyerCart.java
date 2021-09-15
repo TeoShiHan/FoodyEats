@@ -266,7 +266,7 @@ public class BuyerCart implements Initializable {
                 delay.setOnFinished(e -> {
                     myDialog.close();
                     myDialog2.close();
-                    gui.miniPopup("Payment made successfully, you can view your order in Home 👉 Order History");
+                    gui.miniPopup("Payment made successfully, new order added into Order History");
                     gui.toNextScene("View/BuyerOrderHistory.fxml");
                 });
                 delay.play();
