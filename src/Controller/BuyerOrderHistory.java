@@ -31,6 +31,7 @@ public class BuyerOrderHistory implements Initializable {
     @FXML private TableView<Order> tableView;
     @FXML private TableColumn<Order,Object> colOrderId,colStatus,colDate;    
     @FXML private TableColumn<Order,Order> colAction;
+    private String currentFXMLPath = "View/BuyerOrderHistory.fxml";
 
     @Override
     public void initialize(URL location, ResourceBundle resources) {
@@ -79,5 +80,12 @@ public class BuyerOrderHistory implements Initializable {
     @FXML
     void toHome(MouseEvent event) throws IOException {
         gui.toNextScene("View/BuyerHome.fxml");
+    }
+
+    @FXML
+    void toRefreshScene(MouseEvent event) throws IOException {        
+        Order.setOrdersHaveChange(true);
+        gui.refreshScene(currentFXMLPath);
+        gui.miniPopup("Refreshed");
     }
 }

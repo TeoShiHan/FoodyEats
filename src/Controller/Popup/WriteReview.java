@@ -43,7 +43,7 @@ public class WriteReview implements Initializable {
             }            
         });  
         
-        if(data.getOrder().getReviewID()!=null||!data.getOrder().getReviewID().isBlank()||!data.getOrder().getReviewID().isEmpty()){                
+        if(data.getOrder().getReview()!=null && data.getOrder().getReviewID()!=null){
             spinnerRating.getValueFactory().setValue(data.getOrder().getReview().getRating());
             spinnerRating.setEditable(false);
             spinnerRating.setValueFactory(new SpinnerValueFactory.IntegerSpinnerValueFactory(data.getOrder().getReview().getRating(),data.getOrder().getReview().getRating(),data.getOrder().getReview().getRating()));
