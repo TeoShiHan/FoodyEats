@@ -67,7 +67,7 @@ public class RegSeller {
     public void getInfo(){        
         Seller seller = new Seller();
         seller.setAccType("Seller");
-        seller.setName(inputName.getText());            
+        seller.setName(inputName.getText());
         seller.setEmail(inputEmail.getText());
         seller.setMobileNo(inputMobileNo.getText());
         seller.setAddress(inputAddress.getText());

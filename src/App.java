@@ -17,17 +17,12 @@ public class App extends Application{
     
     public static void main(String[] args) throws Exception  {
         
-        DataHolder.loadFromDatabase();
-        /**DEBUG*/System.out.print("SUCCESSFULLE LOADING");
+        DataHolder.loadFromDatabase();        
 
         ArrayList<HashMap<String, Object>> table = new ArrayList<HashMap<String, Object>>();
 
-        System.out.println(table);
-
-        System.out.println("Main method start");              
         launch(); 
-        // launch(args);  // same with line above
-        System.out.println("Main method finished");     
+        // launch(args);  // same with line above             
     }
 
     @Override

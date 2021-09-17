@@ -329,26 +329,20 @@ public final class DataHolder {
       this.seller = new Seller();      
     }
 
-    public static void loadFromDatabase(){
-      /*DEBUG MSG*/System.out.println("RUNNED LOAD");
+    public static void loadFromDatabase(){      
 
-      DataHolder data = DataHolder.getInstance();
-          /*DEBUG MSG*/System.out.println("CREATED DATA HOLDER INSTANCE");
+      DataHolder data = DataHolder.getInstance();          
       
-      SQL sql = SQL.getInstance();
-          /*DEBUG MSG*/System.out.println("CREATED SQL INSTANCE");
+      SQL sql = SQL.getInstance();          
       
-      data.setAccountTable(sql.fetchAccountTable()); 
-          /**DEBUG*/System.out.print("SET ACCOUNT TABLE");
+      data.setAccountTable(sql.fetchAccountTable());           
       
       data.setBuyerTable(sql.fetchBuyerTable());
       data.setSellerTable(sql.fetchSellerTable());
       data.setAdminTable(sql.fetchAdminTable());
       data.setRiderTable(sql.fetchRiderTable());
       data.setShopTable(sql.fetchShopTable());
-      Shop tempShop = new Shop();
-          /**DEBUG*/System.out.print("CREATED SHOP OBJ");
-      data.setFoodCategoriesTable(sql.fetchFoodCategoriesFromAllShops(tempShop.getAllKeysInTable(data.getShopTable())));
-          /*DEBUG MSG*/System.out.println("RUNNED CATEGORY TABLE" + data.getFoodCategoriesTable());
+      Shop tempShop = new Shop();          
+      data.setFoodCategoriesTable(sql.fetchFoodCategoriesFromAllShops(tempShop.getAllKeysInTable(data.getShopTable())));          
     }
   }

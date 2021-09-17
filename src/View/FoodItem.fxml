@@ -11,7 +11,6 @@
 <?import javafx.scene.text.Font?>
 <?import javafx.scene.text.Text?>
 
-
 <HBox maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="134.0" prefWidth="500.0" xmlns="http://javafx.com/javafx/16" xmlns:fx="http://javafx.com/fxml/1" fx:controller="Controller.FoodItem">
    <children>
       <ImageView fx:id="foodPic" fitHeight="132.0" fitWidth="203.0" pickOnBounds="true" preserveRatio="true">
@@ -63,12 +62,12 @@
                         <Insets left="5.0" />
                      </HBox.margin>
                   </Spinner>
-                  <HBox fx:id="addToCartBtn" alignment="CENTER" prefWidth="80.0" style="-fx-background-color: #ffae78;">
+                  <HBox fx:id="addToCartBtn" alignment="CENTER" onMouseClicked="#clickAddToCartBtn" prefWidth="80.0" style="-fx-background-color: #ffae78;">
                      <HBox.margin>
                         <Insets left="100.0" />
                      </HBox.margin>
                      <children>
-                        <ImageView fx:id="cartIcon" fitHeight="28.0" fitWidth="94.0" onMouseClicked="#clickAddToCartBtn" pickOnBounds="true" preserveRatio="true">
+                        <ImageView fx:id="cartIcon" fitHeight="28.0" fitWidth="94.0" pickOnBounds="true" preserveRatio="true">
                            <image>
                               <Image url="@../Images/cartIcon.png" />
                            </image>

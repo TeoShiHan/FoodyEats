@@ -67,9 +67,7 @@ public class Cart {
 
     public void loadCartItems(){        
         this.cartItems = new ArrayList<>();
-        ArrayList<HashMap<String,Object>> cs = sql.fetchCartItems(cartID);        
-        System.out.println(cs);
-        System.out.println("cartID: "+cartID);
+        ArrayList<HashMap<String,Object>> cs = sql.fetchCartItems(cartID);                
         if(!cs.isEmpty()){
             for(HashMap<String,Object> c : cs){
                 if(!c.isEmpty()){
