@@ -87,7 +87,7 @@
       </GridPane>
       <ScrollPane fx:id="scrollFoodList" layoutX="-1.0" layoutY="154.0" prefHeight="544.0" prefWidth="1200.0">
          <content>
-            <GridPane fx:id="foodListGrid" alignment="CENTER" nodeOrientation="LEFT_TO_RIGHT" prefHeight="548.0" prefWidth="1068.0">
+            <GridPane fx:id="foodListGrid" alignment="TOP_CENTER" nodeOrientation="LEFT_TO_RIGHT" prefHeight="548.0" prefWidth="1068.0">
               <columnConstraints>
                 <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
               </columnConstraints>

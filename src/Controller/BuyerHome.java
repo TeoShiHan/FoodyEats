@@ -87,16 +87,12 @@ public class BuyerHome implements Initializable {
         navigationalListeners = createNavigationalListeners();
 
         Shop tempShop = new Shop();
-        shopObjectCollection = tempShop.createShopObjectCollection();
-
-        System.out.println("outa the create shop object function");
+        shopObjectCollection = tempShop.createShopObjectCollection();        
 
         int gridCol = 0;
         int gridRow = 1;
 
-        try {
-
-            System.out.println("go in try clause");
+        try {            
 
             for (int i = 0; i < shopObjectCollection.size(); i++) {
 
