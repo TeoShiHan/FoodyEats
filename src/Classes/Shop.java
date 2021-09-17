@@ -302,13 +302,10 @@ public class Shop implements TableDataProcessing {
     }
 
     public void initializeAvailableFoodCategoryInShop() {
+        sql.fetchFoodCategoriesFromAllShops(data.getShop().getAllKeysInTable(sql.fetchShopTable()));
         HashMap<String, ArrayList<String>> keyMapCategoryArr = getArrMapToKey(data.getFoodCategoriesTable(), "shopID",
-                "category");
-        /* DEBUG MSG */System.out.println("keyMapCategoryArr IS " + keyMapCategoryArr);
-
-        /* DEBUG MSG */System.out.println("SHOP ID IS " + this.shopID);
-        this.availableFoodCategories = keyMapCategoryArr.get(this.shopID);
-        /* DEBUG MSG */System.out.println("FOOD CATEGORY : " + this.getAvailableFoodCategoryInShop());
+                "category");                
+        this.availableFoodCategories = keyMapCategoryArr.get(this.shopID);        
     }
 
     public HashMap<String, ArrayList<Food>> getFoodObjArrThatMapWithCategory() {
@@ -320,14 +317,9 @@ public class Shop implements TableDataProcessing {
                 .readAll(String.format(
                         "SELECT foodID, foodName, foodDesc, price,  F.imgPath, category, S.shopID "
                                 + "FROM Food F, Shop S " + "WHERE S.shopID = F.shopID AND S.shopID = '%s'",
-                        this.shopID));
+                        this.shopID));        
 
-        System.out.println(foodTable);
-        System.out.println("test fetch category : " + foodTable.get(0).get("category"));
-
-        categoryArr = getAvailableFoodCategoryInShop();
-
-        System.out.println("test fetch categoryV2 : " + categoryArr.get(0));
+        categoryArr = getAvailableFoodCategoryInShop();        
 
         for (int i = 0; i < categoryArr.size(); i++) {
             ArrayList<Food> tempFoodArr = new ArrayList<Food>();
@@ -395,6 +387,7 @@ public class Shop implements TableDataProcessing {
 
             if (!isMatch(tempKeyNew, tempKeyOld)) {
                 arrMapToKey.put(tempKeyOld, tempDataArr);
+                tempKeyOld = tempKeyNew;
                 tempDataArr = new ArrayList<String>();
             }
 
@@ -421,10 +414,7 @@ public class Shop implements TableDataProcessing {
             String shopID = (String) shopTable.get(i).get("shopID");
             String shopName = (String) shopTable.get(i).get("shopName");
             double deliveryFee = (double) shopTable.get(i).get("deliveryFee");
-            String imgPath = (String) shopTable.get(i).get("imgPath");
-            System.out.println(imgPath);
-
-            System.out.println("pass through getting value assignatoin");
+            String imgPath = (String) shopTable.get(i).get("imgPath");            
             Shop shopInstance = new Shop();
 
             shopInstance.setShopID(shopID);

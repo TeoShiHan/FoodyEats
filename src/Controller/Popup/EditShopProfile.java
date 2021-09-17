@@ -51,9 +51,7 @@ public class EditShopProfile implements Initializable{
         spinnerDeliveryFee.getValueFactory().setValue(data.getSeller().getShop().getDeliveryFee());
         spinnerStartHour.getValueFactory().setValue(data.getSeller().getShop().getStartHour().getHour());
         spinnerEndHour.getValueFactory().setValue(data.getSeller().getShop().getEndHour().getHour());
-                        
-        System.out.println(data.getSeller().getShop().getImgPath());
-        System.out.println((getClass().getResourceAsStream(data.getSeller().getShop().getImgPath())));
+                                
         // https://stackoverflow.com/questions/22710053/how-can-i-show-an-image-using-the-imageview-component-in-javafx-and-fxml        
         image.setImage(new Image(getClass().getResourceAsStream(data.getSeller().getShop().getImgPath())));
     }    

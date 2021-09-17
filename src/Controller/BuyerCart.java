@@ -330,9 +330,7 @@ public class BuyerCart implements Initializable {
 
     public void checkForUpdate() {
         for (CartItem c : data.getCartItems()) {
-            if (c.isChanged()) {
-                System.out.println("Food Name - " + c.getFood().getName());
-                System.out.println("Quantity - " + c.getQuantity());
+            if (c.isChanged()) {                
                 c.update();
             }
         }

@@ -169,8 +169,7 @@ public class Order {
     }
 
     public void loadReview() {
-        HashMap<String,Object> r = db.readOne(String.format("SELECT r.* FROM `Review` r, `Order` o WHERE r.reviewID='%s' AND r.reviewID=o.reviewID",reviewID));
-        System.out.println(r);
+        HashMap<String,Object> r = db.readOne(String.format("SELECT r.* FROM `Review` r, `Order` o WHERE r.reviewID='%s' AND r.reviewID=o.reviewID",reviewID));        
         Review review = new Review(r.get("reviewID"), r.get("rating"), r.get("comment"), r.get("dateCreated"), r.get("timeCreated"), r.get("orderID"), r.get("shopID"));
         this.review = review;        
     }
@@ -203,9 +202,7 @@ public class Order {
             deleteOrderItemQuery += String.format("DELETE FROM `CartItem` WHERE cartID='%s' AND foodID='%s'; ",c.getCartID(),c.getFood().getFoodID());
         }
         query += String.format("UPDATE `Cart` SET shopID='' WHERE cartID='%s'; ",data.getBuyer().getCart().getCartID());        
-        query += "COMMIT;";
-        System.out.println(query);
-        System.out.println(deleteOrderItemQuery);
+        query += "COMMIT;";        
         db.executeCUD(query,gui);
         db.executeCUD(deleteOrderItemQuery,gui);
         Order.ordersHaveChange = true;
