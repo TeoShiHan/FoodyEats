@@ -197,8 +197,7 @@ public class Seller extends Account {
 
     public void addShopImageIntoFolder(Shop shop) {
         Path source = getShopImgPath(shop);
-        String currentPath = Paths.get("").toAbsolutePath().toString().replaceAll("\\\\", "/") + "/src/Images/";
-        System.out.println(currentPath + shopID + shop.getImgPath().substring(shop.getImgPath().lastIndexOf(".")));
+        String currentPath = Paths.get("").toAbsolutePath().toString().replaceAll("\\\\", "/") + "/src/Images/";        
         try {
             Files.copy(source,
                     Paths.get(currentPath + shopID + shop.getImgPath().substring(shop.getImgPath().lastIndexOf("."))));

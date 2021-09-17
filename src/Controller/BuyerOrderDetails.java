@@ -52,10 +52,8 @@ public class BuyerOrderDetails implements Initializable {
     public void initialize(URL location, ResourceBundle resources) {
         order = new BuyerOrder(data.getOrder());            
         data.setOrder(order);
-        if(order.getOrderItems()==null){            
-            System.out.println(order.getShop());
-            order.loadAllDetails();            
-            System.out.println(order.getShop());
+        if(order.getOrderItems()==null){                        
+            order.loadAllDetails();                        
         }
         
         lblOrderDetails.setText("Order #"+order.getOrderID());
@@ -147,10 +145,8 @@ public class BuyerOrderDetails implements Initializable {
                         gui.miniPopup(String.format("RM%.2f has been returned to your Bank Account",data.getOrder().calcTotalAmount()));
                         Task<Void> task = new Task<Void>() {
                             @Override
-                            public Void call() throws IOException {  
-                                System.out.println(data.getOrders());
-                                data.getOrders().remove(data.getOrder());
-                                System.out.println(data.getOrders());
+                            public Void call() throws IOException {                                  
+                                data.getOrders().remove(data.getOrder());                                
                                 Order.setOrdersHaveChange(true);
                                 data.getOrder().delete();                                
                                 return null;

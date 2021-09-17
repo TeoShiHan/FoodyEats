@@ -139,6 +139,7 @@ public class Account implements TableDataProcessing {
 
         // #region ： PROGRAM VARIABLES
         DataHolder data = DataHolder.getInstance();
+        DataHolder.loadFromDatabase();
         ArrayList<HashMap<String, Object>> accountTable = data.getAccountTable();
         ArrayList<HashMap<String, Object>> shopTable = data.getShopTable();
         ArrayList<HashMap<String, Object>> childAccTable = new ArrayList<HashMap<String, Object>>();

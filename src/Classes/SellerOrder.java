@@ -37,8 +37,7 @@ public class SellerOrder extends Order {
     @Override
     public void loadAllDetails() {            
         super.loadAllDetails();
-        loadBuyer();
-        System.out.println("riderID - "+riderID);
+        loadBuyer();        
         if(!(riderID==null||riderID.isEmpty()||riderID.isBlank())){
             loadRider();
         }

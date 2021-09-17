@@ -170,6 +170,7 @@ INSERT INTO foodyeats.Account(accountID,username,password,name,email,mobileNo,re
 INSERT INTO foodyeats.Account(accountID,username,password,name,email,mobileNo,regDate,type) VALUES ('A00020','knovacekj','Z30B2VZ','Kalle Novacek','knovacekj@sun.com','011-48349406','2021-07-20','Buyer');
 INSERT INTO foodyeats.Account(accountID,username,password,name,email,mobileNo,regDate,type) VALUES ('A00021','bellertonk','fWPrWQJ98','Babara Ellerton','bellertonk@artisteer.com','018-6806133','2021-07-07','Buyer');
 INSERT INTO foodyeats.Account(accountID,username,password,name,email,mobileNo,regDate,type) VALUES ('A00022','rguthersonl','nKdWenYHi7','Retha Gutherson','rguthersonl@auda.org.au','011-96577712','2021-03-23','Buyer');
+INSERT INTO foodyeats.Account(accountID,username,password,name,email,mobileNo,regDate,type) VALUES ('A00023','asdasd','dadqwedasd','Hello World','helloo@auda.org.au','011-96577712','2020-06-23','Seller');
 
 
 INSERT INTO foodyeats.Admin(adminID,NRIC,companyBranch,accountID) VALUES ('M00001','439829-42-2997','699-eff-673','A00001');

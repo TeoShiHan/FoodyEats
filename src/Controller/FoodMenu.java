@@ -149,21 +149,14 @@ public class FoodMenu implements Initializable {
             @Override
             public void addToCart(Food food, int quantity) {
                 Buyer buyer = data.getBuyer();
-                updateShopIdOfCart(food.getShopID(), buyer.getCartID());
+                updateShopIdOfCart(food.getShopID(), buyer.getCartID());                
 
-                /* DEBUG MSG */System.out
-                        .println("buyer.getCart().getShopID() IS >>>>>>" + buyer.getCart().getShopID());
-                /* DEBUG MSG */System.out.println("food.getShopID() IS >>>>>>" + food.getShopID());
-
-                if (cartContainFoodFromOtherShop(buyer, food)) {
-                    System.out.println("foreign food Detected");
+                if (cartContainFoodFromOtherShop(buyer, food)) {                    
                     comfirmForDeleteOldCartItems(buyer.getCartID(), buyer, food);
 
-                } else if (food.getFoodQtyAddedByUserIntoCart(buyer) != 0) {
-                    System.out.println("This food have been added into the database for this user");
+                } else if (food.getFoodQtyAddedByUserIntoCart(buyer) != 0) {                    
                     updateCart(quantity, buyer.getCartID(), food.getFoodID(), food.getName());
                 } else if (quantity == 0) {
-                    System.out.println("Quantity should not be 0");
                     waringOfNoFoodQty();
                 } else {
                     food.addThisFoodToCart(buyer, quantity);
@@ -200,8 +193,7 @@ public class FoodMenu implements Initializable {
 
         int gridCol = 1;
         int gridRow = 0;
-        try {
-            System.out.println("go in try clause");
+        try {            
 
             for (int i = 0; i < categoryList.size(); i++) {
 
@@ -237,8 +229,7 @@ public class FoodMenu implements Initializable {
         int secGridCol = 0;
         int secGridRow = 1;
 
-        try {
-            System.out.println("go in try clause");
+        try {            
 
             for (int r = 0; r < categoryList.size(); r++) {
 
@@ -293,11 +284,9 @@ public class FoodMenu implements Initializable {
         String foodShopID = food.getShopID().toString();
         String sqlStmt = String.format(
                 "SELECT DISTINCT shopID " + "FROM CartItem C, Food F " + "WHERE C.foodID = F.foodID AND cartID = '%s'",
-                buyer.getCartID());
-        /* DEBUG MSG */System.out.println("SQL STATEMENT is : " + sqlStmt);
+                buyer.getCartID());        
 
-        int distinctShopQty = db.readAll(sqlStmt).size();
-        /* DEBUG MSG */System.out.println("shop Qty is : " + distinctShopQty);
+        int distinctShopQty = db.readAll(sqlStmt).size();        
 
         return (!cartShopID.equals(foodShopID) || distinctShopQty > 1);
     }
@@ -344,8 +333,7 @@ public class FoodMenu implements Initializable {
         String sqlStmt = String.format(
                 "UPDATE CartItem " + "SET quantity = quantity + %s " + "WHERE cartID = '%s' AND foodID = '%s';",
                 quantity, cartID, foodId);
-
-        /* DEBUG MSG */System.out.println("SQL STATEMENT IS : " + sqlStmt);
+                        
         db.executeCUD(sqlStmt, gui);
         notifySuccessfullAddToCart(foodName, quantity);
     }

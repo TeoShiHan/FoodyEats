@@ -1,5 +1,7 @@
 package Cache;
 import Classes.*;
+import SQL.CreateTableQuery.SQL;
+
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -327,7 +329,20 @@ public final class DataHolder {
       this.seller = new Seller();      
     }
 
-    public void fetchDataFromDatabase() {
+    public static void loadFromDatabase(){      
 
+      DataHolder data = DataHolder.getInstance();          
+      
+      SQL sql = SQL.getInstance();          
+      
+      data.setAccountTable(sql.fetchAccountTable());           
+      
+      data.setBuyerTable(sql.fetchBuyerTable());
+      data.setSellerTable(sql.fetchSellerTable());
+      data.setAdminTable(sql.fetchAdminTable());
+      data.setRiderTable(sql.fetchRiderTable());
+      data.setShopTable(sql.fetchShopTable());
+      Shop tempShop = new Shop();          
+      data.setFoodCategoriesTable(sql.fetchFoodCategoriesFromAllShops(tempShop.getAllKeysInTable(data.getShopTable())));          
     }
   }

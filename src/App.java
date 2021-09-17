@@ -13,20 +13,16 @@ import SQL.CreateTableQuery.SQL;
 
 public class App extends Application{
     private static GUI gui = GUI.getInstance();
+    private DataHolder data = DataHolder.getInstance();
     
     public static void main(String[] args) throws Exception  {
         
-        loadFromDatabase();
-        /**DEBUG*/System.out.print("SUCCESSFULLE LOADING");
+        DataHolder.loadFromDatabase();        
 
         ArrayList<HashMap<String, Object>> table = new ArrayList<HashMap<String, Object>>();
 
-        System.out.println(table);
-
-        System.out.println("Main method start");              
         launch(); 
-        // launch(args);  // same with line above
-        System.out.println("Main method finished");     
+        // launch(args);  // same with line above             
     }
 
     @Override
@@ -59,28 +55,5 @@ public class App extends Application{
         //         stage.close();
         //     }          
         // });                  
-    }
-
-    private static void loadFromDatabase(){
-            /*DEBUG MSG*/System.out.println("RUNNED LOAD");
-
-        DataHolder data = DataHolder.getInstance();
-            /*DEBUG MSG*/System.out.println("CREATED DATA HOLDER INSTANCE");
-        
-        SQL sql = SQL.getInstance();
-            /*DEBUG MSG*/System.out.println("CREATED SQL INSTANCE");
-        
-        data.setAccountTable(sql.fetchAccountTable()); 
-            /**DEBUG*/System.out.print("SET ACCOUNT TABLE");
-        
-        data.setBuyerTable(sql.fetchBuyerTable());
-        data.setSellerTable(sql.fetchSellerTable());
-        data.setAdminTable(sql.fetchAdminTable());
-        data.setRiderTable(sql.fetchRiderTable());
-        data.setShopTable(sql.fetchShopTable());
-        Shop tempShop = new Shop();
-            /**DEBUG*/System.out.print("CREATED SHOP OBJ");
-        data.setFoodCategoriesTable(sql.fetchFoodCategoriesFromAllShops(tempShop.getAllKeysInTable(data.getShopTable())));
-            /*DEBUG MSG*/System.out.println("RUNNED CATEGORY TABLE" + data.getFoodCategoriesTable());
-    }
+    }    
 }
