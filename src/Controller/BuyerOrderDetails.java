@@ -37,7 +37,7 @@ public class BuyerOrderDetails implements Initializable {
     private DataHolder data = DataHolder.getInstance();    
     
     @FXML private AnchorPane paneBuyerOrder;    
-    @FXML private Label linkLogout,lblOrderDetails,lblShopName,lblShopTel,lblShopAddress,lblTotalAmount,lblDateCreated,lblTimeCreated,lblRiderName,lblRiderMobileNo,lblRiderVehicleDetails;
+    @FXML private Label linkLogout,lblOrderDetails,lblShopName,lblShopTel,lblShopAddress,lblTotalAmount,lblDeliveryFee,lblDateCreated,lblTimeCreated,lblRiderName,lblRiderMobileNo,lblRiderVehicleDetails;
     @FXML private ImageView iconProfile,iconHome,iconCart;            
     @FXML private Button btnWriteReview,btnCancel;        
     @FXML private TableView<OrderItem> tableView;
@@ -57,6 +57,7 @@ public class BuyerOrderDetails implements Initializable {
         }
         
         lblOrderDetails.setText("Order #"+order.getOrderID());
+        lblDeliveryFee.setText(String.format("RM %.2f",order.getShop().getDeliveryFee()));
         lblDateCreated.setText(order.getDateCreated().toString());
         lblTimeCreated.setText(order.getTimeCreated().toString());
         lblShopName.setText(order.getShop().getName());
