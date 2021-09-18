@@ -44,7 +44,7 @@ public class BuyerOrderDetails implements Initializable {
     @FXML private TableColumn<OrderItem,Number> colNo;
     @FXML private TableColumn<OrderItem,Integer> colQty;
     @FXML private TableColumn<OrderItem,String> colItems;
-    private String currentFXMLPath = "/View/BuyerOrderDetails.fxml";
+    private String currentFXMLPath = "View/BuyerOrderDetails.fxml";
 
     private BuyerOrder order;
 
@@ -52,10 +52,8 @@ public class BuyerOrderDetails implements Initializable {
     public void initialize(URL location, ResourceBundle resources) {
         order = new BuyerOrder(data.getOrder());            
         data.setOrder(order);
-        if(order.getOrderItems()==null){            
-            System.out.println(order.getShop());
-            order.loadAllDetails();            
-            System.out.println(order.getShop());
+        if(order.getOrderItems()==null){                        
+            order.loadAllDetails();                        
         }
         
         lblOrderDetails.setText("Order #"+order.getOrderID());
@@ -85,7 +83,7 @@ public class BuyerOrderDetails implements Initializable {
                 
         btnWriteReview.setDisable(data.getOrder().getStatus().equals("Completed")?false:true);
         btnCancel.setDisable(data.getOrder().getStatus().equals("Pending")?false:true);
-        if(!order.getReviewID().isEmpty()||!order.getReviewID().isEmpty()){
+        if(order.getReview()!=null){
             btnWriteReview.setText("Your Review");
         }
 
@@ -111,8 +109,10 @@ public class BuyerOrderDetails implements Initializable {
                 Task<Void> task = new Task<Void>() {
                     @Override
                     public Void call() throws IOException, SQLException {
-                        Review newReview = new Review(controller.getSpinnerRating().getValue(), controller.getInputComment().getText(), data.getOrder().getOrderID(), data.getOrder().getShopID());
-                        newReview.create();
+                        Review newReview = new Review(controller.getSpinnerRating().getValue(), controller.getInputComment().getText().replaceAll("'", "\\\\'"), data.getOrder().getOrderID(), data.getOrder().getShopID());
+                        newReview.create();                        
+                        order.setReviewID(newReview.getReviewID());
+                        order.setReview(newReview);                        
                         return null ;
                     }
                 };
@@ -145,10 +145,8 @@ public class BuyerOrderDetails implements Initializable {
                         gui.miniPopup(String.format("RM%.2f has been returned to your Bank Account",data.getOrder().calcTotalAmount()));
                         Task<Void> task = new Task<Void>() {
                             @Override
-                            public Void call() throws IOException {  
-                                System.out.println(data.getOrders());
-                                data.getOrders().remove(data.getOrder());
-                                System.out.println(data.getOrders());
+                            public Void call() throws IOException {                                  
+                                data.getOrders().remove(data.getOrder());                                
                                 Order.setOrdersHaveChange(true);
                                 data.getOrder().delete();                                
                                 return null;

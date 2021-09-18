@@ -99,5 +99,6 @@ public class SellerIncomingOrder implements Initializable {
     @FXML
     void toRefreshScene(MouseEvent event) throws IOException {
         gui.refreshScene(currentFXMLPath);
+        gui.miniPopup("Refreshed");
     }
 }

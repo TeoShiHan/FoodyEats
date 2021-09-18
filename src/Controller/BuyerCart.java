@@ -249,9 +249,9 @@ public class BuyerCart implements Initializable {
                 myDialog2.show();
 
                 data.setPayment(new Payment(((RadioButton) controller.getPaymentType().getSelectedToggle()).getText()));
-                data.getBuyer().getCart().setShopID("");
                 Order order = new Order("Pending", LocalDate.now(), LocalTime.now(), data.getBuyer().getBuyerID(),
-                        data.getCart().getShopID());
+                                        data.getBuyer().getCart().getShopID());
+                data.getBuyer().getCart().setShopID("");
                 Task<Void> task = new Task<Void>() {
                     @Override
                     public Void call() throws IOException, SQLException {
@@ -266,7 +266,7 @@ public class BuyerCart implements Initializable {
                 delay.setOnFinished(e -> {
                     myDialog.close();
                     myDialog2.close();
-                    gui.miniPopup("Payment made successfully, you can view your order in Home 👉 Order History");
+                    gui.miniPopup("Payment made successfully, new order added into Order History");
                     gui.toNextScene("View/BuyerOrderHistory.fxml");
                 });
                 delay.play();
@@ -330,9 +330,7 @@ public class BuyerCart implements Initializable {
 
     public void checkForUpdate() {
         for (CartItem c : data.getCartItems()) {
-            if (c.isChanged()) {
-                System.out.println("Food Name - " + c.getFood().getName());
-                System.out.println("Quantity - " + c.getQuantity());
+            if (c.isChanged()) {                
                 c.update();
             }
         }

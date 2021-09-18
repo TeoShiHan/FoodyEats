@@ -114,7 +114,17 @@ public class Rider extends Account{
 
     public void acceptOrder(String oRDerID){
         data.getOrder().setRiderID(this.riderID);
-        db.executeCUD(String.format("UPDATE `Order` SET status='Rider Accepted', riderID='%s' WHERE orderID='%s'",this.riderID,oRDerID),gui);        
+        if(db.executeCUD(String.format("UPDATE `Order` SET status='Rider Accepted', riderID='%s' WHERE orderID='%s' AND (riderID='' OR riderID IS NULL)",this.riderID,oRDerID),gui)==0){
+            data.getOrder().setRiderID("");
+            try {
+                gui.informationPopup("Attention", "This order has been accepted by other rider. Try harder next time. 😉");
+            } catch (IOException e) {
+                // TODO Auto-generated catch block
+                e.printStackTrace();
+            }
+        }else{
+            gui.miniPopup("Order Accepted, please go to Order History to see the order");
+        }
     }
 
     public void collectOrder(String oRDerID){

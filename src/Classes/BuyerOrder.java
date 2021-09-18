@@ -55,8 +55,7 @@ public class BuyerOrder extends Order {
     }
 
     public void loadRider() {
-        HashMap<String, Object> riderDetails = sql.fetchSpecificRiderDetails(riderID);
-        System.out.println(riderDetails);
+        HashMap<String, Object> riderDetails = sql.fetchSpecificRiderDetails(riderID);        
         Vehicle vehicle = new Vehicle(riderDetails);
         Rider rider = new Rider(riderDetails);
         rider.setVehicle(vehicle);

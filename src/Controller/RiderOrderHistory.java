@@ -44,7 +44,7 @@ public class RiderOrderHistory implements Initializable {
         data.setOrders(new ArrayList<>());
         if(data.getOrders().isEmpty()){ 
             // https://stackoverflow.com/questions/19196475/custom-order-by-in-sql-server-like-p-a-l-h (select data order by the custom sequence)
-            ArrayList<HashMap<String,Object>> os = db.readAll(String.format("SELECT * FROM `Order` WHERE riderID='%s' ORDER BY CASE WHEN status='Rider Accepted' then 1 WHEN status='Rider Collected' THEN 2 WHEN status='Completed' THEN 3 else 4 END ASC",((Rider)data.getAccount()).getRiderID()));
+            ArrayList<HashMap<String,Object>> os = db.readAll(String.format("SELECT * FROM `Order` WHERE riderID='%s' ORDER BY CASE WHEN status='Rider Collected' THEN 1 WHEN status='Seller Ready' THEN 2 WHEN status='Rider Accepted' THEN 3 else 4 END ASC",((Rider)data.getAccount()).getRiderID()));
             for(HashMap<String,Object> o : os){
                 data.getOrders().add(new Order(o.get("orderID"),o.get("status"), o.get("dateCreated"),o.get("timeCreated"),o.get("buyerID"),o.get("riderID"),o.get("shopID"),o.get("paymentID"),o.get("reviewID")));
             }

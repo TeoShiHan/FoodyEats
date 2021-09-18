@@ -48,10 +48,10 @@ public class JDBC {
         }
     }
 
-    public void executeCUD(String statement, GUI gui) {
+    public int executeCUD(String statement, GUI gui) {
         openConnection();
         try {
-            this.SQLstatement.executeUpdate(statement);
+            return this.SQLstatement.executeUpdate(statement);
         } catch (SQLException e) {
             e.printStackTrace();
             try {
@@ -59,6 +59,7 @@ public class JDBC {
             } catch (IOException e1) {
                 e1.printStackTrace();
             }
+            return 0;
         } finally {
             closeConnection();
         }

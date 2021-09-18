@@ -124,12 +124,9 @@ public class Food {
             "FROM CartItem " +
             "WHERE cartID = '%s' AND foodID = '%s';",
             buyer.getCartID(),this.foodID
-        );
-        /*DEBUG MSG*/System.out.println("SQL STATEMENT IS: " + sqlStatement);
+        );        
 
-        purchasedQuantity = db.readOne(sqlStatement);
-
-        System.out.println(purchasedQuantity);
+        purchasedQuantity = db.readOne(sqlStatement);        
 
         if(purchasedQuantity == null){
             return 0;

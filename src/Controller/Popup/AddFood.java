@@ -59,19 +59,10 @@ public class AddFood implements Initializable{
         );
         foodImageFile = fileChooser.showOpenDialog(gui.getStage());
         if(foodImageFile!=null){                                    
-            // https://stackoverflow.com/questions/36991165/how-to-set-the-save-path-for-a-file-chosen-in-filechooser-javafx/36991844#36991844
-            // String currentPath = Paths.get("").toAbsolutePath().toString().replaceAll("\\\\", "/");            
+            // https://stackoverflow.com/questions/36991165/how-to-set-the-save-path-for-a-file-chosen-in-filechooser-javafx/36991844#36991844            
             newImgFileExtension = foodImageFile.getName().substring(foodImageFile.getName().indexOf("."));            
             // Path path = Paths.get(currentPath+"/src/Images/temp"+newImgFileExtension);
-            Image.setImage(new Image(foodImageFile.toURI().toString()));
-            // try{
-            //     Files.delete(path);
-            // }catch (DirectoryNotEmptyException e) {
-            //     // happens sometimes if Windows is too slow to remove children of a directory                
-            //     System.out.println("Error on remove the file!!!!!");
-            // }finally{
-                // Files.copy(shopImageFile.toPath(), path);
-            // }           
+            Image.setImage(new Image(foodImageFile.toURI().toString()));            
         }                               
     }   
 
