@@ -171,6 +171,7 @@ public class EditProfile implements Initializable{
 
     public boolean detectedInvalidBuyerInfo(){
         BuyerFormValidator formValidator = new BuyerFormValidator(this);
+        System.out.println("DETECTED INVALID BUYER INFO IS : " + formValidator.validateAlterForm());
         return formValidator.validateAlterForm();
     }
 

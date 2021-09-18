@@ -15,6 +15,12 @@ public class BuyerFormValidator extends FormValidator {
 
     public BuyerFormValidator(EditProfile editingBuyerForm){
         super(editingBuyerForm.getInputUsername(),editingBuyerForm.getInputName(), editingBuyerForm.getInputEmail(), editingBuyerForm.getInputMobileNo());
+        
+        System.out.println("USERNAME IS : " + editingBuyerForm.getInputUsername().getText());
+        System.out.println("NAME IS : " + editingBuyerForm.getInputName().getText());
+        System.out.println("EMAIL IS : " + editingBuyerForm.getInputEmail().getText());
+        System.out.println("MOBILE IS : " + editingBuyerForm.getInputMobileNo().getText());
+
         this.editingBuyerForm = editingBuyerForm;
     }
 
@@ -23,7 +29,10 @@ public class BuyerFormValidator extends FormValidator {
         return super.validateForm();
     }
 
+    @Override
     public boolean validateAlterForm(){
-        return super.validateAlterForm() && super.validateForm();
+        boolean accountInfoInvalid = super.validateForm();
+        boolean buyerInfoIsInvalid = super.validateAlterForm();
+        return accountInfoInvalid && buyerInfoIsInvalid;
     }
 }
