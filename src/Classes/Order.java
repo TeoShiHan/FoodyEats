@@ -183,6 +183,12 @@ public class Order {
         double totalAmount = 0.0;
         for(OrderItem orderItem: orderItems){
             totalAmount += orderItem.calcAmount();
+        }        
+        for(HashMap<String,Object> shopHashMap : data.getShopTable()){
+            if(shopHashMap.get("shopID").equals(shopID)){                
+                totalAmount += (double)shopHashMap.get("deliveryFee");
+                break;
+            }
         }
         return totalAmount;
     }
