@@ -197,6 +197,9 @@ public class Order {
         String deleteOrderItemQuery = "";
         String query = "START TRANSACTION; ";        
         query += String.format("INSERT INTO `Order` (orderID,status,dateCreated,timeCreated,buyerID,shopID,paymentID) VALUES ('%s','%s','%s','%s','%s','%s','%s'); ",orderID,status,dateCreated.toString(),timeCreated.toString(),buyerID,shopID,paymentID);        
+        
+        System.out.println("DEBUG PRINT SQL STMT>>>>" + query);
+
         query += String.format("INSERT INTO `Payment` (paymentID,method,orderID) VALUES ('%s','%s','%s'); ",paymentID,data.getPayment().getMethod(),orderID);        
         for(CartItem c : data.getCartItems()){
             query += String.format("INSERT INTO `OrderItem` (orderID,foodID,quantity) VALUES ('%s','%s',%d); ",orderID,c.getFood().getFoodID(),c.getQuantity());
