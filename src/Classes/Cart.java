@@ -85,6 +85,12 @@ public class Cart {
         for(CartItem cartItem : cartItems){
             totalAmount += cartItem.calcAmount();
         }
+        for(HashMap<String,Object> shopHashMap : data.getShopTable()){
+            if(shopHashMap.get("shopID").equals(cartItems.get(0).getFood().getShopID())){                       
+                totalAmount += (double)shopHashMap.get("deliveryFee");
+                break;
+            }
+        }
         return totalAmount;
     }
 
