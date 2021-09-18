@@ -39,6 +39,7 @@ public abstract class FormValidator {
     }
     
     public boolean validateForm(){
+        System.out.println(">>>>>>>>>>>>>>>>RUNNED VALIDATRE FORM FUNCTION");
         if(nameIsInvalid()){
             setTextFieldBorderToRed(nameField);
             isInvalid = true;
@@ -59,11 +60,12 @@ public abstract class FormValidator {
         }else{
             setTextFieldBorderToGreen(mobileField);
         }
+        System.out.println("THE VALIDATE FORM RSLT IS : " + isInvalid);
         return isInvalid;
     }
 
     public boolean validateAlterForm(){
-        
+
         if(usernameExistInDb(usernameField.getText())){
             setTextFieldBorderToRed(usernameField);
             popUpUsernameExistMsg();
@@ -75,7 +77,8 @@ public abstract class FormValidator {
             popUpEmailExistMsg();
             isInvalid = true;
         }
-
+    
+        System.out.println("THE VALIDATE ALTER FORM RSLT IS : " + isInvalid);
         return isInvalid;
     }
     
@@ -88,12 +91,15 @@ public abstract class FormValidator {
         validateName = validateName.replace("A/L ", "");
         validateName = validateName.replace("A/P ", "");
         
+        System.out.println("NAME IS INVALID IS : " + !Pattern.matches(fullNameRegex, validateName));
         return !Pattern.matches(fullNameRegex, validateName);
     }
 
     public boolean emailIsInvalid() {
         String emailRegex = "^[\\w-\\.]+@([\\w-]+\\.)+[\\w-]{2,4}$";
         String email = emailField.getText();
+
+        System.out.println("NAME IS INVALID IS : " + !Pattern.matches(emailRegex, email));
         return !Pattern.matches(emailRegex, email);
     }
 

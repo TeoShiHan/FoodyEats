@@ -95,6 +95,7 @@ public class Profile implements Initializable {
 
                 if (buyerProfileIsFilled(controller)) {
                     if (!controller.detectedInvalidBuyerInfo()) {
+                        System.out.println("IN PROFILE THE DETECTED INVALID BUYER INFO IS: " + !controller.detectedInvalidBuyerInfo());
                         updateChangeInBuyerProfileToDatabase(controller);
                         myDialog.close();
                     } else {

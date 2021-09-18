@@ -75,7 +75,6 @@ public final class GUI {
       nextScene.getStylesheets().add(css);
       // stage.setUserData(this.p);
       this.stage.setScene(nextScene);
-      this.stage.centerOnScreen();
   }
 
   public void toNextScene(String filePath){
@@ -95,8 +94,7 @@ public final class GUI {
     nextScene.getStylesheets().add(css);
     // stage.setUserData(this.p);
     this.stage.setScene(nextScene);
-    this.stage.centerOnScreen();
-  }  
+  }
 
   public void miniPopup(String message){
     Label lblText = new Label(message);
@@ -255,7 +253,6 @@ public final class GUI {
         }
     });  
     }
-    
   }
 
   public void notAlertInProgress(Stage... s){
