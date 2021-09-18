@@ -82,6 +82,7 @@ public class BuyerCart implements Initializable {
         data.setCartItems(data.getBuyer().getCart().getCartItems());
 
         if (data.getCartItems().size() == 0) {
+            data.getBuyer().getCart().setShopID("");
             btnCheckout.setDisable(true);
         }
 
@@ -189,8 +190,7 @@ public class BuyerCart implements Initializable {
                 btnDelete.setGraphic(deleteImage);
                 setGraphic(btnDelete);
 
-                btnDelete.setOnAction(event -> {
-                    data.getBuyer().getCart().setShopID("");
+                btnDelete.setOnAction(event -> {                
                     data.getCartItems().remove(cartItem);
                     tableView.getItems().remove(cartItem);
                     Task<Void> task = new Task<Void>() {

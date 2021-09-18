@@ -113,4 +113,10 @@ public class RiderOrderHistory implements Initializable {
     void toHome(MouseEvent event) throws IOException {
         gui.toNextScene("View/RiderHome.fxml");
     }
+
+    @FXML
+    void toRefreshScene(MouseEvent event) throws IOException {
+        gui.refreshScene(currentFXMLPath);
+        gui.miniPopup("Refreshed");
+    }
 }

@@ -69,7 +69,7 @@ public class ShopItemController{
         }
         
         categoryLabel.setText(categoryStr);
-        deliveryFee.setText("RM " + shop.getDeliveryFee());
+        deliveryFee.setText(String.format("RM %.2f",shop.getDeliveryFee()));
     }
 
     public Button getViewShopBtn() {
